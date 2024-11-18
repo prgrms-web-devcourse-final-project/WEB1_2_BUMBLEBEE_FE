@@ -30,8 +30,10 @@ module.exports = {
     'react/jsx-no-useless-fragment': 'off', // React Fragment (<></>)가 단일 자식을 감쌀 때도 허용
     'import/no-extraneous-dependencies': 'off',
     'react/function-component-definition': [
-      'enabled',
-      { namedcomponents: 'arrow-function' },
+      'off',
+      {
+        namedComponents: 'arrow-function',
+      },
     ], //화살표 함수 이용
 
     'jsx-a11y/click-events-have-key-events': 'off',
