@@ -36,7 +36,7 @@ module.exports = {
         namedComponents: 'arrow-function',
       },
     ], // 화살표 함수 이용
-
+    'react/require-default-props': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
 

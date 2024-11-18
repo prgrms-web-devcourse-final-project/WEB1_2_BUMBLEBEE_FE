@@ -2,12 +2,15 @@ import { ReactNode } from 'react';
 
 interface MainLayoutProps {
   children: ReactNode;
+  headerType?: 'both' | 'default';
 }
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const MainLayout = ({ children, headerType = 'default' }: MainLayoutProps) => {
+  const paddingTop = headerType === 'both' ? 'pt-[132px]' : 'pt-[93px]';
+
   return (
-    <div className='mx-auto my-0 w-[375px] max-w-[100%] bg-white'>
-      {children}
+    <div className='mx-auto my-0 h-[812px] w-[375px] max-w-[100%] bg-white'>
+      <div className={paddingTop}>{children}</div>
     </div>
   );
 };
