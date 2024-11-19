@@ -14,7 +14,7 @@ const BottomNavigation = () => {
   ];
 
   return (
-    <div className='fixed bottom-0 flex h-[94px] w-[375px] items-center justify-between border-t-[1px] border-t-subfont px-[30px] pb-[30px] pt-[18px]'>
+    <div className='fixed bottom-0 z-10 flex h-[94px] w-[375px] items-center justify-between border-t-[1px] border-t-subfont bg-white px-[30px] pb-[30px] pt-[18px]'>
       {navigationItems.map(({ icon, label }) => (
         <button
           type='button'
