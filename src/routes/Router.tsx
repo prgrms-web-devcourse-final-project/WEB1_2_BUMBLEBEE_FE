@@ -7,6 +7,7 @@ import UserLogin from '@pages/UserLogin';
 import UserSignUp from '@pages/UserSignUp';
 import BusinessLogin from '@pages/BusinessLogin';
 import BusinessSignUp from '@pages/BusinessSignUp';
+import Search from '@pages/SearchPage';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: '/host-page',
     element: <HostMypage />,
+  },
+  {
+    path: '/search',
+    element: <Search />,
   },
   {
     path: '*',
