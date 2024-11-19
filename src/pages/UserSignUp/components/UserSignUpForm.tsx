@@ -1,17 +1,50 @@
-import { IoMdArrowDropdown } from 'react-icons/io';
+import { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import SelectAges from './SelectAges';
+import PhoneNumberInput from './PhoneNumberInput';
 
 const UserSignUpForm = () => {
+  const navigate = useNavigate();
+
+  const [userFormData, setUserFormData] = useState({
+    gender: '',
+    ages: '10대',
+    nickname: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+    passwordCheck: '',
+  });
+
+  // input 값 반영
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === 'nickname' && e.target.value.length > 8) {
+      e.target.value = e.target.value.substring(0, 8);
+    }
+    setUserFormData({
+      ...userFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <div className='flex justify-center pt-[40px]'>
-      <form className='w-custom'>
+      <form
+        className='w-custom'
+        onSubmit={handleSubmit}
+      >
         <div className='flex items-center'>
           <p className='mr-[34px] text-[14px] font-normal'>성별</p>
           <input
-            id='male'
             type='radio'
             name='gender'
             value='male'
-            className='" mr-[6px]'
+            className='mr-[6px]'
+            onChange={handleChange}
           />
           <label
             htmlFor='male'
@@ -20,11 +53,11 @@ const UserSignUpForm = () => {
             남자
           </label>
           <input
-            id='female'
             type='radio'
             name='gender'
             value='female'
             className='w-[14px mr-[6px] h-[14px]'
+            onChange={handleChange}
           />
           <label
             htmlFor='female'
@@ -33,18 +66,10 @@ const UserSignUpForm = () => {
             여자
           </label>
         </div>
-        <div className='mt-[18px] flex items-center py-[15px]'>
-          <p className='mr-[20px] text-[14px] font-normal'>나이대</p>
-          <div className='flex h-[38px] w-[90px] items-center justify-evenly rounded-[5px] border border-solid border-subfont'>
-            <span className='text-[14px]'>10대</span>
-            <button
-              type='button'
-              className=''
-            >
-              <IoMdArrowDropdown size='20px' />
-            </button>
-          </div>
-        </div>
+        <SelectAges
+          userFormData={userFormData}
+          setUserFormData={setUserFormData}
+        />
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='nickname'
@@ -53,26 +78,17 @@ const UserSignUpForm = () => {
             닉네임
           </label>
           <input
-            id='nickname'
+            name='nickname'
             type='text'
             className='main-input'
-            placeholder='닉네임 입력'
+            placeholder='닉네임 입력 (8자 이내)'
+            onChange={handleChange}
           />
         </div>
-        <div className='mt-[18px] flex flex-col'>
-          <label
-            htmlFor='phoneNumber'
-            className='mb-[6px] text-[14px] font-normal'
-          >
-            전화번호
-          </label>
-          <input
-            id='phoneNumber'
-            type='number'
-            className='main-input'
-            placeholder='전화번호 입력'
-          />
-        </div>
+        <PhoneNumberInput
+          userFormData={userFormData}
+          setUserFormData={setUserFormData}
+        />
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='email'
@@ -81,10 +97,11 @@ const UserSignUpForm = () => {
             이메일
           </label>
           <input
-            id='email'
+            name='email'
             type='text'
             className='main-input'
             placeholder='이메일 입력'
+            onChange={handleChange}
           />
         </div>
         <div className='mt-[18px] flex flex-col'>
@@ -95,10 +112,11 @@ const UserSignUpForm = () => {
             비밀번호
           </label>
           <input
-            id='password'
-            type='text'
+            name='password'
+            type='password'
             className='main-input'
-            placeholder='비밀번호 입력'
+            placeholder='비밀번호 입력 (영문, 숫자 포함 8~15자)'
+            onChange={handleChange}
           />
         </div>
         <div className='mt-[18px] flex flex-col'>
@@ -109,10 +127,11 @@ const UserSignUpForm = () => {
             비밀번호 확인
           </label>
           <input
-            id='checkPassword'
-            type='text'
+            name='passwordCheck'
+            type='password'
             className='main-input'
             placeholder='비밀번호 확인'
+            onChange={handleChange}
           />
         </div>
         <button
@@ -128,6 +147,7 @@ const UserSignUpForm = () => {
           <button
             type='button'
             className='ml-[6px] border-b border-b-black text-[12px] font-bold leading-[14px]'
+            onClick={() => navigate('/login/user')}
           >
             로그인
           </button>
