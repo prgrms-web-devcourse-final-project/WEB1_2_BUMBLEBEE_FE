@@ -1,3 +1,4 @@
+import MainPage from '@pages/MainPage';
 import UserMypage from '@pages/UserMypage';
 import { createBrowserRouter } from 'react-router-dom';
 import StartPage from '@pages/StartPage';
@@ -9,7 +10,7 @@ import BusinessSignUp from '@pages/BusinessSignUp';
 const router = createBrowserRouter([
   {
     path: '/',
-    // element: <MainPage />,
+    element: <MainPage />,
   },
   {
     path: '/start',
