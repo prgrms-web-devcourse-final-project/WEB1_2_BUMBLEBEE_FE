@@ -10,6 +10,9 @@ export default {
         subfont: '#C3C3C3',
         focusColor: '#454545',
       },
+      width: {
+        custom: '330px',
+      },
       fontFamily: {
         pretendard: ['Pretendard Variable'],
       },

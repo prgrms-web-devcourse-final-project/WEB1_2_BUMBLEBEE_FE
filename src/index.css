@@ -5,7 +5,7 @@
 @layer base {
   body {
     font-family: 'Pretendard Variable', sans-serif;
-    font-weight: 400;
+    font-weight: 300;
     @apply m-0 box-border p-0;
   }
 }
@@ -17,5 +17,35 @@
 
   .main-input {
     @apply h-[48px] w-[330px] rounded-[8px] border border-solid border-subfont px-[13px] py-[10px] focus:border-focusColor focus:outline-none;
+  }
+}
+/* input number 화살표 없애기 */
+@layer utilities {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  /* radio 버튼 색상 custom */
+  input[type='radio'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #c4c4c4;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type='radio']:checked {
+    background-color: #50bead;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px #50bead;
   }
 }
