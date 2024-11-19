@@ -1,5 +1,20 @@
+import { useNavigate } from 'react-router-dom';
+
 const BusinessLogin = () => {
-  return <></>;
+  const navigate = useNavigate();
+  const handleSignUpClick = () => {
+    navigate('/signup/business');
+  };
+  return (
+    <>
+      <button
+        type='button'
+        onClick={handleSignUpClick}
+      >
+        회원가입
+      </button>
+    </>
+  );
 };
 
 export default BusinessLogin;
