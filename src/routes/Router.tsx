@@ -1,3 +1,4 @@
+import UserMypage from '@pages/UserMypage';
 import { createBrowserRouter } from 'react-router-dom';
 import StartPage from '@pages/StartPage';
 import UserLogin from '@pages/UserLogin';
@@ -32,7 +33,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/user-page',
-    // element: <MyPage />,
+    element: <UserMypage />,
+  },
+  {
+    path: '/reservation-page',
+    // element:
+  },
+  {
+    path: '/host-page',
+    // element:
   },
   {
     path: '*',
