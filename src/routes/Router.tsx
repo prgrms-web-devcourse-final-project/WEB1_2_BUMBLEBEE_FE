@@ -1,4 +1,5 @@
 import MainPage from '@pages/MainPage';
+import HostMypage from '@pages/HostMypage';
 import UserMypage from '@pages/UserMypage';
 import { createBrowserRouter } from 'react-router-dom';
 import StartPage from '@pages/StartPage';
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/host-page',
-    // element:
+    element: <HostMypage />,
   },
   {
     path: '*',
