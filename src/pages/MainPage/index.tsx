@@ -1,15 +1,15 @@
 import MainLayout from '@layouts/MainLayout';
 import HeaderNoTitle from '@layouts/HeaderNoTitle';
 import BottomNavigation from '@layouts/BottomNavigation';
-import Map from './components/Map';
 import MainList from './components/MainList';
+import KakaoMap from './components/KakaoMap';
 
 const MainPage = () => {
   return (
     <>
       <MainLayout>
         <HeaderNoTitle />
-        <Map />
+        <KakaoMap />
         <MainList />
         <BottomNavigation />
       </MainLayout>

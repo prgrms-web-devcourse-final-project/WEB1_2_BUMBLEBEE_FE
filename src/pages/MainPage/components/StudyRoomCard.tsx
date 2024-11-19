@@ -10,9 +10,9 @@ const StudyRoomCard = () => {
       />
       <div className='flex h-[90px] w-full flex-col content-between justify-between'>
         <div className='flex-col gap-1'>
-          <p className='font-medium'>ABC 스터디룸</p>
+          <p className='font-normal'>ABC 스터디룸</p>
           <div className='flex gap-[10px]'>
-            <span className='text-xs font-medium'>1.5km</span>
+            <span className='text-xs font-normal'>1.5km</span>
             <span className='text-xs'>서울 서초구 서초동</span>
           </div>
         </div>
