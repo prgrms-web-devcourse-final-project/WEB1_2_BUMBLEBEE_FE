@@ -5,7 +5,7 @@ const BusinessSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='businessNumber'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             사업자 등록 번호
           </label>
@@ -19,7 +19,7 @@ const BusinessSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='nickname'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             닉네임
           </label>
@@ -33,7 +33,7 @@ const BusinessSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='email'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             이메일
           </label>
@@ -47,7 +47,7 @@ const BusinessSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='password'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             비밀번호
           </label>
@@ -61,7 +61,7 @@ const BusinessSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='checkPassword'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             비밀번호 확인
           </label>
@@ -74,12 +74,12 @@ const BusinessSignUpForm = () => {
         </div>
         <button
           type='submit'
-          className='btn-primary mt-[30px] text-[16px] font-semibold'
+          className='btn-primary mt-[30px] text-[16px] font-medium'
         >
           가입 완료
         </button>
         <div className='mt-[10px] flex justify-center'>
-          <span className='text-[12px] font-medium text-[#717171]'>
+          <span className='text-[12px] font-normal text-[#717171]'>
             이미 계정이 있으신가요?
           </span>
           <button

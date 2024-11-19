@@ -5,7 +5,7 @@ const UserSignUpForm = () => {
     <div className='flex justify-center pt-[40px]'>
       <form className='w-custom'>
         <div className='flex items-center'>
-          <p className='mr-[34px] text-[14px] font-medium'>성별</p>
+          <p className='mr-[34px] text-[14px] font-normal'>성별</p>
           <input
             id='male'
             type='radio'
@@ -34,7 +34,7 @@ const UserSignUpForm = () => {
           </label>
         </div>
         <div className='mt-[18px] flex items-center py-[15px]'>
-          <p className='mr-[20px] text-[14px] font-medium'>나이대</p>
+          <p className='mr-[20px] text-[14px] font-normal'>나이대</p>
           <div className='flex h-[38px] w-[90px] items-center justify-evenly rounded-[5px] border border-solid border-subfont'>
             <span className='text-[14px]'>10대</span>
             <button
@@ -48,7 +48,7 @@ const UserSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='nickname'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             닉네임
           </label>
@@ -62,7 +62,7 @@ const UserSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='phoneNumber'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             전화번호
           </label>
@@ -76,7 +76,7 @@ const UserSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='email'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             이메일
           </label>
@@ -90,7 +90,7 @@ const UserSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='password'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             비밀번호
           </label>
@@ -104,7 +104,7 @@ const UserSignUpForm = () => {
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='checkPassword'
-            className='mb-[6px] text-[14px] font-medium'
+            className='mb-[6px] text-[14px] font-normal'
           >
             비밀번호 확인
           </label>
@@ -117,12 +117,12 @@ const UserSignUpForm = () => {
         </div>
         <button
           type='submit'
-          className='btn-primary mt-[30px] text-[16px] font-semibold'
+          className='btn-primary mt-[30px] text-[16px] font-medium'
         >
           가입 완료
         </button>
         <div className='mt-[10px] flex justify-center'>
-          <span className='text-[12px] font-medium text-[#717171]'>
+          <span className='text-[12px] font-normal text-[#717171]'>
             이미 계정이 있으신가요?
           </span>
           <button

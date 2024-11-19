@@ -26,7 +26,7 @@ const StartPage = () => {
           <p className='text-[12px]'>
             스터디룸 예약 서비스를 이용하고 싶으신가요?
           </p>
-          <h3 className='text-[18px] font-semibold'>사용자로 이용하기</h3>
+          <h3 className='text-[18px] font-medium'>사용자로 이용하기</h3>
         </button>
         <button
           type='button'
@@ -36,7 +36,7 @@ const StartPage = () => {
           <p className='text-[12px]'>
             스터디룸을 효율적으로 관리하고 싶으신가요?
           </p>
-          <h3 className='text-[18px] font-semibold'>사업자로 이용하기</h3>
+          <h3 className='text-[18px] font-medium'>사업자로 이용하기</h3>
         </button>
       </div>
     </MainLayout>
