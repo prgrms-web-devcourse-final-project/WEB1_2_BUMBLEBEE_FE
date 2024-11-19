@@ -1,5 +1,5 @@
 import Logo from '@assets/images/roomit_logo.png';
-import { PiBellSimpleBold } from 'react-icons/pi';
+import { RiNotification3Line } from 'react-icons/ri';
 
 const HeaderNoTitle = () => {
   return (
@@ -10,7 +10,7 @@ const HeaderNoTitle = () => {
           src={Logo}
           alt='ROOM:IT 로고'
         />
-        <PiBellSimpleBold className='h-[24px] w-[24px]' />
+        <RiNotification3Line className='h-[24px] w-[24px]' />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import Logo from '@assets/images/roomit_logo.png';
-import { AiOutlineBell } from 'react-icons/ai';
+import { RiNotification3Line } from 'react-icons/ri';
 
 export interface TitleProps {
   title: string;
@@ -15,9 +15,9 @@ const HeaderWithTitle = ({ title }: TitleProps) => {
             src={Logo}
             alt='ROOM:IT 로고'
           />
-          <AiOutlineBell className='h-[24px] w-[24px]' />
+          <RiNotification3Line className='h-[24px] w-[24px]' />
         </div>
-        <p className='flex h-[42px] w-[100%] items-center justify-center text-[18px] font-medium'>
+        <p className='flex h-[42px] w-[100%] items-center justify-center text-[18px] font-normal'>
           {title}
         </p>
       </div>

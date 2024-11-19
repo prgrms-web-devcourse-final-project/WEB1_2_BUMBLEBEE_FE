@@ -27,32 +27,32 @@ const LatestReservation = () => {
         />
 
         <div className='flex w-[auto] flex-col gap-[7px]'>
-          <p className='text-[16px] font-semibold'>
+          <p className='text-[16px] font-medium'>
             {latestReservationCard.name}
           </p>
           <ul className='flex flex-col gap-[2px] text-[12px]'>
             <li className='flex gap-[12px]'>
               <p className='w-[46px]'>예약일</p>
-              <span className='font-medium'>{latestReservationCard.date}</span>
+              <span className='font-normal'>{latestReservationCard.date}</span>
             </li>
             <li className='flex gap-[12px]'>
               <p className='w-[46px]'>예약시간</p>
-              <span className='font-medium'>{latestReservationCard.time}</span>
+              <span className='font-normal'>{latestReservationCard.time}</span>
             </li>
             <li className='flex gap-[12px]'>
               <p className='w-[46px]'>예약된 룸</p>
-              <span className='font-medium'>{latestReservationCard.room}</span>
+              <span className='font-normal'>{latestReservationCard.room}</span>
             </li>
             <li className='flex gap-[12px]'>
               <p className='w-[46px]'>인원</p>
-              <span className='font-medium'>
+              <span className='font-normal'>
                 {latestReservationCard.people}인
               </span>
             </li>
           </ul>
         </div>
       </div>
-      <span className='self-end text-[14px] font-medium'>
+      <span className='self-end text-[14px] font-normal'>
         {latestReservationCard.price}원
       </span>
     </div>
