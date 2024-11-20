@@ -22,6 +22,8 @@ const SelectDate = () => {
         onChange={setSelectedDate}
         formatDay={(_, date) => moment(date).format('DD')}
         value={selectedDate}
+        calendarType='gregory'
+        view='month'
         prev2Label={null}
         next2Label={null}
         showFixedNumberOfWeeks
