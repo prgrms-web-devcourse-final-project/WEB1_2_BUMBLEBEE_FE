@@ -4,17 +4,18 @@ import BottomNavigation from '@layouts/BottomNavigation';
 import PlaceSearch from './components/PlaceSearch';
 import SelectDate from './components/SelectDate/SelectDate';
 import SelectTime from './components/SelectTime';
+import SelectPeople from './components/SelectPeople';
 
 const Search = () => {
   return (
     <>
       <MainLayout>
         <HeaderOnlyTitle title='검색' />
-        <div className='flex flex-col gap-8'>
+        <div className='relative flex h-auto flex-col items-center gap-8 pb-[94px]'>
           <PlaceSearch />
           <SelectDate />
           <SelectTime />
-          <SelectTime />
+          <SelectPeople />
         </div>
         <BottomNavigation />
       </MainLayout>
