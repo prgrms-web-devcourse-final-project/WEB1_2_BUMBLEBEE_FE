@@ -22,7 +22,7 @@ const MainList = () => {
   };
 
   return (
-    <div className='relative z-10 -mt-2 mb-[94px] h-auto w-full rounded-t-[10px] bg-white pb-[110px] shadow-custom'>
+    <div className='relative z-10 -mt-2 mb-[94px] h-auto w-[375px] rounded-t-[10px] bg-white pb-[110px] shadow-custom'>
       <nav className='it flex h-[60px] w-full items-center justify-center'>
         {Object.keys(tabList).map((tab) => (
           <button
