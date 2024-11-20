@@ -53,7 +53,10 @@ const LatestReservation = () => {
         </div>
       </div>
       <span className='self-end text-[14px] font-normal'>
-        {latestReservationCard.price}원
+        {latestReservationCard.price
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+        원
       </span>
     </div>
   );

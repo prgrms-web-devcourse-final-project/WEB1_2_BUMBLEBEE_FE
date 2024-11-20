@@ -12,11 +12,15 @@
 
 @layer components {
   .btn-primary {
-    @apply flex h-[48px] w-[330px] cursor-pointer items-center justify-center rounded-[8px] bg-primary px-[84px] py-[15px] text-white;
+    @apply flex h-[48px] w-[330px] cursor-pointer items-center justify-center rounded-[8px] bg-primary px-[84px] py-[15px] font-medium text-white;
   }
 
   .main-input {
     @apply h-[48px] w-[330px] rounded-[8px] border border-solid border-subfont px-[13px] py-[10px] focus:border-focusColor focus:outline-none;
+  }
+
+  .main-textarea {
+    @apply w-custom resize-none rounded-[8px] border border-solid border-subfont p-[14px] focus:border-focusColor focus:outline-none;
   }
 }
 /* input number 화살표 없애기 */
