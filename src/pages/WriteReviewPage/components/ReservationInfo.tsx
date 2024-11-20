@@ -1,10 +1,14 @@
-interface Reservation {
+export interface Reservation {
+  roomId?: number;
   name: string;
   date: string;
   time: string;
+  endtime?: string;
   room: string;
   people: number;
   price: number;
+  img?: string;
+  createdAt?: string;
 }
 
 const ReservationInfoData: Reservation = {

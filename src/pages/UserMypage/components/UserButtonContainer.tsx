@@ -1,4 +1,5 @@
 import { MdArrowForwardIos } from 'react-icons/md';
+import LogoutButton from '@components/LogoutButton';
 import LatestReservation from './LatestReservation';
 import CategoryButton from './CategoryButton';
 
@@ -17,12 +18,7 @@ const UserButtonContainer = () => {
       </div>
       <CategoryButton category='리뷰 관리' />
       <CategoryButton category='회원 정보' />
-      <button
-        type='button'
-        className='h-[23px] self-start text-[12px] text-subfont underline active:text-black'
-      >
-        로그아웃
-      </button>
+      <LogoutButton />
     </div>
   );
 };
