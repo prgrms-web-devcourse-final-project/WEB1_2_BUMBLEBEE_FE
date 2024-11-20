@@ -22,7 +22,7 @@ const SelectTime = () => {
       >
         시간 선택
       </label>
-      <div className='flex w-[330px] flex-wrap justify-between gap-y-[10px]'>
+      <div className='flex w-[330px] flex-wrap gap-x-[5px] gap-y-[10px]'>
         {timeList.map((timeItem) => (
           <button
             key={timeItem}
