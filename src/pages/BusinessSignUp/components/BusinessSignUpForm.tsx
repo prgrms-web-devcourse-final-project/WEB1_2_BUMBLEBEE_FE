@@ -191,7 +191,7 @@ const BusinessSignUpForm = () => {
         )}
         <button
           type='submit'
-          className='btn-primary mt-[30px] text-[16px] font-medium'
+          className='btn-primary mt-[30px] text-[16px]'
         >
           가입 완료
         </button>
@@ -201,7 +201,7 @@ const BusinessSignUpForm = () => {
           </span>
           <button
             type='button'
-            className='ml-[6px] border-b border-b-black text-[12px] font-bold leading-[14px]'
+            className='ml-[6px] border-b border-b-black text-[12px] font-semibold leading-[14px]'
             onClick={() => navigate('/login/business')}
           >
             로그인
