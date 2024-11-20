@@ -47,16 +47,8 @@ const UserSignUpForm = () => {
 
   // 비밀번호 형식 확인
   const isValidPassword = (pwd: string) => {
-    const pwdRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,15}$/;
+    const pwdRegex = /^[a-zA-Z0-9]{8,15}$/;
     return pwdRegex.test(pwd);
-  };
-
-  // 비밀번호 일치 확인
-  const checkPassword = (checkPwd: string) => {
-    if (userFormData.password === checkPwd) {
-      return true;
-    }
-    return false;
   };
 
   const [errorMessage, setErrorMessage] = useState({
@@ -102,7 +94,7 @@ const UserSignUpForm = () => {
       newErrorMessage.passwordError =
         '비밀번호는 영문, 숫자를 포함하여 8자~15자 이내로 입력해주세요.';
     }
-    if (!checkPassword(userFormData.passwordCheck)) {
+    if (userFormData.password !== userFormData.passwordCheck) {
       newErrorMessage.checkPasswordError = '비밀번호가 일치하지 않습니다.';
     }
 
