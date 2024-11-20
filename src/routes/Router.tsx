@@ -8,6 +8,7 @@ import UserSignUp from '@pages/UserSignUp';
 import BusinessLogin from '@pages/BusinessLogin';
 import BusinessSignUp from '@pages/BusinessSignUp';
 import Search from '@pages/SearchPage';
+import WriteReviewPage from '@pages/WriteReviewPage';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: '/reservation-page',
     // element:
+  },
+  {
+    path: '/write-review',
+    element: <WriteReviewPage />,
   },
   {
     path: '/host-page',
