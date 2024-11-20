@@ -1,19 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
+import MainLayout from '@layouts/MainLayout';
+import BusinessLoginForm from './components/BusinessLoginForm';
 
 const BusinessLogin = () => {
-  const navigate = useNavigate();
-  const handleSignUpClick = () => {
-    navigate('/signup/business');
-  };
   return (
-    <>
-      <button
-        type='button'
-        onClick={handleSignUpClick}
-      >
-        회원가입
-      </button>
-    </>
+    <MainLayout>
+      <HeaderOnlyTitle title='사업자 로그인' />
+      <BusinessLoginForm />
+    </MainLayout>
   );
 };
 
