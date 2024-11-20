@@ -8,7 +8,7 @@ const UserSignUpForm = () => {
 
   const [userFormData, setUserFormData] = useState({
     gender: '',
-    ages: '10대',
+    ages: '선택',
     nickname: '',
     phoneNumber: '',
     email: '',
@@ -27,8 +27,91 @@ const UserSignUpForm = () => {
     });
   };
 
+  // 닉네임 형식 확인 - 공백확인
+  const isValidNickname = (nickname: string) => {
+    const nicknameRegex = /^(?!.*\s)[\S]{1,8}$/;
+    return nicknameRegex.test(nickname);
+  };
+
+  // 전화번호 형식 확인
+  const isValidNumber = (number: string) => {
+    const numberRegex = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/;
+    return numberRegex.test(number);
+  };
+
+  // 이메일 형식 확인
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    return emailRegex.test(email);
+  };
+
+  // 비밀번호 형식 확인
+  const isValidPassword = (pwd: string) => {
+    const pwdRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,15}$/;
+    return pwdRegex.test(pwd);
+  };
+
+  // 비밀번호 일치 확인
+  const checkPassword = (checkPwd: string) => {
+    if (userFormData.password === checkPwd) {
+      return true;
+    }
+    return false;
+  };
+
+  const [errorMessage, setErrorMessage] = useState({
+    genderError: '',
+    agesError: '',
+    nicknameError: '',
+    phonNumberError: '',
+    emailError: '',
+    passwordError: '',
+    checkPasswordError: '',
+  });
+
+  const isValid = () => {
+    const newErrorMessage = {
+      genderError: '',
+      agesError: '',
+      nicknameError: '',
+      phonNumberError: '',
+      emailError: '',
+      passwordError: '',
+      checkPasswordError: '',
+    };
+
+    if (userFormData.gender === '') {
+      newErrorMessage.genderError = '성별을 선택해주세요.';
+    }
+
+    if (userFormData.ages === '선택') {
+      newErrorMessage.agesError = '나이대를 선택해주세요.';
+    }
+
+    if (!isValidNickname(userFormData.nickname)) {
+      newErrorMessage.nicknameError =
+        '닉네임은 공백없이 8자 이내로 입력해주세요.';
+    }
+    if (!isValidNumber(userFormData.phoneNumber)) {
+      newErrorMessage.phonNumberError = '전화번호 형식을 확인해주세요.';
+    }
+    if (!isValidEmail(userFormData.email)) {
+      newErrorMessage.emailError = '이메일 형식을 확인해주세요.';
+    }
+    if (!isValidPassword(userFormData.password)) {
+      newErrorMessage.passwordError =
+        '비밀번호는 영문, 숫자를 포함하여 8자~15자 이내로 입력해주세요.';
+    }
+    if (!checkPassword(userFormData.passwordCheck)) {
+      newErrorMessage.checkPasswordError = '비밀번호가 일치하지 않습니다.';
+    }
+
+    setErrorMessage(newErrorMessage);
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    isValid();
   };
 
   return (
@@ -66,10 +149,20 @@ const UserSignUpForm = () => {
             여자
           </label>
         </div>
+        {errorMessage.genderError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.genderError}
+          </div>
+        )}
         <SelectAges
           userFormData={userFormData}
           setUserFormData={setUserFormData}
         />
+        {errorMessage.agesError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.agesError}
+          </div>
+        )}
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='nickname'
@@ -85,10 +178,20 @@ const UserSignUpForm = () => {
             onChange={handleChange}
           />
         </div>
+        {errorMessage.nicknameError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.nicknameError}
+          </div>
+        )}
         <PhoneNumberInput
           userFormData={userFormData}
           setUserFormData={setUserFormData}
         />
+        {errorMessage.phonNumberError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.phonNumberError}
+          </div>
+        )}
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='email'
@@ -104,6 +207,11 @@ const UserSignUpForm = () => {
             onChange={handleChange}
           />
         </div>
+        {errorMessage.emailError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.emailError}
+          </div>
+        )}
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='password'
@@ -119,6 +227,11 @@ const UserSignUpForm = () => {
             onChange={handleChange}
           />
         </div>
+        {errorMessage.passwordError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.passwordError}
+          </div>
+        )}
         <div className='mt-[18px] flex flex-col'>
           <label
             htmlFor='checkPassword'
@@ -134,6 +247,11 @@ const UserSignUpForm = () => {
             onChange={handleChange}
           />
         </div>
+        {errorMessage.checkPasswordError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.checkPasswordError}
+          </div>
+        )}
         <button
           type='submit'
           className='btn-primary mt-[30px] text-[16px] font-medium'
