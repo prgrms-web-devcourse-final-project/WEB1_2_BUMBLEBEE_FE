@@ -1,27 +1,92 @@
+import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const BusinessLoginForm = () => {
   const navigate = useNavigate();
 
+  const [hostLoginForm, setHostLoginForm] = useState({
+    email: '',
+    password: '',
+  });
+
+  // input 값 반영
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHostLoginForm({ ...hostLoginForm, [e.target.name]: e.target.value });
+  };
+
+  // 이메일 형식 확인
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    return emailRegex.test(email);
+  };
+
+  // 비밀번호 형식 확인
+  const isValidPassword = (pwd: string) => {
+    const pwdRegex = /^[a-zA-Z0-9]{8,15}$/;
+    return pwdRegex.test(pwd);
+  };
+
+  const [errorMessage, setErrorMessage] = useState({
+    emailError: '',
+    passwordError: '',
+  });
+
+  const isValid = () => {
+    const newError = {
+      emailError: '',
+      passwordError: '',
+    };
+
+    if (!isValidEmail(hostLoginForm.email)) {
+      newError.emailError = '이메일 형식을 확인해주세요.';
+    }
+    if (!isValidPassword(hostLoginForm.password)) {
+      newError.passwordError =
+        '비밀번호는 영문, 숫자를 포함하여 8자~15자 이내로 입력해주세요.';
+    }
+
+    setErrorMessage(newError);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    isValid();
+  };
+
   return (
     <div className='flex justify-center pt-[40px]'>
-      <form className='w-custom'>
+      <form
+        className='w-custom'
+        onSubmit={handleSubmit}
+      >
         <div className='mt-[18px] flex flex-col'>
           <input
             name='email'
             type='text'
             className='main-input'
             placeholder='이메일 입력'
+            onChange={handleChange}
           />
         </div>
+        {errorMessage.emailError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.emailError}
+          </div>
+        )}
         <div className='mt-[13px] flex flex-col'>
           <input
             name='password'
             type='password'
             className='main-input'
             placeholder='비밀번호 입력 (영문, 숫자 포함 8~15자)'
+            onChange={handleChange}
           />
         </div>
+        {errorMessage.passwordError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.passwordError}
+          </div>
+        )}
         <button
           type='submit'
           className='btn-primary mt-[30px] text-[16px]'
