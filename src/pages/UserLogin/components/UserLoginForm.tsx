@@ -23,7 +23,7 @@ const UserLoginForm = () => {
         </div>
         <button
           type='submit'
-          className='btn-primary mt-[30px] text-[16px] font-medium'
+          className='btn-primary mt-[30px] text-[16px]'
         >
           로그인
         </button>
@@ -33,7 +33,7 @@ const UserLoginForm = () => {
           </span>
           <button
             type='button'
-            className='ml-[6px] border-b border-b-black text-[12px] font-bold leading-[14px]'
+            className='ml-[6px] border-b border-b-black text-[12px] font-semibold leading-[14px]'
             onClick={() => navigate('/signup/user')}
           >
             회원가입
