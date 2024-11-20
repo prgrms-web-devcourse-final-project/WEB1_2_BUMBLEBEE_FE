@@ -16,6 +16,12 @@ const Search = () => {
           <SelectDate />
           <SelectTime />
           <SelectPeople />
+          <button
+            type='button'
+            className='btn-primary mb-4'
+          >
+            검색하기
+          </button>
         </div>
         <BottomNavigation />
       </MainLayout>

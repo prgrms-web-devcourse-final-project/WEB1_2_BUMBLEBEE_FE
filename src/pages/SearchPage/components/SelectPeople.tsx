@@ -13,7 +13,7 @@ const SelectPeople = () => {
   };
 
   return (
-    <div className='mb-4 flex w-custom items-center justify-between gap-[4px]'>
+    <div className='flex w-custom items-center justify-between gap-[4px]'>
       <label
         htmlFor='place'
         className='flex h-[32px] w-auto items-center px-[6px] font-normal'
