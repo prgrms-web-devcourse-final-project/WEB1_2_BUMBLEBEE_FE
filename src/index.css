@@ -23,18 +23,8 @@
     @apply w-custom resize-none rounded-[8px] border border-solid border-subfont p-[14px] focus:border-focusColor focus:outline-none;
   }
 }
-/* input number 화살표 없애기 */
+
 @layer utilities {
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  input[type='number'] {
-    -moz-appearance: textfield;
-  }
-
   /* radio 버튼 색상 custom */
   input[type='radio'] {
     -webkit-appearance: none;
