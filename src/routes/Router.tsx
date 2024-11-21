@@ -11,6 +11,7 @@ import Search from '@pages/SearchPage';
 import WriteReviewPage from '@pages/WriteReviewPage';
 import ReservationListPage from '@pages/ReservationListPage';
 import ReviewListPage from '@pages/ReviewListPage';
+import SearchResult from '@pages/SearchResult';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
   {
     path: '/search',
     element: <Search />,
+  },
+  {
+    path: '/search-result',
+    element: <SearchResult />,
   },
   {
     path: '*',
