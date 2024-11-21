@@ -10,6 +10,7 @@ import BusinessSignUp from '@pages/BusinessSignUp';
 import Search from '@pages/SearchPage';
 import WriteReviewPage from '@pages/WriteReviewPage';
 import ReservationListPage from '@pages/ReservationListPage';
+import ReviewListPage from '@pages/ReviewListPage';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: '/write-review',
     element: <WriteReviewPage />,
+  },
+  {
+    path: '/review-list',
+    element: <ReviewListPage />,
   },
   {
     path: '/host-page',
