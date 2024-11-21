@@ -22,6 +22,10 @@
   .main-textarea {
     @apply w-custom resize-none rounded-[8px] border border-solid border-subfont p-[14px] focus:border-focusColor focus:outline-none;
   }
+
+  .card-button {
+    @apply h-[34px] w-[76px] border-[0.5px] border-solid border-subfont text-[12px] active:bg-subfont active:bg-opacity-50;
+  }
 }
 
 @layer utilities {
