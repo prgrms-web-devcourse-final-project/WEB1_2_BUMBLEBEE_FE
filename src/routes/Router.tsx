@@ -9,6 +9,7 @@ import BusinessLogin from '@pages/BusinessLogin';
 import BusinessSignUp from '@pages/BusinessSignUp';
 import Search from '@pages/SearchPage';
 import WriteReviewPage from '@pages/WriteReviewPage';
+import ReservationListPage from '@pages/ReservationListPage';
 
 const router = createBrowserRouter([
   {
@@ -40,8 +41,8 @@ const router = createBrowserRouter([
     element: <UserMypage />,
   },
   {
-    path: '/reservation-page',
-    // element:
+    path: '/reservation-list',
+    element: <ReservationListPage />,
   },
   {
     path: '/write-review',
