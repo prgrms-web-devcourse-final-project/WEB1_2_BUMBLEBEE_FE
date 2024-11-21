@@ -1,4 +1,5 @@
-import PlaceCard from './PlaceCard';
+import { IoAdd } from 'react-icons/io5';
+import ManagementPlaceCard from './ManagementPlaceCard';
 
 export interface WorkPlace {
   workPlaceId: number;
@@ -33,31 +34,32 @@ const workPlaceList: WorkPlace[] = [
   },
 ];
 
-const PlaceList = () => {
+const ManagementPlaceList = () => {
   const sortedWorkPlaceList = [...workPlaceList].sort((b, a) => {
     return +new Date(a.createdAt) - +new Date(b.createdAt);
   });
 
   return (
-    <>
-      {workPlaceList.length > 0 ? (
-        <div className='mt-[6px] flex w-[375px] flex-col justify-center'>
-          {sortedWorkPlaceList.map((item) => {
-            return (
-              <PlaceCard
-                key={item.workPlaceId}
-                item={item}
-              />
-            );
-          })}
-        </div>
-      ) : (
-        <div className='mt-[47px] w-[375px] text-center text-[14px] font-normal text-subfont'>
-          작성한 리뷰가 없습니다.
-        </div>
-      )}
-    </>
+    <div className='mt-[6px] flex w-[375px] flex-col justify-center'>
+      {workPlaceList.length > 0 &&
+        sortedWorkPlaceList.map((item) => {
+          return (
+            <ManagementPlaceCard
+              key={item.workPlaceId}
+              item={item}
+            />
+          );
+        })}
+
+      <button
+        type='button'
+        className='mx-auto mt-6 flex h-32 w-custom flex-col items-center justify-center rounded-[8px] border border-dashed p-2 active:text-focusColor'
+      >
+        <IoAdd className='text-6xl text-subfont' />
+        <p className='text-sm text-subfont'>새로운 사업장 등록하기</p>
+      </button>
+    </div>
   );
 };
 
-export default PlaceList;
+export default ManagementPlaceList;

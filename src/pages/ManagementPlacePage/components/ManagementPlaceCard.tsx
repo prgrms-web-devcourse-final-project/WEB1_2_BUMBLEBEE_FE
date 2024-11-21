@@ -1,9 +1,9 @@
 import { MdArrowForwardIos } from 'react-icons/md';
 import { getDateFunction } from '@utils/formatTime';
 import ButtonInCard from '@components/ButtonInCard';
-import { WorkPlace } from './PlaceList';
+import { WorkPlace } from './ManagementPlaceList';
 
-const PlaceCard = ({ item }: { item: WorkPlace }) => {
+const ManagementPlaceCard = ({ item }: { item: WorkPlace }) => {
   const {
     workplaceName,
     workplaceAddress,
@@ -56,4 +56,4 @@ const PlaceCard = ({ item }: { item: WorkPlace }) => {
   );
 };
 
-export default PlaceCard;
+export default ManagementPlaceCard;
