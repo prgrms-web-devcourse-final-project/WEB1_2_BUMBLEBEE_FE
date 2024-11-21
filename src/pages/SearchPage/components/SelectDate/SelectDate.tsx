@@ -16,8 +16,9 @@ const SelectDate = (props: SelectDateProps) => {
   const { searchValue, onSetSearchValue } = props;
 
   const handleChangeDate = (newDate: SelectedDate) => {
-    const newDateString = newDate?.toString() || '';
-    onSetSearchValue({ ...searchValue, date: newDateString });
+    if (newDate instanceof Date) {
+      onSetSearchValue({ ...searchValue, date: new Date(newDate) });
+    }
   };
   return (
     <div className='flex flex-col gap-[4px]'>

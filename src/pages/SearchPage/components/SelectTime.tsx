@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { SearchType } from '..';
 
 interface SelectTimeProps {
@@ -10,7 +11,7 @@ const SelectTime = (props: SelectTimeProps) => {
 
   const times = { startTime: '09:00', endTime: '23:00' };
 
-  const selectedTimeList = searchValue.time;
+  const [selectedTimeList, setSelectedTimeList] = useState<string[]>([]);
 
   const startHour: number = Number(times.startTime.split(':')[0]);
   const endHour: number = Number(times.endTime.split(':')[0]);
@@ -20,30 +21,36 @@ const SelectTime = (props: SelectTimeProps) => {
     return `${String(hour).padStart(2, '0')}:00`;
   });
 
+  const addTimeArray = (newArray: string[]) => {
+    const lastTime = newArray[newArray.length - 1];
+    const [hour] = lastTime.split(':');
+    onSetSearchValue({
+      ...searchValue,
+      time: [newArray[0], `${hour}:59`],
+    });
+  };
+
   const handleSelectTime = (time: string) => {
     const indexOfTime = timeList.indexOf(time);
     if (selectedTimeList.length === 0) {
       const slicedSelected = [...timeList].splice(indexOfTime, 2); // 기본 2시간
-      onSetSearchValue({ ...searchValue, time: slicedSelected });
+      setSelectedTimeList(slicedSelected);
+      addTimeArray(slicedSelected);
     } else {
       const indexOfSelected = selectedTimeList.indexOf(time);
       if (indexOfSelected === 0 && selectedTimeList.length > 2) {
         // 선택되어있는 것들 중에서 첫번째 시간을 선택했을 경우 (2시간 미만이 아니라면)
-        const slicedSelected = searchValue.time.filter((item) => item !== time);
-        onSetSearchValue({
-          ...searchValue,
-          time: slicedSelected,
-        });
+        const slicedSelected = selectedTimeList.filter((item) => item !== time);
+        setSelectedTimeList(slicedSelected);
+        addTimeArray(slicedSelected);
       } else if (indexOfSelected !== -1 && indexOfSelected !== 1) {
         // 선택되어있는 것들 중에서 하나를 선택했을 경우
         // 2번째 시간은 선택되지 않아야 함 (2시간 미만)
         // 선택된 시간이 2시간일 때, 첫번째 시간을 선택했을 경우
         const slicedSelected = [...selectedTimeList];
         slicedSelected.splice(indexOfSelected);
-        onSetSearchValue({
-          ...searchValue,
-          time: slicedSelected,
-        });
+        setSelectedTimeList(slicedSelected);
+        addTimeArray(slicedSelected);
       } else if (
         indexOfTime >
         timeList.indexOf(selectedTimeList[selectedTimeList.length - 1])
@@ -53,20 +60,16 @@ const SelectTime = (props: SelectTimeProps) => {
           timeList.indexOf(selectedTimeList[0]),
           indexOfTime + 1,
         );
-        onSetSearchValue({
-          ...searchValue,
-          time: addAfterSelected,
-        });
+        setSelectedTimeList(addAfterSelected);
+        addTimeArray(addAfterSelected);
       } else if (indexOfTime < timeList.indexOf(selectedTimeList[0])) {
         // 선택되어있는 시간 이전 시간을 선택했을 경우
         const addBeforeSelected = [...timeList].slice(
           indexOfTime,
           timeList.indexOf(selectedTimeList[selectedTimeList.length - 1]) + 1,
         );
-        onSetSearchValue({
-          ...searchValue,
-          time: addBeforeSelected,
-        });
+        setSelectedTimeList(addBeforeSelected);
+        addTimeArray(addBeforeSelected);
       }
     }
   };

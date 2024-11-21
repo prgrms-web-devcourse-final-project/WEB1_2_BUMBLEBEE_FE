@@ -9,7 +9,7 @@ import SelectPeople from './components/SelectPeople';
 
 export interface SearchType {
   place: string;
-  date: string;
+  date: Date | null;
   time: string[];
   people: number;
 }
@@ -17,7 +17,7 @@ export interface SearchType {
 const Search = () => {
   const [searchValue, setSearchValue] = useState<SearchType>({
     place: '',
-    date: '',
+    date: new Date(),
     time: [],
     people: 0,
   });
