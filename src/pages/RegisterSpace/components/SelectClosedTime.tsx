@@ -7,6 +7,7 @@ export interface SpaceForm {
   openTime: string;
   closedTime: string;
   phoneNumber: string;
+  address: string;
 }
 
 interface SelectClosedTimeProps {
@@ -20,6 +21,7 @@ const SelectClosedTime = ({
   const [showList, setShowList] = useState(false);
 
   const timeList = [
+    '09:00',
     '10:00',
     '11:00',
     '12:00',
