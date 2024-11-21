@@ -9,6 +9,7 @@ import BusinessLogin from '@pages/BusinessLogin';
 import BusinessSignUp from '@pages/BusinessSignUp';
 import WriteReviewPage from '@pages/WriteReviewPage';
 import ReservationListPage from '@pages/ReservationListPage';
+import ReviewListPage from '@pages/ReviewListPage';
 import RegisterSpace from '@pages/RegisterSpace';
 
 const router = createBrowserRouter([
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: '/write-review',
     element: <WriteReviewPage />,
+  },
+  {
+    path: '/review-list',
+    element: <ReviewListPage />,
   },
   {
     path: '/host-page',
