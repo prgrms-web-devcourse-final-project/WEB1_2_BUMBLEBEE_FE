@@ -14,7 +14,7 @@ export const getDateFunction = (timeString: string) => {
 export const getTimeFunction = (timeString: string) => {
   const hour = new Date(timeString).getHours().toString().padStart(2, '0');
   const minutes = new Date(timeString).getMinutes().toString().padStart(2, '0');
-  const reservationTime = `${hour}:${minutes}`;
+  const formattedTimeString = `${hour}:${minutes}`;
 
-  return reservationTime;
+  return formattedTimeString;
 };
