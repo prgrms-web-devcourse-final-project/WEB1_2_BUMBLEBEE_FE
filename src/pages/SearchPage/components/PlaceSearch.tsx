@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import PlaceList from './PlaceList';
+import PlaceList, { Place } from './PlaceList';
 
 const PlaceSearch = () => {
   const [searchPlace, setSearchPlace] = useState('');
   const [showList, setShowList] = useState(false);
-  const [searchList, setSearchList] = useState([]);
+  const [searchList, setSearchList] = useState<Place[]>([]);
 
   const handleSearchPlace = () => {
     setShowList(true);
@@ -21,6 +21,12 @@ const PlaceSearch = () => {
         console.log('검색 결과 중 오류가 발생했습니다.');
       }
     });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearchPlace();
+    }
   };
 
   return (
@@ -39,6 +45,7 @@ const PlaceSearch = () => {
             placeholder='장소 검색'
             value={searchPlace}
             onChange={(e) => setSearchPlace(e.target.value)}
+            onKeyDown={handleKeyDown}
             className='main-input text-sm'
           />
           <AiOutlineSearch
