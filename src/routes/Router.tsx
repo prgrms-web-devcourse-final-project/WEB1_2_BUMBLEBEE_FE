@@ -9,6 +9,7 @@ import BusinessLogin from '@pages/BusinessLogin';
 import BusinessSignUp from '@pages/BusinessSignUp';
 import WriteReviewPage from '@pages/WriteReviewPage';
 import ReservationListPage from '@pages/ReservationListPage';
+import RegisterSpace from '@pages/RegisterSpace';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: '/signup/business',
     element: <BusinessSignUp />,
+  },
+  {
+    path: '/register-Space',
+    element: <RegisterSpace />,
   },
   {
     path: '/user-page',
