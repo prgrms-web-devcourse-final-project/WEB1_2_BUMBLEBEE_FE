@@ -2,6 +2,7 @@ import { getDateFunction, getTimeFunction } from '@utils/formatTime';
 import ButtonInCard from '@components/ButtonInCard';
 import { Reservation } from '@pages/WriteReviewPage/components/ReservationInfo';
 import { useNavigate } from 'react-router-dom';
+import ListStyle from '@components/ListStyle';
 
 const ReservationDetailCard = ({ item }: { item: Reservation }) => {
   const { name, date, time, endtime, room, people, price, img, createdAt } =
@@ -48,30 +49,26 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
         <div className='flex w-[auto] flex-col gap-[7px]'>
           <p className='text-[16px] font-medium'>{name}</p>
           <ul className='flex flex-col gap-[2px] text-[12px]'>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약일</p>
-              <span className='font-normal'>{date}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약시간</p>
-              <span className='font-normal'>
-                {getTimeFunction(time)} ~ {getTimeFunction(endtime as string)}
-              </span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약된 룸</p>
-              <span className='font-normal'>{room}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>인원</p>
-              <span className='font-normal'>{people}인</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>결제일</p>
-              <span className='font-normal'>
-                {getDateFunction(createdAt as string)}
-              </span>
-            </li>
+            <ListStyle
+              name='예약일'
+              value={date}
+            />
+            <ListStyle
+              name='예약시간'
+              value={`${getTimeFunction(time)} ~ ${getTimeFunction(endtime as string)}`}
+            />
+            <ListStyle
+              name='예약된 룸'
+              value={room}
+            />
+            <ListStyle
+              name='인원'
+              value={`${people}인`}
+            />
+            <ListStyle
+              name='결제일'
+              value={getDateFunction(createdAt as string)}
+            />
           </ul>
         </div>
       </div>

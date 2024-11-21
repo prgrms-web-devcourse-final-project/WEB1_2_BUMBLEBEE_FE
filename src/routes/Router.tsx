@@ -12,6 +12,9 @@ import WriteReviewPage from '@pages/WriteReviewPage';
 import ReservationListPage from '@pages/ReservationListPage';
 import ReviewListPage from '@pages/ReviewListPage';
 import SearchResult from '@pages/SearchResult';
+import ManagementPlacePage from '@pages/ManagementPlacePage';
+import ManagementReserverPage from '@pages/ManagementReserverPage';
+import RegisterSpace from '@pages/RegisterSpace';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +42,10 @@ const router = createBrowserRouter([
     element: <BusinessSignUp />,
   },
   {
+    path: '/register-Space',
+    element: <RegisterSpace />,
+  },
+  {
     path: '/user-page',
     element: <UserMypage />,
   },
@@ -57,6 +64,14 @@ const router = createBrowserRouter([
   {
     path: '/host-page',
     element: <HostMypage />,
+  },
+  {
+    path: '/management-place-list',
+    element: <ManagementPlacePage />,
+  },
+  {
+    path: '/management-reserver-list',
+    element: <ManagementReserverPage />,
   },
   {
     path: '/search',
