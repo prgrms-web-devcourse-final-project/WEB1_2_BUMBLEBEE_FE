@@ -1,3 +1,5 @@
+import ListStyle from '@components/ListStyle';
+
 interface Reservation {
   name: string;
   date: string;
@@ -31,24 +33,22 @@ const LatestReservation = () => {
             {latestReservationCard.name}
           </p>
           <ul className='flex flex-col gap-[2px] text-[12px]'>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약일</p>
-              <span className='font-normal'>{latestReservationCard.date}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약시간</p>
-              <span className='font-normal'>{latestReservationCard.time}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약된 룸</p>
-              <span className='font-normal'>{latestReservationCard.room}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>인원</p>
-              <span className='font-normal'>
-                {latestReservationCard.people}인
-              </span>
-            </li>
+            <ListStyle
+              name='예약일'
+              value={latestReservationCard.date}
+            />
+            <ListStyle
+              name='예약시간'
+              value={latestReservationCard.time}
+            />
+            <ListStyle
+              name='예약된 룸'
+              value={latestReservationCard.room}
+            />
+            <ListStyle
+              name='인원'
+              value={`${latestReservationCard.people}인`}
+            />
           </ul>
         </div>
       </div>

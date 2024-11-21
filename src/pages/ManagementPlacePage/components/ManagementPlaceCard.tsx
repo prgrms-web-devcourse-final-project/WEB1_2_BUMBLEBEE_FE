@@ -1,6 +1,7 @@
 import { MdArrowForwardIos } from 'react-icons/md';
 import { getDateFunction } from '@utils/formatTime';
 import ButtonInCard from '@components/ButtonInCard';
+import ListStyle from '@components/ListStyle';
 import { WorkPlace } from './ManagementPlaceList';
 
 const ManagementPlaceCard = ({ item }: { item: WorkPlace }) => {
@@ -23,22 +24,22 @@ const ManagementPlaceCard = ({ item }: { item: WorkPlace }) => {
           </div>
 
           <ul className='flex flex-col gap-1 text-[12px]'>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>주소</p>
-              <span className='font-normal'>{workplaceAddress}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>전화번호</p>
-              <span className='font-normal'>{workPlacePhoneNumber}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>룸 수</p>
-              <span className='font-normal'>{numberOfRooms}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>등록일</p>
-              <span className='font-normal'>{getDateFunction(createdAt)}</span>
-            </li>
+            <ListStyle
+              name='주소'
+              value={workplaceAddress}
+            />
+            <ListStyle
+              name='전화번호'
+              value={workPlacePhoneNumber}
+            />
+            <ListStyle
+              name='룸 수'
+              value={numberOfRooms}
+            />
+            <ListStyle
+              name='등록일'
+              value={getDateFunction(createdAt)}
+            />
           </ul>
         </div>
         <img
