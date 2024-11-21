@@ -75,7 +75,7 @@ const KakaoMap = () => {
         <div className='absolute right-0 top-0 z-10 m-4'>
           <button
             type='button'
-            className='shadow-custom flex h-[45px] w-[45px] cursor-pointer items-center justify-center rounded-full bg-white'
+            className='flex h-[45px] w-[45px] cursor-pointer items-center justify-center rounded-full bg-white shadow-custom'
             onClick={() => setCenter(position.center)}
           >
             <MdMyLocation />

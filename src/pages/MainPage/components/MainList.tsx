@@ -22,7 +22,7 @@ const MainList = () => {
   };
 
   return (
-    <div className='shadow-custom relative z-10 -mt-2 mb-[94px] h-auto w-full rounded-t-[10px] bg-white pb-[110px]'>
+    <div className='relative z-10 -mt-2 mb-[94px] h-auto w-[375px] rounded-t-[10px] bg-white pb-[110px] shadow-custom'>
       <nav className='it flex h-[60px] w-full items-center justify-center'>
         {Object.keys(tabList).map((tab) => (
           <button
@@ -35,11 +35,11 @@ const MainList = () => {
           </button>
         ))}
       </nav>
-      <div className='w-custom mx-auto my-4 h-[45px]'>
+      <div className='mx-auto my-4 h-[45px] w-custom'>
         <p className='text-base font-medium'>{tabList[activeTab].title}</p>
         <p className='text-sm'>{tabList[activeTab].context}</p>
       </div>
-      <div className='w-custom mx-auto flex flex-col gap-4'>
+      <div className='mx-auto flex w-custom flex-col gap-4'>
         <StudyRoomCard />
         <StudyRoomCard />
         <StudyRoomCard />

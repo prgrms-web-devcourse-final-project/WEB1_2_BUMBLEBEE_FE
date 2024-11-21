@@ -23,7 +23,6 @@
     "types": ["kakao.maps.d.ts"],
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
       "@apis/*": ["src/apis/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
@@ -34,7 +33,8 @@
       "@store/*": ["src/store/*"],
       "@styles/*": ["src/styles/*"],
       "@types/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@/*": ["src/*"]
     }
   },
 

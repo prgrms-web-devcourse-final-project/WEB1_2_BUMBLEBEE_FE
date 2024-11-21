@@ -2,7 +2,7 @@ import { FaStar } from 'react-icons/fa6';
 
 const StudyRoomCard = () => {
   return (
-    <div className='w-custom shadow-custom hover: flex h-[116px] cursor-pointer gap-[18px] rounded-[10px] border-primary bg-white p-3 hover:border-[1px]'>
+    <div className='hover: flex h-[116px] w-custom cursor-pointer gap-[18px] rounded-[10px] border-primary bg-white p-3 shadow-custom hover:border-[1px]'>
       <img
         src='src/assets/images/roomit_logo.png'
         alt='스터디룸 사진'
