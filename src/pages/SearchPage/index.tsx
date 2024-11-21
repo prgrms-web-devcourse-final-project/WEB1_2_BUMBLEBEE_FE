@@ -11,7 +11,7 @@ const Search = () => {
     <>
       <MainLayout>
         <HeaderOnlyTitle title='검색' />
-        <div className='relative flex h-auto flex-col items-center gap-8 pb-[94px]'>
+        <div className='relative flex h-auto flex-col items-center gap-8 pb-[100px]'>
           <PlaceSearch />
           <SelectDate />
           <SelectTime />
