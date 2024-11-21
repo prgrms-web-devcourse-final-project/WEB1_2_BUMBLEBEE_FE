@@ -1,6 +1,6 @@
 import { MdArrowForwardIos } from 'react-icons/md';
 import { FaStar, FaRegStar } from 'react-icons/fa6';
-import getDateFunction from '@utils/formatTime';
+import { getDateFunction } from '@utils/formatTime';
 import { Review } from './MyReviewList';
 
 const MyReviewCard = ({ item }: { item: Review }) => {

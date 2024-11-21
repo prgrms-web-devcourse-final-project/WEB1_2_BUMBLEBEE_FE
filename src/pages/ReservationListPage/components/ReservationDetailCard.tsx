@@ -1,3 +1,4 @@
+import { getDateFunction, getTimeFunction } from '@utils/formatTime';
 import ButtonInCard from '@components/ButtonInCard';
 import { Reservation } from '@pages/WriteReviewPage/components/ReservationInfo';
 import { useNavigate } from 'react-router-dom';
@@ -9,30 +10,6 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
 
   const now = new Date();
   const gap = +new Date(time) - +now;
-
-  // LocalDatetime에서 시간(HH:mm) 추출
-  const getTimeFunction = (timeString: string) => {
-    const hour = new Date(timeString).getHours().toString().padStart(2, '0');
-    const minutes = new Date(timeString)
-      .getMinutes()
-      .toString()
-      .padStart(2, '0');
-    const reservationTime = `${hour}:${minutes}`;
-
-    return reservationTime;
-  };
-
-  // LocalDatetime에서 날짜(년, 월, 일) 추출
-  const getDateFunction = (timeString: string) => {
-    const year = new Date(timeString).getFullYear();
-    const month = (new Date(timeString).getMonth() + 1)
-      .toString()
-      .padStart(2, '0');
-    const day = new Date(timeString).getDate().toString().padStart(2, '0');
-    const payDay = `${year}.${month}.${day}`;
-
-    return payDay;
-  };
 
   // 예약 시간으로부터 24시간 전인지 확인
   const buttonType = (timeGap: number): string => {
