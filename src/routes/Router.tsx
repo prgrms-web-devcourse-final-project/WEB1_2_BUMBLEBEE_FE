@@ -11,6 +11,7 @@ import Search from '@pages/SearchPage';
 import WriteReviewPage from '@pages/WriteReviewPage';
 import ReservationListPage from '@pages/ReservationListPage';
 import ReviewListPage from '@pages/ReviewListPage';
+import ManagementPlacePage from '@pages/ManagementPlacePage';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
   {
     path: '/host-page',
     element: <HostMypage />,
+  },
+  {
+    path: '/management-place-list',
+    element: <ManagementPlacePage />,
   },
   {
     path: '/search',
