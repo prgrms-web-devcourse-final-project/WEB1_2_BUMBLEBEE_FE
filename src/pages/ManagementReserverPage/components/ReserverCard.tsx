@@ -1,5 +1,6 @@
 import { MdArrowForwardIos } from 'react-icons/md';
 import { getDateFunction, getTimeFunction } from '@utils/formatTime';
+import ListStyle from '@components/ListStyle';
 import { ReserverInfo } from './ReserverList';
 
 const ReserverCard = ({ item }: { item: ReserverInfo }) => {
@@ -26,36 +27,34 @@ const ReserverCard = ({ item }: { item: ReserverInfo }) => {
           </div>
 
           <ul className='flex flex-col gap-1 text-[12px]'>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약자명</p>
-              <span className='font-normal'>{reservationName}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>전화번호</p>
-              <span className='font-normal'>{reservationPhonenumber}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약된 룸</p>
-              <span className='font-normal'>{roomTitle}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약일</p>
-              <span className='font-normal'>{getDateFunction(startTime)}</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>예약 시간</p>
-              <span className='font-normal'>
-                {getTimeFunction(startTime)} ~ {getTimeFunction(endTime)}
-              </span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>인원</p>
-              <span className='font-normal'>{numberOfReserver}인</span>
-            </li>
-            <li className='flex gap-[12px]'>
-              <p className='w-[46px]'>인원</p>
-              <span className='font-normal'>{getDateFunction(createdAt)}</span>
-            </li>
+            <ListStyle
+              name='예약자명'
+              value={reservationName}
+            />
+            <ListStyle
+              name='전화번호'
+              value={reservationPhonenumber}
+            />
+            <ListStyle
+              name='예약된 룸'
+              value={roomTitle}
+            />
+            <ListStyle
+              name='예약일'
+              value={getDateFunction(startTime)}
+            />
+            <ListStyle
+              name='예약 시간'
+              value={`${getTimeFunction(startTime)} ~ ${getTimeFunction(endTime)}`}
+            />
+            <ListStyle
+              name='인원'
+              value={`${numberOfReserver}인`}
+            />
+            <ListStyle
+              name='결제일'
+              value={getDateFunction(createdAt)}
+            />
           </ul>
         </div>
 
