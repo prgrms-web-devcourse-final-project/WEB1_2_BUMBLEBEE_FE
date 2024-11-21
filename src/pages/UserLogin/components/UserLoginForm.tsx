@@ -111,14 +111,14 @@ const UserLoginForm = () => {
             className='mr-[12px]'
           >
             <img
-              src='/Public/KakaoLogo.svg'
+              src='/src/assets/icons/KakaoLogo.svg'
               alt='카카오 로고'
             />
           </button>
           <button type='button'>
             <img
-              src='/Public/NaverLogo.svg'
-              alt='카카오 로고'
+              src='/src/assets/icons/NaverLogo.svg'
+              alt='네이버 로고'
             />
           </button>
         </div>
