@@ -76,7 +76,10 @@ const SpaceForm = () => {
             setSpaceForm={setSpaceForm}
           />
         </div>
-        <PhoneNumber />
+        <PhoneNumber
+          spaceForm={spaceForm}
+          setSpaceForm={setSpaceForm}
+        />
       </form>
     </div>
   );

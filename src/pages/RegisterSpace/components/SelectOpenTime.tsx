@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
-
-interface SpaceForm {
-  spaceName: string;
-  description: string;
-  openTime: string;
-  closedTime: string;
-  phoneNumber: string;
-}
+import { SpaceForm } from './SelectClosedTime';
 
 interface SelectOpenTimeProps {
   spaceForm: SpaceForm;

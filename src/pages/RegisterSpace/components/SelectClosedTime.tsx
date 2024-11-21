@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
-interface SpaceForm {
+export interface SpaceForm {
   spaceName: string;
   description: string;
   openTime: string;
