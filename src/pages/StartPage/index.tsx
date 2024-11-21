@@ -20,7 +20,7 @@ const StartPage = () => {
 
         <button
           type='button'
-          className='w-custom mt-[30px] flex h-[90px] flex-col rounded-[10px] bg-primary bg-opacity-[8%] px-[20px] py-[22.5px]'
+          className='mt-[30px] flex h-[90px] w-custom flex-col rounded-[10px] bg-primary bg-opacity-[8%] px-[20px] py-[22.5px]'
           onClick={handleUserClick}
         >
           <p className='text-[12px]'>
@@ -30,7 +30,7 @@ const StartPage = () => {
         </button>
         <button
           type='button'
-          className='w-custom mt-[10px] flex h-[90px] flex-col rounded-[10px] bg-primary bg-opacity-[8%] px-[20px] py-[22.5px]'
+          className='mt-[10px] flex h-[90px] w-custom flex-col rounded-[10px] bg-primary bg-opacity-[8%] px-[20px] py-[22.5px]'
           onClick={handleBusinessClick}
         >
           <p className='text-[12px]'>
