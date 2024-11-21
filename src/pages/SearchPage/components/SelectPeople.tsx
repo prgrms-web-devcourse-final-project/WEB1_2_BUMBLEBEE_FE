@@ -1,14 +1,25 @@
-import { useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { SearchType } from '..';
 
-const SelectPeople = () => {
-  const [people, setPeople] = useState(0);
+interface SelecSelectPeopleProps {
+  searchValue: SearchType;
+  onSetSearchValue: (value: SearchType) => void;
+}
+
+const SelectPeople = (props: SelecSelectPeopleProps) => {
+  const { searchValue, onSetSearchValue } = props;
 
   const handleCountClick = (count: string) => {
-    if (count === 'decrease' && people > 0) {
-      setPeople((prev) => prev - 1);
+    if (count === 'decrease' && searchValue.people > 0) {
+      onSetSearchValue({
+        ...searchValue,
+        people: searchValue.people - 1,
+      });
     } else if (count === 'increase') {
-      setPeople((prev) => prev + 1);
+      onSetSearchValue({
+        ...searchValue,
+        people: searchValue.people + 1,
+      });
     }
   };
 
@@ -28,7 +39,7 @@ const SelectPeople = () => {
         >
           <AiOutlineMinus />
         </button>
-        <span className='w-2 text-sm font-normal'>{people}</span>
+        <span className='w-2 text-sm font-normal'>{searchValue.people}</span>
         <button
           type='button'
           className='hover:text-primary'
