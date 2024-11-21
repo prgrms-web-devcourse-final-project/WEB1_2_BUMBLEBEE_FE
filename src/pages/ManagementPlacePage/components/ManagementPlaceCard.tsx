@@ -14,7 +14,7 @@ const ManagementPlaceCard = ({ item }: { item: WorkPlace }) => {
   } = item;
 
   return (
-    <div className='mx-auto flex w-custom flex-col gap-5 border-b border-solid border-b-black px-[13px] py-[26px]'>
+    <div className='mx-auto flex w-custom flex-col gap-2 border-b border-solid border-b-black px-[13px] py-[26px]'>
       <div className='flex justify-between'>
         <div className='flex flex-col items-start gap-2'>
           <div className='flex cursor-pointer items-center gap-1.5 font-medium'>
@@ -48,9 +48,8 @@ const ManagementPlaceCard = ({ item }: { item: WorkPlace }) => {
         />
       </div>
 
-      <div className='flex gap-1'>
-        <ButtonInCard name='수정' />
-        <ButtonInCard name='삭제' />
+      <div className='self-end'>
+        <ButtonInCard name='상세 보기' />
       </div>
     </div>
   );

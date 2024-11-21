@@ -53,10 +53,12 @@ const ManagementPlaceList = () => {
 
       <button
         type='button'
-        className='mx-auto mt-6 flex h-32 w-custom flex-col items-center justify-center rounded-[8px] border border-dashed p-2 active:text-focusColor'
+        className='group mx-auto my-6 flex h-32 w-custom flex-col items-center justify-center rounded-[8px] border border-dashed p-2 active:border-primary'
       >
-        <IoAdd className='text-6xl text-subfont' />
-        <p className='text-sm text-subfont'>새로운 사업장 등록하기</p>
+        <IoAdd className='text-6xl text-subfont group-active:text-primary' />
+        <p className='text-sm text-subfont group-active:text-primary'>
+          새로운 사업장 등록하기
+        </p>
       </button>
     </div>
   );
