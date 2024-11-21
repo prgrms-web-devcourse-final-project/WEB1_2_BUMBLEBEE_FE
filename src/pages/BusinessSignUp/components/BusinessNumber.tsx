@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 interface HostFormData {
   businessNumber: string;
   nickname: string;
@@ -17,46 +15,27 @@ const BusinessNumber = ({
   hostFormData,
   setHostFormData,
 }: BusinessNumberProps) => {
-  const { businessNumber } = hostFormData;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 하이픈 포함 12자리까지만 입력 가능하도록 만들기
-    if (e.target.name === 'businessNumber' && e.target.value.length > 12) {
+    if (e.target.value.length > 12) {
       e.target.value = e.target.value.substring(0, 12);
     }
-    setHostFormData({
-      ...hostFormData,
-      businessNumber: e.target.value,
-    });
-  };
+    const basicNumber = e.target.value;
+    // 숫자만 남기기
+    const onlyNumber = e.target.value.replace(/[^0-9]/g, '');
+    let formatNumber = basicNumber;
 
-  useEffect(() => {
-    if (!businessNumber) return;
-
-    if (businessNumber.length === 10) {
-      const formatNumber = businessNumber.replace(
+    if (onlyNumber.length === 10) {
+      formatNumber = onlyNumber.replace(
         /^(\d{1,3})(\d{0,2})(\d{0,5}).*$/,
         '$1-$2-$3',
       );
-      if (businessNumber !== formatNumber) {
-        setHostFormData({
-          ...hostFormData,
-          businessNumber: formatNumber,
-        });
-      }
     }
 
-    if (businessNumber.length === 12) {
-      const formatNumber = businessNumber
-        .replace(/-/g, '')
-        .replace(/^(\d{1,3})(\d{0,2})(\d{0,5}).*$/, '$1-$2-$3');
-      if (businessNumber !== formatNumber) {
-        setHostFormData({
-          ...hostFormData,
-          businessNumber: formatNumber,
-        });
-      }
+    if (hostFormData.businessNumber !== formatNumber) {
+      setHostFormData({ ...hostFormData, businessNumber: formatNumber });
     }
-  }, [businessNumber, hostFormData, setHostFormData]);
+  };
 
   return (
     <div className='mt-[18px] flex flex-col'>

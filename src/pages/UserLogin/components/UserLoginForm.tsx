@@ -16,13 +16,15 @@ const UserLoginForm = () => {
 
   // 이메일 형식 확인
   const isValidEmail = (email: string) => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    const emailRegex =
+      /^(?=.{1,100}@)[A-Za-z0-9-]+(.[A-Za-z0-9_-]+)@[^-][A-Za-z0-9-]+(.[A-Za-z0-9-]+)(.[A-Za-z]{2,})$/;
     return emailRegex.test(email);
   };
 
   // 비밀번호 형식 확인
   const isValidPassword = (pwd: string) => {
-    const pwdRegex = /^[a-zA-Z0-9]{8,15}$/;
+    const pwdRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%?&])[A-Za-z\d$@$!%?&]{8,20}$/;
     return pwdRegex.test(pwd);
   };
 
@@ -42,7 +44,7 @@ const UserLoginForm = () => {
     }
     if (!isValidPassword(userLoginForm.password)) {
       newError.passwordError =
-        '비밀번호는 영문, 숫자를 포함하여 8자~15자 이내로 입력해주세요.';
+        '대소문자, 숫자, 특수문자($,@,!,%,?,&)를 모두 포함해야 합니다.';
     }
 
     setErrorMessage(newError);
@@ -78,7 +80,7 @@ const UserLoginForm = () => {
             name='password'
             type='password'
             className='main-input'
-            placeholder='비밀번호 입력 (영문, 숫자 포함 8~15자)'
+            placeholder='비밀번호 입력 (8~20자 이내)'
             onChange={handleChange}
           />
         </div>
@@ -111,14 +113,14 @@ const UserLoginForm = () => {
             className='mr-[12px]'
           >
             <img
-              src='/Public/KakaoLogo.svg'
+              src='/src/assets/icons/KakaoLogo.svg'
               alt='카카오 로고'
             />
           </button>
           <button type='button'>
             <img
-              src='/Public/NaverLogo.svg'
-              alt='카카오 로고'
+              src='/src/assets/icons/NaverLogo.svg'
+              alt='네이버 로고'
             />
           </button>
         </div>

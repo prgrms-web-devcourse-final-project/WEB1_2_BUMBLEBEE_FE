@@ -27,27 +27,29 @@ const UserSignUpForm = () => {
     });
   };
 
-  // 닉네임 형식 확인 - 공백확인
+  // 닉네임 형식 확인 - 공백 없이 2~10자
   const isValidNickname = (nickname: string) => {
-    const nicknameRegex = /^(?!.*\s)[\S]{1,8}$/;
+    const nicknameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9-]{2,10}$/;
     return nicknameRegex.test(nickname);
   };
 
   // 전화번호 형식 확인
   const isValidNumber = (number: string) => {
-    const numberRegex = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/;
+    const numberRegex = /\d{3}-\d{4}-\d{4}$/;
     return numberRegex.test(number);
   };
 
   // 이메일 형식 확인
   const isValidEmail = (email: string) => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    const emailRegex =
+      /^(?=.{1,100}@)[A-Za-z0-9-]+(.[A-Za-z0-9_-]+)@[^-][A-Za-z0-9-]+(.[A-Za-z0-9-]+)(.[A-Za-z]{2,})$/;
     return emailRegex.test(email);
   };
 
   // 비밀번호 형식 확인
   const isValidPassword = (pwd: string) => {
-    const pwdRegex = /^[a-zA-Z0-9]{8,15}$/;
+    const pwdRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%?&])[A-Za-z\d$@$!%?&]{8,20}$/;
     return pwdRegex.test(pwd);
   };
 
@@ -82,7 +84,7 @@ const UserSignUpForm = () => {
 
     if (!isValidNickname(userFormData.nickname)) {
       newErrorMessage.nicknameError =
-        '닉네임은 공백없이 8자 이내로 입력해주세요.';
+        '닉네임은 공백없이 2~10자 이내로 입력해주세요.';
     }
     if (!isValidNumber(userFormData.phoneNumber)) {
       newErrorMessage.phonNumberError = '전화번호 형식을 확인해주세요.';
@@ -92,7 +94,7 @@ const UserSignUpForm = () => {
     }
     if (!isValidPassword(userFormData.password)) {
       newErrorMessage.passwordError =
-        '비밀번호는 영문, 숫자를 포함하여 8자~15자 이내로 입력해주세요.';
+        '대소문자, 숫자, 특수문자($,@,!,%,?,&)를 모두 포함해야 합니다.';
     }
     if (userFormData.password !== userFormData.passwordCheck) {
       newErrorMessage.checkPasswordError = '비밀번호가 일치하지 않습니다.';
@@ -166,7 +168,7 @@ const UserSignUpForm = () => {
             name='nickname'
             type='text'
             className='main-input'
-            placeholder='닉네임 입력 (8자 이내)'
+            placeholder='닉네임 입력 (2~10자 이내)'
             onChange={handleChange}
           />
         </div>
@@ -215,7 +217,7 @@ const UserSignUpForm = () => {
             name='password'
             type='password'
             className='main-input'
-            placeholder='비밀번호 입력 (영문, 숫자 포함 8~15자)'
+            placeholder='비밀번호 입력 (8~20자 이내)'
             onChange={handleChange}
           />
         </div>
