@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
 import SelectOpenTime from './SelectOpenTime';
@@ -7,6 +9,7 @@ import Address from './Address';
 import WorkSpaceImage from './WorkSpaceImage';
 
 const SpaceForm = () => {
+  const navigate = useNavigate();
   const [spaceForm, setSpaceForm] = useState({
     spaceName: '',
     description: '',
@@ -158,6 +161,24 @@ const SpaceForm = () => {
           setSpaceForm={setSpaceForm}
         />
         <WorkSpaceImage />
+        <div className='mt-[40px] flex flex-col'>
+          <label
+            htmlFor='spaceName'
+            className='mb-[10px] text-[14px] font-normal'
+          >
+            룸 추가
+          </label>
+          <button
+            type='button'
+            className='flex h-[120px] w-custom items-center justify-center rounded-[10px] border border-dashed border-primary py-[10px]'
+            onClick={() => navigate('/add-room')}
+          >
+            <AiOutlinePlus
+              size='25px'
+              color='#50BEAD'
+            />
+          </button>
+        </div>
         {/* <button
           type='submit'
           className='btn-primary mt-[30px] text-[16px]'
