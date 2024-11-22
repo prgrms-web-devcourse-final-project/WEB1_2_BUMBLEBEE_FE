@@ -4,6 +4,7 @@ import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
 import SelectOpenTime from './SelectOpenTime';
 import Address from './Address';
+import WorkSpaceImage from './WorkSpaceImage';
 
 const SpaceForm = () => {
   const [spaceForm, setSpaceForm] = useState({
@@ -156,6 +157,7 @@ const SpaceForm = () => {
           spaceForm={spaceForm}
           setSpaceForm={setSpaceForm}
         />
+        <WorkSpaceImage />
         {/* <button
           type='submit'
           className='btn-primary mt-[30px] text-[16px]'
