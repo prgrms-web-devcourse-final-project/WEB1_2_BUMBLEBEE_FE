@@ -18,3 +18,40 @@ export const getTimeFunction = (timeString: string) => {
 
   return formattedTimeString;
 };
+
+// 시간 차이 구하는 함수
+export const getTimeDifference = (timeString: string) => {
+  const milliSeconds = +new Date() - +new Date(timeString);
+  let message = '';
+
+  const seconds = milliSeconds / 1000;
+  if (seconds < 60) {
+    message = `방금 전`;
+  }
+  const minutes = seconds / 60;
+  if (minutes < 60) {
+    message = `${Math.floor(minutes)}분 전`;
+  }
+  const hours = minutes / 60;
+  if (hours < 24) {
+    message = `${Math.floor(hours)}시간 전`;
+  }
+  const days = hours / 24;
+  if (days < 7) {
+    message = `${Math.floor(days)}일 전`;
+  }
+
+  return message;
+};
+
+export const getWithinSevenDays = (timeString: string) => {
+  const milliSeconds = +new Date() - +new Date(timeString);
+  const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+  let message = '';
+
+  if (milliSeconds < SEVEN_DAYS) {
+    message = '7일 이내';
+  }
+
+  return message;
+};

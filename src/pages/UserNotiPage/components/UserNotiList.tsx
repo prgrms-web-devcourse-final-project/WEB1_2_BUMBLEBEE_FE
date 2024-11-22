@@ -1,4 +1,4 @@
-import UpcomingNotiCard from './UserNotiCard';
+import UserNotiCard from './UserNotiCard';
 
 export interface UserNotification {
   id: number;
@@ -20,10 +20,18 @@ const allNotification: UserNotification[] = [
   {
     id: 2,
     type: 'completeReservation',
-    message: '',
+    message: '예약이 완료되었습니다.',
     reservationInfo: '스터디랩 / ROOM A',
     price: 8000,
-    createdAt: '2024-11-12T14:00:00',
+    createdAt: '2024-11-16T14:00:00',
+  },
+  {
+    id: 2,
+    type: 'completeReservation',
+    message: '예약이 완료되었습니다.',
+    reservationInfo: '스터디랩 / ROOM A',
+    price: 8000,
+    createdAt: '2024-11-20T14:00:00',
   },
 ];
 
@@ -38,7 +46,7 @@ const UserNotiList = () => {
         <div className='mt-4 flex w-[375px] flex-col justify-center gap-[13px]'>
           {sortedNotification.map((item) => {
             return (
-              <UpcomingNotiCard
+              <UserNotiCard
                 key={item.id}
                 item={item}
               />
