@@ -1,23 +1,39 @@
 import TextareaAutosize from 'react-textarea-autosize';
+import { ChangeEvent, useState } from 'react';
 import RoomImage from './RoomImage';
 import CountPeople from './CountPeople';
 
 const RoomForm = () => {
+  const [roomForm, setRoomForm] = useState({
+    roomName: '',
+    description: '',
+    price: '',
+    people: 0,
+  });
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setRoomForm({ ...roomForm, [e.target.name]: e.target.value });
+  };
+
   return (
     <div className='flex justify-center pt-[35px]'>
       <form className='w-custom'>
         <div className='flex flex-col'>
           <label
-            htmlFor='spaceName'
+            htmlFor='roomName'
             className='mb-[6px] text-[14px] font-normal'
           >
             룸 이름
           </label>
           <input
-            name='spaceName'
+            name='roomName'
             type='text'
             className='main-input'
             placeholder='룸 이름을 입력해주세요.'
+            onChange={handleChange}
+            value={roomForm.roomName}
           />
         </div>
         <div className='mt-[40px] flex flex-col'>
@@ -28,7 +44,9 @@ const RoomForm = () => {
             >
               룸 설명
             </label>
-            <p className='text-[14px] font-normal text-subfont'>0/200</p>
+            <p className='text-[14px] font-normal text-subfont'>
+              {roomForm.description.length}/200
+            </p>
           </div>
           <TextareaAutosize
             cacheMeasurements
@@ -36,6 +54,8 @@ const RoomForm = () => {
             name='description'
             className='main-textarea text-[14px]'
             placeholder='룸에 대한 설명을 입력해주세요.'
+            onChange={handleChange}
+            value={roomForm.description}
           />
         </div>
         <RoomImage />
@@ -53,9 +73,14 @@ const RoomForm = () => {
               type='text'
               className='main-input ml-[30px] h-[38px] w-[84px] rounded-[5px]'
               placeholder='ex) 3000'
+              onChange={handleChange}
+              value={roomForm.price}
             />
           </div>
-          <CountPeople />
+          <CountPeople
+            roomForm={roomForm}
+            setRoomForm={setRoomForm}
+          />
         </div>
         <button
           type='submit'

@@ -1,15 +1,26 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
-const CountPeople = () => {
-  const [people, setPeople] = useState(0);
+interface RoomForm {
+  roomName: string;
+  description: string;
+  price: string;
+  people: number;
+}
 
-  const handleCountClick = (count: string) => {
-    if (count === 'decrease' && people > 0) {
-      setPeople((prev) => prev - 1);
-    } else if (count === 'increase') {
-      setPeople((prev) => prev + 1);
+interface CountPeopleProps {
+  roomForm: RoomForm;
+  setRoomForm: Dispatch<SetStateAction<RoomForm>>;
+}
+
+const CountPeople = ({ roomForm, setRoomForm }: CountPeopleProps) => {
+  const handleDecrease = () => {
+    if (roomForm.people > 0) {
+      setRoomForm({ ...roomForm, people: roomForm.people - 1 });
     }
+  };
+  const handleIncrease = () => {
+    setRoomForm({ ...roomForm, people: roomForm.people + 1 });
   };
 
   return (
@@ -24,15 +35,15 @@ const CountPeople = () => {
         <button
           type='button'
           className='hover:text-primary'
-          onClick={() => handleCountClick('decrease')}
+          onClick={handleDecrease}
         >
           <AiOutlineMinus />
         </button>
-        <span className='w-2 text-sm font-normal'>{people}</span>
+        <span className='w-2 text-sm font-normal'>{roomForm.people}</span>
         <button
           type='button'
           className='hover:text-primary'
-          onClick={() => handleCountClick('increase')}
+          onClick={handleIncrease}
         >
           <AiOutlinePlus />
         </button>
