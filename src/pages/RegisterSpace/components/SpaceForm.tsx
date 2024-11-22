@@ -1,8 +1,9 @@
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
 import SelectOpenTime from './SelectOpenTime';
+import Address from './Address';
 
 const SpaceForm = () => {
   const [spaceForm, setSpaceForm] = useState({
@@ -11,10 +12,11 @@ const SpaceForm = () => {
     openTime: '선택',
     closedTime: '선택',
     phoneNumber: '',
+    address: '',
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     if (e.target.name === 'spaceName' && e.target.value.length > 20) {
       e.target.value = e.target.value.substring(0, 20);
@@ -115,7 +117,7 @@ const SpaceForm = () => {
             cacheMeasurements
             minRows={4.6}
             name='description'
-            className='main-textarea'
+            className='main-textarea text-[14px]'
             placeholder='사업장 소개 문구를 입력해주세요.'
             onChange={handleChange}
             value={spaceForm.description}
@@ -150,6 +152,10 @@ const SpaceForm = () => {
             {errorMessage.phoneNumberError}
           </div>
         )}
+        <Address
+          spaceForm={spaceForm}
+          setSpaceForm={setSpaceForm}
+        />
         {/* <button
           type='submit'
           className='btn-primary mt-[30px] text-[16px]'
