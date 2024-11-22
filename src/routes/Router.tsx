@@ -15,6 +15,7 @@ import ManagementPlacePage from '@pages/ManagementPlacePage';
 import ManagementReserverPage from '@pages/ManagementReserverPage';
 import RegisterSpace from '@pages/RegisterSpace';
 import UserNotiPage from '@pages/UserNotiPage';
+import AddRoom from '@pages/AddRoom';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: '/register-Space',
     element: <RegisterSpace />,
+  },
+  {
+    path: '/add-room',
+    element: <AddRoom />,
   },
   {
     path: '/user-page',

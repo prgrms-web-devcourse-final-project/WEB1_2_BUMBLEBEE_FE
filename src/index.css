@@ -16,7 +16,7 @@
   }
 
   .main-input {
-    @apply h-[48px] w-[330px] rounded-[8px] border border-solid border-subfont px-[13px] py-[10px] focus:border-focusColor focus:outline-none;
+    @apply h-[48px] w-[330px] rounded-[8px] border border-solid border-subfont px-[13px] py-[10px] text-[14px] focus:border-focusColor focus:outline-none;
   }
 
   .main-textarea {

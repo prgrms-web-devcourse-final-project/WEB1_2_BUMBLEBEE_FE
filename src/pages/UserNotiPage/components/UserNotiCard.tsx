@@ -1,5 +1,5 @@
 import { getDateFunction } from '@utils/formatTime';
-import { UserNotification } from './UserNotiList';
+import type { UserNotification } from './UserNotiList';
 
 const UserNotiCard = ({ item }: { item: UserNotification }) => {
   const { type, message, reservationInfo, createdAt, price } = item;
