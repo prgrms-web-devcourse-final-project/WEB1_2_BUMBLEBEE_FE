@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
+import useSearchStore from '@store/searchStore';
 import PlaceList, { Place } from './PlaceList';
 
 const PlaceSearch = () => {
-  const [searchPlace, setSearchPlace] = useState('');
   const [showList, setShowList] = useState(false);
   const [searchList, setSearchList] = useState<Place[]>([]);
+  const { searchPlace, setPlace } = useSearchStore();
 
   const handleSearchPlace = () => {
     setShowList(true);
@@ -13,6 +14,7 @@ const PlaceSearch = () => {
     ps.keywordSearch(searchPlace, (data, status, _pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         setSearchList(data);
+        setPlace(searchPlace);
         console.log(data);
         console.log(_pagination);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -44,7 +46,7 @@ const PlaceSearch = () => {
             type='text'
             placeholder='장소 검색'
             value={searchPlace}
-            onChange={(e) => setSearchPlace(e.target.value)}
+            onChange={(e) => setPlace(e.target.value)}
             onKeyDown={handleKeyDown}
             className='main-input text-sm'
           />
@@ -58,7 +60,6 @@ const PlaceSearch = () => {
         <PlaceList
           onShowList={setShowList}
           showList={showList}
-          onSetSearchPlace={setSearchPlace}
           searchList={searchList}
         />
       )}

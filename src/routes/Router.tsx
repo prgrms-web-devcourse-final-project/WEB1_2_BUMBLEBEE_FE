@@ -16,6 +16,7 @@ import ManagementReserverPage from '@pages/ManagementReserverPage';
 import RegisterSpace from '@pages/RegisterSpace';
 import UserNotiPage from '@pages/UserNotiPage';
 import AddRoom from '@pages/AddRoom';
+import SearchResult from '@pages/SearchResult';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
   {
     path: '/search',
     element: <Search />,
+  },
+  {
+    path: '/search-result',
+    element: <SearchResult />,
   },
   {
     path: '*',

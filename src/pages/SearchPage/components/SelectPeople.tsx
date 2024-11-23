@@ -1,14 +1,14 @@
-import { useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import useSearchStore from '@store/searchStore';
 
 const SelectPeople = () => {
-  const [people, setPeople] = useState(0);
+  const { searchPeople, setPeople } = useSearchStore();
 
   const handleCountClick = (count: string) => {
-    if (count === 'decrease' && people > 0) {
-      setPeople((prev) => prev - 1);
+    if (count === 'decrease' && searchPeople > 0) {
+      setPeople(searchPeople - 1);
     } else if (count === 'increase') {
-      setPeople((prev) => prev + 1);
+      setPeople(searchPeople + 1);
     }
   };
 
@@ -28,7 +28,7 @@ const SelectPeople = () => {
         >
           <AiOutlineMinus />
         </button>
-        <span className='w-2 text-sm font-normal'>{people}</span>
+        <span className='w-2 text-sm font-normal'>{searchPeople}</span>
         <button
           type='button'
           className='hover:text-primary'
