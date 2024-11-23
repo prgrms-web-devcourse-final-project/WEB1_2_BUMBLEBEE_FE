@@ -7,6 +7,7 @@ import SelectClosedTime from './SelectClosedTime';
 import SelectOpenTime from './SelectOpenTime';
 import Address from './Address';
 import WorkSpaceImage from './WorkSpaceImage';
+import RoomComponent from './RoomComponent';
 
 interface SpaceFormProps {
   spaceFormData: Space;
@@ -81,6 +82,7 @@ const SpaceForm = ({
     isValid();
   };
 
+  const handleClick = () => {};
   return (
     <div className='flex flex-col items-center justify-center pb-24 pt-[35px]'>
       <form
@@ -168,6 +170,14 @@ const SpaceForm = ({
           >
             룸 추가
           </label>
+          {spaceFormData.rooms.length !== 0 &&
+            spaceFormData.rooms.map((item) => (
+              <RoomComponent
+                key={item.id}
+                room={item}
+                onClick={handleClick}
+              />
+            ))}
           <button
             type='button'
             className='flex h-[120px] w-custom items-center justify-center rounded-[10px] border border-dashed border-primary py-[10px]'

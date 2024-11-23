@@ -46,6 +46,7 @@ const RegisterSpace = () => {
     setSelectedRoomId(newRoomId);
   };
 
+  // 룸 등록에서 값 변경
   const updateRoomData = useCallback(
     (data: Partial<Room>) => {
       setSpaceFormData((prev) => {
