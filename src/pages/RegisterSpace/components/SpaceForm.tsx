@@ -1,24 +1,24 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
+import { Space } from '@typings/Types';
 import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
 import SelectOpenTime from './SelectOpenTime';
 import Address from './Address';
 import WorkSpaceImage from './WorkSpaceImage';
 
-const SpaceForm = () => {
-  const navigate = useNavigate();
-  const [spaceForm, setSpaceForm] = useState({
-    spaceName: '',
-    description: '',
-    openTime: '선택',
-    closedTime: '선택',
-    phoneNumber: '',
-    address: '',
-  });
+interface SpaceFormProps {
+  spaceFormData: Space;
+  changeFormdata: (data: Partial<Space>) => void;
+  addRoom: () => void;
+}
 
+const SpaceForm = ({
+  spaceFormData,
+  changeFormdata,
+  addRoom,
+}: SpaceFormProps) => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -28,7 +28,7 @@ const SpaceForm = () => {
     if (e.target.name === 'description' && e.target.value.length > 500) {
       e.target.value = e.target.value.substring(0, 500);
     }
-    setSpaceForm({ ...spaceForm, [e.target.name]: e.target.value });
+    changeFormdata({ [e.target.name]: e.target.value });
   };
 
   // 사업장명 형식 확인
@@ -57,17 +57,20 @@ const SpaceForm = () => {
       timeError: '',
       phoneNumberError: '',
     };
-    if (!isValidSpaceName(spaceForm.spaceName)) {
+    if (!isValidSpaceName(spaceFormData.spaceName)) {
       newErrorMessage.spaceNameError =
         '사업장명은 특수문자 없이 20자 이내로 입력해주세요.';
     }
-    if (spaceForm.description === '') {
+    if (spaceFormData.description === '') {
       newErrorMessage.descriptionError = '사업장 소개 문구를 입력해주세요.';
     }
-    if (spaceForm.openTime === '선택' || spaceForm.closedTime === '선택') {
+    if (
+      spaceFormData.openTime === '선택' ||
+      spaceFormData.closedTime === '선택'
+    ) {
       newErrorMessage.timeError = '시간을 선택해주세요.';
     }
-    if (!isValidNumber(spaceForm.phoneNumber)) {
+    if (!isValidNumber(spaceFormData.phoneNumber)) {
       newErrorMessage.phoneNumberError = '전화번호 형식을 확인해주세요.';
     }
     setErrorMessage(newErrorMessage);
@@ -79,7 +82,7 @@ const SpaceForm = () => {
   };
 
   return (
-    <div className='flex justify-center pt-[35px]'>
+    <div className='flex flex-col items-center justify-center pb-24 pt-[35px]'>
       <form
         className='w-custom'
         onSubmit={handleSubmit}
@@ -97,7 +100,7 @@ const SpaceForm = () => {
             className='main-input'
             placeholder='사업장명을 입력해주세요.'
             onChange={handleChange}
-            value={spaceForm.spaceName}
+            value={spaceFormData.spaceName}
           />
         </div>
         {errorMessage.spaceNameError && (
@@ -114,7 +117,7 @@ const SpaceForm = () => {
               사업장 소개
             </label>
             <p className='text-[14px] font-normal text-subfont'>
-              {spaceForm.description.length}/500
+              {spaceFormData.description.length}/500
             </p>
           </div>
           <TextareaAutosize
@@ -124,7 +127,7 @@ const SpaceForm = () => {
             className='main-textarea text-[14px]'
             placeholder='사업장 소개 문구를 입력해주세요.'
             onChange={handleChange}
-            value={spaceForm.description}
+            value={spaceFormData.description}
           />
         </div>
         {errorMessage.descriptionError && (
@@ -134,12 +137,12 @@ const SpaceForm = () => {
         )}
         <div className='mt-[40px] flex justify-between'>
           <SelectOpenTime
-            spaceForm={spaceForm}
-            setSpaceForm={setSpaceForm}
+            spaceFormData={spaceFormData}
+            changeFormdata={changeFormdata}
           />
           <SelectClosedTime
-            spaceForm={spaceForm}
-            setSpaceForm={setSpaceForm}
+            spaceFormData={spaceFormData}
+            changeFormdata={changeFormdata}
           />
         </div>
         {errorMessage.timeError && (
@@ -148,19 +151,16 @@ const SpaceForm = () => {
           </div>
         )}
         <PhoneNumber
-          spaceForm={spaceForm}
-          setSpaceForm={setSpaceForm}
+          spaceFormData={spaceFormData}
+          changeFormdata={changeFormdata}
         />
         {errorMessage.phoneNumberError && (
           <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
             {errorMessage.phoneNumberError}
           </div>
         )}
-        <Address
-          spaceForm={spaceForm}
-          setSpaceForm={setSpaceForm}
-        />
-        <WorkSpaceImage />
+        <Address changeFormdata={changeFormdata} />
+        <WorkSpaceImage changeFormdata={changeFormdata} />
         <div className='mt-[40px] flex flex-col'>
           <label
             htmlFor='spaceName'
@@ -171,7 +171,7 @@ const SpaceForm = () => {
           <button
             type='button'
             className='flex h-[120px] w-custom items-center justify-center rounded-[10px] border border-dashed border-primary py-[10px]'
-            onClick={() => navigate('/add-room')}
+            onClick={() => addRoom()}
           >
             <AiOutlinePlus
               size='25px'
@@ -179,12 +179,12 @@ const SpaceForm = () => {
             />
           </button>
         </div>
-        {/* <button
+        <button
           type='submit'
-          className='btn-primary mt-[30px] text-[16px]'
+          className='btn-primary mt-[40px] text-[16px]'
         >
           공간 등록 완료
-        </button> */}
+        </button>
       </form>
     </div>
   );

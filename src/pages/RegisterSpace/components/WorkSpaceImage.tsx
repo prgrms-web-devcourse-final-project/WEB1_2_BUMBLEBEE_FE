@@ -1,12 +1,15 @@
 import { ChangeEvent, useState } from 'react';
+import { AddressProps } from './Address';
 
-const WorkSpaceImage = () => {
+const WorkSpaceImage = ({ changeFormdata }: AddressProps) => {
   //   const ALLOW_FILE_EXTENSION = 'jpg,jpeg,png';
   const [fileName, setFileName] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files === null) return;
     if (e.target.files && e.target.files[0]) {
       setFileName(e.target.files[0].name);
     }
+    changeFormdata({ spaceImage: e.target.files[0] });
   };
 
   return (
@@ -23,6 +26,7 @@ const WorkSpaceImage = () => {
             name='image'
             className='mb-[10px] mr-[12px] h-[38px] w-[234px] border-b border-solid border-subfont px-[6px] py-[5.5px] text-[14px] focus:outline-none'
             value={fileName}
+            readOnly
           />
           <label
             htmlFor='file'

@@ -1,26 +1,19 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Room } from '@typings/Types';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
-interface RoomForm {
-  roomName: string;
-  description: string;
-  price: string;
-  people: number;
-}
-
 interface CountPeopleProps {
-  roomForm: RoomForm;
-  setRoomForm: Dispatch<SetStateAction<RoomForm>>;
+  room: Room;
+  updateRoomData: (data: Partial<Room>) => void;
 }
 
-const CountPeople = ({ roomForm, setRoomForm }: CountPeopleProps) => {
+const CountPeople = ({ room, updateRoomData }: CountPeopleProps) => {
   const handleDecrease = () => {
-    if (roomForm.people > 0) {
-      setRoomForm({ ...roomForm, people: roomForm.people - 1 });
+    if (room.people > 0) {
+      updateRoomData({ people: room.people - 1 });
     }
   };
   const handleIncrease = () => {
-    setRoomForm({ ...roomForm, people: roomForm.people + 1 });
+    updateRoomData({ people: room.people + 1 });
   };
 
   return (
@@ -31,7 +24,7 @@ const CountPeople = ({ roomForm, setRoomForm }: CountPeopleProps) => {
       >
         인원수
       </label>
-      <div className='ml-[30px] flex h-[38px] w-[84px] items-center justify-center gap-[20px] rounded-[5px] border-[1px] border-subfont px-[13px] py-[10px] text-xs'>
+      <div className='ml-[20px] flex h-[38px] w-[84px] items-center justify-center gap-[20px] rounded-[5px] border-[1px] border-subfont px-[13px] py-[10px] text-xs'>
         <button
           type='button'
           className='hover:text-primary'
@@ -39,7 +32,7 @@ const CountPeople = ({ roomForm, setRoomForm }: CountPeopleProps) => {
         >
           <AiOutlineMinus />
         </button>
-        <span className='w-2 text-sm font-normal'>{roomForm.people}</span>
+        <span className='w-2 text-sm font-normal'>{room.people}</span>
         <button
           type='button'
           className='hover:text-primary'

@@ -1,13 +1,12 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { Space } from '@typings/Types';
+import { ChangeEvent, SetStateAction, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
-import { SpaceForm } from './SelectClosedTime';
 
-interface AddressProps {
-  spaceForm: SpaceForm;
-  setSpaceForm: Dispatch<SetStateAction<SpaceForm>>;
+export interface AddressProps {
+  changeFormdata: (data: Partial<Space>) => void;
 }
 
-const Address = ({ spaceForm, setSpaceForm }: AddressProps) => {
+const Address = ({ changeFormdata }: AddressProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [addressChange, setAddressChange] = useState('');
 
@@ -29,11 +28,9 @@ const Address = ({ spaceForm, setSpaceForm }: AddressProps) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const detailAddress = e.target.value;
-    const fullAddress = `${addressChange} ${detailAddress}`;
-    setSpaceForm({
-      ...spaceForm,
-      address: fullAddress,
-    });
+    const fullAddress = `${addressChange}, ${detailAddress}`;
+
+    changeFormdata({ address: fullAddress });
   };
 
   return (
