@@ -11,6 +11,7 @@ const SelectOpenTime = ({ spaceForm, setSpaceForm }: SelectOpenTimeProps) => {
   const [showList, setShowList] = useState(false);
 
   const timeList = [
+    '09:00',
     '10:00',
     '11:00',
     '12:00',

@@ -11,10 +11,11 @@ import Search from '@pages/SearchPage';
 import WriteReviewPage from '@pages/WriteReviewPage';
 import ReservationListPage from '@pages/ReservationListPage';
 import ReviewListPage from '@pages/ReviewListPage';
-import SearchResult from '@pages/SearchResult';
 import ManagementPlacePage from '@pages/ManagementPlacePage';
 import ManagementReserverPage from '@pages/ManagementReserverPage';
 import RegisterSpace from '@pages/RegisterSpace';
+import AddRoom from '@pages/AddRoom';
+import SearchResult from '@pages/SearchResult';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: '/register-Space',
     element: <RegisterSpace />,
+  },
+  {
+    path: '/add-room',
+    element: <AddRoom />,
   },
   {
     path: '/user-page',
