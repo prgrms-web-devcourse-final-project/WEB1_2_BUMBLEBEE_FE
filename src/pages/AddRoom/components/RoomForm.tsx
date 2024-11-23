@@ -7,9 +7,10 @@ import CountPeople from './CountPeople';
 interface RoomFormProps {
   room: Room;
   updateRoomData: (data: Partial<Room>) => void;
+  completeAdd: (id: string) => void;
 }
 
-const RoomForm = ({ room, updateRoomData }: RoomFormProps) => {
+const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -27,6 +28,7 @@ const RoomForm = ({ room, updateRoomData }: RoomFormProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     isValid();
+    completeAdd('');
   };
 
   return (

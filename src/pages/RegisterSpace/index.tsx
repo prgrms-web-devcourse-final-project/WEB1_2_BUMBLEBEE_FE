@@ -70,6 +70,7 @@ const RegisterSpace = () => {
         <RoomForm
           room={spaceFormData.rooms.find(({ id }) => id === selectedRoomId)!}
           updateRoomData={updateRoomData}
+          completeAdd={setSelectedRoomId}
         />
       ) : (
         <SpaceForm
