@@ -1,14 +1,15 @@
+import useSearchStore from '@store/searchStore';
 import { useState } from 'react';
-import { SearchType } from '@typings/types';
+// import { SearchType } from '@typings/types';
 
-interface SelectTimeProps {
-  searchValue: SearchType;
-  onSetSearchValue: (value: SearchType) => void;
-}
+// interface SelectTimeProps {
+//   searchValue: SearchType;
+//   onSetSearchValue: (value: SearchType) => void;
+// }
 
-const SelectTime = (props: SelectTimeProps) => {
-  const { searchValue, onSetSearchValue } = props;
-
+const SelectTime = () => {
+  // const { searchValue, onSetSearchValue } = props;
+  const { setTime } = useSearchStore();
   const times = { startTime: '09:00', endTime: '23:00' };
 
   const [selectedTimeList, setSelectedTimeList] = useState<string[]>([]);
@@ -24,10 +25,7 @@ const SelectTime = (props: SelectTimeProps) => {
   const addTimeArray = (newArray: string[]) => {
     const lastTime = newArray[newArray.length - 1];
     const [hour] = lastTime.split(':');
-    onSetSearchValue({
-      ...searchValue,
-      time: [newArray[0], `${hour}:59`],
-    });
+    setTime([newArray[0], `${hour}:59`]);
   };
 
   const handleSelectTime = (time: string) => {

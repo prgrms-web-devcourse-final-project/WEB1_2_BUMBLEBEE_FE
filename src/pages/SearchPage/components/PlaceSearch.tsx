@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { SearchType } from '@typings/types';
+// import { SearchType } from '@typings/types';
+import useSearchStore from '@store/searchStore';
 import PlaceList, { Place } from './PlaceList';
 
-interface PlaceSearchProps {
-  searchValue: SearchType;
-  onSetSearchValue: (value: SearchType) => void;
-}
+// interface PlaceSearchProps {
+//   searchValue: SearchType;
+//   onSetSearchValue: (value: SearchType) => void;
+// }
 
-const PlaceSearch = (props: PlaceSearchProps) => {
-  const { searchValue, onSetSearchValue } = props;
+const PlaceSearch = () => {
+  // const { searchValue, onSetSearchValue } = props;
   const [searchPlace, setSearchPlace] = useState('');
   const [showList, setShowList] = useState(false);
   const [searchList, setSearchList] = useState<Place[]>([]);
+  const { setPlace } = useSearchStore();
 
   const handleSearchPlace = () => {
     setShowList(true);
@@ -20,7 +22,7 @@ const PlaceSearch = (props: PlaceSearchProps) => {
     ps.keywordSearch(searchPlace, (data, status, _pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         setSearchList(data);
-        onSetSearchValue({ ...searchValue, place: searchPlace });
+        setPlace(searchPlace);
         console.log(data);
         console.log(_pagination);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -68,8 +70,6 @@ const PlaceSearch = (props: PlaceSearchProps) => {
           showList={showList}
           onSetSearchPlace={setSearchPlace}
           searchList={searchList}
-          searchValue={searchValue}
-          onSetSearchValue={onSetSearchValue}
         />
       )}
     </div>

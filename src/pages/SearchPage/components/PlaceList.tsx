@@ -1,5 +1,6 @@
 import { IoIosSubway, IoIosPin } from 'react-icons/io';
-import { SearchType } from '@typings/types';
+// import { SearchType } from '@typings/types';
+import useSearchStore from '@store/searchStore';
 
 export type Place = kakao.maps.services.PlacesSearchResultItem;
 
@@ -8,23 +9,14 @@ interface PlaceListProps {
   showList: boolean;
   onSetSearchPlace: (value: string) => void;
   searchList: Place[];
-  searchValue: SearchType;
-  onSetSearchValue: (value: SearchType) => void;
 }
 
 const PlaceList = (props: PlaceListProps) => {
-  const {
-    onShowList,
-    showList,
-    onSetSearchPlace,
-    searchList,
-    searchValue,
-    onSetSearchValue,
-  } = props;
-
+  const { onShowList, showList, onSetSearchPlace, searchList } = props;
+  const { setPlace } = useSearchStore();
   const handleClickPlace = (placeName: string) => {
     onSetSearchPlace(placeName);
-    onSetSearchValue({ ...searchValue, place: placeName });
+    setPlace(placeName);
     onShowList(!showList);
   };
 

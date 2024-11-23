@@ -1,23 +1,24 @@
 import Calendar from 'react-calendar';
 import './SelectDate.css';
 import moment from 'moment';
-import { SearchType } from '@typings/types';
+import useSearchStore from '@store/searchStore';
+// import { SearchType } from '@typings/types';
 
 type DatePiece = Date | null;
 
 type SelectedDate = DatePiece | [DatePiece, DatePiece];
 
-interface SelectDateProps {
-  searchValue: SearchType;
-  onSetSearchValue: (value: SearchType) => void;
-}
+// interface SelectDateProps {
+//   searchValue: SearchType;
+//   onSetSearchValue: (value: SearchType) => void;
+// }
 
-const SelectDate = (props: SelectDateProps) => {
-  const { searchValue, onSetSearchValue } = props;
-
+const SelectDate = () => {
+  // const { searchValue, onSetSearchValue } = props;
+  const { searchDate, setDate } = useSearchStore();
   const handleChangeDate = (newDate: SelectedDate) => {
     if (newDate instanceof Date) {
-      onSetSearchValue({ ...searchValue, date: new Date(newDate) });
+      setDate(new Date(newDate));
     }
   };
   return (
@@ -31,7 +32,7 @@ const SelectDate = (props: SelectDateProps) => {
       <Calendar
         onChange={handleChangeDate}
         formatDay={(_, date) => moment(date).format('DD')}
-        value={searchValue.date}
+        value={searchDate}
         calendarType='gregory'
         view='month'
         prev2Label={null}
