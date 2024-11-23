@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { SearchType } from '@typings/types';
 import PlaceList, { Place } from './PlaceList';
-import { SearchType } from '..';
 
 interface PlaceSearchProps {
   searchValue: SearchType;

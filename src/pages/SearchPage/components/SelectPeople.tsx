@@ -1,5 +1,5 @@
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { SearchType } from '..';
+import { SearchType } from '@typings/types';
 
 interface SelecSelectPeopleProps {
   searchValue: SearchType;

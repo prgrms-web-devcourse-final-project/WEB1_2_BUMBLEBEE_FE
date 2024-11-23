@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SearchType } from '..';
+import { SearchType } from '@typings/types';
 
 interface SelectTimeProps {
   searchValue: SearchType;

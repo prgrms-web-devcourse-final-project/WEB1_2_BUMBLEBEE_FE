@@ -1,5 +1,5 @@
 import { IoIosSubway, IoIosPin } from 'react-icons/io';
-import { SearchType } from '..';
+import { SearchType } from '@typings/types';
 
 export type Place = kakao.maps.services.PlacesSearchResultItem;
 

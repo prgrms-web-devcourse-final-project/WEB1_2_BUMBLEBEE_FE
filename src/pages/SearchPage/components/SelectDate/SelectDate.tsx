@@ -1,7 +1,7 @@
 import Calendar from 'react-calendar';
 import './SelectDate.css';
 import moment from 'moment';
-import { SearchType } from '@pages/SearchPage';
+import { SearchType } from '@typings/types';
 
 type DatePiece = Date | null;
 

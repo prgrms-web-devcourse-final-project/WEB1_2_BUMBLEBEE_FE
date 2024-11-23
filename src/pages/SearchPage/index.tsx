@@ -2,17 +2,11 @@ import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
 import BottomNavigation from '@layouts/BottomNavigation';
 import { useState } from 'react';
+import { SearchType } from '@typings/types';
 import PlaceSearch from './components/PlaceSearch';
 import SelectDate from './components/SelectDate/SelectDate';
 import SelectTime from './components/SelectTime';
 import SelectPeople from './components/SelectPeople';
-
-export interface SearchType {
-  place: string;
-  date: Date | null;
-  time: string[];
-  people: number;
-}
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState<SearchType>({
