@@ -29,7 +29,7 @@ const ReservationBar = () => {
   const formattedPeople = searchPeople > 0 ? `${searchPeople}명` : '인원 선택';
   return (
     <>
-      <div className='relative mx-auto mt-4 flex w-custom justify-center gap-3 rounded-full py-[18px] text-sm shadow-custom'>
+      <div className='relative z-10 mx-auto mt-4 flex w-custom justify-center gap-3 rounded-full py-[18px] text-sm shadow-custom'>
         <button
           type='button'
           className='w-20 border-r-2 border-subfont pr-3 text-center'
