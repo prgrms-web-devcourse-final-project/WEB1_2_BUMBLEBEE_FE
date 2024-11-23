@@ -17,6 +17,7 @@ import RegisterSpace from '@pages/RegisterSpace';
 import UserNotiPage from '@pages/UserNotiPage';
 import AddRoom from '@pages/AddRoom';
 import SearchResult from '@pages/SearchResult';
+import ReservationPage from '@pages/ReservationPage';
 import HostNotiPage from '@pages/HostNotiPage';
 
 const router = createBrowserRouter([
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
   {
     path: '/search-result',
     element: <SearchResult />,
+  },
+  {
+    path: '/reservation',
+    element: <ReservationPage />,
   },
   {
     path: '*',
