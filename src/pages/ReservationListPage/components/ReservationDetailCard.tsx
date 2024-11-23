@@ -104,14 +104,14 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
             {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
           </span>
         </div>
+        {modalOpen && (
+          <Modal
+            message='결제를 취소하시겠습니까?'
+            cancelButton={() => setModalOpen(false)}
+            confirmButton={cancelPayment}
+          />
+        )}
       </div>
-      {modalOpen && (
-        <Modal
-          message='결제를 취소하시겠습니까?'
-          cancelButton={() => setModalOpen(false)}
-          confirmButton={cancelPayment}
-        />
-      )}
     </>
   );
 };
