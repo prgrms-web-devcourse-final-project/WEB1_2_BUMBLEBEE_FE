@@ -15,7 +15,7 @@ const useSearchStore = create<SearchState>((set) => ({
   searchPlace: '',
   searchDate: new Date(),
   searchTime: [],
-  searchPeople: 1,
+  searchPeople: 0,
   setPlace: (searchPlace) => set({ searchPlace }),
   setDate: (searchDate) => set({ searchDate }),
   setTime: (searchTime) => set({ searchTime }),
