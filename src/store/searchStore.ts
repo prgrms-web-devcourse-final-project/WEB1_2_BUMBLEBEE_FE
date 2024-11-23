@@ -3,7 +3,7 @@ import { create } from 'zustand';
 interface SearchState {
   searchPlace: string;
   searchDate: Date;
-  serachTime: string[];
+  searchTime: string[];
   searchPeople: number;
   setPlace: (place: string) => void;
   setDate: (date: Date) => void;
@@ -14,11 +14,11 @@ interface SearchState {
 const useSearchStore = create<SearchState>((set) => ({
   searchPlace: '',
   searchDate: new Date(),
-  serachTime: [],
+  searchTime: [],
   searchPeople: 1,
   setPlace: (searchPlace) => set({ searchPlace }),
   setDate: (searchDate) => set({ searchDate }),
-  setTime: (serachTime) => set({ serachTime }),
+  setTime: (searchTime) => set({ searchTime }),
   setPeople: (searchPeople) => set({ searchPeople }),
 }));
 

@@ -1,20 +1,12 @@
 import { useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-// import { SearchType } from '@typings/types';
 import useSearchStore from '@store/searchStore';
 import PlaceList, { Place } from './PlaceList';
 
-// interface PlaceSearchProps {
-//   searchValue: SearchType;
-//   onSetSearchValue: (value: SearchType) => void;
-// }
-
 const PlaceSearch = () => {
-  // const { searchValue, onSetSearchValue } = props;
-  const [searchPlace, setSearchPlace] = useState('');
   const [showList, setShowList] = useState(false);
   const [searchList, setSearchList] = useState<Place[]>([]);
-  const { setPlace } = useSearchStore();
+  const { searchPlace, setPlace } = useSearchStore();
 
   const handleSearchPlace = () => {
     setShowList(true);
@@ -54,7 +46,7 @@ const PlaceSearch = () => {
             type='text'
             placeholder='장소 검색'
             value={searchPlace}
-            onChange={(e) => setSearchPlace(e.target.value)}
+            onChange={(e) => setPlace(e.target.value)}
             onKeyDown={handleKeyDown}
             className='main-input text-sm'
           />
@@ -68,7 +60,6 @@ const PlaceSearch = () => {
         <PlaceList
           onShowList={setShowList}
           showList={showList}
-          onSetSearchPlace={setSearchPlace}
           searchList={searchList}
         />
       )}

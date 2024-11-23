@@ -1,15 +1,7 @@
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-// import { SearchType } from '@typings/types';
 import useSearchStore from '@store/searchStore';
 
-// interface SelecSelectPeopleProps {
-//   searchValue: SearchType;
-//   onSetSearchValue: (value: SearchType) => void;
-// }
-
 const SelectPeople = () => {
-  // const { searchValue, onSetSearchValue } = props;
-
   const { searchPeople, setPeople } = useSearchStore();
 
   const handleCountClick = (count: string) => {

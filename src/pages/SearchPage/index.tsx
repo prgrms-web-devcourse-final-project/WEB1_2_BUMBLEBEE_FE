@@ -9,38 +9,6 @@ import SelectPeople from './components/SelectPeople';
 
 const Search = () => {
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const { place, date, time, people, setPlace, setDate, setTime, setPeople } =
-  //   useSearchStore();
-  // const [searchValue, setSearchValue] = useState<SearchType>({
-  //   place,
-  //   date,
-  //   time,
-  //   people,
-  // });
-
-  // console.log(searchValue);
-
-  // if (location.state?.fromBack) {
-  //   const existingSearch = { ...location.state };
-  //   setSearchValue({
-  //     ...searchValue,
-  //     place: existingSearch.place,
-  //     date: new Date(existingSearch.date),
-  //     people: existingSearch.people,
-  //   });
-  // }
-
-  // const handleSearchClick = () => {
-  //   navigate('/search-result', {
-  //     state: {
-  //       place: `${searchValue.place}`,
-  //       date: `${searchValue.date}`,
-  //       time: `${searchValue.time}`,
-  //       people: `${searchValue.people}`,
-  //     },
-  //   });
-  // };
 
   return (
     <>
