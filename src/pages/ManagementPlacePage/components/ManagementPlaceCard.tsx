@@ -2,7 +2,7 @@ import { MdArrowForwardIos } from 'react-icons/md';
 import { getDateFunction } from '@utils/formatTime';
 import ButtonInCard from '@components/ButtonInCard';
 import ListStyle from '@components/ListStyle';
-import { WorkPlace } from './ManagementPlaceList';
+import type { WorkPlace } from './ManagementPlaceList';
 
 const ManagementPlaceCard = ({ item }: { item: WorkPlace }) => {
   const {
@@ -50,7 +50,7 @@ const ManagementPlaceCard = ({ item }: { item: WorkPlace }) => {
       </div>
 
       <div className='self-end'>
-        <ButtonInCard name='상세 보기' />
+        <ButtonInCard name='수정' />
       </div>
     </div>
   );
