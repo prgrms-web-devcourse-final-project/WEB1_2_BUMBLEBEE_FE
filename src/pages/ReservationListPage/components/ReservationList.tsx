@@ -62,7 +62,7 @@ const ReservationList = () => {
   return (
     <>
       {reservationCardList.length > 0 ? (
-        <div className='mt-[6px] flex w-[375px] flex-col justify-center'>
+        <div className='mt-[6px] flex w-[375px] flex-col justify-center pb-24'>
           {sortedReservationList.map((item) => {
             return (
               <ReservationDetailCard
