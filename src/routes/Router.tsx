@@ -14,6 +14,7 @@ import ReviewListPage from '@pages/ReviewListPage';
 import ManagementPlacePage from '@pages/ManagementPlacePage';
 import ManagementReserverPage from '@pages/ManagementReserverPage';
 import RegisterSpace from '@pages/RegisterSpace';
+import UserNotiPage from '@pages/UserNotiPage';
 import AddRoom from '@pages/AddRoom';
 import SearchResult from '@pages/SearchResult';
 
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
   {
     path: '/review-list',
     element: <ReviewListPage />,
+  },
+  {
+    path: '/user-noti',
+    element: <UserNotiPage />,
   },
   {
     path: '/host-page',
