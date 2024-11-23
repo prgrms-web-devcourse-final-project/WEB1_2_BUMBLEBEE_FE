@@ -1,7 +1,13 @@
 import { getDateFunction } from '@utils/formatTime';
+import ShowWithinSevenDays from '@components/ShowWithinSevenDays';
 import type { UserNotification } from './UserNotiList';
 
-const UserNotiCard = ({ item }: { item: UserNotification }) => {
+interface UserNotiProps {
+  item: UserNotification;
+  showLabel: boolean;
+}
+
+const UserNotiCard = ({ item, showLabel }: UserNotiProps) => {
   const { type, message, reservationInfo, createdAt, price } = item;
 
   return (
@@ -38,6 +44,7 @@ const UserNotiCard = ({ item }: { item: UserNotification }) => {
           </div>
         </div>
       </div>
+      {showLabel ? <ShowWithinSevenDays label='7일 이내' /> : null}
     </>
   );
 };
