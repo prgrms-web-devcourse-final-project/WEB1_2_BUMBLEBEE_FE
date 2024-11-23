@@ -1,39 +1,41 @@
 import { getDateFunction } from '@utils/formatTime';
 import ShowWithinSevenDays from '@components/ShowWithinSevenDays';
-import type { UserNotification } from './UserNotiList';
+import { UserNotification } from '@pages/UserNotiPage/components/UserNotiList';
 
-interface UserNotiProps {
+interface HostNotiProps {
   item: UserNotification;
   showLabel: boolean;
 }
 
-const UserNotiCard = ({ item, showLabel }: UserNotiProps) => {
-  const { type, message, reservationInfo, createdAt, price } = item;
+const HostNotiCard = ({ item, showLabel }: HostNotiProps) => {
+  const { type, message, reservationInfo, createdAt } = item;
 
   return (
     <>
       <div className='mx-auto flex w-[100%] flex-col gap-3 text-sm active:bg-[#e9e9e9]'>
         <div className='mx-auto w-custom px-1.5 py-[13px]'>
-          {type === 'upcoming' ? (
-            <p className='font-medium'>다가오는 일정</p>
+          {type === 'newReview' ? (
+            <p className='font-medium'>새 리뷰 등록</p>
           ) : (
-            <p className='font-medium'>예약 완료</p>
+            <p className='font-medium'>새로운 예약</p>
           )}
 
           <div className='flex flex-col gap-1'>
             <p className='text-xs text-subfont'>{getDateFunction(createdAt)}</p>
-            <div className='flex justify-between'>
-              {!price ? (
+            <div className='flex justify-between gap-3'>
+              {type === 'newReview' ? (
                 <div className='flex w-[260px] flex-col'>
-                  <p className='w-[100%]'>{message}</p>
-                  <p className='w-[100%]'>{reservationInfo}</p>
+                  <p className='w-[100%]'>
+                    {reservationInfo}에 새로운 리뷰가 등록되었습니다.
+                  </p>
+                  <p className='w-[100%] overflow-hidden text-ellipsis whitespace-nowrap text-[#666666]'>
+                    {message}
+                  </p>
                 </div>
               ) : (
                 <div className='flex w-[260px] flex-col'>
-                  <p className='w-[100%]'>{`${reservationInfo} ${message}`}</p>
-                  <p className='w-[100%]'>
-                    {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
-                  </p>
+                  <p className='w-[100%]'>{message}</p>
+                  <p className='w-[100%]'>{reservationInfo}</p>
                 </div>
               )}
 
@@ -51,4 +53,4 @@ const UserNotiCard = ({ item, showLabel }: UserNotiProps) => {
   );
 };
 
-export default UserNotiCard;
+export default HostNotiCard;

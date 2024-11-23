@@ -18,6 +18,7 @@ import UserNotiPage from '@pages/UserNotiPage';
 import AddRoom from '@pages/AddRoom';
 import SearchResult from '@pages/SearchResult';
 import ReservationPage from '@pages/ReservationPage';
+import HostNotiPage from '@pages/HostNotiPage';
 
 const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
   {
     path: '/management-reserver-list',
     element: <ManagementReserverPage />,
+  },
+  {
+    path: '/host-noti',
+    element: <HostNotiPage />,
   },
   {
     path: '/search',
