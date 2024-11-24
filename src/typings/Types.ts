@@ -17,3 +17,18 @@ export type Space = {
   spaceImage: File | null;
   rooms: Room[];
 };
+
+export interface StudyRoom {
+  workPlaceId: number;
+  businessId: number;
+  workplaceName: string;
+  workplaceImage: string;
+  workPlacePhoneNumber: string;
+  workPlaceDescription: string;
+  workPlaceAddress: string;
+  workPlaceStartTime: string; // 추후 수정
+  workPlaceEndTime: string; // 추후 수정
+  createdAt: string; // 추후 수정
+  updateAt: string; // 추후 수정
+  starSum: number;
+}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { StudyRoom } from '@typings/Types';
 import StudyRoomCard from './StudyRoomCard';
 
 type TabList = {
@@ -8,7 +9,13 @@ type TabList = {
   };
 };
 
-const MainList = () => {
+interface MainListProps {
+  data: StudyRoom[];
+}
+
+const MainList = (props: MainListProps) => {
+  const { data } = props;
+
   const [activeTab, setActiveTab] = useState('기본');
   const tabList: TabList = {
     기본: {
@@ -40,9 +47,12 @@ const MainList = () => {
         <p className='text-sm'>{tabList[activeTab].context}</p>
       </div>
       <div className='mx-auto flex w-custom flex-col gap-4'>
-        <StudyRoomCard />
-        <StudyRoomCard />
-        <StudyRoomCard />
+        {data.map((item) => (
+          <StudyRoomCard
+            key={item.workPlaceId}
+            studyroom={item}
+          />
+        ))}
       </div>
     </div>
   );
