@@ -14,7 +14,10 @@ const RegisterSpace = () => {
     openTime: '선택',
     closedTime: '선택',
     phoneNumber: '',
-    address: '',
+    address: {
+      basic: '',
+      detail: '',
+    },
     spaceImage: null,
     rooms: [],
   });
@@ -78,6 +81,7 @@ const RegisterSpace = () => {
           spaceFormData={spaceFormData}
           changeFormdata={onChange}
           addRoom={addRoom}
+          clickRoom={setSelectedRoomId}
         />
       )}
     </MainLayout>

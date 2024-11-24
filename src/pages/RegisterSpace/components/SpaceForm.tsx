@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Space } from '@typings/Types';
+import { IoMdClose } from 'react-icons/io';
 import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
 import SelectOpenTime from './SelectOpenTime';
@@ -13,12 +14,14 @@ interface SpaceFormProps {
   spaceFormData: Space;
   changeFormdata: (data: Partial<Space>) => void;
   addRoom: () => void;
+  clickRoom: (id: string) => void;
 }
 
 const SpaceForm = ({
   spaceFormData,
   changeFormdata,
   addRoom,
+  clickRoom,
 }: SpaceFormProps) => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -30,6 +33,12 @@ const SpaceForm = ({
       e.target.value = e.target.value.substring(0, 500);
     }
     changeFormdata({ [e.target.name]: e.target.value });
+  };
+
+  const handleDelete = (roomId: string) => {
+    changeFormdata({
+      rooms: spaceFormData.rooms.filter((item) => item.id !== roomId),
+    });
   };
 
   // 사업장명 형식 확인
@@ -44,45 +53,78 @@ const SpaceForm = ({
     return numberRegex.test(number);
   };
 
+  // 주소 형식 확인
+  const isValidAddress = (detail: string) => {
+    const addressRegex = /^[a-zA-Z가-힣0-9\s(),-]{5,100}$/;
+    return addressRegex.test(detail);
+  };
+
   const [errorMessage, setErrorMessage] = useState({
     spaceNameError: '',
     descriptionError: '',
     timeError: '',
     phoneNumberError: '',
+    addressError: '',
+    imageError: '',
+    roomError: '',
   });
 
+  let pass = true;
   const isValid = () => {
     const newErrorMessage = {
       spaceNameError: '',
       descriptionError: '',
       timeError: '',
       phoneNumberError: '',
+      addressError: '',
+      imageError: '',
+      roomError: '',
     };
+
     if (!isValidSpaceName(spaceFormData.spaceName)) {
       newErrorMessage.spaceNameError =
         '사업장명은 특수문자 없이 20자 이내로 입력해주세요.';
+      pass = false;
     }
     if (spaceFormData.description === '') {
       newErrorMessage.descriptionError = '사업장 소개 문구를 입력해주세요.';
+      pass = false;
     }
     if (
       spaceFormData.openTime === '선택' ||
       spaceFormData.closedTime === '선택'
     ) {
       newErrorMessage.timeError = '시간을 선택해주세요.';
+      pass = false;
     }
     if (!isValidNumber(spaceFormData.phoneNumber)) {
       newErrorMessage.phoneNumberError = '전화번호 형식을 확인해주세요.';
+      pass = false;
     }
+    if (!isValidAddress(spaceFormData.address.detail)) {
+      newErrorMessage.addressError =
+        '주소는 5~100자 이내이며, 가능한 특수문자는 (,-())입니다.';
+      pass = false;
+    }
+    if (spaceFormData.spaceImage === null) {
+      newErrorMessage.imageError = '이미지를 등록해주세요.';
+      pass = false;
+    }
+    if (spaceFormData.rooms.length === 0) {
+      newErrorMessage.roomError = '룸은 적어도 하나 이상 등록해야 합니다.';
+    }
+
     setErrorMessage(newErrorMessage);
+    return pass;
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    isValid();
+    if (isValid()) {
+      // api 호출
+    }
   };
 
-  const handleClick = () => {};
   return (
     <div className='flex flex-col items-center justify-center pb-24 pt-[35px]'>
       <form
@@ -161,22 +203,59 @@ const SpaceForm = ({
             {errorMessage.phoneNumberError}
           </div>
         )}
-        <Address changeFormdata={changeFormdata} />
-        <WorkSpaceImage changeFormdata={changeFormdata} />
-        <div className='mt-[40px] flex flex-col'>
+        <Address
+          address={spaceFormData.address}
+          onUpdateAddress={(address) => changeFormdata({ address })}
+        />
+        {errorMessage.addressError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.addressError}
+          </div>
+        )}
+        <WorkSpaceImage
+          spaceFormData={spaceFormData}
+          changeFormdata={changeFormdata}
+        />
+        {errorMessage.imageError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.imageError}
+          </div>
+        )}
+        <div className='relative mt-[40px] flex flex-col'>
           <label
             htmlFor='spaceName'
             className='mb-[10px] text-[14px] font-normal'
           >
             룸 추가
           </label>
+          {errorMessage.roomError && (
+            <div className='absolute right-[0px] text-[12px] font-medium text-[#F83A3A]'>
+              {errorMessage.roomError}
+            </div>
+          )}
           {spaceFormData.rooms.length !== 0 &&
             spaceFormData.rooms.map((item) => (
-              <RoomComponent
+              <div
                 key={item.id}
-                room={item}
-                onClick={handleClick}
-              />
+                className='relative'
+              >
+                <button
+                  type='button'
+                  onClick={() => clickRoom(item.id)}
+                >
+                  <RoomComponent room={item} />
+                </button>
+                <button
+                  type='button'
+                  className='absolute right-[12px] top-[12px]'
+                  onClick={() => handleDelete(item.id)}
+                >
+                  <IoMdClose
+                    size='20px'
+                    color='black'
+                  />
+                </button>
+              </div>
             ))}
           <button
             type='button'

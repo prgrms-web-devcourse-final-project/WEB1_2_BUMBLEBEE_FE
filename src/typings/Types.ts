@@ -13,7 +13,7 @@ export type Space = {
   openTime: string;
   closedTime: string;
   phoneNumber: string;
-  address: string;
+  address: { basic: string; detail: string };
   spaceImage: File | null;
   rooms: Room[];
 };

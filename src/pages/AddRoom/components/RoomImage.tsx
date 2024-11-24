@@ -35,7 +35,7 @@ const RoomImage = ({ roomImages, onUpdateImages }: RoomImagesProps) => {
           >
             룸 사진 등록
             <span className='ml-[6px] text-[12px] text-[#8b8b8b]'>
-              JPG, JPEG, 최대 4장
+              JPG, JPEG, PNG, 최대 4장
             </span>
           </label>
         </div>
@@ -50,7 +50,7 @@ const RoomImage = ({ roomImages, onUpdateImages }: RoomImagesProps) => {
           name='images'
           type='file'
           multiple
-          accept='image/png, image/jpeg'
+          accept='image/jpeg, image/jpg, image/png'
           className='absolute h-0 w-0 border-0'
           onChange={handleChange}
         />

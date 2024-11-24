@@ -1,5 +1,5 @@
 import TextareaAutosize from 'react-textarea-autosize';
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { Room } from '@typings/Types';
 import RoomImage from './RoomImage';
 import CountPeople from './CountPeople';
@@ -23,12 +23,47 @@ const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
     updateRoomData({ [e.target.name]: e.target.value });
   };
 
-  const isValid = () => {};
+  const [errorMessage, setErrorMessage] = useState({
+    roomNameError: '',
+    roomDescriptionError: '',
+    roomImagesError: '',
+    priceError: '',
+  });
+
+  let pass = true;
+  const isValid = () => {
+    const newErrorMessage = {
+      roomNameError: '',
+      roomDescriptionError: '',
+      roomImagesError: '',
+      priceError: '',
+    };
+    if (room.roomName === '') {
+      newErrorMessage.roomNameError = '룸 이름을 입력해주세요.';
+      pass = false;
+    }
+    if (room.description === '') {
+      newErrorMessage.roomDescriptionError = '룸 소개를 입력해주세요.';
+      pass = false;
+    }
+    if (room.roomImages.length === 0) {
+      newErrorMessage.roomImagesError = '이미지를 등록해주세요.';
+      pass = false;
+    }
+    if (room.price === '' || room.people === 0) {
+      newErrorMessage.priceError = '가격 또는 인원수를 필수로 입력해주세요.';
+      pass = false;
+    }
+
+    setErrorMessage(newErrorMessage);
+    return pass;
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    isValid();
-    completeAdd('');
+    if (isValid()) {
+      completeAdd('');
+    }
   };
 
   return (
@@ -53,6 +88,11 @@ const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
             value={room.roomName}
           />
         </div>
+        {errorMessage.roomNameError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.roomNameError}
+          </div>
+        )}
         <div className='mt-[40px] flex flex-col'>
           <div className='flex justify-between'>
             <label
@@ -75,10 +115,20 @@ const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
             value={room.description}
           />
         </div>
+        {errorMessage.roomDescriptionError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.roomDescriptionError}
+          </div>
+        )}
         <RoomImage
           roomImages={room.roomImages}
           onUpdateImages={(roomImages) => updateRoomData({ roomImages })}
         />
+        {errorMessage.roomImagesError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.roomImagesError}
+          </div>
+        )}
         <div className='mt-[40px] flex items-center justify-between'>
           <div className='flex items-center'>
             <label htmlFor='price'>
@@ -101,6 +151,11 @@ const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
             updateRoomData={updateRoomData}
           />
         </div>
+        {errorMessage.priceError && (
+          <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.priceError}
+          </div>
+        )}
         <button
           type='submit'
           className='btn-primary mt-[40px] text-[16px]'
