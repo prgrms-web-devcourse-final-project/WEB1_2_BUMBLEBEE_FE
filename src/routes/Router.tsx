@@ -19,6 +19,7 @@ import AddRoom from '@pages/AddRoom';
 import SearchResult from '@pages/SearchResult';
 import ReservationPage from '@pages/ReservationPage';
 import HostNotiPage from '@pages/HostNotiPage';
+import UserInfoPage from '@pages/UserInfoPage';
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
   {
     path: '/user-noti',
     element: <UserNotiPage />,
+  },
+  {
+    path: '/user-info',
+    element: <UserInfoPage />,
   },
   {
     path: '/host-page',
