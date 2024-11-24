@@ -1,10 +1,14 @@
 interface ModalProps {
   message: string;
-  cancelButton: React.MouseEventHandler<HTMLButtonElement>;
-  confirmButton: React.MouseEventHandler<HTMLButtonElement>;
+  onCancelButtonClick: React.MouseEventHandler<HTMLButtonElement>;
+  onConfirmButtonClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const Modal = ({ message, cancelButton, confirmButton }: ModalProps) => {
+const Modal = ({
+  message,
+  onCancelButtonClick,
+  onConfirmButtonClick,
+}: ModalProps) => {
   return (
     <div className='fixed left-[50%] top-0 z-[1500] flex h-[100%] w-[375px] translate-x-[-50%] items-center justify-center bg-[rgba(0,0,0,0.4)]'>
       <div className='flex h-auto min-h-[140px] w-[280px] flex-col rounded-lg bg-[rgba(255,255,255,0.98)] text-center'>
@@ -15,13 +19,13 @@ const Modal = ({ message, cancelButton, confirmButton }: ModalProps) => {
           <button
             type='button'
             className='w-[50%] border-r-[0.5px] border-subfont'
-            onClick={cancelButton}
+            onClick={onCancelButtonClick}
           >
             취소
           </button>
           <button
             type='button'
-            onClick={confirmButton}
+            onClick={onConfirmButtonClick}
             className='w-[50%] active:text-primary'
           >
             확인
