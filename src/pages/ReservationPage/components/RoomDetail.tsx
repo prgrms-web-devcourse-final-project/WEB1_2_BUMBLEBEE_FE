@@ -1,19 +1,17 @@
+import DetailTitle from '@components/DetailTitle';
 import { GrNext } from 'react-icons/gr';
 
 const RoomDetail = () => {
   return (
-    <div className='mx-auto mt-8 flex w-custom flex-col'>
-      <div className='flex items-center justify-between'>
-        <p>룸 상세 정보</p>
+    <div className='mx-auto mt-8 flex w-custom flex-col gap-4'>
+      <DetailTitle title='룸 상세 정보'>
         <button
           type='button'
           className='flex items-center justify-center gap-1 text-xs text-subfont'
         >
           123 스터디룸 <GrNext />
         </button>
-      </div>
-
-      <hr className='my-2 border border-black' />
+      </DetailTitle>
       <div className='whitespace-pre-wrap text-sm'>
         강서구 내발산동 수명산파크 중심상가에 위치해있으며, 김포공항, 마곡,
         마곡나루, 우장산, 화곡역 등에 가깝고 대로변에 위치하고 있어 접근성이

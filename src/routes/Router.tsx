@@ -20,6 +20,7 @@ import SearchResult from '@pages/SearchResult';
 import ReservationPage from '@pages/ReservationPage';
 import HostNotiPage from '@pages/HostNotiPage';
 import UserInfoPage from '@pages/UserInfoPage';
+import PaymentPage from '@pages/PaymentPage';
 
 const router = createBrowserRouter([
   {
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
   {
     path: '/reservation',
     element: <ReservationPage />,
+  },
+  {
+    path: '/payment',
+    element: <PaymentPage />,
   },
   {
     path: '*',
