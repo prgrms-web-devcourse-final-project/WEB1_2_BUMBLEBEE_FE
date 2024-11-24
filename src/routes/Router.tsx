@@ -22,6 +22,7 @@ import HostNotiPage from '@pages/HostNotiPage';
 import UserInfoPage from '@pages/UserInfoPage';
 import PaymentPage from '@pages/PaymentPage';
 import PaymentSuccessPage from '@pages/PaymentSuccessPage';
+import HostInfoPage from '@pages/HostInfoPage';
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
   {
     path: '/host-noti',
     element: <HostNotiPage />,
+  },
+  {
+    path: 'host-info',
+    element: <HostInfoPage />,
   },
   {
     path: '/search',

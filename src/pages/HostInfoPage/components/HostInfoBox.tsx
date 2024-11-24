@@ -1,28 +1,28 @@
 import LabelWithInput from '@components/LabelWithInput';
 
-const user = {
-  name: 'HYUN',
-  email: 'hyun@gmail.com',
-  phone: '010-1111-2222',
+const host = {
+  name: 'HOST',
+  email: 'host@gmail.com',
+  businessNumber: '000-00-0000',
 };
 
-const InfoContainer = () => {
+const HostInfoBox = () => {
   return (
     <div className='flex flex-col gap-12'>
       <LabelWithInput
         label='닉네임'
-        value={user.name}
+        value={host.name}
       />
       <LabelWithInput
-        label='전화번호'
-        value={user.phone}
+        label='사업자 등록번호'
+        value={host.businessNumber}
       />
       <LabelWithInput
         label='이메일'
-        value={user.email}
+        value={host.email}
       />
     </div>
   );
 };
 
-export default InfoContainer;
+export default HostInfoBox;

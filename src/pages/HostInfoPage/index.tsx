@@ -1,14 +1,14 @@
 import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
-import UserInfoContainer from './components/UserInfoContainer';
+import HostInfoContainer from './components/HostInfoContainer';
 
-const UserInfoPage = () => {
+const HostInfoPage = () => {
   return (
     <MainLayout>
       <HeaderOnlyTitle title='회원 정보' />
-      <UserInfoContainer />
+      <HostInfoContainer />
     </MainLayout>
   );
 };
 
-export default UserInfoPage;
+export default HostInfoPage;
