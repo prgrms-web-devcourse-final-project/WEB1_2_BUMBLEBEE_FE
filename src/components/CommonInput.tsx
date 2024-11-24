@@ -1,7 +1,7 @@
 interface InputPros {
   label: string;
   placeholder?: string;
-  defaultValue: string;
+  defaultValue?: string;
 }
 
 const CommonInput = ({ label, placeholder, defaultValue }: InputPros) => {
