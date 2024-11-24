@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
+import { getDistance } from '@utils/getDistance';
 
 const KakaoMap = () => {
+  const { kakao } = window;
   const [position, setPosition] = useState({
     center: {
       lat: 33.450701,
@@ -47,6 +49,21 @@ const KakaoMap = () => {
       }));
     }
   }, []);
+
+  useEffect(() => {
+    const calculateDistance = () => {
+      const distance = getDistance(
+        position.center.lat,
+        position.center.lng,
+        center.lat,
+        center.lng,
+      );
+      console.log(`두 좌표 간의 거리는 ${distance}km 입니다.`);
+    };
+    if (kakao && kakao.maps) {
+      calculateDistance();
+    }
+  }, [kakao, position, center]);
 
   return (
     <div className='relative h-[298px] w-[375px]'>
