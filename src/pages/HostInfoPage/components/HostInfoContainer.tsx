@@ -3,7 +3,7 @@ import HostInfoBox from './HostInfoBox';
 
 const HostInfoContainer = () => {
   return (
-    <div className='mt-14 flex w-[375px] flex-col justify-center gap-52'>
+    <div className='mt-14 flex w-[375px] flex-col justify-center gap-60'>
       <div className='mx-auto flex w-custom flex-col justify-center gap-10'>
         <HostInfoBox />
         <button
