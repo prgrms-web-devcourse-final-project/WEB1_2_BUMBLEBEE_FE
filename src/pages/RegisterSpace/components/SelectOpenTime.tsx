@@ -1,13 +1,16 @@
+import { Space } from '@typings/Types';
 import { useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
-import { SpaceForm } from './SelectClosedTime';
 
-interface SelectOpenTimeProps {
-  spaceForm: SpaceForm;
-  setSpaceForm: React.Dispatch<React.SetStateAction<SpaceForm>>;
+export interface SelectOpenTimeProps {
+  spaceFormData: Space;
+  changeFormdata: (data: Partial<Space>) => void;
 }
 
-const SelectOpenTime = ({ spaceForm, setSpaceForm }: SelectOpenTimeProps) => {
+const SelectOpenTime = ({
+  spaceFormData,
+  changeFormdata,
+}: SelectOpenTimeProps) => {
   const [showList, setShowList] = useState(false);
 
   const timeList = [
@@ -29,7 +32,7 @@ const SelectOpenTime = ({ spaceForm, setSpaceForm }: SelectOpenTimeProps) => {
   ];
 
   const handleTimeSelect = (item: string) => {
-    setSpaceForm({ ...spaceForm, openTime: item });
+    changeFormdata({ openTime: item });
     setShowList(!showList);
   };
 
@@ -37,7 +40,7 @@ const SelectOpenTime = ({ spaceForm, setSpaceForm }: SelectOpenTimeProps) => {
     <div className='relative flex items-center'>
       <p className='mr-[12px] text-[14px] font-normal'>오픈 시간</p>
       <div className='flex h-[38px] w-[90px] items-center justify-around rounded-[5px] border border-solid border-subfont'>
-        <span className='pl-[12px] text-[14px]'>{spaceForm.openTime}</span>
+        <span className='pl-[12px] text-[14px]'>{spaceFormData.openTime}</span>
         <button
           type='button'
           onClick={() => setShowList(!showList)}
