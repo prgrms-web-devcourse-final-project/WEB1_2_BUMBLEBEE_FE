@@ -41,7 +41,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
     navigate('/write-review');
   };
 
-  const cancelPayment = () => {
+  const handleCancelPayment = () => {
     console.log('결제 취소');
     setModalOpen(() => false);
   };
@@ -107,8 +107,8 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
         {modalOpen && (
           <Modal
             message='결제를 취소하시겠습니까?'
-            cancelButton={() => setModalOpen(false)}
-            confirmButton={cancelPayment}
+            onCancelButtonClick={() => setModalOpen(false)}
+            onConfirmButtonClick={handleCancelPayment}
           />
         )}
       </div>

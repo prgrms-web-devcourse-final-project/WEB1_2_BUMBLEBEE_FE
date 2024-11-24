@@ -18,8 +18,10 @@ import UserNotiPage from '@pages/UserNotiPage';
 import SearchResult from '@pages/SearchResult';
 import ReservationPage from '@pages/ReservationPage';
 import HostNotiPage from '@pages/HostNotiPage';
+import UserInfoPage from '@pages/UserInfoPage';
 import PaymentPage from '@pages/PaymentPage';
 import PaymentSuccessPage from '@pages/PaymentSuccessPage';
+import HostInfoPage from '@pages/HostInfoPage';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +73,10 @@ const router = createBrowserRouter([
     element: <UserNotiPage />,
   },
   {
+    path: '/user-info',
+    element: <UserInfoPage />,
+  },
+  {
     path: '/host-page',
     element: <HostMypage />,
   },
@@ -85,6 +91,10 @@ const router = createBrowserRouter([
   {
     path: '/host-noti',
     element: <HostNotiPage />,
+  },
+  {
+    path: 'host-info',
+    element: <HostInfoPage />,
   },
   {
     path: '/search',
