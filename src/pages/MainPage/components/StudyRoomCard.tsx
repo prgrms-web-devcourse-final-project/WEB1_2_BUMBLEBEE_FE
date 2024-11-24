@@ -3,9 +3,10 @@ import { FaStar } from 'react-icons/fa6';
 
 interface StudyRoomCardProps {
   studyroom: StudyRoom;
+  distance: number;
 }
 
-const StudyRoomCard = ({ studyroom }: StudyRoomCardProps) => {
+const StudyRoomCard = ({ studyroom, distance }: StudyRoomCardProps) => {
   const { workplaceImage, workplaceName, workPlaceAddress, starSum } =
     studyroom;
 
@@ -22,7 +23,7 @@ const StudyRoomCard = ({ studyroom }: StudyRoomCardProps) => {
         <div className='flex-col gap-1'>
           <p className='font-normal'>{workplaceName}</p>
           <div className='flex gap-[10px]'>
-            <span className='text-xs font-normal'>1.5km</span>
+            <span className='text-xs font-normal'>{distance}km</span>
             <span className='text-xs'>{formattedAddress}</span>
           </div>
         </div>

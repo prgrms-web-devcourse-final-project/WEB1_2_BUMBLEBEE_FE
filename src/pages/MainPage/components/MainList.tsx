@@ -11,10 +11,11 @@ type TabList = {
 
 interface MainListProps {
   data: StudyRoom[];
+  distanceList: { id: number; distance: number }[];
 }
 
 const MainList = (props: MainListProps) => {
-  const { data } = props;
+  const { data, distanceList } = props;
 
   const [activeTab, setActiveTab] = useState('기본');
   const tabList: TabList = {
@@ -47,12 +48,18 @@ const MainList = (props: MainListProps) => {
         <p className='text-sm'>{tabList[activeTab].context}</p>
       </div>
       <div className='mx-auto flex w-custom flex-col gap-4'>
-        {data.map((item) => (
-          <StudyRoomCard
-            key={item.workPlaceId}
-            studyroom={item}
-          />
-        ))}
+        {data.map((item) => {
+          const distanceData = distanceList.find(
+            (distance) => distance.id === item.workPlaceId,
+          );
+          return (
+            <StudyRoomCard
+              key={item.workPlaceId}
+              studyroom={item}
+              distance={distanceData ? distanceData.distance : 0}
+            />
+          );
+        })}
       </div>
     </div>
   );

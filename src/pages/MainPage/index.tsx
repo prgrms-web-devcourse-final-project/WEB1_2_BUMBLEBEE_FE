@@ -1,10 +1,22 @@
 import MainLayout from '@layouts/MainLayout';
 import HeaderNoTitle from '@layouts/HeaderNoTitle';
 import BottomNavigation from '@layouts/BottomNavigation';
+import { useCallback, useState } from 'react';
 import MainList from './components/MainList';
 import KakaoMap from './components/KakaoMap';
 
 const MainPage = () => {
+  const [distanceList, setDistanceList] = useState<
+    { id: number; distance: number }[]
+  >([]);
+
+  const handleDistanceChange = useCallback(
+    (distanceData: { id: number; distance: number }[]) => {
+      setDistanceList(distanceData); // 상태를 업데이트
+    },
+    [],
+  );
+
   const studyRoomExample = [
     {
       workPlaceId: 1,
@@ -42,8 +54,14 @@ const MainPage = () => {
     <>
       <MainLayout>
         <HeaderNoTitle />
-        <KakaoMap data={studyRoomExample} />
-        <MainList data={studyRoomExample} />
+        <KakaoMap
+          data={studyRoomExample}
+          onDistanceChange={handleDistanceChange}
+        />
+        <MainList
+          data={studyRoomExample}
+          distanceList={distanceList}
+        />
         <BottomNavigation />
       </MainLayout>
     </>

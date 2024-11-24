@@ -6,11 +6,11 @@ import { StudyRoom } from '@typings/Types';
 
 interface KakaoMapProps {
   data: StudyRoom[];
+  onDistanceChange: (value: { id: number; distance: number }[]) => void;
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const { data } = props;
-
+  const { data, onDistanceChange } = props;
   const { kakao } = window;
   const [position, setPosition] = useState({
     center: {
@@ -23,6 +23,7 @@ const KakaoMap = (props: KakaoMapProps) => {
 
   const [center, setCenter] = useState(position.center);
 
+  // 사용자 위치 가져오기
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -57,11 +58,15 @@ const KakaoMap = (props: KakaoMapProps) => {
     }
   }, []);
 
+  // 거리 계산 및 업데이트
   const [studyRoomList, setStudyRoomList] = useState<kakao.maps.LatLng[]>([]);
-  const geocoder = new kakao.maps.services.Geocoder();
 
   useEffect(() => {
-    data.map((item) =>
+    const newStudyRoomList: kakao.maps.LatLng[] = [];
+    const distanceData: { id: number; distance: number }[] = [];
+
+    const geocoder = new kakao.maps.services.Geocoder();
+    data.forEach((item) =>
       geocoder.addressSearch(item.workPlaceAddress, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           const coords = new kakao.maps.LatLng(
@@ -75,15 +80,21 @@ const KakaoMap = (props: KakaoMapProps) => {
             parseFloat(result[0].y),
             parseFloat(result[0].x),
           );
-          setStudyRoomList((prevList) => [...prevList, coords]);
+          newStudyRoomList.push(coords);
+          distanceData.push({ id: item.workPlaceId, distance });
           console.log(
             `${item.workplaceName} 간의 거리는 ${distance}km 입니다.`,
           );
+
+          if (distanceData.length === data.length) {
+            setStudyRoomList(newStudyRoomList);
+            onDistanceChange(distanceData);
+          }
         }
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, position]);
+  }, [onDistanceChange, position]);
 
   return (
     <div className='relative h-[298px] w-[375px]'>
