@@ -7,10 +7,11 @@ import { StudyRoom } from '@typings/Types';
 interface KakaoMapProps {
   data: StudyRoom[];
   onDistanceChange: (value: { id: number; distance: number }[]) => void;
+  onLoadingChange: (value: boolean) => void;
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const { data, onDistanceChange } = props;
+  const { data, onDistanceChange, onLoadingChange } = props;
   const { kakao } = window;
   const [position, setPosition] = useState({
     center: {
@@ -40,6 +41,7 @@ const KakaoMap = (props: KakaoMapProps) => {
             lat: pos.coords.latitude,
             lng: pos.coords.longitude,
           });
+          onLoadingChange(false);
         },
         (err) => {
           setPosition((prev) => ({
@@ -47,6 +49,7 @@ const KakaoMap = (props: KakaoMapProps) => {
             errMsg: err.message,
             isLoading: false,
           }));
+          onLoadingChange(false);
         },
       );
     } else {
@@ -55,8 +58,9 @@ const KakaoMap = (props: KakaoMapProps) => {
         errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
+      onLoadingChange(false);
     }
-  }, []);
+  }, [onLoadingChange]);
 
   // 거리 계산 및 업데이트
   const [studyRoomList, setStudyRoomList] = useState<kakao.maps.LatLng[]>([]);

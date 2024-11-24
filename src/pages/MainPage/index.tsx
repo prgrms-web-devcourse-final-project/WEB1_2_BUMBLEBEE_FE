@@ -6,6 +6,7 @@ import MainList from './components/MainList';
 import KakaoMap from './components/KakaoMap';
 
 const MainPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [distanceList, setDistanceList] = useState<
     { id: number; distance: number }[]
   >([]);
@@ -54,14 +55,23 @@ const MainPage = () => {
     <>
       <MainLayout>
         <HeaderNoTitle />
-        <KakaoMap
-          data={studyRoomExample}
-          onDistanceChange={handleDistanceChange}
-        />
-        <MainList
-          data={studyRoomExample}
-          distanceList={distanceList}
-        />
+        {isLoading ? (
+          <div className='flex h-full items-center justify-center'>
+            <p>Loading...</p>
+          </div>
+        ) : (
+          <>
+            <KakaoMap
+              data={studyRoomExample}
+              onDistanceChange={handleDistanceChange}
+              onLoadingChange={setIsLoading}
+            />
+            <MainList
+              data={studyRoomExample}
+              distanceList={distanceList}
+            />
+          </>
+        )}
         <BottomNavigation />
       </MainLayout>
     </>
