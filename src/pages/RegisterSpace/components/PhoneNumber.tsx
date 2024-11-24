@@ -1,11 +1,11 @@
-import { SpaceForm } from './SelectClosedTime';
+import { Space } from '@typings/Types';
 
-interface PhoneNumberProps {
-  spaceForm: SpaceForm;
-  setSpaceForm: React.Dispatch<React.SetStateAction<SpaceForm>>;
+export interface PhoneNumberProps {
+  spaceFormData: Space;
+  changeFormdata: (data: Partial<Space>) => void;
 }
 
-const PhoneNumber = ({ spaceForm, setSpaceForm }: PhoneNumberProps) => {
+const PhoneNumber = ({ spaceFormData, changeFormdata }: PhoneNumberProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 하이픈 포함 최대 14자리까지만 입력 가능
     if (e.target.value.length > 14) {
@@ -26,8 +26,8 @@ const PhoneNumber = ({ spaceForm, setSpaceForm }: PhoneNumberProps) => {
       formatNumber = onlyNumber.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
     }
 
-    if (spaceForm.phoneNumber !== formatNumber) {
-      setSpaceForm({ ...spaceForm, phoneNumber: formatNumber });
+    if (spaceFormData.phoneNumber !== formatNumber) {
+      changeFormdata({ phoneNumber: formatNumber });
     }
   };
 
@@ -45,7 +45,7 @@ const PhoneNumber = ({ spaceForm, setSpaceForm }: PhoneNumberProps) => {
         className='main-input'
         placeholder='사업장 전화번호를 입력해주세요.'
         onChange={handleChange}
-        value={spaceForm.phoneNumber}
+        value={spaceFormData.phoneNumber}
       />
     </div>
   );

@@ -1,22 +1,15 @@
 import { useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
-
-export interface SpaceForm {
-  spaceName: string;
-  description: string;
-  openTime: string;
-  closedTime: string;
-  phoneNumber: string;
-  address: string;
-}
+import { Space } from '@typings/Types';
 
 interface SelectClosedTimeProps {
-  spaceForm: SpaceForm;
-  setSpaceForm: React.Dispatch<React.SetStateAction<SpaceForm>>;
+  spaceFormData: Space;
+  changeFormdata: (data: Partial<Space>) => void;
 }
+
 const SelectClosedTime = ({
-  spaceForm,
-  setSpaceForm,
+  spaceFormData,
+  changeFormdata,
 }: SelectClosedTimeProps) => {
   const [showList, setShowList] = useState(false);
 
@@ -39,14 +32,16 @@ const SelectClosedTime = ({
   ];
 
   const handleTimeSelect = (item: string) => {
-    setSpaceForm({ ...spaceForm, closedTime: item });
+    changeFormdata({ closedTime: item });
     setShowList(!showList);
   };
   return (
     <div className='relative flex items-center'>
       <p className='mr-[12px] text-[14px] font-normal'>마감 시간</p>
       <div className='flex h-[38px] w-[90px] items-center justify-around rounded-[5px] border border-solid border-subfont'>
-        <span className='pl-[12px] text-[14px]'>{spaceForm.closedTime}</span>
+        <span className='pl-[12px] text-[14px]'>
+          {spaceFormData.closedTime}
+        </span>
         <button
           type='button'
           onClick={() => setShowList(!showList)}

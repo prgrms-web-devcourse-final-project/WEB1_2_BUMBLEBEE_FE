@@ -1,22 +1,20 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
-import { SpaceForm } from './SelectClosedTime';
 
-interface AddressProps {
-  spaceForm: SpaceForm;
-  setSpaceForm: Dispatch<SetStateAction<SpaceForm>>;
+export interface AddressProps {
+  onUpdateAddress: (address: { basic: string; detail: string }) => void;
+  address: { basic: string; detail: string };
 }
 
-const Address = ({ spaceForm, setSpaceForm }: AddressProps) => {
+const Address = ({ onUpdateAddress, address }: AddressProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [addressChange, setAddressChange] = useState('');
 
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
 
-  const completeHandler = (data: { address: SetStateAction<string> }) => {
-    setAddressChange(data.address);
+  const completeHandler = (data: { address: string }) => {
+    onUpdateAddress({ ...address, basic: data.address });
   };
 
   const closeHandler = (state: string) => {
@@ -29,11 +27,7 @@ const Address = ({ spaceForm, setSpaceForm }: AddressProps) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const detailAddress = e.target.value;
-    const fullAddress = `${addressChange} ${detailAddress}`;
-    setSpaceForm({
-      ...spaceForm,
-      address: fullAddress,
-    });
+    onUpdateAddress({ ...address, detail: detailAddress });
   };
 
   return (
@@ -51,7 +45,7 @@ const Address = ({ spaceForm, setSpaceForm }: AddressProps) => {
             type='text'
             className='mb-[10px] mr-[12px] h-[38px] w-[234px] border-b border-solid border-subfont px-[6px] py-[5.5px] text-[14px] focus:outline-none'
             placeholder='주소를 등록해주세요.'
-            value={addressChange}
+            defaultValue={address.basic}
             readOnly
           />
           <button
@@ -68,6 +62,7 @@ const Address = ({ spaceForm, setSpaceForm }: AddressProps) => {
           className='h-[38px] w-custom border-b border-solid border-subfont px-[6px] py-[5.5px] text-[14px] focus:border-focusColor focus:outline-none'
           placeholder='상세 주소를 입력해주세요.'
           onChange={handleChange}
+          value={address.detail}
         />
       </div>
       {isOpen && (

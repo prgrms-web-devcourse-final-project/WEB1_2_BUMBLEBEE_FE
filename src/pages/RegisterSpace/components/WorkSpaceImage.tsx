@@ -1,12 +1,22 @@
 import { ChangeEvent, useState } from 'react';
+import { Space } from '@typings/Types';
 
-const WorkSpaceImage = () => {
-  //   const ALLOW_FILE_EXTENSION = 'jpg,jpeg,png';
-  const [fileName, setFileName] = useState('');
+interface WorkSpaceImageProps {
+  changeFormdata: (data: Partial<Space>) => void;
+  spaceFormData: Space;
+}
+
+const WorkSpaceImage = ({
+  changeFormdata,
+  spaceFormData,
+}: WorkSpaceImageProps) => {
+  const [fileName, setFileName] = useState(spaceFormData.spaceImage?.name);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files === null) return;
     if (e.target.files && e.target.files[0]) {
       setFileName(e.target.files[0].name);
     }
+    changeFormdata({ spaceImage: e.target.files[0] });
   };
 
   return (
@@ -14,15 +24,19 @@ const WorkSpaceImage = () => {
       <div className='mt-[6px]'>
         <label
           htmlFor='image'
-          className='mb-[6px] text-[14px] font-normal'
+          className='mb-[6px] flex justify-between text-[14px] font-normal'
         >
           사업장 사진 등록
+          <span className='text-[12px] text-[#8b8b8b]'>
+            JPG, JPEG, PNG 중 1개 가능
+          </span>
         </label>
         <div>
           <input
             name='image'
             className='mb-[10px] mr-[12px] h-[38px] w-[234px] border-b border-solid border-subfont px-[6px] py-[5.5px] text-[14px] focus:outline-none'
             value={fileName}
+            readOnly
           />
           <label
             htmlFor='file'
@@ -34,7 +48,7 @@ const WorkSpaceImage = () => {
             id='file'
             name='file'
             type='file'
-            accept='image/png, image/jpeg'
+            accept='image/png, image/jpeg, image/jpg'
             className='absolute h-0 w-0 border-0'
             onChange={handleChange}
           />
