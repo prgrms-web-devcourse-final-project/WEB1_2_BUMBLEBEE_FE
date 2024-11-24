@@ -1,10 +1,9 @@
+import DetailTitle from '@components/DetailTitle';
+
 const ReservationPrice = () => {
   return (
     <div className='mx-auto mt-8 flex w-custom flex-col gap-4'>
-      <div>
-        <p>주문 상품</p>
-        <hr className='mt-2 border border-black' />
-      </div>
+      <DetailTitle title='주문 상품' />
       <div>
         <div className='flex flex-col gap-[14px]'>
           <p className='font-normal'>ROOM A</p>

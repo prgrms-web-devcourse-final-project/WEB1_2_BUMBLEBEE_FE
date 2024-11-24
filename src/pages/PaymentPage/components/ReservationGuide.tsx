@@ -1,19 +1,56 @@
+import CheckAgree from '@components/CheckAgree';
+import DetailTitle from '@components/DetailTitle';
+import { useState } from 'react';
+
 const ReservationGuide = () => {
+  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const handleCheckItem = (checked: boolean, id: string) => {
+    if (checked) {
+      setCheckedList((prev) => [...prev, id]);
+    } else {
+      setCheckedList(checkedList.filter((item) => item !== id));
+    }
+  };
+
+  const isChecked = (id: string) => checkedList.includes(id);
+
   return (
     <div className='mx-auto mt-8 flex w-custom flex-col gap-4'>
-      <div>
-        <p>취소 / 환불 규정</p>
-        <hr className='mt-2 border border-black' />
-      </div>
+      <DetailTitle title='예약 안내' />
       <div className='flex flex-col gap-2 text-xs'>
-        <div className='flex items-center justify-between'>
-          <span>이용 24시간 전까지</span>
-          <span className='font-normal'>총 금액의 100% 환불</span>
-        </div>
-        <div className='flex items-center justify-between'>
-          <span>이용 24시간 이내</span>
-          <span className='font-normal'>환불 불가</span>
-        </div>
+        <CheckAgree
+          checkId='reservation1'
+          isCheck={isChecked('reservation1')}
+          description='개인정보 수집/이용
+              동의'
+          onChangeChecked={handleCheckItem}
+        >
+          <button
+            type='button'
+            className='text-subfont underline'
+          >
+            보기
+          </button>
+        </CheckAgree>
+        <CheckAgree
+          checkId='reservation2'
+          isCheck={isChecked('reservation2')}
+          description='개인정보 제3자 제공 동의'
+          onChangeChecked={handleCheckItem}
+        >
+          <button
+            type='button'
+            className='text-subfont underline'
+          >
+            보기
+          </button>
+        </CheckAgree>
+        <CheckAgree
+          checkId='reservation3'
+          isCheck={isChecked('reservation3')}
+          description='환불규정 안내에 대한 동의'
+          onChangeChecked={handleCheckItem}
+        />
       </div>
     </div>
   );
