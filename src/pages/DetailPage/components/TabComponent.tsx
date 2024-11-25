@@ -8,7 +8,7 @@ interface TabComponentProps {
 }
 
 const TabComponent = ({ setIsBtnDisabled }: TabComponentProps) => {
-  const tabs = ['상세정보', '룸 선택', '리뷰 (12)'];
+  const tabs = ['상세정보', '룸 선택', '리뷰 (3)'];
   const [activeTab, setActiveTab] = useState(0);
 
   const handleClickTab = (index: number) => {

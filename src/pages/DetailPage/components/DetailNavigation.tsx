@@ -6,7 +6,7 @@ interface DetailNavigationProps {
 
 const DetailNavigation = ({ isBtnDisabled }: DetailNavigationProps) => {
   return (
-    <div className='fixed bottom-0 flex h-[94px] w-[375px] items-center justify-center border-t border-subfont bg-white pb-[16px]'>
+    <div className='fixed bottom-0 z-10 flex h-[94px] w-[375px] items-center justify-center border-t border-subfont bg-white pb-[16px]'>
       <div className='flex'>
         <button
           type='button'

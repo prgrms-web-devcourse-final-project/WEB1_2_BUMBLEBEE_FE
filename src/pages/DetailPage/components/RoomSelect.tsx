@@ -1,4 +1,4 @@
-// import RoomComponent from '@pages/RegisterSpace/components/RoomComponent';
+import RoomComponent from '@pages/RegisterSpace/components/RoomComponent';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 // 임시 데이터
@@ -54,7 +54,7 @@ const RoomSelect = ({ setIsBtnDisabled }: RoomSelectProps) => {
             border: selectedRoomId === item.id ? '1px solid #50BEAD' : 'none',
           }}
         >
-          {/* <RoomComponent room={item} /> */}
+          <RoomComponent room={item} />
         </button>
       ))}
     </div>

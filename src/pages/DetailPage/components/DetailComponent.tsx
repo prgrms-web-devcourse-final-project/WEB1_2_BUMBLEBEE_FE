@@ -1,7 +1,10 @@
 import { BsTelephoneFill } from 'react-icons/bs';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 const DetailComponent = () => {
+  const center = { lat: 37.5525909469274, lng: 126.826197321696 };
+
   return (
     <div className='w-custom'>
       <div className='flex items-center'>
@@ -11,7 +14,7 @@ const DetailComponent = () => {
         />
         <span className='ml-[10px] text-[16px]'>0507-1234-5678</span>
       </div>
-      <div className='mt-[16px] flex'>
+      <div className='mb-[16px] mt-[16px] flex'>
         <FaMapMarkerAlt
           size='25px'
           color='#c3c3c3'
@@ -21,7 +24,26 @@ const DetailComponent = () => {
           (르하임 강서 마곡점)
         </span>
       </div>
-      <div className='h-[140px]'>지도</div>
+      <div className='h-[140px] w-custom'>
+        <Map
+          center={center}
+          className='h-full w-full'
+          level={3}
+          style={{ borderRadius: '8px' }}
+          draggable={false}
+        >
+          <MapMarker
+            position={center}
+            image={{
+              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+              size: {
+                width: 24,
+                height: 35,
+              },
+            }}
+          />
+        </Map>
+      </div>
       <hr className='border-top my-[26px] border-dashed border-subfont' />
       <p className='whitespace-pre-wrap text-[16px]'>
         강서구 내발산동 수명산파크 중심상가에 위치해있으며, 김포공항, 마곡,
