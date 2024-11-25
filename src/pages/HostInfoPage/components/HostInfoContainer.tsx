@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { MdArrowForwardIos } from 'react-icons/md';
 import HostInfoBox from './HostInfoBox';
 
 const HostInfoContainer = () => {
@@ -14,10 +15,11 @@ const HostInfoContainer = () => {
         <HostInfoBox />
         <button
           type='button'
-          className='btn-primary border border-primary bg-white text-primary active:bg-primary active:text-white'
+          className='flex h-[30px] items-center gap-1 self-end text-subfont active:text-primary'
           onClick={handleMoveEditPage}
         >
-          수정하기
+          정보 수정하기
+          <MdArrowForwardIos />
         </button>
       </div>
     </div>
