@@ -22,6 +22,8 @@ import UserInfoPage from '@pages/UserInfoPage';
 import PaymentPage from '@pages/PaymentPage';
 import PaymentSuccessPage from '@pages/PaymentSuccessPage';
 import HostInfoPage from '@pages/HostInfoPage';
+import HostInfoEditPage from '@pages/HostInfoEditPage';
+import UserInfoEditPage from '@pages/UserInfoEditPage';
 
 const router = createBrowserRouter([
   {
@@ -77,6 +79,10 @@ const router = createBrowserRouter([
     element: <UserInfoPage />,
   },
   {
+    path: '/user-info-edit',
+    element: <UserInfoEditPage />,
+  },
+  {
     path: '/host-page',
     element: <HostMypage />,
   },
@@ -95,6 +101,10 @@ const router = createBrowserRouter([
   {
     path: 'host-info',
     element: <HostInfoPage />,
+  },
+  {
+    path: 'host-info-edit',
+    element: <HostInfoEditPage />,
   },
   {
     path: '/search',
