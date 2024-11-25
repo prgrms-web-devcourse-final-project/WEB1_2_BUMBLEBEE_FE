@@ -22,10 +22,6 @@ const UserInfoBox = () => {
         label='생년월일'
         value={user.birth}
       />
-      <LabelWithInput
-        label='전화번호'
-        value={user.phone}
-      />
     </div>
   );
 };

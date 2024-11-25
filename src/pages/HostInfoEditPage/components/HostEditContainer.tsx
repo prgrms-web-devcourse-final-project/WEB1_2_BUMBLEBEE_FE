@@ -1,10 +1,10 @@
 import DeleteAccountButton from '@components/DeleteAccountButton';
-import UserEditForm from './UserEditForm';
+import HostEditForm from './HostEditForm';
 
-const UserEditContainer = () => {
+const HostEditContainer = () => {
   return (
     <div className='relative mt-14 flex w-[375px] flex-col'>
-      <UserEditForm />
+      <HostEditForm />
       <div className='absolute bottom-[-280px] left-[50%] translate-x-[-50%]'>
         <DeleteAccountButton />
       </div>
@@ -12,4 +12,4 @@ const UserEditContainer = () => {
   );
 };
 
-export default UserEditContainer;
+export default HostEditContainer;

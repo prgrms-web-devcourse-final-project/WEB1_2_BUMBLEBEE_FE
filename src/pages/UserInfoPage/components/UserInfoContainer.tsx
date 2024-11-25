@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import DeleteAccountButton from './DeleteAccountButton';
+import { MdArrowForwardIos } from 'react-icons/md';
 import UserInfoBox from './UserInfoBox';
 
 const UserInfoContainer = () => {
@@ -10,18 +10,18 @@ const UserInfoContainer = () => {
   };
 
   return (
-    <div className='mt-14 flex w-[375px] flex-col justify-center gap-[135px]'>
+    <div className='mt-14 flex w-[375px] flex-col justify-center'>
       <div className='mx-auto flex w-custom flex-col justify-center gap-10'>
         <UserInfoBox />
         <button
           type='button'
-          className='btn-primary border border-primary bg-white text-primary active:bg-primary active:text-white'
+          className='flex h-[30px] items-center gap-1 self-end text-subfont active:text-primary'
           onClick={handleMoveEditPage}
         >
-          수정하기
+          정보 수정하기
+          <MdArrowForwardIos />
         </button>
       </div>
-      <DeleteAccountButton />
     </div>
   );
 };
