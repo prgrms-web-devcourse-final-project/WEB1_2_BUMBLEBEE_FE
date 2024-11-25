@@ -41,6 +41,10 @@ const SpaceForm = ({
     });
   };
 
+  const handleClickAdd = () => {
+    addRoom();
+  };
+
   // 사업장명 형식 확인
   const isValidSpaceName = (name: string) => {
     const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9-\s]{1,20}$/;
@@ -242,6 +246,7 @@ const SpaceForm = ({
                 <button
                   type='button'
                   onClick={() => clickRoom(item.id)}
+                  className='mb-[10px]'
                 >
                   <RoomComponent room={item} />
                 </button>
@@ -260,7 +265,7 @@ const SpaceForm = ({
           <button
             type='button'
             className='flex h-[120px] w-custom items-center justify-center rounded-[10px] border border-dashed border-primary py-[10px]'
-            onClick={() => addRoom()}
+            onClick={handleClickAdd}
           >
             <AiOutlinePlus
               size='25px'
