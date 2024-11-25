@@ -3,15 +3,15 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
 import { getDistance } from '@utils/getDistance';
 import { StudyRoom } from '@typings/Types';
+import { MoonLoader } from 'react-spinners';
 
 interface KakaoMapProps {
   data: StudyRoom[];
   onDistanceChange: (value: { id: number; distance: number }[]) => void;
-  onLoadingChange: (value: boolean) => void;
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const { data, onDistanceChange, onLoadingChange } = props;
+  const { data, onDistanceChange } = props;
   const { kakao } = window;
   const [position, setPosition] = useState({
     center: {
@@ -41,7 +41,6 @@ const KakaoMap = (props: KakaoMapProps) => {
             lat: pos.coords.latitude,
             lng: pos.coords.longitude,
           });
-          onLoadingChange(false);
         },
         (err) => {
           setPosition((prev) => ({
@@ -49,7 +48,6 @@ const KakaoMap = (props: KakaoMapProps) => {
             errMsg: err.message,
             isLoading: false,
           }));
-          onLoadingChange(false);
         },
       );
     } else {
@@ -58,9 +56,8 @@ const KakaoMap = (props: KakaoMapProps) => {
         errMsg: 'geolocation을 사용할수 없어요..',
         isLoading: false,
       }));
-      onLoadingChange(false);
     }
-  }, [onLoadingChange]);
+  }, []);
 
   // 거리 계산 및 업데이트
   const [studyRoomList, setStudyRoomList] = useState<kakao.maps.LatLng[]>([]);
@@ -102,16 +99,24 @@ const KakaoMap = (props: KakaoMapProps) => {
 
   return (
     <div className='relative h-[298px] w-[375px]'>
-      <Map
-        center={center}
-        className='h-full w-full'
-        level={3}
-        onDragEnd={(map) => {
-          const latlng = map.getCenter();
-          setCenter({ lat: latlng.getLat(), lng: latlng.getLng() });
-        }}
-      >
-        {!position.isLoading && (
+      {position.isLoading ? (
+        <div className='flex h-full w-full items-center justify-center'>
+          <MoonLoader
+            color='#50BEAD'
+            size={30}
+            speedMultiplier={0.7}
+          />
+        </div>
+      ) : (
+        <Map
+          center={center}
+          className='h-full w-full'
+          level={3}
+          onDragEnd={(map) => {
+            const latlng = map.getCenter();
+            setCenter({ lat: latlng.getLat(), lng: latlng.getLng() });
+          }}
+        >
           <MapMarker
             position={position.center}
             image={{
@@ -122,32 +127,33 @@ const KakaoMap = (props: KakaoMapProps) => {
               },
             }}
           />
-        )}
-        {studyRoomList.length > 0 &&
-          studyRoomList.map((item, index) => (
-            <MapMarker
-              // eslint-disable-next-line react/no-array-index-key
-              key={index}
-              position={{ lat: item.getLat(), lng: item.getLng() }}
-              image={{
-                src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-                size: {
-                  width: 24,
-                  height: 35,
-                },
-              }}
-            />
-          ))}
-        <div className='absolute right-0 top-0 z-10 m-4'>
-          <button
-            type='button'
-            className='flex h-[45px] w-[45px] cursor-pointer items-center justify-center rounded-full bg-white shadow-custom'
-            onClick={() => setCenter(position.center)}
-          >
-            <MdMyLocation />
-          </button>
-        </div>
-      </Map>
+
+          {studyRoomList.length > 0 &&
+            studyRoomList.map((item, index) => (
+              <MapMarker
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                position={{ lat: item.getLat(), lng: item.getLng() }}
+                image={{
+                  src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+                  size: {
+                    width: 24,
+                    height: 35,
+                  },
+                }}
+              />
+            ))}
+          <div className='absolute right-0 top-0 z-10 m-4'>
+            <button
+              type='button'
+              className='flex h-[45px] w-[45px] cursor-pointer items-center justify-center rounded-full bg-white shadow-custom'
+              onClick={() => setCenter(position.center)}
+            >
+              <MdMyLocation />
+            </button>
+          </div>
+        </Map>
+      )}
     </div>
   );
 };
