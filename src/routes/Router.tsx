@@ -22,6 +22,7 @@ import UserInfoPage from '@pages/UserInfoPage';
 import PaymentPage from '@pages/PaymentPage';
 import PaymentSuccessPage from '@pages/PaymentSuccessPage';
 import HostInfoPage from '@pages/HostInfoPage';
+import DetailPage from '@pages/DetailPage';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: '/register-Space',
     element: <RegisterSpace />,
+  },
+  {
+    path: '/detail',
+    element: <DetailPage />,
   },
   {
     path: '/user-page',
