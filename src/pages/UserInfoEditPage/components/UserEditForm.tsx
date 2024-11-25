@@ -179,7 +179,7 @@ const UserEditForm = () => {
       </div>
       <button
         type='submit'
-        className='btn-primary border border-primary bg-white text-primary active:bg-primary active:text-white'
+        className='btn-primary'
       >
         수정하기
       </button>

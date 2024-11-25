@@ -3,9 +3,11 @@ import HostEditForm from './HostEditForm';
 
 const HostEditContainer = () => {
   return (
-    <div className='mt-14 flex w-[375px] flex-col justify-center gap-60'>
+    <div className='relative mt-14 flex w-[375px] flex-col'>
       <HostEditForm />
-      <DeleteAccountButton />
+      <div className='absolute bottom-[-280px] left-[50%] translate-x-[-50%]'>
+        <DeleteAccountButton />
+      </div>
     </div>
   );
 };
