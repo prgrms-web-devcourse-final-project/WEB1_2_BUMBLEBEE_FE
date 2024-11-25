@@ -1,9 +1,11 @@
 interface InputProps {
   label: string;
   placeholder?: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
   value?: string;
   onChangeFunction?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  maxLength?: number;
+  name?: string;
 }
 
 const CommonInput = ({
@@ -12,6 +14,8 @@ const CommonInput = ({
   defaultValue,
   value,
   onChangeFunction,
+  maxLength,
+  name,
 }: InputProps) => {
   return (
     <div className='mx-auto flex w-custom flex-col gap-1.5'>
@@ -22,6 +26,8 @@ const CommonInput = ({
         defaultValue={defaultValue}
         value={value}
         onChange={onChangeFunction}
+        maxLength={maxLength}
+        name={name}
       />
     </div>
   );
