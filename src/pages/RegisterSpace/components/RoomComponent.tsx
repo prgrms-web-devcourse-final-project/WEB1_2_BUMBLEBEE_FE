@@ -6,7 +6,7 @@ interface RoomComponentProps {
 
 const RoomComponent = ({ room }: RoomComponentProps) => {
   return (
-    <div className='mb-[10px] flex h-[120px] w-custom items-center rounded-[10px] bg-white px-[14px] py-[10px] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.2)]'>
+    <div className='flex h-[120px] w-custom items-center rounded-[10px] bg-white px-[14px] py-[10px] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.2)]'>
       <img
         src={room.roomImages[0].url}
         alt='사진'
