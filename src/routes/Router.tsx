@@ -24,6 +24,7 @@ import PaymentSuccessPage from '@pages/PaymentSuccessPage';
 import HostInfoPage from '@pages/HostInfoPage';
 import HostInfoEditPage from '@pages/HostInfoEditPage';
 import UserInfoEditPage from '@pages/UserInfoEditPage';
+import ChatListPage from '@pages/ChatListPage';
 
 const router = createBrowserRouter([
   {
@@ -125,6 +126,10 @@ const router = createBrowserRouter([
   {
     path: '/payment-success',
     element: <PaymentSuccessPage />,
+  },
+  {
+    path: '/chat-list',
+    element: <ChatListPage />,
   },
   {
     path: '*',
