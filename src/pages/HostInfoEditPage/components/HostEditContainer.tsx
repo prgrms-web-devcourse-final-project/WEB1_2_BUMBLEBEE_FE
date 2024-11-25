@@ -46,6 +46,7 @@ const HostEditContainer = () => {
     return businessNumberRegex.test(businessNumber);
   };
 
+  // 사업자 등록번호 자동 하이픈
   const insertBusinessNumberHyphen = (value: string) => {
     const numberText = value.replace(/[^0-9]/g, '');
     let formattedValue = numberText.slice(0, 10);

@@ -14,12 +14,12 @@ const HostInfoBox = () => {
         value={host.name}
       />
       <LabelWithInput
-        label='사업자 등록번호'
-        value={host.businessNumber}
-      />
-      <LabelWithInput
         label='이메일'
         value={host.email}
+      />
+      <LabelWithInput
+        label='사업자 등록번호'
+        value={host.businessNumber}
       />
     </div>
   );

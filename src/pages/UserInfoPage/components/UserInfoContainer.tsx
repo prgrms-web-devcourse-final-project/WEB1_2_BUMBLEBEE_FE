@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import DeleteAccountButton from './DeleteAccountButton';
 import UserInfoBox from './UserInfoBox';
 
 const UserInfoContainer = () => {
@@ -10,7 +9,7 @@ const UserInfoContainer = () => {
   };
 
   return (
-    <div className='mt-14 flex w-[375px] flex-col justify-center gap-[135px]'>
+    <div className='mt-14 flex w-[375px] flex-col justify-center'>
       <div className='mx-auto flex w-custom flex-col justify-center gap-10'>
         <UserInfoBox />
         <button
@@ -21,7 +20,6 @@ const UserInfoContainer = () => {
           수정하기
         </button>
       </div>
-      <DeleteAccountButton />
     </div>
   );
 };

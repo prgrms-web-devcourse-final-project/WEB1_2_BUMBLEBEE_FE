@@ -1,4 +1,3 @@
-import DeleteAccountButton from '@pages/UserInfoPage/components/DeleteAccountButton';
 import { useNavigate } from 'react-router-dom';
 import HostInfoBox from './HostInfoBox';
 
@@ -10,7 +9,7 @@ const HostInfoContainer = () => {
   };
 
   return (
-    <div className='mt-14 flex w-[375px] flex-col justify-center gap-60'>
+    <div className='mt-14 flex w-[375px] flex-col justify-center'>
       <div className='mx-auto flex w-custom flex-col justify-center gap-10'>
         <HostInfoBox />
         <button
@@ -21,7 +20,6 @@ const HostInfoContainer = () => {
           수정하기
         </button>
       </div>
-      <DeleteAccountButton />
     </div>
   );
 };
