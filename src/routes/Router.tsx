@@ -24,8 +24,8 @@ import PaymentSuccessPage from '@pages/PaymentSuccessPage';
 import HostInfoPage from '@pages/HostInfoPage';
 import HostInfoEditPage from '@pages/HostInfoEditPage';
 import UserInfoEditPage from '@pages/UserInfoEditPage';
-import ChatListPage from '@pages/ChatListPage';
 import DetailPage from '@pages/DetailPage';
+import ChatListPage from '@pages/ChatListPage';
 import ChatPage from '@pages/ChatPage';
 
 const router = createBrowserRouter([
