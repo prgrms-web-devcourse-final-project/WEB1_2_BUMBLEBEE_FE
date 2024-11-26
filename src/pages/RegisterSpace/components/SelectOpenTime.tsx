@@ -1,4 +1,4 @@
-import { Space } from '@typings/Types';
+import { Space } from '@typings/types';
 import { useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 

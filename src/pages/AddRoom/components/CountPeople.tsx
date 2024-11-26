@@ -1,4 +1,4 @@
-import { Room } from '@typings/Types';
+import { Room } from '@typings/types';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
 interface CountPeopleProps {
