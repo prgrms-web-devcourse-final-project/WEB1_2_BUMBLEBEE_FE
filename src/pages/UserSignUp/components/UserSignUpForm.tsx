@@ -1,14 +1,14 @@
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SelectAges from './SelectAges';
 import PhoneNumberInput from './PhoneNumberInput';
+import BirthInput from './BirthInput';
 
 const UserSignUpForm = () => {
   const navigate = useNavigate();
 
   const [userFormData, setUserFormData] = useState({
     gender: '',
-    ages: '선택',
+    birth: '',
     nickname: '',
     phoneNumber: '',
     email: '',
@@ -17,7 +17,7 @@ const UserSignUpForm = () => {
   });
 
   // input 값 반영
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'nickname' && e.target.value.length > 8) {
       e.target.value = e.target.value.substring(0, 8);
     }
@@ -25,6 +25,15 @@ const UserSignUpForm = () => {
       ...userFormData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // 생년월일 형식 확인 - 1920년 이전, 현재 년도 이후는 입력할 수 없도록 처리
+  const isValidBirth = (date: string) => {
+    const currentYear = new Date().getFullYear();
+    const dateRegex = new RegExp(
+      `^(19[2-9][0-9]|20[0-${Math.floor((currentYear - 2000) / 10)}][0-9])-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$`,
+    );
+    return dateRegex.test(date);
   };
 
   // 닉네임 형식 확인 - 공백 없이 2~10자
@@ -42,7 +51,7 @@ const UserSignUpForm = () => {
   // 이메일 형식 확인
   const isValidEmail = (email: string) => {
     const emailRegex =
-      /^(?=.{1,100}@)[A-Za-z0-9-]+(.[A-Za-z0-9_-]+)@[^-][A-Za-z0-9-]+(.[A-Za-z0-9-]+)(.[A-Za-z]{2,})$/;
+      /^(?=.{1,100}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     return emailRegex.test(email);
   };
 
@@ -55,7 +64,7 @@ const UserSignUpForm = () => {
 
   const [errorMessage, setErrorMessage] = useState({
     genderError: '',
-    agesError: '',
+    birthError: '',
     nicknameError: '',
     phonNumberError: '',
     emailError: '',
@@ -66,7 +75,7 @@ const UserSignUpForm = () => {
   const isValid = () => {
     const newErrorMessage = {
       genderError: '',
-      agesError: '',
+      birthError: '',
       nicknameError: '',
       phonNumberError: '',
       emailError: '',
@@ -77,11 +86,9 @@ const UserSignUpForm = () => {
     if (userFormData.gender === '') {
       newErrorMessage.genderError = '성별을 선택해주세요.';
     }
-
-    if (userFormData.ages === '선택') {
-      newErrorMessage.agesError = '나이대를 선택해주세요.';
+    if (!isValidBirth(userFormData.birth)) {
+      newErrorMessage.birthError = '생년월일을 다시 확인해주세요.';
     }
-
     if (!isValidNickname(userFormData.nickname)) {
       newErrorMessage.nicknameError =
         '닉네임은 공백없이 2~10자 이내로 입력해주세요.';
@@ -148,13 +155,13 @@ const UserSignUpForm = () => {
             {errorMessage.genderError}
           </div>
         )}
-        <SelectAges
+        <BirthInput
           userFormData={userFormData}
           setUserFormData={setUserFormData}
         />
-        {errorMessage.agesError && (
+        {errorMessage.birthError && (
           <div className='mt-[8px] text-[12px] font-medium text-[#F83A3A]'>
-            {errorMessage.agesError}
+            {errorMessage.birthError}
           </div>
         )}
         <div className='mt-[18px] flex flex-col'>

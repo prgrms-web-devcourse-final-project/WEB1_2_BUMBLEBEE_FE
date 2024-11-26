@@ -1,6 +1,8 @@
-interface UserFormData {
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+
+export interface UserFormData {
   gender: string;
-  ages: string;
+  birth: string;
   nickname: string;
   phoneNumber: string;
   email: string;
@@ -10,14 +12,14 @@ interface UserFormData {
 
 interface PhoneNumberInputProps {
   userFormData: UserFormData;
-  setUserFormData: React.Dispatch<React.SetStateAction<UserFormData>>;
+  setUserFormData: Dispatch<SetStateAction<UserFormData>>;
 }
 
 const PhoneNumberInput = ({
   userFormData,
   setUserFormData,
 }: PhoneNumberInputProps) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     // 하이픈 포함 13자리까지만 입력 가능하도록 만들기
     if (e.target.value.length > 13) {
       e.target.value = e.target.value.substring(0, 13);
