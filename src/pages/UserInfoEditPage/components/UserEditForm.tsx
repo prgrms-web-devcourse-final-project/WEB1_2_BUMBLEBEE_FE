@@ -1,4 +1,11 @@
 import CommonInput from '@components/CommonInput';
+import { ERROR_MESSAGE } from '@constants/constants';
+import { insertBirthHyphen } from '@utils/autoHyphen';
+import {
+  isValidBirth,
+  isValidEmail,
+  isValidNickname,
+} from '@utils/validationCheckRegex';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 interface EditData {
@@ -28,45 +35,6 @@ const UserEditForm = () => {
   });
   const [errorMessage, setErrorMessage] = useState<EditErrorMessage>({});
 
-  // 닉네임 형식 확인 - 공백 없이 2~10자
-  const isValidNickname = (nickname: string) => {
-    const nicknameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9-]{2,10}$/;
-    return nicknameRegex.test(nickname);
-  };
-
-  // 이메일 형식 확인
-  const isValidEmail = (email: string) => {
-    const emailRegex =
-      /^(?=.{1,100}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    return emailRegex.test(email);
-  };
-
-  // 생년월일 형식 확인 - 1920년 이전, 현재 년도 이후는 입력할 수 없도록 처리
-  const isValidBirth = (date: string) => {
-    const currentYear = new Date().getFullYear();
-    const dateRegex = new RegExp(
-      `^(19[2-9][0-9]|20[0-${Math.floor((currentYear - 2000) / 10)}][0-9])-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$`,
-    );
-    return dateRegex.test(date);
-  };
-
-  // 생년월일 자동하이픈
-  const insertBirthHyphen = (value: string) => {
-    // 숫자만 남기기
-    const dateText = value.replace(/\D/g, '');
-    let formattedValue = dateText.slice(0, 8);
-
-    // 4번째 자리와 6번째 자리 뒤에 하이픈 추가
-    if (dateText.length > 4) {
-      formattedValue = `${formattedValue.slice(0, 4)}-${formattedValue.slice(4)}`;
-    }
-    if (dateText.length > 6) {
-      formattedValue = `${formattedValue.slice(0, 7)}-${formattedValue.slice(7)}`;
-    }
-
-    return formattedValue;
-  };
-
   const handleGetNewValue = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value: originValue } = e.target;
     let value = originValue;
@@ -91,13 +59,13 @@ const UserEditForm = () => {
     };
 
     if (!isValidNickname(newInformation.nickname)) {
-      errors.nicknameError = '닉네임은 공백없이 2~10자 이내로 입력해주세요.';
+      errors.nicknameError = ERROR_MESSAGE.nickname;
     }
     if (!isValidEmail(newInformation.email)) {
-      errors.emailError = '이메일 형식을 확인해주세요.';
+      errors.emailError = ERROR_MESSAGE.email;
     }
     if (!isValidBirth(newInformation.birth)) {
-      errors.birthError = '생년월일을 다시 확인해주세요';
+      errors.birthError = ERROR_MESSAGE.birth;
     }
 
     return errors;
