@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { Space } from '@typings/Types';
+import { Space } from '@typings/types';
 import { IoMdClose } from 'react-icons/io';
 import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
