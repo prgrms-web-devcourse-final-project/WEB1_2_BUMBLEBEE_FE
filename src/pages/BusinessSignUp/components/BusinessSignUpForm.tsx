@@ -1,5 +1,12 @@
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  isValidBusinessNumber,
+  isValidEmail,
+  isValidNickname,
+  isValidPassword,
+} from '@utils/validationCheckRegex';
+import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
 import BusinessNumber from './BusinessNumber';
 
 const BusinessSignUpForm = () => {
@@ -14,7 +21,7 @@ const BusinessSignUpForm = () => {
   });
 
   // input 값 반영
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'nickname' && e.target.value.length > 8) {
       e.target.value = e.target.value.substring(0, 8);
     }
@@ -22,32 +29,6 @@ const BusinessSignUpForm = () => {
       ...hostFormData,
       [e.target.name]: e.target.value,
     });
-  };
-
-  // 사업자 등록 번호 형식 확인
-  const isValidBusinessNumber = (businessNumber: string) => {
-    const businessNumberRegex = /^[0-9]{3}-[0-9]{2}-[0-9]{5}/;
-    return businessNumberRegex.test(businessNumber);
-  };
-
-  // 닉네임 형식 확인 - 공백 없이 2~10자
-  const isValidNickname = (nickname: string) => {
-    const nicknameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9-]{2,10}$/;
-    return nicknameRegex.test(nickname);
-  };
-
-  // 이메일 형식 확인
-  const isValidEmail = (email: string) => {
-    const emailRegex =
-      /^(?=.{1,100}@)[A-Za-z0-9-]+(.[A-Za-z0-9_-]+)@[^-][A-Za-z0-9-]+(.[A-Za-z0-9-]+)(.[A-Za-z]{2,})$/;
-    return emailRegex.test(email);
-  };
-
-  // 비밀번호 형식 확인
-  const isValidPassword = (pwd: string) => {
-    const pwdRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%?&])[A-Za-z\d$@$!%?&]{8,20}$/;
-    return pwdRegex.test(pwd);
   };
 
   const [errorMessage, setErrorMessage] = useState({
@@ -68,24 +49,21 @@ const BusinessSignUpForm = () => {
     };
 
     if (!isValidBusinessNumber(hostFormData.businessNumber)) {
-      newErrorMessage.businessNumberError =
-        '사업자 등록 번호 형식을 확인해주세요.';
+      newErrorMessage.businessNumberError = ERROR_MESSAGE.businessNumber;
     }
 
     if (!isValidNickname(hostFormData.nickname)) {
-      newErrorMessage.nicknameError =
-        '닉네임은 공백없이 2~10자 이내로 입력해주세요.';
+      newErrorMessage.nicknameError = ERROR_MESSAGE.nickname;
     }
 
     if (!isValidEmail(hostFormData.email)) {
-      newErrorMessage.emailError = '이메일 형식을 확인해주세요.';
+      newErrorMessage.emailError = ERROR_MESSAGE.email;
     }
     if (!isValidPassword(hostFormData.password)) {
-      newErrorMessage.passwordError =
-        '대소문자, 숫자, 특수문자($,@,!,%,?,&)를 모두 포함해야 합니다.';
+      newErrorMessage.passwordError = ERROR_MESSAGE.password;
     }
     if (hostFormData.password !== hostFormData.passwordCheck) {
-      newErrorMessage.checkPasswordError = '비밀번호가 일치하지 않습니다.';
+      newErrorMessage.checkPasswordError = ERROR_MESSAGE.checkPassword;
     }
 
     setErrorMessage(newErrorMessage);
@@ -122,7 +100,7 @@ const BusinessSignUpForm = () => {
             name='nickname'
             type='text'
             className='main-input'
-            placeholder='닉네임 입력 (2~10자 이내)'
+            placeholder={PLACEHOLDER.nickname}
             onChange={handleChange}
           />
         </div>
@@ -142,7 +120,7 @@ const BusinessSignUpForm = () => {
             name='email'
             type='text'
             className='main-input'
-            placeholder='이메일 입력'
+            placeholder={PLACEHOLDER.email}
             onChange={handleChange}
           />
         </div>
@@ -162,7 +140,7 @@ const BusinessSignUpForm = () => {
             name='password'
             type='password'
             className='main-input'
-            placeholder='비밀번호 입력 (8~20자 이내)'
+            placeholder={PLACEHOLDER.password}
             onChange={handleChange}
           />
         </div>
@@ -182,7 +160,7 @@ const BusinessSignUpForm = () => {
             name='passwordCheck'
             type='password'
             className='main-input'
-            placeholder='비밀번호 확인'
+            placeholder={PLACEHOLDER.checkPassword}
             onChange={handleChange}
           />
         </div>

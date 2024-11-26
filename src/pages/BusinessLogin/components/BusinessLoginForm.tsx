@@ -1,4 +1,6 @@
-import { FormEvent, useState } from 'react';
+import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
+import { isValidEmail, isValidPassword } from '@utils/validationCheckRegex';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const BusinessLoginForm = () => {
@@ -10,22 +12,8 @@ const BusinessLoginForm = () => {
   });
 
   // input 값 반영
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setHostLoginForm({ ...hostLoginForm, [e.target.name]: e.target.value });
-  };
-
-  // 이메일 형식 확인
-  const isValidEmail = (email: string) => {
-    const emailRegex =
-      /^(?=.{1,100}@)[A-Za-z0-9-]+(.[A-Za-z0-9_-]+)@[^-][A-Za-z0-9-]+(.[A-Za-z0-9-]+)(.[A-Za-z]{2,})$/;
-    return emailRegex.test(email);
-  };
-
-  // 비밀번호 형식 확인
-  const isValidPassword = (pwd: string) => {
-    const pwdRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%?&])[A-Za-z\d$@$!%?&]{8,20}$/;
-    return pwdRegex.test(pwd);
   };
 
   const [errorMessage, setErrorMessage] = useState({
@@ -40,11 +28,10 @@ const BusinessLoginForm = () => {
     };
 
     if (!isValidEmail(hostLoginForm.email)) {
-      newError.emailError = '이메일 형식을 확인해주세요.';
+      newError.emailError = ERROR_MESSAGE.email;
     }
     if (!isValidPassword(hostLoginForm.password)) {
-      newError.passwordError =
-        '대소문자, 숫자, 특수문자($,@,!,%,?,&)를 모두 포함해야 합니다.';
+      newError.passwordError = ERROR_MESSAGE.password;
     }
 
     setErrorMessage(newError);
@@ -66,7 +53,7 @@ const BusinessLoginForm = () => {
             name='email'
             type='text'
             className='main-input'
-            placeholder='이메일 입력'
+            placeholder={PLACEHOLDER.email}
             onChange={handleChange}
           />
         </div>
@@ -80,7 +67,7 @@ const BusinessLoginForm = () => {
             name='password'
             type='password'
             className='main-input'
-            placeholder='비밀번호 입력 (8~20자 이내)'
+            placeholder={PLACEHOLDER.password}
             onChange={handleChange}
           />
         </div>

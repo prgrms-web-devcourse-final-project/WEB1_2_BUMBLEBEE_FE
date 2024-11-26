@@ -17,4 +17,6 @@ export const PLACEHOLDER = {
   email: '이메일 입력',
   password: '비밀번호 입력 (8~20자 이내)',
   checkPassword: '비밀번호 확인',
+  birth: 'YYYY-MM-DD',
+  phonNumber: '전화번호 입력',
 };

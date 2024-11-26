@@ -1,3 +1,5 @@
+import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
+import { isValidEmail, isValidPassword } from '@utils/validationCheckRegex';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,20 +16,6 @@ const UserLoginForm = () => {
     setUserLoginForm({ ...userLoginForm, [e.target.name]: e.target.value });
   };
 
-  // 이메일 형식 확인
-  const isValidEmail = (email: string) => {
-    const emailRegex =
-      /^(?=.{1,100}@)[A-Za-z0-9-]+(.[A-Za-z0-9_-]+)@[^-][A-Za-z0-9-]+(.[A-Za-z0-9-]+)(.[A-Za-z]{2,})$/;
-    return emailRegex.test(email);
-  };
-
-  // 비밀번호 형식 확인
-  const isValidPassword = (pwd: string) => {
-    const pwdRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%?&])[A-Za-z\d$@$!%?&]{8,20}$/;
-    return pwdRegex.test(pwd);
-  };
-
   const [errorMessage, setErrorMessage] = useState({
     emailError: '',
     passwordError: '',
@@ -40,11 +28,10 @@ const UserLoginForm = () => {
     };
 
     if (!isValidEmail(userLoginForm.email)) {
-      newError.emailError = '이메일 형식을 확인해주세요.';
+      newError.emailError = ERROR_MESSAGE.email;
     }
     if (!isValidPassword(userLoginForm.password)) {
-      newError.passwordError =
-        '대소문자, 숫자, 특수문자($,@,!,%,?,&)를 모두 포함해야 합니다.';
+      newError.passwordError = ERROR_MESSAGE.password;
     }
 
     setErrorMessage(newError);
@@ -66,7 +53,7 @@ const UserLoginForm = () => {
             name='email'
             type='text'
             className='main-input'
-            placeholder='이메일 입력'
+            placeholder={PLACEHOLDER.email}
             onChange={handleChange}
           />
         </div>
@@ -80,7 +67,7 @@ const UserLoginForm = () => {
             name='password'
             type='password'
             className='main-input'
-            placeholder='비밀번호 입력 (8~20자 이내)'
+            placeholder={PLACEHOLDER.password}
             onChange={handleChange}
           />
         </div>
