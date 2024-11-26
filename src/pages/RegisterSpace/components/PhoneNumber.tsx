@@ -1,4 +1,4 @@
-import { Space } from '@typings/Types';
+import { Space } from '@typings/types';
 
 export interface PhoneNumberProps {
   spaceFormData: Space;

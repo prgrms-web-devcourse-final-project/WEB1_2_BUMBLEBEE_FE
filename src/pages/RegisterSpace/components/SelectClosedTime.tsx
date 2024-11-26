@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
-import { Space } from '@typings/Types';
+import { Space } from '@typings/types';
 
 interface SelectClosedTimeProps {
   spaceFormData: Space;

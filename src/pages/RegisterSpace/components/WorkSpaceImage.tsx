@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { Space } from '@typings/Types';
+import { Space } from '@typings/types';
 
 interface WorkSpaceImageProps {
   changeFormdata: (data: Partial<Space>) => void;

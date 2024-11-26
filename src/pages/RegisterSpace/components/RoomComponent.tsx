@@ -1,4 +1,4 @@
-import { Room } from '@typings/Types';
+import { Room } from '@typings/types';
 
 interface RoomComponentProps {
   room: Room;
