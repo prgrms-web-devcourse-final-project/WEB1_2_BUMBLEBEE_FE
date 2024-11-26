@@ -5,8 +5,9 @@ interface LoginData {
   password: string;
 }
 
-const postLogin = (loginData: LoginData) => {
-  return defaultInstance.post(`/api/v1/member/login`, loginData);
+export const postLogin = async (user: LoginData) => {
+  const response = await defaultInstance.post(`/api/v1/member/login`, user);
+  return response.data;
 };
 
 export default postLogin;
