@@ -59,13 +59,13 @@ const UserEditForm = () => {
     };
 
     if (!isValidNickname(newInformation.nickname)) {
-      errors.nicknameError = ERROR_MESSAGE.nicknameError;
+      errors.nicknameError = ERROR_MESSAGE.nickname;
     }
     if (!isValidEmail(newInformation.email)) {
-      errors.emailError = ERROR_MESSAGE.emailError;
+      errors.emailError = ERROR_MESSAGE.email;
     }
     if (!isValidBirth(newInformation.birth)) {
-      errors.birthError = ERROR_MESSAGE.birthError;
+      errors.birthError = ERROR_MESSAGE.birth;
     }
 
     return errors;

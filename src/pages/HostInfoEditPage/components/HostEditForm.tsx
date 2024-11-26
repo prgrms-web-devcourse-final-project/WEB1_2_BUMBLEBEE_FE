@@ -58,13 +58,13 @@ const HostEditForm = () => {
     };
 
     if (!isValidNickname(newInformation.nickname)) {
-      errors.nicknameError = ERROR_MESSAGE.nicknameError;
+      errors.nicknameError = ERROR_MESSAGE.nickname;
     }
     if (!isValidEmail(newInformation.email)) {
-      errors.emailError = ERROR_MESSAGE.emailError;
+      errors.emailError = ERROR_MESSAGE.email;
     }
     if (!isValidBusinessNumber(newInformation.businessNumber)) {
-      errors.businessNumberError = ERROR_MESSAGE.businessNumberError;
+      errors.businessNumberError = ERROR_MESSAGE.businessNumber;
     }
 
     return errors;
