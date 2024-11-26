@@ -1,4 +1,11 @@
 import CommonInput from '@components/CommonInput';
+import { ERROR_MESSAGE } from '@constants/constants';
+import { insertBusinessNumberHyphen } from '@utils/autoHyphen';
+import {
+  isValidBusinessNumber,
+  isValidEmail,
+  isValidNickname,
+} from '@utils/validationCheckRegex';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 interface EditData {
@@ -27,40 +34,6 @@ const HostEditForm = () => {
   });
   const [errorMessage, setErrorMessage] = useState<EditErrorMessage>({});
 
-  // 닉네임 형식 확인 - 공백 없이 2~10자
-  const isValidNickname = (nickname: string) => {
-    const nicknameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9-]{2,10}$/;
-    return nicknameRegex.test(nickname);
-  };
-
-  // 이메일 형식 확인
-  const isValidEmail = (email: string) => {
-    const emailRegex =
-      /^(?=.{1,100}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    return emailRegex.test(email);
-  };
-
-  // 사업자 등록 번호 형식 확인
-  const isValidBusinessNumber = (businessNumber: string) => {
-    const businessNumberRegex = /^[0-9]{3}-[0-9]{2}-[0-9]{5}/;
-    return businessNumberRegex.test(businessNumber);
-  };
-
-  // 사업자 등록번호 자동 하이픈
-  const insertBusinessNumberHyphen = (value: string) => {
-    const numberText = value.replace(/[^0-9]/g, '');
-    let formattedValue = numberText.slice(0, 10);
-
-    if (numberText.length > 3) {
-      formattedValue = `${formattedValue.slice(0, 3)}-${formattedValue.slice(3)}`;
-    }
-    if (numberText.length > 5) {
-      formattedValue = `${formattedValue.slice(0, 6)}-${formattedValue.slice(6)}`;
-    }
-
-    return formattedValue;
-  };
-
   const handleGetNewValue = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value: originValue } = e.target;
     let value = originValue;
@@ -85,13 +58,13 @@ const HostEditForm = () => {
     };
 
     if (!isValidNickname(newInformation.nickname)) {
-      errors.nicknameError = '닉네임은 공백없이 2~10자 이내로 입력해주세요.';
+      errors.nicknameError = ERROR_MESSAGE.nicknameError;
     }
     if (!isValidEmail(newInformation.email)) {
-      errors.emailError = '이메일 형식을 확인해주세요.';
+      errors.emailError = ERROR_MESSAGE.emailError;
     }
     if (!isValidBusinessNumber(newInformation.businessNumber)) {
-      errors.businessNumberError = '사업자 등록번호 형식을 확인해주세요.';
+      errors.businessNumberError = ERROR_MESSAGE.businessNumberError;
     }
 
     return errors;

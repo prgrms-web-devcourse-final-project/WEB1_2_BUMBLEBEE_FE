@@ -17,3 +17,23 @@ export type Space = {
   spaceImage: File | null;
   rooms: Room[];
 };
+
+export interface Member {
+  memberNickname: string;
+  memberPhonenumber: string;
+  memberAge: number;
+  memberSex: string;
+  memberEmail: string;
+  memberPwd: string;
+  memberRole: string;
+  createdAt: string;
+  deleteAt?: string;
+}
+
+export interface Review {
+  reviewId: string;
+  reviewContent: string;
+  reviewRating: number;
+  createdAt: string;
+  updateAt?: string;
+}
