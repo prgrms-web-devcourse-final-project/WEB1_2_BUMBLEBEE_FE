@@ -1,27 +1,35 @@
-import Axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
 import { BASE_URL } from '@constants/constants';
 import { getAuthToken } from '@utils/auth';
 
-const axios = Axios.create({
+// Default Instance
+const defaultInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
+  timeout: 2000,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
 });
 
-const axiosWithToken = Axios.create({
-  baseURL: BASE_URL,
-  // 추후 추가
-});
-
-const axiosInstance: AxiosInstance = Axios.create({
+// Auth Instance
+const authInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 2000,
   headers: {
     accept: 'application/json',
+    'Content-Type': 'application/json',
   },
 });
 
 // request interceptor
-axiosInstance.interceptors.request.use(
-  (config: InternalAxiosRequestConfig<{ headers: string }>) => {
+authInstance.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
     const accessToken = getAuthToken();
     if (config.headers && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -34,13 +42,15 @@ axiosInstance.interceptors.request.use(
 );
 
 // response interceptor
-axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
+const responseInterceptor = (response: AxiosResponse) => response;
+const errorInterceptor = (error: AxiosError) => {
+  return Promise.reject(error);
+};
 
-export { axios, axiosWithToken, axiosInstance };
+defaultInstance.interceptors.response.use(
+  responseInterceptor,
+  errorInterceptor,
+);
+authInstance.interceptors.response.use(responseInterceptor, errorInterceptor);
+
+export { defaultInstance, authInstance };
