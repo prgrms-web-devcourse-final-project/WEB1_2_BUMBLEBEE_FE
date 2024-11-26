@@ -18,9 +18,15 @@ export const isValidPassword = (pwd: string) => {
   return pwdRegex.test(pwd);
 };
 
-// 전화번호 형식 확인
-export const isValidNumber = (number: string) => {
+// 사용자 전화번호 형식 확인
+export const isValidUserPhoneNumber = (number: string) => {
   const numberRegex = /\d{3}-\d{4}-\d{4}$/;
+  return numberRegex.test(number);
+};
+
+// 사업장 전화번호 형식 확인
+export const isValidBusinuessPhoneNumber = (number: string) => {
+  const numberRegex = /^(0507-\d{4}-\d{4}|\d{2,3}-\d{3,4}-\d{4})$/;
   return numberRegex.test(number);
 };
 
