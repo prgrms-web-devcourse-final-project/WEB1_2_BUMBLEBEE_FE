@@ -1,3 +1,5 @@
+import { PLACEHOLDER } from '@constants/constants';
+import { insertPhoneNumberHyphen } from '@utils/autoHyphen';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 export interface UserFormData {
@@ -20,22 +22,8 @@ const PhoneNumberInput = ({
   setUserFormData,
 }: PhoneNumberInputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // 하이픈 포함 13자리까지만 입력 가능하도록 만들기
-    if (e.target.value.length > 13) {
-      e.target.value = e.target.value.substring(0, 13);
-    }
-    const basicNumber = e.target.value;
-    // 숫자만 남기기
-    const onlyNumber = e.target.value.replace(/[^0-9]/g, '');
-    let formatNumber = basicNumber;
-
-    if (onlyNumber.length === 11) {
-      formatNumber = onlyNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-    }
-
-    if (userFormData.phoneNumber !== formatNumber) {
-      setUserFormData({ ...userFormData, phoneNumber: formatNumber });
-    }
+    const formatNumber = insertPhoneNumberHyphen(e.target.value);
+    setUserFormData({ ...userFormData, phoneNumber: formatNumber });
   };
 
   return (
@@ -50,7 +38,7 @@ const PhoneNumberInput = ({
         name='phoneNumber'
         type='text'
         className='main-input'
-        placeholder='전화번호 입력'
+        placeholder={PLACEHOLDER.phonNumber}
         onChange={handleChange}
         value={userFormData.phoneNumber}
       />

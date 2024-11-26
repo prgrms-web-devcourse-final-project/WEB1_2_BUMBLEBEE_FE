@@ -1,4 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { insertBirthHyphen } from '@utils/autoHyphen';
+import { PLACEHOLDER } from '@constants/constants';
 import { UserFormData } from './PhoneNumberInput';
 
 interface BirthInputProps {
@@ -8,22 +10,8 @@ interface BirthInputProps {
 
 const BirthInput = ({ userFormData, setUserFormData }: BirthInputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // 하이픈 포함 10자리까지만 입력 가능하도록 만들기
-    if (e.target.value.length > 10) {
-      e.target.value = e.target.value.substring(0, 10);
-    }
-    const basicBirth = e.target.value;
-    // 숫자만 남기기
-    const onlyNumber = e.target.value.replace(/[^0-9]/g, '');
-    let formatBirth = basicBirth;
-
-    if (onlyNumber.length === 8) {
-      formatBirth = onlyNumber.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
-    }
-
-    if (userFormData.birth !== formatBirth) {
-      setUserFormData({ ...userFormData, birth: formatBirth });
-    }
+    const formatBirth = insertBirthHyphen(e.target.value);
+    setUserFormData({ ...userFormData, birth: formatBirth });
   };
 
   return (
@@ -38,7 +26,7 @@ const BirthInput = ({ userFormData, setUserFormData }: BirthInputProps) => {
         name='birth'
         type='text'
         className='main-input'
-        placeholder='YYYY-MM-DD'
+        placeholder={PLACEHOLDER.birth}
         onChange={handleChange}
         value={userFormData.birth}
       />

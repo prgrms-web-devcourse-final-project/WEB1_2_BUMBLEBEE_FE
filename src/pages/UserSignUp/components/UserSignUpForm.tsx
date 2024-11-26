@@ -1,5 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  isValidBirth,
+  isValidEmail,
+  isValidNickname,
+  isValidPassword,
+  isValidUserPhoneNumber,
+} from '@utils/validationCheckRegex';
+import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
 import PhoneNumberInput from './PhoneNumberInput';
 import BirthInput from './BirthInput';
 
@@ -27,41 +35,6 @@ const UserSignUpForm = () => {
     });
   };
 
-  // 생년월일 형식 확인 - 1920년 이전, 현재 년도 이후는 입력할 수 없도록 처리
-  const isValidBirth = (date: string) => {
-    const currentYear = new Date().getFullYear();
-    const dateRegex = new RegExp(
-      `^(19[2-9][0-9]|20[0-${Math.floor((currentYear - 2000) / 10)}][0-9])-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$`,
-    );
-    return dateRegex.test(date);
-  };
-
-  // 닉네임 형식 확인 - 공백 없이 2~10자
-  const isValidNickname = (nickname: string) => {
-    const nicknameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9-]{2,10}$/;
-    return nicknameRegex.test(nickname);
-  };
-
-  // 전화번호 형식 확인
-  const isValidNumber = (number: string) => {
-    const numberRegex = /\d{3}-\d{4}-\d{4}$/;
-    return numberRegex.test(number);
-  };
-
-  // 이메일 형식 확인
-  const isValidEmail = (email: string) => {
-    const emailRegex =
-      /^(?=.{1,100}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    return emailRegex.test(email);
-  };
-
-  // 비밀번호 형식 확인
-  const isValidPassword = (pwd: string) => {
-    const pwdRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%?&])[A-Za-z\d$@$!%?&]{8,20}$/;
-    return pwdRegex.test(pwd);
-  };
-
   const [errorMessage, setErrorMessage] = useState({
     genderError: '',
     birthError: '',
@@ -84,27 +57,25 @@ const UserSignUpForm = () => {
     };
 
     if (userFormData.gender === '') {
-      newErrorMessage.genderError = '성별을 선택해주세요.';
+      newErrorMessage.genderError = ERROR_MESSAGE.gender;
     }
     if (!isValidBirth(userFormData.birth)) {
-      newErrorMessage.birthError = '생년월일을 다시 확인해주세요.';
+      newErrorMessage.birthError = ERROR_MESSAGE.birth;
     }
     if (!isValidNickname(userFormData.nickname)) {
-      newErrorMessage.nicknameError =
-        '닉네임은 공백없이 2~10자 이내로 입력해주세요.';
+      newErrorMessage.nicknameError = ERROR_MESSAGE.nickname;
     }
-    if (!isValidNumber(userFormData.phoneNumber)) {
-      newErrorMessage.phonNumberError = '전화번호 형식을 확인해주세요.';
+    if (!isValidUserPhoneNumber(userFormData.phoneNumber)) {
+      newErrorMessage.phonNumberError = ERROR_MESSAGE.phonNumber;
     }
     if (!isValidEmail(userFormData.email)) {
-      newErrorMessage.emailError = '이메일 형식을 확인해주세요.';
+      newErrorMessage.emailError = ERROR_MESSAGE.email;
     }
     if (!isValidPassword(userFormData.password)) {
-      newErrorMessage.passwordError =
-        '대소문자, 숫자, 특수문자($,@,!,%,?,&)를 모두 포함해야 합니다.';
+      newErrorMessage.passwordError = ERROR_MESSAGE.password;
     }
     if (userFormData.password !== userFormData.passwordCheck) {
-      newErrorMessage.checkPasswordError = '비밀번호가 일치하지 않습니다.';
+      newErrorMessage.checkPasswordError = ERROR_MESSAGE.checkPassword;
     }
 
     setErrorMessage(newErrorMessage);
@@ -175,7 +146,7 @@ const UserSignUpForm = () => {
             name='nickname'
             type='text'
             className='main-input'
-            placeholder='닉네임 입력 (2~10자 이내)'
+            placeholder={PLACEHOLDER.nickname}
             onChange={handleChange}
           />
         </div>
@@ -204,7 +175,7 @@ const UserSignUpForm = () => {
             name='email'
             type='text'
             className='main-input'
-            placeholder='이메일 입력'
+            placeholder={PLACEHOLDER.email}
             onChange={handleChange}
           />
         </div>
@@ -224,7 +195,7 @@ const UserSignUpForm = () => {
             name='password'
             type='password'
             className='main-input'
-            placeholder='비밀번호 입력 (8~20자 이내)'
+            placeholder={PLACEHOLDER.password}
             onChange={handleChange}
           />
         </div>
@@ -244,7 +215,7 @@ const UserSignUpForm = () => {
             name='passwordCheck'
             type='password'
             className='main-input'
-            placeholder='비밀번호 확인'
+            placeholder={PLACEHOLDER.checkPassword}
             onChange={handleChange}
           />
         </div>

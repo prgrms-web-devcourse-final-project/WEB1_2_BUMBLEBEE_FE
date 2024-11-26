@@ -25,7 +25,7 @@ export const isValidUserPhoneNumber = (number: string) => {
 };
 
 // 사업장 전화번호 형식 확인
-export const isValidBusinuessPhoneNumber = (number: string) => {
+export const isValidBusinessPhoneNumber = (number: string) => {
   const numberRegex = /^(0507-\d{4}-\d{4}|\d{2,3}-\d{3,4}-\d{4})$/;
   return numberRegex.test(number);
 };
