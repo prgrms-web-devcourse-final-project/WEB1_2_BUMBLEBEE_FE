@@ -8,21 +8,44 @@ interface PostReviewRequestBody {
 }
 
 // 리뷰
-interface Review {
+interface Review extends PostReviewRequestBody {
   reviewId: number;
-  workplaceId: number;
   workplaceName: string;
-  reviewRating: string;
-  reviewContent: string;
   reviewDate: Date;
 }
 
-// 상세페이지 리뷰 전체 목록 조회 - 비로그인
-export const getAllReview = async (workplaceId: string): Promise<Review[]> => {
+// 상세페이지 리뷰 전체 목록 조회(비로그인)
+export const getAllReview = async (
+  workplaceId: string,
+  lastId?: string,
+  nextcursor?: string,
+): Promise<Review[]> => {
   const response = await defaultInstance.get(
     `/api/vi/review/workplace/${workplaceId}`,
+    {
+      params: {
+        lastId: lastId || null,
+        nextcusor: nextcursor || null,
+      },
+    },
   );
   return response.data;
+};
+
+// 상세페이지 리뷰 전체 목록 조회(비로그인) - 첫 페이지 요청
+export const getFirstPage = async (workplaceId: string) => {
+  const firstPageReviews = await getAllReview(workplaceId);
+  return firstPageReviews;
+};
+
+// 상세페이지 리뷰 전체 목록 조회(비로그인) - 첫 페이지 이후 다음 페이지들 요청
+export const getNextPage = async (
+  workplaceId: string,
+  lastId: string,
+  nextcursor: string,
+) => {
+  const nextPageReviews = await getAllReview(workplaceId, lastId, nextcursor);
+  return nextPageReviews;
 };
 
 // 내가 작성한 리뷰 조회 - 로그인

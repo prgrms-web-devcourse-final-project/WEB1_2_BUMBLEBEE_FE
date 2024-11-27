@@ -5,6 +5,7 @@ interface Member {
   nickName: string;
   phoneNumber: string;
   birthDay: Date;
+  sex: string;
   email: string;
   createdAt?: string;
 }
