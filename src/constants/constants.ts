@@ -10,6 +10,7 @@ export const ERROR_MESSAGE = {
   phonNumber: '전화번호 형식을 확인해주세요.',
   birth: '생년월일을 다시 확인해주세요.',
   name: '성함을 올바르게 입력해주세요.',
+  check: '필수 항목에 동의해주세요.',
 };
 
 export const PLACEHOLDER = {

@@ -3,20 +3,23 @@ import {
   isValidUserPhoneNumber,
 } from '@utils/validationCheckRegex';
 import { ERROR_MESSAGE } from '@constants/constants';
-import type { ReservationFormData, ErrorMessageType } from '..';
+import type { ReservationFormData, ErrorMessageType, CheckState } from '..';
 
 interface PaymentButtonProps {
   reservationForm: ReservationFormData;
   onSetErrorMessage: (value: ErrorMessageType) => void;
+  checkState: CheckState;
 }
 
 const PaymentButton = (props: PaymentButtonProps) => {
-  const { reservationForm, onSetErrorMessage } = props;
+  const { reservationForm, onSetErrorMessage, checkState } = props;
 
   const isValid = () => {
     const newError = {
       nameError: '',
       phonNumberError: '',
+      reservationCheckError: '',
+      paymentCheckError: '',
     };
 
     if (!isValidKoreanName(reservationForm.name)) {
@@ -24,6 +27,12 @@ const PaymentButton = (props: PaymentButtonProps) => {
     }
     if (!isValidUserPhoneNumber(reservationForm.phoneNumber)) {
       newError.phonNumberError = ERROR_MESSAGE.phonNumber;
+    }
+    if (checkState.reservation.length < 3) {
+      newError.reservationCheckError = ERROR_MESSAGE.check;
+    }
+    if (checkState.payment.length < 2) {
+      newError.paymentCheckError = ERROR_MESSAGE.check;
     }
 
     onSetErrorMessage(newError);

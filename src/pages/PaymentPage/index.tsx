@@ -17,6 +17,13 @@ export interface ReservationFormData {
 export interface ErrorMessageType {
   nameError: string;
   phonNumberError: string;
+  reservationCheckError: string;
+  paymentCheckError: string;
+}
+
+export interface CheckState {
+  reservation: string[];
+  payment: string[];
 }
 
 const PaymentPage = () => {
@@ -25,9 +32,16 @@ const PaymentPage = () => {
     phoneNumber: '',
   });
 
+  const [checkState, setCheckState] = useState<CheckState>({
+    reservation: [],
+    payment: [],
+  });
+
   const [errorMessage, setErrorMessage] = useState<ErrorMessageType>({
     nameError: '',
     phonNumberError: '',
+    reservationCheckError: '',
+    paymentCheckError: '',
   });
 
   return (
@@ -42,13 +56,22 @@ const PaymentPage = () => {
             errorMessage={errorMessage}
           />
           <CancelRule />
-          <ReservationGuide />
+          <ReservationGuide
+            checkState={checkState}
+            onSetCheckState={setCheckState}
+            errorMessage={errorMessage}
+          />
           <ReservationPrice />
-          <PaymentAgree />
+          <PaymentAgree
+            checkState={checkState}
+            onSetCheckState={setCheckState}
+            errorMessage={errorMessage}
+          />
         </div>
         <PaymentButton
           reservationForm={reservationForm}
           onSetErrorMessage={setErrorMessage}
+          checkState={checkState}
         />
       </MainLayout>
     </>
