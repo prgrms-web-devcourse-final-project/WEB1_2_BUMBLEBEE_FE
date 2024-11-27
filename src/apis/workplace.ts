@@ -65,7 +65,7 @@ interface GetPositionWorkPlace {
   positionLng: number;
 }
 
-interface GetMainWorkPlaceData {
+interface GetPositionWorkPlaceData {
   workplaces: GetWorkPlaceData[];
 }
 
@@ -156,7 +156,7 @@ export const getWorkPlace = async (
 // 위치 기반 사업장 조회
 export const getPositionWorkPlace = async (
   position: GetPositionWorkPlace,
-): Promise<GetMainWorkPlaceData> => {
+): Promise<GetPositionWorkPlaceData> => {
   const response = await defaultInstance.get('api/v1/workplace/distance', {
     params: position,
   });
