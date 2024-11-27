@@ -24,27 +24,14 @@ const ReservationGuide = () => {
           description='개인정보 수집/이용
               동의'
           onChangeChecked={handleCheckItem}
-        >
-          <button
-            type='button'
-            className='text-subfont underline'
-          >
-            보기
-          </button>
-        </CheckAgree>
+        />
         <CheckAgree
           checkId='reservation2'
           isCheck={isChecked('reservation2')}
           description='개인정보 제3자 제공 동의'
           onChangeChecked={handleCheckItem}
-        >
-          <button
-            type='button'
-            className='text-subfont underline'
-          >
-            보기
-          </button>
-        </CheckAgree>
+        />
+
         <CheckAgree
           checkId='reservation3'
           isCheck={isChecked('reservation3')}

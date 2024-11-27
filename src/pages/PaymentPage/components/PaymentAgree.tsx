@@ -23,14 +23,7 @@ const PaymentAgree = () => {
           isCheck={isChecked('payment1')}
           description='결제 서비스 이용 약관'
           onChangeChecked={handleCheckItem}
-        >
-          <button
-            type='button'
-            className='text-subfont underline'
-          >
-            보기
-          </button>
-        </CheckAgree>
+        />
         <CheckAgree
           checkId='payment2'
           isCheck={isChecked('payment2')}
