@@ -35,6 +35,5 @@ export const putEditMemberInformation = async (
 
 // 사용자 탈퇴
 export const deleteMember = async (): Promise<void> => {
-  const response = await authInstance.delete('/api/v1/member');
-  return response.data;
+  await authInstance.delete('/api/v1/member');
 };

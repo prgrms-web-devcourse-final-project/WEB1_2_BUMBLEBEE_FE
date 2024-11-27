@@ -76,6 +76,5 @@ export const putEditReview = async (
 
 // 리뷰 삭제
 export const deleteReview = async (reviewId: string): Promise<void> => {
-  const response = await authInstance.delete(`/api/vi/review/${reviewId}`);
-  return response.data;
+  await authInstance.delete(`/api/v1/review/${reviewId}`);
 };

@@ -33,6 +33,5 @@ export const putEditBusinessInformation = async (
 
 // 사업자 탈퇴
 export const deleteBusiness = async (): Promise<void> => {
-  const response = await authInstance.delete('/api/v1/business');
-  return response.data;
+  await authInstance.delete('/api/v1/business');
 };
