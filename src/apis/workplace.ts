@@ -21,17 +21,6 @@ interface WorkplaceStudyRoomData {
   capacity: number;
 }
 
-interface ReservationRoomData {
-  workplaceName: {
-    name: string;
-  };
-  reservationDate: Date;
-  reservationStartTime: Date;
-  studyRoomName: string;
-  studyRoomCapacity: number;
-  studyRoomPrice: number;
-}
-
 interface SearchStudyRoom {
   workplaceAddress: string;
   startTime: string;
@@ -69,7 +58,7 @@ interface GetWorkPlaceData extends WorkPlacePutData {
   latitude: string;
 }
 
-interface GetMainWorkPlace {
+interface GetPositionWorkPlace {
   topLeft: { lat: number; lng: number };
   bottomRight: { lat: number; lng: number };
   positionLat: number;
@@ -87,7 +76,7 @@ interface GetBusinessWorkPlaceData {
 }
 
 // 스터디룸 등록
-export const postRegisterSpace = async (
+export const postStudyRoom = async (
   studyroom: StudyRoomData,
 ): Promise<void> => {
   const response = await authInstance.post('api/v1/studyroom', studyroom);
@@ -95,7 +84,7 @@ export const postRegisterSpace = async (
 };
 
 // 스터디룸 정보 수정
-export const putRegisterSpace = async (
+export const putStudyRoom = async (
   studyroom: StudyRoomPutData,
 ): Promise<void> => {
   const response = await authInstance.put('api/v1/studyroom', studyroom);
@@ -103,10 +92,8 @@ export const putRegisterSpace = async (
 };
 
 // 스터디룸 삭제
-export const deleteRegisterSpace = async (
-  studyyRoomId: string,
-): Promise<void> => {
-  const response = await authInstance.put(`api/v1/studyroom/${studyyRoomId}`);
+export const deleteStudyRoom = async (studyRoomId: string): Promise<void> => {
+  const response = await authInstance.delete(`api/v1/studyroom/${studyRoomId}`);
   return response.data;
 };
 
@@ -117,14 +104,6 @@ export const getWorkplaceStudyRoom = async (
   const response = await defaultInstance.get(
     `api/v1/studyroom/workplace/${workplaceId}`,
   );
-  return response.data;
-};
-
-// 최근 예약한 스터디룸 보여주기
-export const getReservationStudyRoom = async (
-  studyyRoomId: string,
-): Promise<ReservationRoomData[]> => {
-  const response = await authInstance.get(`api/v1/studyroom/${studyyRoomId}`);
   return response.data;
 };
 
@@ -174,9 +153,9 @@ export const getWorkPlace = async (
   return response.data;
 };
 
-// 메인페이지 사업장 조회
-export const getMainWorkPlace = async (
-  position: GetMainWorkPlace,
+// 위치 기반 사업장 조회
+export const getPositionWorkPlace = async (
+  position: GetPositionWorkPlace,
 ): Promise<GetMainWorkPlaceData> => {
   const response = await defaultInstance.get('api/v1/workplace/distance', {
     params: position,
