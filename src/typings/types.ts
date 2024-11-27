@@ -47,8 +47,8 @@ export interface Business {
 // 리뷰
 export interface Review {
   reviewId: string;
-  memberId: bigint;
-  workPlaceId: bigint;
+  memberId: number; // bigint
+  workPlaceId: number; // bigint
   reviewContent: string;
   reviewRating: number;
   createdAt: string;
@@ -57,9 +57,9 @@ export interface Review {
 
 // 예약
 export interface Reservation {
-  reservationId: bigint;
-  memberId: bigint;
-  studyroomId: bigint;
+  reservationId: number; // bigint
+  memberId: number; // bigint
+  studyroomId: number; // bigint
   reservationName?: string;
   reservationPhoneNumber?: string;
   reservationState: number; // enum
@@ -73,8 +73,8 @@ export interface Reservation {
 
 // 스터디룸
 export interface StudyRoom {
-  studyroomId: bigint;
-  workPlaceId: bigint;
+  studyroomId: number; // bigint
+  workPlaceId: number; // bigint
   title: string;
   description: string;
   createdAt: string;
@@ -86,8 +86,8 @@ export interface StudyRoom {
 
 // 사업장
 export interface WorkPlace {
-  workPlaceId: bigint;
-  businessId: bigint;
+  workPlaceId: number; // bigint
+  businessId: number; // bigint
   workplaceName: string;
   workplaceImage: string; // erd상에서 타입 미정
   workPlacePhoneNumber: string;
@@ -102,8 +102,8 @@ export interface WorkPlace {
 
 // 결제
 export interface Payment {
-  paymentId: bigint;
-  reservationId: bigint;
+  paymentId: number; // bigint
+  reservationId: number; // bigint
   orderId: string;
   orderName: string;
   method: number; // enum
@@ -117,7 +117,7 @@ export interface Payment {
 // 사용자 알림
 export interface Alarm {
   // id?: bigint; // erd상에서 타입 미정
-  memberId: bigint;
+  memberId: number; // bigint
   message?: string; // erd상에서 타입 미정
   createdAt?: string; // erd상에서 타입 미정
 }
@@ -125,22 +125,22 @@ export interface Alarm {
 // 사업자 알림
 export interface BusinessAlarm {
   // key?: bigint; // erd상에서 타입 미정
-  businessId: bigint;
+  businessId: number; // bigint
   businessMessage: string;
   createdAt: string;
 }
 
 // 채팅방
 export interface ChatRoom {
-  chatroomId: bigint;
-  memberId: bigint;
+  chatroomId: number; // bigint
+  memberId: number; // bigint
   chatTitle: string;
 }
 
 // 채팅
 export interface Chat {
-  chatId: bigint;
-  chatroomId: bigint;
+  chatId: number; // bigint
+  chatroomId: number; // bigint
   message: string;
   createdAt: string;
   readYn?: boolean;
