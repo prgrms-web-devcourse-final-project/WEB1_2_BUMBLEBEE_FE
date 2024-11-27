@@ -45,7 +45,7 @@ module.exports = {
         some: ['nesting', 'id'],
       },
     ],
-
+    'no-param-reassign': 'off',
     '@typescript-eslint/naming-convention': [
       'error',
       // 인터페이스 이름은 PascalCase를 사용하되, 'I'로 시작하지 않아야 함
