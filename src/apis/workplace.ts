@@ -13,6 +13,12 @@ import {
 } from '@typings/types';
 import { authInstance, defaultInstance } from '.';
 
+// 프리사인드 URL 얻기
+export const getS3URL = async (): Promise<string> => {
+  const response = await authInstance.get('/api/generate-presigned-url');
+  return response.data;
+};
+
 // 스터디룸 등록
 export const postStudyRoom = async (
   studyroom: StudyRoomData,
