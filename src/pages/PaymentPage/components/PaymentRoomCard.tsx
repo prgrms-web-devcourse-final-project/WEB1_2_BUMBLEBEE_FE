@@ -1,7 +1,13 @@
 import DetailTitle from '@components/DetailTitle';
+import useSearchStore from '@store/searchStore';
+import { getFormattedDateFunction } from '@utils/formatTime';
 import { GrNext } from 'react-icons/gr';
 
 const PaymentRoomCard = () => {
+  const { searchDate, formattedTime, searchPeople } = useSearchStore();
+
+  const formattedDate = getFormattedDateFunction(searchDate);
+  const timeString = formattedTime.join(' ~ ');
   return (
     <div className='mx-auto mt-8 flex w-custom flex-col gap-4'>
       <DetailTitle title='룸 상세 정보'>
@@ -28,13 +34,13 @@ const PaymentRoomCard = () => {
             <div className='flex gap-[10px]'>
               <span>일정</span>
               <div className='flex gap-[6px]'>
-                <span className='font-normal'>11월 16일(토)</span>
-                <span className='font-normal'>16:00 - 18:00</span>
+                <span className='font-normal'>{formattedDate}</span>
+                <span className='font-normal'>{timeString}</span>
               </div>
             </div>
             <div className='flex gap-[10px]'>
               <span>인원</span>
-              <span className='font-normal'>4명</span>
+              <span className='font-normal'>{searchPeople}명</span>
             </div>
           </div>
         </div>

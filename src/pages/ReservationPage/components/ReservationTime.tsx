@@ -1,7 +1,7 @@
 import useSearchStore from '@store/searchStore';
 
 const ReservationTime = () => {
-  const { searchTime, setTime } = useSearchStore();
+  const { searchTime, setTime, setFormattedTime } = useSearchStore();
   const times = { startTime: '09:00', endTime: '23:00' };
 
   const startHour: number = Number(times.startTime.split(':')[0]);
@@ -16,7 +16,7 @@ const ReservationTime = () => {
     const lastTime = newArray[newArray.length - 1];
     const [hour] = lastTime.split(':');
     const newTimeArray = [newArray[0], `${hour}:59`];
-    console.log(newTimeArray);
+    setFormattedTime(newTimeArray);
   };
 
   const handleSelectTime = (time: string) => {

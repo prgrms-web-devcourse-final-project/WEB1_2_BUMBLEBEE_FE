@@ -10,6 +10,16 @@ export const getDateFunction = (timeString: string) => {
   return dateString;
 };
 
+export const getFormattedDateFunction = (date: Date) => {
+  const formattedDate = date.toLocaleDateString('ko-KR', {
+    month: 'long', // 월
+    day: 'numeric', // 일
+    weekday: 'short', // (요일)
+  });
+
+  return formattedDate.replace(/\s/g, '');
+};
+
 // YYYY-MM-DDTHH:mm:ss 에서 시간(HH:mm) 추출
 export const getTimeFunction = (timeString: string) => {
   const hour = new Date(timeString).getHours().toString().padStart(2, '0');
