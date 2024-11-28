@@ -1,15 +1,5 @@
+import { Business, BusinessAlarm } from '@typings/types';
 import { authInstance } from '.';
-
-// 사업자
-interface Business {
-  businessName: string;
-  businessEmail: string;
-  businessNum: string;
-  createdAt?: string;
-}
-
-// 사업자 알림
-interface BusinessAlarm {}
 
 // 사업자 정보 조회
 export const getBusinessData = async (): Promise<Business> => {

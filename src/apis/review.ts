@@ -1,18 +1,5 @@
+import { PostReviewRequestBody, Review } from '@typings/types';
 import { authInstance, defaultInstance } from '.';
-
-// 리뷰 작성, 수정
-interface PostReviewRequestBody {
-  workplaceId: number;
-  reviewContent: string;
-  reviewRating: number;
-}
-
-// 리뷰
-interface Review extends PostReviewRequestBody {
-  reviewId: number;
-  workplaceName: string;
-  reviewDate: Date;
-}
 
 // 상세페이지 리뷰 전체 목록 조회(비로그인)
 export const getAllReview = async (

@@ -1,17 +1,5 @@
+import { Alarm, Member } from '@typings/types';
 import { authInstance } from '.';
-
-// 사용자
-interface Member {
-  nickName: string;
-  phoneNumber: string;
-  birthDay: Date;
-  sex: string;
-  email: string;
-  createdAt?: string;
-}
-
-// 사용자 알림
-interface Alarm {}
 
 // 로그인한 유저 정보 조회
 export const getUserData = async (): Promise<Member> => {
