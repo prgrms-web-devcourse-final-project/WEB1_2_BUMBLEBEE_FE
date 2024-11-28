@@ -1,26 +1,6 @@
 import { removeAuthToken, setAuthToken } from '@utils/auth';
+import { BusinessSignUpData, LoginData, UserSignUpData } from '@typings/types';
 import { authInstance } from '.';
-
-interface UserSignUpData {
-  nickName: string;
-  phoneNumber: string;
-  sex: string;
-  email: string;
-  pwd: string;
-  birthDay: string;
-}
-
-interface LoginData {
-  email: string;
-  password: string;
-}
-
-interface BusinessSignUpData {
-  businessName: string;
-  businessEmail: string;
-  businessPwd: string;
-  businessNum: string;
-}
 
 // 사용자 회원가입
 export const postUserSignUp = async (user: UserSignUpData): Promise<void> => {
