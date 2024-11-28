@@ -3,8 +3,10 @@ import LogoutButton from '@components/LogoutButton';
 import { useNavigate } from 'react-router-dom';
 import LatestReservation from './LatestReservation';
 import CategoryButton from './CategoryButton';
+import { useGetLatestReservation } from '../hooks/useGetMyReservations';
 
 const UserButtonContainer = () => {
+  const latestReservation = useGetLatestReservation();
   const navigate = useNavigate();
 
   const handleMoveReservationList = () => {
@@ -30,7 +32,15 @@ const UserButtonContainer = () => {
           예약 내역
           <MdArrowForwardIos />
         </button>
-        <LatestReservation />
+        {latestReservation ? (
+          <LatestReservation data={latestReservation} />
+        ) : (
+          <div className='flex h-[172px] w-[330px] items-center justify-center rounded-[10px] bg-white p-[16px] shadow-[0_0_6px_0_rgba(0,0,0,0.25)]'>
+            <p className='text-sm font-normal text-subfont'>
+              예약 내역이 없습니다.
+            </p>
+          </div>
+        )}
       </div>
       <CategoryButton
         category='리뷰 관리'

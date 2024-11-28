@@ -3,11 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Member } from '@typings/types';
 
 const useGetUserData = () => {
-  const { data, isLoading, isError } = useQuery<Member>({
+  const { data } = useQuery<Member>({
     queryKey: ['member'],
     queryFn: () => getUserData(),
   });
-  return { data, isLoading, isError };
+  return { data };
 };
 
 export default useGetUserData;
