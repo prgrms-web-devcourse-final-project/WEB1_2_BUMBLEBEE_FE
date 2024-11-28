@@ -81,7 +81,14 @@ const PaymentButton = (props: PaymentButtonProps) => {
 
   const handlePaymentButton = async () => {
     isValid();
-    handlePayment();
+    if (
+      isValidKoreanName(reservationForm.name) &&
+      isValidUserPhoneNumber(reservationForm.phoneNumber) &&
+      checkState.reservation.length === 3 &&
+      checkState.payment.length === 2
+    ) {
+      handlePayment();
+    }
   };
 
   return (
