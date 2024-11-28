@@ -49,26 +49,34 @@ const PaymentButton = (props: PaymentButtonProps) => {
     const orderId = uuidv4();
 
     const formattedPhoneNumber = reservationForm.phoneNumber.replace(/-/g, '');
-    await payment.requestPayment({
-      method: 'CARD',
-      amount: {
-        currency: 'KRW',
-        value: 50000,
-      },
-      orderId,
-      orderName: '스터디룸 예약',
-      successUrl: `${window.location.origin}/payment-success`,
-      failUrl: `${window.location.origin}/payment-fail`,
-      customerEmail: 'customer123@gmail.com',
-      customerName: reservationForm.name,
-      customerMobilePhone: formattedPhoneNumber,
-      card: {
-        useEscrow: false,
-        flowMode: 'DIRECT',
-        easyPay: '토스페이',
-        useCardPoint: false,
-      },
-    });
+    await payment
+      .requestPayment({
+        method: 'CARD',
+        amount: {
+          currency: 'KRW',
+          value: 50000,
+        },
+        orderId,
+        orderName: '스터디룸 예약',
+        successUrl: `${window.location.origin}/payment-success`,
+        failUrl: `${window.location.origin}/payment-fail`,
+        customerEmail: 'customer123@gmail.com',
+        customerName: reservationForm.name,
+        customerMobilePhone: formattedPhoneNumber,
+        card: {
+          useEscrow: false,
+          flowMode: 'DIRECT',
+          easyPay: '토스페이',
+          useCardPoint: false,
+        },
+      })
+      .catch((error) => {
+        if (error.code === 'USER_CANCEL') {
+          console.log('유저 취소');
+        } else {
+          console.log(error.message);
+        }
+      });
   };
 
   const handlePaymentButton = async () => {
