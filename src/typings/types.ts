@@ -18,7 +18,25 @@ export type Space = {
   rooms: Room[];
 };
 
-// 로그인
+// 사용자 회원가입
+export interface UserSignUpData {
+  nickName: string;
+  phoneNumber: string;
+  sex: string;
+  email: string;
+  pwd: string;
+  birthDay: string;
+}
+
+// 사업자 회원가입
+export interface BusinessSignUpData {
+  businessName: string;
+  businessEmail: string;
+  businessPwd: string;
+  businessNum: string;
+}
+
+// 사용자 로그인
 export interface LoginData {
   email: string;
   password: string;

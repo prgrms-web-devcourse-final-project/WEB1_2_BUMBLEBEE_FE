@@ -1,18 +1,19 @@
 import axios, {
   AxiosError,
   AxiosInstance,
+  AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
 import { BASE_URL } from '@constants/constants';
-import { getAuthToken } from '@utils/auth';
+import { getAuthToken, removeAuthToken, setAuthToken } from '@utils/auth';
 
 // Default Instance
 const defaultInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 2000,
   headers: {
-    Accept: 'application/json',
+    accept: 'application/json',
     'Content-Type': 'application/json',
   },
 });
@@ -26,6 +27,51 @@ const authInstance: AxiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+// 회원가입 & 로그인 용
+const tokenInstance: AxiosInstance = axios.create({
+  baseURL: BASE_URL,
+  timeout: 2000,
+  headers: {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+});
+
+// response interceptor (토큰 갱신)
+tokenInstance.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  async (error: AxiosError) => {
+    // token 갱신하기
+    if (error.response && error.response.status === 401) {
+      try {
+        const response = await tokenInstance.post(
+          '/reissue',
+          {},
+          { withCredentials: true },
+        );
+
+        if (response.status === 200) {
+          const { accessToken } = response.data;
+          setAuthToken(accessToken);
+
+          const originalRequest = error.config as AxiosRequestConfig;
+          if (originalRequest.headers) {
+            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+          }
+          return await tokenInstance(originalRequest); // 실패했던 요청 재시도
+        }
+      } catch (refreshError) {
+        // 로그아웃 처리
+        removeAuthToken();
+        tokenInstance.post('/logout');
+        window.location.replace('/');
+      }
+    }
+    return Promise.reject(error);
+  },
+);
 
 // request interceptor
 authInstance.interceptors.request.use(
@@ -80,4 +126,4 @@ defaultInstance.interceptors.response.use(
 );
 authInstance.interceptors.response.use(responseInterceptor, errorInterceptor);
 
-export { defaultInstance, authInstance };
+export { defaultInstance, authInstance, tokenInstance };
