@@ -1,16 +1,9 @@
 import useGetBusinessData from '../hooks/useGetBusinessData';
 
 const HostInfo = () => {
-  const { data, isLoading, isError } = useGetBusinessData();
+  const { data } = useGetBusinessData();
 
   // 마이페이지 진입 시 토큰 유무(로그인 상태) 확인할 것
-
-  if (isLoading) {
-    return <p>로딩중...</p>;
-  }
-  if (isError) {
-    return <p>404</p>;
-  }
 
   return (
     <div className='self-start pl-[33px] pt-[30px]'>
