@@ -18,8 +18,15 @@ import UserNotiPage from '@pages/UserNotiPage';
 import SearchResult from '@pages/SearchResult';
 import ReservationPage from '@pages/ReservationPage';
 import HostNotiPage from '@pages/HostNotiPage';
+import UserInfoPage from '@pages/UserInfoPage';
 import PaymentPage from '@pages/PaymentPage';
 import PaymentSuccessPage from '@pages/PaymentSuccessPage';
+import HostInfoPage from '@pages/HostInfoPage';
+import HostInfoEditPage from '@pages/HostInfoEditPage';
+import UserInfoEditPage from '@pages/UserInfoEditPage';
+import DetailPage from '@pages/DetailPage';
+import ChatListPage from '@pages/ChatListPage';
+import ChatPage from '@pages/ChatPage';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +58,10 @@ const router = createBrowserRouter([
     element: <RegisterSpace />,
   },
   {
+    path: '/detail',
+    element: <DetailPage />,
+  },
+  {
     path: '/user-page',
     element: <UserMypage />,
   },
@@ -71,6 +82,14 @@ const router = createBrowserRouter([
     element: <UserNotiPage />,
   },
   {
+    path: '/user-info',
+    element: <UserInfoPage />,
+  },
+  {
+    path: '/user-info-edit',
+    element: <UserInfoEditPage />,
+  },
+  {
     path: '/host-page',
     element: <HostMypage />,
   },
@@ -85,6 +104,14 @@ const router = createBrowserRouter([
   {
     path: '/host-noti',
     element: <HostNotiPage />,
+  },
+  {
+    path: 'host-info',
+    element: <HostInfoPage />,
+  },
+  {
+    path: 'host-info-edit',
+    element: <HostInfoEditPage />,
   },
   {
     path: '/search',
@@ -105,6 +132,14 @@ const router = createBrowserRouter([
   {
     path: '/payment-success',
     element: <PaymentSuccessPage />,
+  },
+  {
+    path: '/chat-list',
+    element: <ChatListPage />,
+  },
+  {
+    path: '/chat',
+    element: <ChatPage />,
   },
   {
     path: '*',

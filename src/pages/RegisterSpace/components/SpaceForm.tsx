@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { Space } from '@typings/Types';
+import { Space } from '@typings/types';
 import { IoMdClose } from 'react-icons/io';
 import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
@@ -39,6 +39,10 @@ const SpaceForm = ({
     changeFormdata({
       rooms: spaceFormData.rooms.filter((item) => item.id !== roomId),
     });
+  };
+
+  const handleClickAdd = () => {
+    addRoom();
   };
 
   // 사업장명 형식 확인
@@ -242,6 +246,7 @@ const SpaceForm = ({
                 <button
                   type='button'
                   onClick={() => clickRoom(item.id)}
+                  className='mb-[10px]'
                 >
                   <RoomComponent room={item} />
                 </button>
@@ -260,7 +265,7 @@ const SpaceForm = ({
           <button
             type='button'
             className='flex h-[120px] w-custom items-center justify-center rounded-[10px] border border-dashed border-primary py-[10px]'
-            onClick={() => addRoom()}
+            onClick={handleClickAdd}
           >
             <AiOutlinePlus
               size='25px'

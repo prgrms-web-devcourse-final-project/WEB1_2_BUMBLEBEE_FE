@@ -2,7 +2,7 @@ import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
 import { useCallback, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Room, Space } from '@typings/Types';
+import { Room, Space } from '@typings/types';
 import SpaceForm from './components/SpaceForm';
 import RoomForm from '../AddRoom/components/RoomForm';
 

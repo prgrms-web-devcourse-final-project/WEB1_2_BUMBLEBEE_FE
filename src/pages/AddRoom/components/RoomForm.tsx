@@ -1,6 +1,6 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { Room } from '@typings/Types';
+import { Room } from '@typings/types';
 import RoomImage from './RoomImage';
 import CountPeople from './CountPeople';
 
