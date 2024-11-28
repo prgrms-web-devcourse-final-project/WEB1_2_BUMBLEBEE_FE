@@ -1,79 +1,17 @@
+import {
+  GetBusinessWorkPlaceData,
+  GetPositionWorkPlace,
+  GetPositionWorkPlaceData,
+  GetWorkPlaceData,
+  SearchStudyRoom,
+  SearchStudyRoomData,
+  StudyRoomData,
+  StudyRoomPutData,
+  WorkPlaceData,
+  WorkPlacePutData,
+  WorkplaceStudyRoomData,
+} from '@typings/types';
 import { authInstance, defaultInstance } from '.';
-
-interface StudyRoomData {
-  title: string;
-  description: string;
-  imageUrl: string;
-  price: number;
-  capacity: number;
-}
-
-interface StudyRoomPutData extends StudyRoomData {
-  studyRoomId: number;
-}
-
-interface WorkplaceStudyRoomData {
-  id: number;
-  title: string;
-  description: string;
-  imageUrl: string;
-  price: number;
-  capacity: number;
-}
-
-interface SearchStudyRoom {
-  workplaceAddress: string;
-  startTime: string;
-  endTime: string;
-  capacity: number;
-}
-
-interface SearchStudyRoomData {
-  workplaceName: string;
-  averageReviewScore: number;
-  studyRoomTitle: string;
-  workplaceAddress: string;
-  studyRoomCapacity: number;
-  studyRoomPrice: number;
-  imageUrl: string;
-}
-
-interface WorkPlaceData {
-  workplaceName: string;
-  WorkplacePhoneNumber: string;
-  workplaceDescription: string;
-  workplaceAddress: string;
-  imageUrl: string;
-  workplaceStartTime: string;
-  workplaceEndTime: string;
-}
-
-interface WorkPlacePutData extends WorkPlaceData {
-  workplaceId: number;
-}
-
-interface GetWorkPlaceData extends WorkPlacePutData {
-  createdAt: string;
-  longitude: string;
-  latitude: string;
-}
-
-interface GetPositionWorkPlace {
-  topLeft: { lat: number; lng: number };
-  bottomRight: { lat: number; lng: number };
-  positionLat: number;
-  positionLng: number;
-}
-
-interface GetPositionWorkPlaceData {
-  workplaces: GetWorkPlaceData[];
-}
-
-interface GetBusinessWorkPlaceData {
-  businessId: number;
-  businessName: string;
-  workplaces: GetWorkPlaceData[];
-}
 
 // 프리사인드 URL 얻기
 export const getS3URL = async (): Promise<string> => {

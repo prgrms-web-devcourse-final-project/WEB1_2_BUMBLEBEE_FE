@@ -1,25 +1,5 @@
+import { GetAllReservationData, PostReservationData } from '@typings/types';
 import { authInstance } from '.';
-
-interface PostReservationData {
-  reservationName: string;
-  reservationPhoneNumber: string;
-  startTime: Date;
-  endTime: Date;
-}
-
-interface GetAllReservation {
-  workplaceName: string;
-  reservationCreatedAt: Date;
-  startTime: Date;
-  endTime: Date;
-  studyRoomCapacity: number;
-  price: number;
-  studyRoomUrl: string;
-}
-
-interface GetAllReservationData {
-  reservations: GetAllReservation[];
-}
 
 // 예약 등록
 export const postReservation = async (
