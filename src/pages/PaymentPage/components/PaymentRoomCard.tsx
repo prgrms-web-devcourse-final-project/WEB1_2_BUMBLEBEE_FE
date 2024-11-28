@@ -10,14 +10,7 @@ const PaymentRoomCard = () => {
   const timeString = formattedTime.join(' ~ ');
   return (
     <div className='mx-auto mt-8 flex w-custom flex-col gap-4'>
-      <DetailTitle title='룸 상세 정보'>
-        <button
-          type='button'
-          className='flex items-center justify-center gap-1 text-xs text-subfont'
-        >
-          123 스터디룸 <GrNext />
-        </button>
-      </DetailTitle>
+      <DetailTitle title='룸 상세 정보' />
       <div className='flex h-[120px] w-custom items-center justify-center gap-[18px] rounded-[10px] shadow-custom'>
         <img
           src='https://modo-phinf.pstatic.net/20180304_61/1520159998510ED9Yt_JPEG/mosaSDaCsR.jpeg?type=w1100'
