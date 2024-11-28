@@ -1,17 +1,9 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useGetBusinessData from '../hooks/useGetBusinessData';
 
 const HostInfo = () => {
   const { data, isLoading, isError } = useGetBusinessData();
-  const navigate = useNavigate();
 
-  // 렌더링 이후 데이터가 없고, 로딩중이 아니면 로그인 페이지로 이동
-  useEffect(() => {
-    if (!data && !isLoading) {
-      navigate('/login/business');
-    }
-  });
+  // 마이페이지 진입 시 토큰 유무(로그인 상태) 확인할 것
 
   if (isLoading) {
     return <p>로딩중...</p>;
