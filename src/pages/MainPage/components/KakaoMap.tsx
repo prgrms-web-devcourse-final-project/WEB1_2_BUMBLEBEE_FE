@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
 import { getDistance } from '@utils/getDistance';
-import { StudyRoom } from '@typings/Types';
 import { MoonLoader } from 'react-spinners';
+import { WorkPlaceData } from '@typings/types';
 
 interface KakaoMapProps {
-  data: StudyRoom[];
-  onDistanceChange: (value: { id: number; distance: number }[]) => void;
+  data: WorkPlaceData[];
+  onDistanceChange: (value: { id: string; distance: number }[]) => void;
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
@@ -64,11 +64,11 @@ const KakaoMap = (props: KakaoMapProps) => {
 
   useEffect(() => {
     const newStudyRoomList: kakao.maps.LatLng[] = [];
-    const distanceData: { id: number; distance: number }[] = [];
+    const distanceData: { id: string; distance: number }[] = [];
 
     const geocoder = new kakao.maps.services.Geocoder();
     data.forEach((item) =>
-      geocoder.addressSearch(item.workPlaceAddress, (result, status) => {
+      geocoder.addressSearch(item.workplaceAddress, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           const coords = new kakao.maps.LatLng(
             parseFloat(result[0].y),
@@ -82,7 +82,7 @@ const KakaoMap = (props: KakaoMapProps) => {
             parseFloat(result[0].x),
           );
           newStudyRoomList.push(coords);
-          distanceData.push({ id: item.workPlaceId, distance });
+          distanceData.push({ id: item.workplaceName, distance });
           console.log(
             `${item.workplaceName} 간의 거리는 ${distance}km 입니다.`,
           );

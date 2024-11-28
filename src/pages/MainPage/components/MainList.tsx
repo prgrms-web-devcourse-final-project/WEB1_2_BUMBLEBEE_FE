@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StudyRoom } from '@typings/Types';
+import { WorkPlaceData } from '@typings/types';
 import StudyRoomCard from './StudyRoomCard';
 
 type TabList = {
@@ -10,8 +10,8 @@ type TabList = {
 };
 
 interface MainListProps {
-  data: StudyRoom[];
-  distanceList: { id: number; distance: number }[];
+  data: WorkPlaceData[];
+  distanceList: { id: string; distance: number }[];
 }
 
 const MainList = (props: MainListProps) => {
@@ -50,11 +50,11 @@ const MainList = (props: MainListProps) => {
       <div className='mx-auto flex w-custom flex-col gap-4'>
         {data.map((item) => {
           const distanceData = distanceList.find(
-            (distance) => distance.id === item.workPlaceId,
+            (distance) => distance.id === item.workplaceName,
           );
           return (
             <StudyRoomCard
-              key={item.workPlaceId}
+              key={item.workplaceName}
               studyroom={item}
               distance={distanceData ? distanceData.distance : 0}
             />
