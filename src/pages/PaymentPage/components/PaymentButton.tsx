@@ -3,6 +3,8 @@ import {
   isValidUserPhoneNumber,
 } from '@utils/validationCheckRegex';
 import { ERROR_MESSAGE } from '@constants/constants';
+import { v4 as uuidv4 } from 'uuid';
+import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
 import type { ReservationFormData, ErrorMessageType, CheckState } from '..';
 
 interface PaymentButtonProps {
@@ -38,8 +40,40 @@ const PaymentButton = (props: PaymentButtonProps) => {
     onSetErrorMessage(newError);
   };
 
-  const handlePaymentButton = () => {
+  const clientKey = import.meta.env.VITE_APP_TOSS_CLIENT_KEY;
+  const customerKey = uuidv4();
+
+  const handlePayment = async (): Promise<void> => {
+    const tossPayments = await loadTossPayments(clientKey);
+    const payment = tossPayments.payment({ customerKey });
+    const orderId = uuidv4();
+
+    const formattedPhoneNumber = reservationForm.phoneNumber.replace(/-/g, '');
+    await payment.requestPayment({
+      method: 'CARD',
+      amount: {
+        currency: 'KRW',
+        value: 50000,
+      },
+      orderId,
+      orderName: '스터디룸 예약',
+      successUrl: `${window.location.origin}/payment-success`,
+      failUrl: `${window.location.origin}/payment-fail`,
+      customerEmail: 'customer123@gmail.com',
+      customerName: reservationForm.name,
+      customerMobilePhone: formattedPhoneNumber,
+      card: {
+        useEscrow: false,
+        flowMode: 'DIRECT',
+        easyPay: '토스페이',
+        useCardPoint: false,
+      },
+    });
+  };
+
+  const handlePaymentButton = async () => {
     isValid();
+    handlePayment();
   };
 
   return (
