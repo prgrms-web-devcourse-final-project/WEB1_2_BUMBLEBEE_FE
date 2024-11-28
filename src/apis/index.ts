@@ -7,6 +7,7 @@ import axios, {
 } from 'axios';
 import { BASE_URL } from '@constants/constants';
 import { getAuthToken, removeAuthToken, setAuthToken } from '@utils/auth';
+import useAuthStore from '@store/authStore';
 
 // Default Instance
 const defaultInstance: AxiosInstance = axios.create({
@@ -54,8 +55,10 @@ authInstance.interceptors.response.use(
         }
       } catch (refreshError) {
         // 로그아웃 처리
+        const { storeLogout } = useAuthStore();
         removeAuthToken();
         authInstance.post('/logout');
+        storeLogout();
         window.location.replace('/');
       }
     }
