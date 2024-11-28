@@ -1,7 +1,6 @@
 import DetailTitle from '@components/DetailTitle';
 import useSearchStore from '@store/searchStore';
 import { getFormattedDateFunction } from '@utils/formatTime';
-import { GrNext } from 'react-icons/gr';
 
 const PaymentRoomCard = () => {
   const { searchDate, formattedTime, searchPeople } = useSearchStore();
