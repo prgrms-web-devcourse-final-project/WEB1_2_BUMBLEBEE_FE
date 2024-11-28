@@ -1,5 +1,5 @@
 import useSearchStore from '@store/searchStore';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReservationDate from './ReservationDate/ReservationDate';
 import ReservationTime from './ReservationTime';
 import ReservationPeople from './ReservationPeople';
@@ -27,9 +27,33 @@ const ReservationBar = () => {
     searchTime.length > 0 ? setTimeArray(searchTime).join(' ~ ') : '시간 선택';
 
   const formattedPeople = searchPeople > 0 ? `${searchPeople}명` : '인원 선택';
+
+  const listRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const handleOutsideClose = (e: { target: unknown }) => {
+      if (
+        (showSelect.date || showSelect.time || showSelect.people) &&
+        listRef.current &&
+        !listRef.current.contains(e.target as Node)
+      ) {
+        setShowSelect({
+          date: false,
+          time: false,
+          people: false,
+        });
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClose);
+
+    return () => document.removeEventListener('mousedown', handleOutsideClose);
+  }, [showSelect]);
+
   return (
     <>
-      <div className='relative z-10 mx-auto mt-4 flex w-custom justify-center gap-3 rounded-full py-[18px] text-sm shadow-custom'>
+      <div
+        className='relative z-10 mx-auto mt-4 flex w-custom justify-center gap-3 rounded-full py-[18px] text-sm shadow-custom'
+        ref={listRef}
+      >
         <button
           type='button'
           className='w-20 border-r-2 border-subfont pr-3 text-center'
