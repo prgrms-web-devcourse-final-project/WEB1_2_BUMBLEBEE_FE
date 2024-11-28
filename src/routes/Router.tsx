@@ -28,6 +28,7 @@ import DetailPage from '@pages/DetailPage';
 import ChatListPage from '@pages/ChatListPage';
 import ChatPage from '@pages/ChatPage';
 import PaymentFailPage from '@pages/PaymentPage/PaymentFailPage';
+import PaymentLoadingPage from '@pages/PaymentPage/PaymentLoadingPage';
 
 const router = createBrowserRouter([
   {
@@ -129,6 +130,10 @@ const router = createBrowserRouter([
   {
     path: '/payment',
     element: <PaymentPage />,
+  },
+  {
+    path: '/payment-loading',
+    element: <PaymentLoadingPage />,
   },
   {
     path: '/payment-success',

@@ -68,7 +68,7 @@ const PaymentButton = (props: PaymentButtonProps) => {
         },
         orderId,
         orderName: '스터디룸 예약',
-        successUrl: `${window.location.origin}/payment-success`,
+        successUrl: `${window.location.origin}/payment-loading`,
         failUrl: `${window.location.origin}/payment-fail`,
         customerEmail: 'customer123@gmail.com',
         customerName: reservationForm.name,
