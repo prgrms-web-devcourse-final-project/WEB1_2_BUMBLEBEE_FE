@@ -10,12 +10,8 @@ export const postReservation = async (
 };
 
 // 사용자의 최근 예약 전체 조회
-export const getAllReservation = async (
-  memberId: number,
-): Promise<GetAllReservationData> => {
-  const response = await authInstance.get(
-    `api/v1/reservations/member/${memberId}`,
-  );
+export const getAllReservation = async (): Promise<GetAllReservationData> => {
+  const response = await authInstance.get(`api/v1/reservations/member`);
   return response.data;
 };
 

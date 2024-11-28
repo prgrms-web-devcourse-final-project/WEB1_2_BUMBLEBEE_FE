@@ -7,6 +7,10 @@ import CategoryButton from './CategoryButton';
 const UserButtonContainer = () => {
   const navigate = useNavigate();
 
+  const handleMoveReservationList = () => {
+    navigate('/reservation-list');
+  };
+
   const handleMoveReviewList = () => {
     navigate('/review-list');
   };
@@ -21,6 +25,7 @@ const UserButtonContainer = () => {
         <button
           type='button'
           className='flex items-center gap-[2px] self-end text-[14px] text-white'
+          onClick={handleMoveReservationList}
         >
           예약 내역
           <MdArrowForwardIos />
