@@ -8,6 +8,7 @@ import ReservationGuide from './components/ReservationGuide';
 import ReservationPrice from './components/ReservationPrice';
 import PaymentAgree from './components/PaymentAgree';
 import PaymentButton from './components/PaymentButton';
+import PaymentMethod from './components/PaymentMethod';
 
 export interface ReservationFormData {
   name: string;
@@ -19,12 +20,15 @@ export interface ErrorMessageType {
   phonNumberError: string;
   reservationCheckError: string;
   paymentCheckError: string;
+  payMethodError: string;
 }
 
 export interface CheckState {
   reservation: string[];
   payment: string[];
 }
+
+export type PayMethodType = 'TOSS' | 'KAKAOPAY' | null;
 
 const PaymentPage = () => {
   const [reservationForm, setReservationForm] = useState<ReservationFormData>({
@@ -42,7 +46,10 @@ const PaymentPage = () => {
     phonNumberError: '',
     reservationCheckError: '',
     paymentCheckError: '',
+    payMethodError: '',
   });
+
+  const [payMethod, setPayMethod] = useState<PayMethodType>(null);
 
   return (
     <>
@@ -67,11 +74,17 @@ const PaymentPage = () => {
             onSetCheckState={setCheckState}
             errorMessage={errorMessage}
           />
+          <PaymentMethod
+            payMethod={payMethod}
+            onSetPayMethod={setPayMethod}
+            errorMessage={errorMessage}
+          />
         </div>
         <PaymentButton
           reservationForm={reservationForm}
           onSetErrorMessage={setErrorMessage}
           checkState={checkState}
+          payMethod={payMethod}
         />
       </MainLayout>
     </>

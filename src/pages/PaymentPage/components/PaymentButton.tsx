@@ -5,16 +5,22 @@ import {
 import { ERROR_MESSAGE } from '@constants/constants';
 import { v4 as uuidv4 } from 'uuid';
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
-import type { ReservationFormData, ErrorMessageType, CheckState } from '..';
+import type {
+  ReservationFormData,
+  ErrorMessageType,
+  CheckState,
+  PayMethodType,
+} from '..';
 
 interface PaymentButtonProps {
   reservationForm: ReservationFormData;
   onSetErrorMessage: (value: ErrorMessageType) => void;
   checkState: CheckState;
+  payMethod: PayMethodType;
 }
 
 const PaymentButton = (props: PaymentButtonProps) => {
-  const { reservationForm, onSetErrorMessage, checkState } = props;
+  const { reservationForm, onSetErrorMessage, checkState, payMethod } = props;
 
   const isValid = () => {
     const newError = {
@@ -22,6 +28,7 @@ const PaymentButton = (props: PaymentButtonProps) => {
       phonNumberError: '',
       reservationCheckError: '',
       paymentCheckError: '',
+      payMethodError: '',
     };
 
     if (!isValidKoreanName(reservationForm.name)) {
@@ -35,6 +42,9 @@ const PaymentButton = (props: PaymentButtonProps) => {
     }
     if (checkState.payment.length < 2) {
       newError.paymentCheckError = ERROR_MESSAGE.check;
+    }
+    if (payMethod === null) {
+      newError.payMethodError = ERROR_MESSAGE.payMethod;
     }
 
     onSetErrorMessage(newError);
@@ -85,7 +95,8 @@ const PaymentButton = (props: PaymentButtonProps) => {
       isValidKoreanName(reservationForm.name) &&
       isValidUserPhoneNumber(reservationForm.phoneNumber) &&
       checkState.reservation.length === 3 &&
-      checkState.payment.length === 2
+      checkState.payment.length === 2 &&
+      payMethod
     ) {
       handlePayment();
     }
