@@ -95,21 +95,21 @@ const UserLoginForm = () => {
           </button>
         </div>
         <div className='mt-[40px] flex w-custom justify-center'>
-          <button
-            type='button'
+          <a
+            href='/oauth2/authorization/kakao'
             className='mr-[12px]'
           >
             <img
               src='/src/assets/icons/KakaoLogo.svg'
               alt='카카오 로고'
             />
-          </button>
-          <button type='button'>
+          </a>
+          <a href='/oauth2/authorization/naver'>
             <img
               src='/src/assets/icons/NaverLogo.svg'
               alt='네이버 로고'
             />
-          </button>
+          </a>
         </div>
       </form>
     </div>

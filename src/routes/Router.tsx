@@ -27,6 +27,7 @@ import UserInfoEditPage from '@pages/UserInfoEditPage';
 import DetailPage from '@pages/DetailPage';
 import ChatListPage from '@pages/ChatListPage';
 import ChatPage from '@pages/ChatPage';
+import OAuth from '@pages/UserLogin/components/OAuth';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: '/login/user',
     element: <UserLogin />,
+  },
+  {
+    path: '/courses',
+    element: <OAuth />,
   },
   {
     path: '/login/business',
