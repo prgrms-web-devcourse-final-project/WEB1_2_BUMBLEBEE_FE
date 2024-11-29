@@ -1,7 +1,7 @@
 import {
   GetBusinessWorkPlaceData,
   GetPositionWorkPlace,
-  GetPositionWorkPlaceData,
+  GetPositionWorkPlaceList,
   GetWorkPlaceData,
   SearchStudyRoom,
   SearchStudyRoomData,
@@ -104,7 +104,7 @@ export const getWorkPlace = async (
 // 위치 기반 사업장 조회
 export const getPositionWorkPlace = async (
   position: GetPositionWorkPlace,
-): Promise<GetPositionWorkPlaceData> => {
+): Promise<GetPositionWorkPlaceList> => {
   const response = await defaultInstance.get('/api/v1/workplace', {
     params: position,
   });

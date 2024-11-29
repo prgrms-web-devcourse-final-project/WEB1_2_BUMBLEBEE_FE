@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { WorkPlaceData } from '@typings/types';
+import { GetPositionWorkPlaceData } from '@typings/types';
 import StudyRoomCard from './StudyRoomCard';
 
 type TabList = {
@@ -10,12 +10,11 @@ type TabList = {
 };
 
 interface MainListProps {
-  data: WorkPlaceData[];
-  distanceList: { id: string; distance: number }[];
+  data: GetPositionWorkPlaceData[];
 }
 
 const MainList = (props: MainListProps) => {
-  const { data, distanceList } = props;
+  const { data } = props;
 
   const [activeTab, setActiveTab] = useState('기본');
   const tabList: TabList = {
@@ -48,18 +47,12 @@ const MainList = (props: MainListProps) => {
         <p className='text-sm'>{tabList[activeTab].context}</p>
       </div>
       <div className='mx-auto flex w-custom flex-col gap-4'>
-        {data.map((item) => {
-          const distanceData = distanceList.find(
-            (distance) => distance.id === item.workplaceName,
-          );
-          return (
-            <StudyRoomCard
-              key={item.workplaceName}
-              studyroom={item}
-              distance={distanceData ? distanceData.distance : 0}
-            />
-          );
-        })}
+        {data.map((item) => (
+          <StudyRoomCard
+            key={item.workplaceName}
+            studyroom={item}
+          />
+        ))}
       </div>
     </div>
   );

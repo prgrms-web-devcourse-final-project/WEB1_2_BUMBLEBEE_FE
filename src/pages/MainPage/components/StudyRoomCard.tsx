@@ -1,21 +1,26 @@
-import { StudyRoom } from '@typings/Types';
+import { GetPositionWorkPlaceData } from '@typings/types';
 import { FaStar } from 'react-icons/fa6';
 
 interface StudyRoomCardProps {
-  studyroom: StudyRoom;
-  distance: number;
+  studyroom: GetPositionWorkPlaceData;
 }
 
-const StudyRoomCard = ({ studyroom, distance }: StudyRoomCardProps) => {
-  const { workplaceImage, workplaceName, workPlaceAddress, starSum } =
-    studyroom;
+const StudyRoomCard = ({ studyroom }: StudyRoomCardProps) => {
+  const {
+    workplaceName,
+    workplaceAddress,
+    imageUrl,
+    stars,
+    reviewCount,
+    distance,
+  } = studyroom;
 
-  const formattedAddress = workPlaceAddress.split(' ').slice(0, 3).join(' ');
+  const formattedAddress = workplaceAddress.split(' ').slice(0, 3).join(' ');
 
   return (
     <div className='hover: flex h-[116px] w-custom cursor-pointer gap-[18px] rounded-[10px] border-primary bg-white p-3 shadow-custom hover:border-[1px]'>
       <img
-        src={workplaceImage}
+        src={imageUrl}
         alt='스터디룸 사진'
         className='h-[90px] w-[90px] object-cover'
       />
@@ -29,8 +34,8 @@ const StudyRoomCard = ({ studyroom, distance }: StudyRoomCardProps) => {
         </div>
         <div className='flex items-center gap-1 text-xs'>
           <FaStar className='text-primary' />
-          <span>{starSum}</span>
-          <span>(25)</span>
+          <span>{stars}</span>
+          <span>({reviewCount})</span>
         </div>
       </div>
     </div>

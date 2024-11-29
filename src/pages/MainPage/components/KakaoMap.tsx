@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
-import { getDistance } from '@utils/getDistance';
 import { MoonLoader } from 'react-spinners';
-import { WorkPlaceData } from '@typings/types';
+import { GetPositionWorkPlaceData } from '@typings/types';
 
 interface KakaoMapProps {
-  data: WorkPlaceData[];
-  onDistanceChange: (value: { id: string; distance: number }[]) => void;
+  data: GetPositionWorkPlaceData[];
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const { data, onDistanceChange } = props;
+  const { data } = props;
   const { kakao } = window;
   const [position, setPosition] = useState({
     center: {
@@ -59,44 +57,6 @@ const KakaoMap = (props: KakaoMapProps) => {
     }
   }, []);
 
-  // 거리 계산 및 업데이트
-  const [studyRoomList, setStudyRoomList] = useState<kakao.maps.LatLng[]>([]);
-
-  useEffect(() => {
-    const newStudyRoomList: kakao.maps.LatLng[] = [];
-    const distanceData: { id: string; distance: number }[] = [];
-
-    const geocoder = new kakao.maps.services.Geocoder();
-    data.forEach((item) =>
-      geocoder.addressSearch(item.workplaceAddress, (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          const coords = new kakao.maps.LatLng(
-            parseFloat(result[0].y),
-            parseFloat(result[0].x),
-          );
-
-          const distance = getDistance(
-            position.center.lat,
-            position.center.lng,
-            parseFloat(result[0].y),
-            parseFloat(result[0].x),
-          );
-          newStudyRoomList.push(coords);
-          distanceData.push({ id: item.workplaceName, distance });
-          console.log(
-            `${item.workplaceName} 간의 거리는 ${distance}km 입니다.`,
-          );
-
-          if (distanceData.length === data.length) {
-            setStudyRoomList(newStudyRoomList);
-            onDistanceChange(distanceData);
-          }
-        }
-      }),
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onDistanceChange, position]);
-
   return (
     <div className='relative h-[298px] w-[375px]'>
       {position.isLoading ? (
@@ -128,12 +88,12 @@ const KakaoMap = (props: KakaoMapProps) => {
             }}
           />
 
-          {studyRoomList.length > 0 &&
-            studyRoomList.map((item, index) => (
+          {/* {data.length > 0 &&
+            data.map((item, index) => (
               <MapMarker
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
-                position={{ lat: item.getLat(), lng: item.getLng() }}
+                position={{ lat: item.latitude, lng: item.longitude }}
                 image={{
                   src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
                   size: {
@@ -142,7 +102,7 @@ const KakaoMap = (props: KakaoMapProps) => {
                   },
                 }}
               />
-            ))}
+            ))} */}
           <div className='absolute right-0 top-0 z-10 m-4'>
             <button
               type='button'
