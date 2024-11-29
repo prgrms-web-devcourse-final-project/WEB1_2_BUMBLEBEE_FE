@@ -17,6 +17,7 @@ const defaultInstance: AxiosInstance = axios.create({
     accept: 'application/json',
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 // Auth Instance
@@ -37,27 +38,23 @@ authInstance.interceptors.response.use(
     // token 갱신하기
     if (error.response && error.response.status === 401) {
       try {
-        const response = await authInstance.post(
-          '/reissue',
-          {},
-          { withCredentials: true },
-        );
+        const response = await authInstance.post('/reissue');
 
         if (response.status === 200) {
-          const { accessToken } = response.data;
-          setAuthToken(accessToken);
+          const { token } = response.data;
+          setAuthToken(token);
 
           const originalRequest = error.config as AxiosRequestConfig;
           if (originalRequest.headers) {
-            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+            originalRequest.headers.Authorization = `Bearer ${token}`;
           }
           return await authInstance(originalRequest); // 실패했던 요청 재시도
         }
       } catch (refreshError) {
         // 로그아웃 처리
         const { storeLogout } = useAuthStore();
-        removeAuthToken();
         authInstance.post('/logout');
+        removeAuthToken();
         storeLogout();
         window.location.replace('/');
       }
