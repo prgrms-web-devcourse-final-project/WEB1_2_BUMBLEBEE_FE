@@ -1,37 +1,54 @@
 import MainLayout from '@layouts/MainLayout';
 import HeaderNoTitle from '@layouts/HeaderNoTitle';
 import BottomNavigation from '@layouts/BottomNavigation';
+import { useState } from 'react';
+import { MapPosition } from '@typings/types';
 import MainList from './components/MainList';
 import KakaoMap from './components/KakaoMap';
+import { useGetWorkplaceData } from './hooks/useGetWorkplaceData';
+
+export interface Position {
+  center: {
+    lat: number;
+    lng: number;
+  };
+  errMsg: string;
+  isLoading: boolean;
+}
 
 const MainPage = () => {
-  const studyRoomExample = [
-    {
-      workplaceId: 1,
-      workplaceName: 'Java Study Room',
-      workplaceAddress: '서울 중구 장충단로 247 굿모닝시티 8층',
-      imageUrl: 'http://example.com/java-room.jpg',
-      stars: 3.0,
-      reviewCount: 200,
-      distance: 20.2,
-    },
-    {
-      workplaceId: 2,
-      workplaceName: 'Python Study Room',
-      workplaceAddress: '서울 중구 을지로 227 훈련원공원',
-      imageUrl: 'http://example.com/python-room.jpg',
-      stars: 3.0,
-      reviewCount: 200,
-      distance: 20,
-    },
-  ];
+  const [mapPosition, setMapPosition] = useState<MapPosition>({
+    topRight: { lat: 0, lng: 0 },
+    bottomLeft: { lat: 0, lng: 0 },
+  });
 
+  const [position, setPosition] = useState({
+    center: {
+      lat: 37.496486063,
+      lng: 127.028361548,
+    },
+    errMsg: '',
+    isLoading: true,
+  });
+
+  const nowPosition = {
+    latitude: position.center.lat,
+    longitude: position.center.lng,
+  };
+
+  const { data } = useGetWorkplaceData(nowPosition, mapPosition);
   return (
     <>
       <MainLayout>
         <HeaderNoTitle />
-        <KakaoMap data={studyRoomExample} />
-        <MainList data={studyRoomExample} />
+        <KakaoMap
+          position={position}
+          onSetPosition={setPosition}
+          mapPosition={mapPosition}
+          onSetMapPosition={setMapPosition}
+          data={data}
+        />
+        <MainList data={data} />
         <BottomNavigation />
       </MainLayout>
     </>

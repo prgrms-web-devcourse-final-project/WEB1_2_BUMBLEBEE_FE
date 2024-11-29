@@ -187,6 +187,8 @@ export interface GetPositionWorkPlaceData {
   imageUrl: string;
   stars: number;
   reviewCount: number;
+  latitude: number; //
+  longitude: number;
   distance: number;
 }
 

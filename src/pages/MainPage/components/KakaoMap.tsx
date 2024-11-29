@@ -1,42 +1,36 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
 import { MoonLoader } from 'react-spinners';
-import { GetPositionWorkPlaceData, MapPosition } from '@typings/types';
 import { debounce } from 'lodash';
-import useGetWorkplaceMutation from '../hooks/useGetWorkplaceMutation';
+import { GetPositionWorkPlaceList, MapPosition } from '@typings/types';
+import { useGetWorkplaceMutation } from '../hooks/useGetWorkplaceData';
+import type { Position } from '..';
 
 interface KakaoMapProps {
-  data: GetPositionWorkPlaceData[];
+  position: Position;
+  onSetPosition: Dispatch<React.SetStateAction<Position>>;
+  mapPosition: MapPosition;
+  onSetMapPosition: (value: MapPosition) => void;
+  data: GetPositionWorkPlaceList | undefined;
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const [mapPosition, setMapPosition] = useState<MapPosition>({
-    topRight: { lat: 0, lng: 0 },
-    bottomLeft: { lat: 0, lng: 0 },
-  });
-
-  const [position, setPosition] = useState({
-    center: {
-      lat: 37.496486063,
-      lng: 127.028361548,
-    },
-    errMsg: '',
-    isLoading: true,
-  });
-
+  const { position, onSetPosition, mapPosition, onSetMapPosition, data } =
+    props;
   const [center, setCenter] = useState(position.center);
 
   // 사용자 위치 가져오기
   useEffect(() => {
+    console.log('실행');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          setPosition((prev) => ({
-            ...prev,
+          onSetPosition((prevPosition: Position) => ({
+            ...prevPosition,
             center: {
-              lat: pos.coords.latitude, // 위도
-              lng: pos.coords.longitude, // 경도
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude,
             },
             isLoading: false,
           }));
@@ -46,27 +40,27 @@ const KakaoMap = (props: KakaoMapProps) => {
           });
         },
         (err) => {
-          setPosition((prev) => ({
-            ...prev,
+          onSetPosition((prevPosition: Position) => ({
+            ...prevPosition,
             errMsg: err.message,
             isLoading: false,
           }));
         },
       );
     } else {
-      setPosition((prev) => ({
-        ...prev,
+      onSetPosition((prevPosition: Position) => ({
+        ...prevPosition,
         errMsg: 'geolocation을 사용할 수 없음',
         isLoading: false,
       }));
     }
-  }, []);
+  }, [onSetPosition]);
 
   const { mutate: getWorkPlace } = useGetWorkplaceMutation();
 
   const handleBoundsChange = debounce((map) => {
     const bound = map.getBounds();
-    setMapPosition({
+    onSetMapPosition({
       topRight: {
         lat: bound.getNorthEast().getLat(),
         lng: bound.getNorthEast().getLng(),
@@ -76,11 +70,11 @@ const KakaoMap = (props: KakaoMapProps) => {
         lng: bound.getSouthWest().getLng(),
       },
     });
-    const nowPosition = {
+    const newNowPosition = {
       latitude: position.center.lat,
       longitude: position.center.lng,
     };
-    getWorkPlace({ nowPosition, mapPosition });
+    getWorkPlace({ nowPosition: newNowPosition, mapPosition });
   }, 500);
 
   return (
@@ -114,9 +108,8 @@ const KakaoMap = (props: KakaoMapProps) => {
               },
             }}
           />
-
-          {/* {data.length > 0 &&
-            data.map((item, index) => (
+          {data &&
+            data.workplaces.map((item, index) => (
               <MapMarker
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
@@ -129,7 +122,7 @@ const KakaoMap = (props: KakaoMapProps) => {
                   },
                 }}
               />
-            ))} */}
+            ))}
           <div className='absolute right-0 top-0 z-10 m-4'>
             <button
               type='button'
