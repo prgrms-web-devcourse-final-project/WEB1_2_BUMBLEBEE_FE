@@ -43,7 +43,12 @@ const TabComponent = ({
         {activeTab === 0 && (
           <DetailComponent workplaceDetailData={workplaceDetailData} />
         )}
-        {activeTab === 1 && <RoomSelect setIsBtnDisabled={setIsBtnDisabled} />}
+        {activeTab === 1 && (
+          <RoomSelect
+            setIsBtnDisabled={setIsBtnDisabled}
+            workplaceId={workplaceId}
+          />
+        )}
         {activeTab === 2 && <WorkPlaceReview />}
       </div>
     </div>
