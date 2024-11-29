@@ -19,6 +19,8 @@ export const getFormattedDateFunction = (date: Date) => {
   });
 
   return formattedDate.replace('일 (', '일(');
+};
+
 // date타입에서 YYYY-MM-DD 추출해 YYYY.MM.DD로 변환
 export const getStringFromDate = (value: Date) => {
   const year = value.getFullYear();
