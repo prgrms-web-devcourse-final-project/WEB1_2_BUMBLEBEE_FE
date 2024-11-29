@@ -2,19 +2,24 @@ import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
 import { MoonLoader } from 'react-spinners';
-import { GetPositionWorkPlaceData } from '@typings/types';
+import { GetPositionWorkPlaceData, MapPosition } from '@typings/types';
+import { debounce } from 'lodash';
+import useGetWorkplaceMutation from '../hooks/useGetWorkplaceMutation';
 
 interface KakaoMapProps {
   data: GetPositionWorkPlaceData[];
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const { data } = props;
-  const { kakao } = window;
+  const [mapPosition, setMapPosition] = useState<MapPosition>({
+    topRight: { lat: 0, lng: 0 },
+    bottomLeft: { lat: 0, lng: 0 },
+  });
+
   const [position, setPosition] = useState({
     center: {
-      lat: 0,
-      lng: 0,
+      lat: 37.496486063,
+      lng: 127.028361548,
     },
     errMsg: '',
     isLoading: true,
@@ -51,11 +56,32 @@ const KakaoMap = (props: KakaoMapProps) => {
     } else {
       setPosition((prev) => ({
         ...prev,
-        errMsg: 'geolocation을 사용할수 없어요..',
+        errMsg: 'geolocation을 사용할 수 없음',
         isLoading: false,
       }));
     }
   }, []);
+
+  const { mutate: getWorkPlace } = useGetWorkplaceMutation();
+
+  const handleBoundsChange = debounce((map) => {
+    const bound = map.getBounds();
+    setMapPosition({
+      topRight: {
+        lat: bound.getNorthEast().getLat(),
+        lng: bound.getNorthEast().getLng(),
+      },
+      bottomLeft: {
+        lat: bound.getSouthWest().getLat(),
+        lng: bound.getSouthWest().getLng(),
+      },
+    });
+    const nowPosition = {
+      latitude: position.center.lat,
+      longitude: position.center.lng,
+    };
+    getWorkPlace({ nowPosition, mapPosition });
+  }, 500);
 
   return (
     <div className='relative h-[298px] w-[375px]'>
@@ -76,6 +102,7 @@ const KakaoMap = (props: KakaoMapProps) => {
             const latlng = map.getCenter();
             setCenter({ lat: latlng.getLat(), lng: latlng.getLng() });
           }}
+          onBoundsChanged={(map) => handleBoundsChange(map)}
         >
           <MapMarker
             position={position.center}

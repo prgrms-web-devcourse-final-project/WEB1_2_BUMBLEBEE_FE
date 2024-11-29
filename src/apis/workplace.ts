@@ -1,8 +1,9 @@
 import {
   GetBusinessWorkPlaceData,
-  GetPositionWorkPlace,
   GetPositionWorkPlaceList,
   GetWorkPlaceData,
+  MapPosition,
+  NowPosition,
   SearchStudyRoom,
   SearchStudyRoomData,
   StudyRoomData,
@@ -102,11 +103,18 @@ export const getWorkPlace = async (
 };
 
 // 위치 기반 사업장 조회
-export const getPositionWorkPlace = async (
-  position: GetPositionWorkPlace,
-): Promise<GetPositionWorkPlaceList> => {
+export const getPositionWorkPlace = async ({
+  nowPosition,
+  mapPosition,
+}: {
+  nowPosition: NowPosition;
+  mapPosition: MapPosition;
+}): Promise<GetPositionWorkPlaceList> => {
   const response = await defaultInstance.get('/api/v1/workplace', {
-    params: position,
+    params: {
+      ...nowPosition, // latitude, longitude
+      ...mapPosition, // topRight, bottomLeft
+    },
   });
   return response.data;
 };
