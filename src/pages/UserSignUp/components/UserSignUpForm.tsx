@@ -10,6 +10,7 @@ import {
 import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
 import PhoneNumberInput from './PhoneNumberInput';
 import BirthInput from './BirthInput';
+import useUserSignUp from '../hooks/useUserSignUp';
 
 const UserSignUpForm = () => {
   const navigate = useNavigate();
@@ -81,9 +82,29 @@ const UserSignUpForm = () => {
     setErrorMessage(newErrorMessage);
   };
 
+  const { mutate } = useUserSignUp();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     isValid();
+    if (
+      userFormData.gender !== '' &&
+      isValidBirth(userFormData.birth) &&
+      isValidNickname(userFormData.nickname) &&
+      isValidUserPhoneNumber(userFormData.phoneNumber) &&
+      isValidEmail(userFormData.email) &&
+      isValidPassword(userFormData.password) &&
+      userFormData.password === userFormData.passwordCheck
+    ) {
+      mutate({
+        nickName: userFormData.nickname,
+        phoneNumber: userFormData.phoneNumber,
+        sex: userFormData.gender,
+        email: userFormData.email,
+        pwd: userFormData.password,
+        birthDay: userFormData.birth,
+      });
+    }
   };
 
   return (
@@ -97,12 +118,12 @@ const UserSignUpForm = () => {
           <input
             type='radio'
             name='gender'
-            value='male'
+            value='MALE'
             className='mr-[6px]'
             onChange={handleChange}
           />
           <label
-            htmlFor='male'
+            htmlFor='MALE'
             className='mr-[20px] text-[14px]'
           >
             남자
@@ -110,12 +131,12 @@ const UserSignUpForm = () => {
           <input
             type='radio'
             name='gender'
-            value='female'
+            value='FEMALE'
             className='w-[14px mr-[6px] h-[14px]'
             onChange={handleChange}
           />
           <label
-            htmlFor='female'
+            htmlFor='FEMALE'
             className='text-[14px]'
           >
             여자
