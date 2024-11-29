@@ -10,6 +10,17 @@ export const getDateFunction = (timeString: string) => {
   return dateString;
 };
 
+// Date 타입의 날짜를 MM월 DD일(요일)로 변환하는 함수
+export const getFormattedDateFunction = (date: Date) => {
+  const formattedDate = date.toLocaleDateString('ko-KR', {
+    month: 'long', // 월
+    day: 'numeric', // 일
+    weekday: 'short', // (요일)
+  });
+
+  return formattedDate.replace('일 (', '일(');
+};
+
 // date타입에서 YYYY-MM-DD 추출해 YYYY.MM.DD로 변환
 export const getStringFromDate = (value: Date) => {
   const year = value.getFullYear();

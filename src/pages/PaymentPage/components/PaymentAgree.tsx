@@ -1,18 +1,31 @@
 import CheckAgree from '@components/CheckAgree';
 import DetailTitle from '@components/DetailTitle';
-import { useState } from 'react';
+import type { CheckState, ErrorMessageType } from '..';
 
-const PaymentAgree = () => {
-  const [checkedList, setCheckedList] = useState<string[]>([]);
+interface PaymentAgreeProps {
+  checkState: CheckState;
+  onSetCheckState: (value: CheckState) => void;
+  errorMessage: ErrorMessageType;
+}
+
+const PaymentAgree = (props: PaymentAgreeProps) => {
+  const { checkState, onSetCheckState, errorMessage } = props;
+
   const handleCheckItem = (checked: boolean, id: string) => {
     if (checked) {
-      setCheckedList((prev) => [...prev, id]);
+      onSetCheckState({
+        ...checkState,
+        payment: [...checkState.payment, id],
+      });
     } else {
-      setCheckedList(checkedList.filter((item) => item !== id));
+      onSetCheckState({
+        ...checkState,
+        payment: checkState.payment.filter((item) => item !== id),
+      });
     }
   };
 
-  const isChecked = (id: string) => checkedList.includes(id);
+  const isChecked = (id: string) => checkState.payment.includes(id);
 
   return (
     <div className='mx-auto mt-8 flex w-custom flex-col gap-4'>
@@ -23,14 +36,7 @@ const PaymentAgree = () => {
           isCheck={isChecked('payment1')}
           description='결제 서비스 이용 약관'
           onChangeChecked={handleCheckItem}
-        >
-          <button
-            type='button'
-            className='text-subfont underline'
-          >
-            보기
-          </button>
-        </CheckAgree>
+        />
         <CheckAgree
           checkId='payment2'
           isCheck={isChecked('payment2')}
@@ -38,6 +44,11 @@ const PaymentAgree = () => {
           onChangeChecked={handleCheckItem}
         />
       </div>
+      {errorMessage.paymentCheckError && (
+        <div className='-mt-[6px] text-[12px] font-medium text-[#F83A3A]'>
+          {errorMessage.paymentCheckError}
+        </div>
+      )}
     </div>
   );
 };

@@ -95,3 +95,9 @@ export const isValidSpaceName = (name: string) => {
   const nameRegex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9-\s]{1,20}$/;
   return nameRegex.test(name);
 };
+
+// 예약자 이름 형식 확인
+export const isValidKoreanName = (name: string) => {
+  const nameRegex = /^[가-힣]{2,4}$/;
+  return nameRegex.test(name);
+};
