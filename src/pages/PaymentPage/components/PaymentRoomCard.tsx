@@ -1,17 +1,15 @@
 import DetailTitle from '@components/DetailTitle';
-import { GrNext } from 'react-icons/gr';
+import useSearchStore from '@store/searchStore';
+import { getFormattedDateFunction } from '@utils/formatTime';
 
 const PaymentRoomCard = () => {
+  const { searchDate, formattedTime, searchPeople } = useSearchStore();
+
+  const formattedDate = getFormattedDateFunction(searchDate);
+  const timeString = formattedTime.join(' ~ ');
   return (
     <div className='mx-auto mt-8 flex w-custom flex-col gap-4'>
-      <DetailTitle title='룸 상세 정보'>
-        <button
-          type='button'
-          className='flex items-center justify-center gap-1 text-xs text-subfont'
-        >
-          123 스터디룸 <GrNext />
-        </button>
-      </DetailTitle>
+      <DetailTitle title='룸 상세 정보' />
       <div className='flex h-[120px] w-custom items-center justify-center gap-[18px] rounded-[10px] shadow-custom'>
         <img
           src='https://modo-phinf.pstatic.net/20180304_61/1520159998510ED9Yt_JPEG/mosaSDaCsR.jpeg?type=w1100'
@@ -28,13 +26,13 @@ const PaymentRoomCard = () => {
             <div className='flex gap-[10px]'>
               <span>일정</span>
               <div className='flex gap-[6px]'>
-                <span className='font-normal'>11월 16일(토)</span>
-                <span className='font-normal'>16:00 - 18:00</span>
+                <span className='font-normal'>{formattedDate}</span>
+                <span className='font-normal'>{timeString}</span>
               </div>
             </div>
             <div className='flex gap-[10px]'>
               <span>인원</span>
-              <span className='font-normal'>4명</span>
+              <span className='font-normal'>{searchPeople}명</span>
             </div>
           </div>
         </div>

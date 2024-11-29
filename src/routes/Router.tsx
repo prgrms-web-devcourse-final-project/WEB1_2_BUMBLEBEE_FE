@@ -20,13 +20,15 @@ import ReservationPage from '@pages/ReservationPage';
 import HostNotiPage from '@pages/HostNotiPage';
 import UserInfoPage from '@pages/UserInfoPage';
 import PaymentPage from '@pages/PaymentPage';
-import PaymentSuccessPage from '@pages/PaymentSuccessPage';
+import PaymentSuccessPage from '@pages/PaymentPage/PaymentSuccessPage';
 import HostInfoPage from '@pages/HostInfoPage';
 import HostInfoEditPage from '@pages/HostInfoEditPage';
 import UserInfoEditPage from '@pages/UserInfoEditPage';
 import DetailPage from '@pages/DetailPage';
 import ChatListPage from '@pages/ChatListPage';
 import ChatPage from '@pages/ChatPage';
+import PaymentFailPage from '@pages/PaymentPage/PaymentFailPage';
+import PaymentLoadingPage from '@pages/PaymentPage/PaymentLoadingPage';
 import OAuth from '@pages/UserLogin/components/OAuth';
 
 const router = createBrowserRouter([
@@ -135,8 +137,16 @@ const router = createBrowserRouter([
     element: <PaymentPage />,
   },
   {
+    path: '/payment-loading',
+    element: <PaymentLoadingPage />,
+  },
+  {
     path: '/payment-success',
     element: <PaymentSuccessPage />,
+  },
+  {
+    path: '/payment-fail',
+    element: <PaymentFailPage />,
   },
   {
     path: '/chat-list',

@@ -1,23 +1,24 @@
 import DetailTitle from '@components/DetailTitle';
-import { useState } from 'react';
+import { PLACEHOLDER } from '@constants/constants';
+import { insertPhoneNumberHyphen } from '@utils/autoHyphen';
+import { ChangeEvent } from 'react';
+import type { ErrorMessageType, ReservationFormData } from '..';
 
-const ReservationInfo = () => {
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
+interface ReservationInfoProps {
+  reservationForm: ReservationFormData;
+  onSetReservationForm: (value: ReservationFormData) => void;
+  errorMessage: ErrorMessageType;
+}
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 13) {
-      e.target.value = e.target.value.substring(0, 13);
-    }
-    const onlyNumber = e.target.value.replace(/[^0-9]/g, '');
-    let formattedValue = '';
-    if (onlyNumber.length <= 3) {
-      formattedValue = onlyNumber;
-    } else if (onlyNumber.length <= 7) {
-      formattedValue = `${onlyNumber.slice(0, 3)}-${onlyNumber.slice(3)}`;
-    } else {
-      formattedValue = `${onlyNumber.slice(0, 3)}-${onlyNumber.slice(3, 7)}-${onlyNumber.slice(7, 11)}`;
-    }
-    setPhoneNumber(formattedValue);
+const ReservationInfo = (props: ReservationInfoProps) => {
+  const { reservationForm, onSetReservationForm, errorMessage } = props;
+  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+    onSetReservationForm({ ...reservationForm, name: e.target.value });
+  };
+
+  const handleChangePhoneNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    const formatNumber = insertPhoneNumberHyphen(e.target.value);
+    onSetReservationForm({ ...reservationForm, phoneNumber: formatNumber });
   };
 
   return (
@@ -28,20 +29,34 @@ const ReservationInfo = () => {
           <p>예약자명</p>
           <input
             type='text'
-            placeholder='이름을 입력하세요.'
+            name='name'
+            placeholder={PLACEHOLDER.name}
+            value={reservationForm.name}
+            onChange={handleChangeName}
             className='h-[38px] w-[200px] rounded-[5px] border-[1px] border-subfont px-[10px] py-[10px] focus:border-focusColor focus:outline-none'
           />
         </div>
+        {errorMessage.nameError && (
+          <div className='ml-32 text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.nameError}
+          </div>
+        )}
         <div className='flex w-full items-center justify-between text-sm'>
           <p>예약자 전화번호</p>
           <input
             type='text'
-            placeholder='전화번호를 입력하세요.'
-            value={phoneNumber}
-            onChange={handlePhoneChange}
+            name='phoneNumber'
+            placeholder={PLACEHOLDER.phonNumber}
+            value={reservationForm.phoneNumber}
+            onChange={handleChangePhoneNumber}
             className='h-[38px] w-[200px] rounded-[5px] border-[1px] border-subfont px-[10px] py-[10px] focus:border-focusColor focus:outline-none'
           />
         </div>
+        {errorMessage.phonNumberError && (
+          <div className='ml-32 text-[12px] font-medium text-[#F83A3A]'>
+            {errorMessage.phonNumberError}
+          </div>
+        )}
       </div>
     </div>
   );
