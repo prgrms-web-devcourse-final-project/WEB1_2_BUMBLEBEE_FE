@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Pretendard Variable', sans-serif;
+    font-weight: 300;
+    @apply m-0 box-border p-0;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply flex h-[48px] w-[330px] cursor-pointer items-center justify-center rounded-[8px] bg-primary px-[84px] py-[15px] font-medium text-white;
+  }
+
+  .main-input {
+    @apply h-[48px] w-[330px] rounded-[8px] border border-solid border-subfont px-[13px] py-[10px] text-[14px] focus:border-focusColor focus:outline-none;
+  }
+
+  .main-textarea {
+    @apply w-custom resize-none rounded-[8px] border border-solid border-subfont p-[14px] focus:border-focusColor focus:outline-none;
+  }
+
+  .card-button {
+    @apply h-[34px] w-[76px] border-[0.5px] border-solid border-subfont text-[12px] active:bg-subfont active:bg-opacity-50;
+  }
+}
+
+@layer utilities {
+  /* radio 버튼 색상 custom */
+  input[type='radio'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #c4c4c4;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type='radio']:checked {
+    background-color: #50bead;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px #50bead;
+  }
+}
