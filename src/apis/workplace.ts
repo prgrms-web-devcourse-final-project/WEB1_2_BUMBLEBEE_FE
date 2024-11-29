@@ -45,7 +45,7 @@ export const deleteStudyRoom = async (studyRoomId: string): Promise<void> => {
 
 // 사업장의 스터디룸 찾기
 export const getWorkplaceStudyRoom = async (
-  workplaceId: string,
+  workplaceId: number,
 ): Promise<WorkplaceStudyRoomData[]> => {
   const response = await defaultInstance.get(
     `/api/v1/studyroom/workplace/${workplaceId}`,
