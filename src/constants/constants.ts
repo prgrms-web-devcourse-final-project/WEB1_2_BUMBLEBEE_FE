@@ -9,6 +9,9 @@ export const ERROR_MESSAGE = {
   gender: '성별을 선택해주세요.',
   phonNumber: '전화번호 형식을 확인해주세요.',
   birth: '생년월일을 다시 확인해주세요.',
+  name: '성함을 올바르게 입력해주세요.',
+  check: '필수 항목에 동의해주세요.',
+  payMethod: '결제 수단을 선택해주세요.',
 };
 
 export const PLACEHOLDER = {
@@ -19,4 +22,5 @@ export const PLACEHOLDER = {
   checkPassword: '비밀번호 확인',
   birth: 'YYYY-MM-DD',
   phonNumber: '전화번호 입력',
+  name: '이름 입력',
 };

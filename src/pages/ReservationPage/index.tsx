@@ -1,10 +1,12 @@
 import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
+import { useNavigate } from 'react-router-dom';
 import ReservationBar from './components/ReservationBar';
 import ImageCarousel from './components/ImageCarousel';
 import RoomDetail from './components/RoomDetail';
 
 const ReservationPage = () => {
+  const navigate = useNavigate();
   return (
     <MainLayout>
       <HeaderOnlyTitle title='ROOM B' />
@@ -15,6 +17,7 @@ const ReservationPage = () => {
         <button
           type='button'
           className='btn-primary'
+          onClick={() => navigate('/payment')}
         >
           예약하기
         </button>

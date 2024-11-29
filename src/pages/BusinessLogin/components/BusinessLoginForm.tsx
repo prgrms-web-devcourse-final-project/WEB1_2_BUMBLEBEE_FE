@@ -2,6 +2,7 @@ import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
 import { isValidEmail, isValidPassword } from '@utils/validationCheckRegex';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useBusinessLogIn from '../hooks/useBusinessLogin';
 
 const BusinessLoginForm = () => {
   const navigate = useNavigate();
@@ -37,9 +38,17 @@ const BusinessLoginForm = () => {
     setErrorMessage(newError);
   };
 
+  const { mutate } = useBusinessLogIn();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     isValid();
+    if (
+      isValidEmail(hostLoginForm.email) &&
+      isValidPassword(hostLoginForm.password)
+    ) {
+      mutate({ email: hostLoginForm.email, password: hostLoginForm.password });
+    }
   };
 
   return (

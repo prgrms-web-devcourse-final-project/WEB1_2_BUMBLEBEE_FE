@@ -1,33 +1,113 @@
 import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
+import { useState } from 'react';
 import PaymentRoomCard from './components/PaymentRoomCard';
 import ReservationInfo from './components/ReservationInfo';
 import CancelRule from './components/CancelRule';
 import ReservationGuide from './components/ReservationGuide';
 import ReservationPrice from './components/ReservationPrice';
 import PaymentAgree from './components/PaymentAgree';
+import PaymentButton from './components/PaymentButton';
+import PaymentMethod from './components/PaymentMethod';
+
+export interface StudyRoomInfo {
+  studyRoomId: number;
+  workplaceName: string;
+  studyRoomTitle: string;
+  studyRoomPrice: number;
+}
+
+export interface ReservationFormData {
+  name: string;
+  phoneNumber: string;
+}
+
+export interface ErrorMessageType {
+  nameError: string;
+  phonNumberError: string;
+  reservationCheckError: string;
+  paymentCheckError: string;
+  payMethodError: string;
+}
+
+export interface CheckState {
+  reservation: string[];
+  payment: string[];
+}
+
+export type PayMethodType = 'TOSS' | 'KAKAOPAY' | null;
 
 const PaymentPage = () => {
+  const studyRoomInfo: StudyRoomInfo = {
+    studyRoomId: 309,
+    workplaceName: 'ABC 스터디룸',
+    studyRoomTitle: 'ROOM A',
+    studyRoomPrice: 3500,
+  };
+
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  const [reservationForm, setReservationForm] = useState<ReservationFormData>({
+    name: '',
+    phoneNumber: '',
+  });
+
+  const [checkState, setCheckState] = useState<CheckState>({
+    reservation: [],
+    payment: [],
+  });
+
+  const [errorMessage, setErrorMessage] = useState<ErrorMessageType>({
+    nameError: '',
+    phonNumberError: '',
+    reservationCheckError: '',
+    paymentCheckError: '',
+    payMethodError: '',
+  });
+
+  const [payMethod, setPayMethod] = useState<PayMethodType>(null);
+
   return (
     <>
       <MainLayout>
         <HeaderOnlyTitle title='예약 확인 및 결제' />
         <div className='flex h-auto flex-col gap-4 pb-[110px]'>
-          <PaymentRoomCard />
-          <ReservationInfo />
+          <PaymentRoomCard studyRoomInfo={studyRoomInfo} />
+          <ReservationInfo
+            reservationForm={reservationForm}
+            onSetReservationForm={setReservationForm}
+            errorMessage={errorMessage}
+          />
           <CancelRule />
-          <ReservationGuide />
-          <ReservationPrice />
-          <PaymentAgree />
+          <ReservationGuide
+            checkState={checkState}
+            onSetCheckState={setCheckState}
+            errorMessage={errorMessage}
+          />
+          <ReservationPrice
+            studyRoomInfo={studyRoomInfo}
+            totalAmount={totalAmount}
+            onSetTotalAmount={setTotalAmount}
+          />
+          <PaymentAgree
+            checkState={checkState}
+            onSetCheckState={setCheckState}
+            errorMessage={errorMessage}
+          />
+          <PaymentMethod
+            payMethod={payMethod}
+            onSetPayMethod={setPayMethod}
+            errorMessage={errorMessage}
+          />
         </div>
-        <div className='fixed bottom-0 z-10 flex h-[94px] w-[375px] items-center justify-between border-t-[1px] border-t-subfont bg-white px-[30px] pb-[30px] pt-[18px]'>
-          <button
-            type='button'
-            className='btn-primary'
-          >
-            42,000원 결제하기
-          </button>
-        </div>
+        <PaymentButton
+          studyRoomInfo={studyRoomInfo}
+          reservationForm={reservationForm}
+          onSetErrorMessage={setErrorMessage}
+          checkState={checkState}
+          payMethod={payMethod}
+          totalAmount={totalAmount}
+        />
       </MainLayout>
     </>
   );
