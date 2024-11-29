@@ -23,7 +23,7 @@ export const getS3URL = async (): Promise<string> => {
 export const postStudyRoom = async (
   studyroom: StudyRoomData,
 ): Promise<void> => {
-  const response = await authInstance.post('api/v1/studyroom', studyroom);
+  const response = await authInstance.post('/api/v1/studyroom', studyroom);
   return response.data;
 };
 
@@ -31,13 +31,15 @@ export const postStudyRoom = async (
 export const putStudyRoom = async (
   studyroom: StudyRoomPutData,
 ): Promise<void> => {
-  const response = await authInstance.put('api/v1/studyroom', studyroom);
+  const response = await authInstance.put('/api/v1/studyroom', studyroom);
   return response.data;
 };
 
 // 스터디룸 삭제
 export const deleteStudyRoom = async (studyRoomId: string): Promise<void> => {
-  const response = await authInstance.delete(`api/v1/studyroom/${studyRoomId}`);
+  const response = await authInstance.delete(
+    `/api/v1/studyroom/${studyRoomId}`,
+  );
   return response.data;
 };
 
@@ -46,7 +48,7 @@ export const getWorkplaceStudyRoom = async (
   workplaceId: string,
 ): Promise<WorkplaceStudyRoomData[]> => {
   const response = await defaultInstance.get(
-    `api/v1/studyroom/workplace/${workplaceId}`,
+    `/api/v1/studyroom/workplace/${workplaceId}`,
   );
   return response.data;
 };
@@ -55,7 +57,7 @@ export const getWorkplaceStudyRoom = async (
 export const getSearchStudyRoom = async (
   searchStudyRoom: SearchStudyRoom,
 ): Promise<SearchStudyRoomData[]> => {
-  const response = await authInstance.get('api/v1/studyroom/search', {
+  const response = await authInstance.get('/api/v1/studyroom/search', {
     params: searchStudyRoom,
   });
   return response.data;
@@ -65,7 +67,7 @@ export const getSearchStudyRoom = async (
 export const postWorkPlace = async (
   workplace: WorkPlaceData,
 ): Promise<void> => {
-  const response = await authInstance.post('api/v1/workplace', workplace);
+  const response = await authInstance.post('/api/v1/workplace', workplace);
   return response.data;
 };
 
@@ -75,7 +77,7 @@ export const putWorkPlace = async (
   workplace: WorkPlacePutData,
 ): Promise<void> => {
   const response = await authInstance.put(
-    `api/v1/workplace/${workplaceId}`,
+    `/api/v1/workplace/${workplaceId}`,
     workplace,
   );
   return response.data;
@@ -83,7 +85,9 @@ export const putWorkPlace = async (
 
 // 사업장 삭제
 export const deleteWorkPlace = async (workplaceId: number): Promise<void> => {
-  const response = await authInstance.delete(`api/v1/workplace/${workplaceId}`);
+  const response = await authInstance.delete(
+    `/api/v1/workplace/${workplaceId}`,
+  );
   return response.data;
 };
 
@@ -92,7 +96,7 @@ export const getWorkPlace = async (
   workplaceId: number,
 ): Promise<GetWorkPlaceData> => {
   const response = await defaultInstance.get(
-    `api/v1/workplace/info/${workplaceId}`,
+    `/api/v1/workplace/info/${workplaceId}`,
   );
   return response.data;
 };
@@ -101,7 +105,7 @@ export const getWorkPlace = async (
 export const getPositionWorkPlace = async (
   position: GetPositionWorkPlace,
 ): Promise<GetPositionWorkPlaceData> => {
-  const response = await defaultInstance.get('api/v1/workplace/distance', {
+  const response = await defaultInstance.get('/api/v1/workplace/distance', {
     params: position,
   });
   return response.data;
@@ -110,6 +114,6 @@ export const getPositionWorkPlace = async (
 // 사업자 사업장 조회
 export const getBusinessWorkPlace =
   async (): Promise<GetBusinessWorkPlaceData> => {
-    const response = await authInstance.get('api/v1/workplace/business');
+    const response = await authInstance.get('/api/v1/workplace/business');
     return response.data;
   };

@@ -5,13 +5,13 @@ import { authInstance } from '.';
 export const postReservation = async (
   reservation: PostReservationData,
 ): Promise<void> => {
-  const response = await authInstance.post('api/v1/reservations', reservation);
+  const response = await authInstance.post('/api/v1/reservations', reservation);
   return response.data;
 };
 
 // 사용자의 최근 예약 전체 조회
 export const getAllReservation = async (): Promise<GetAllReservationData> => {
-  const response = await authInstance.get(`api/v1/reservations/member`);
+  const response = await authInstance.get(`/api/v1/reservations/member`);
   return response.data;
 };
 
