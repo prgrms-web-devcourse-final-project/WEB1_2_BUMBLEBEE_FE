@@ -36,11 +36,11 @@ const PaymentButton = (props: PaymentButtonProps) => {
 
   const { searchDate, formattedTime, searchPeople } = useSearchStore();
 
-  const startTimeStr = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[0]}`;
-  const endTimeStr = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[1]}`;
+  const startTimeString = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[0]}`;
+  const endTimeString = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[1]}`;
 
-  const startTime = new Date(startTimeStr);
-  const endTime = new Date(endTimeStr);
+  const startTime = new Date(startTimeString);
+  const endTime = new Date(endTimeString);
 
   const orderName = `${studyRoomInfo.workplaceName} ${studyRoomInfo.studyRoomTitle} 예약`;
 
