@@ -5,22 +5,44 @@ import {
 import { ERROR_MESSAGE } from '@constants/constants';
 import { v4 as uuidv4 } from 'uuid';
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
+import { postReservation } from '@apis/reservation';
+import useSearchStore from '@store/searchStore';
 import type {
   ReservationFormData,
   ErrorMessageType,
   CheckState,
   PayMethodType,
+  StudyRoomInfo,
 } from '..';
 
 interface PaymentButtonProps {
+  studyRoomInfo: StudyRoomInfo;
   reservationForm: ReservationFormData;
   onSetErrorMessage: (value: ErrorMessageType) => void;
   checkState: CheckState;
   payMethod: PayMethodType;
+  totalAmount: number;
 }
 
 const PaymentButton = (props: PaymentButtonProps) => {
-  const { reservationForm, onSetErrorMessage, checkState, payMethod } = props;
+  const {
+    studyRoomInfo,
+    reservationForm,
+    onSetErrorMessage,
+    checkState,
+    payMethod,
+    totalAmount,
+  } = props;
+
+  const { searchDate, formattedTime, searchPeople } = useSearchStore();
+
+  const startTimeString = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[0]}`;
+  const endTimeString = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[1]}`;
+
+  const startTime = new Date(startTimeString);
+  const endTime = new Date(endTimeString);
+
+  const orderName = `${studyRoomInfo.workplaceName} ${studyRoomInfo.studyRoomTitle} 예약`;
 
   const isValid = () => {
     const newError = {
@@ -64,13 +86,12 @@ const PaymentButton = (props: PaymentButtonProps) => {
         method: 'CARD',
         amount: {
           currency: 'KRW',
-          value: 50000,
+          value: totalAmount,
         },
         orderId,
-        orderName: '스터디룸 예약',
+        orderName,
         successUrl: `${window.location.origin}/payment-loading`,
         failUrl: `${window.location.origin}/payment-fail`,
-        customerEmail: 'customer123@gmail.com',
         customerName: reservationForm.name,
         customerMobilePhone: formattedPhoneNumber,
         card: {
@@ -98,6 +119,19 @@ const PaymentButton = (props: PaymentButtonProps) => {
       checkState.payment.length === 2 &&
       payMethod
     ) {
+      const reservationData = {
+        reservationName: reservationForm.name,
+        reservationPhoneNumber: reservationForm.phoneNumber,
+        reservationCapacity: searchPeople,
+        reservationPrice: totalAmount,
+        startTime,
+        endTime,
+      };
+      const reservationId = await postReservation(
+        studyRoomInfo.studyRoomId,
+        reservationData,
+      );
+      console.log(reservationId);
       handlePayment();
     }
   };
@@ -109,7 +143,7 @@ const PaymentButton = (props: PaymentButtonProps) => {
         onClick={handlePaymentButton}
         className='btn-primary'
       >
-        42,000원 결제하기
+        {totalAmount.toLocaleString('ko-KR')}원 결제하기
       </button>
     </div>
   );

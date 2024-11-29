@@ -70,6 +70,8 @@ export interface Alarm {}
 export interface PostReservationData {
   reservationName: string;
   reservationPhoneNumber: string;
+  reservationCapacity: number;
+  reservationPrice: number;
   startTime: Date;
   endTime: Date;
 }
@@ -148,7 +150,7 @@ export interface SearchStudyRoomData {
 // 사업장
 export interface WorkPlaceData {
   workplaceName: string;
-  WorkplacePhoneNumber: string;
+  workplacePhoneNumber: string;
   workplaceDescription: string;
   workplaceAddress: string;
   imageUrl: string;
