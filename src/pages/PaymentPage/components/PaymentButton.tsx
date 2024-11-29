@@ -12,10 +12,11 @@ import type {
   ErrorMessageType,
   CheckState,
   PayMethodType,
+  StudyRoomInfo,
 } from '..';
 
 interface PaymentButtonProps {
-  studyroomId: number;
+  studyRoomInfo: StudyRoomInfo;
   reservationForm: ReservationFormData;
   onSetErrorMessage: (value: ErrorMessageType) => void;
   checkState: CheckState;
@@ -25,7 +26,7 @@ interface PaymentButtonProps {
 
 const PaymentButton = (props: PaymentButtonProps) => {
   const {
-    studyroomId,
+    studyRoomInfo,
     reservationForm,
     onSetErrorMessage,
     checkState,
@@ -40,6 +41,8 @@ const PaymentButton = (props: PaymentButtonProps) => {
 
   const startTime = new Date(startTimeStr);
   const endTime = new Date(endTimeStr);
+
+  const orderName = `${studyRoomInfo.workplaceName} ${studyRoomInfo.studyRoomTitle} 예약`;
 
   const isValid = () => {
     const newError = {
@@ -86,10 +89,9 @@ const PaymentButton = (props: PaymentButtonProps) => {
           value: totalAmount,
         },
         orderId,
-        orderName: '스터디룸 예약',
+        orderName,
         successUrl: `${window.location.origin}/payment-loading`,
         failUrl: `${window.location.origin}/payment-fail`,
-        customerEmail: 'customer123@gmail.com',
         customerName: reservationForm.name,
         customerMobilePhone: formattedPhoneNumber,
         card: {
@@ -125,7 +127,10 @@ const PaymentButton = (props: PaymentButtonProps) => {
         startTime,
         endTime,
       };
-      const reservationId = await postReservation(studyroomId, reservationData);
+      const reservationId = await postReservation(
+        studyRoomInfo.studyRoomId,
+        reservationData,
+      );
       console.log(reservationId);
       handlePayment();
     }

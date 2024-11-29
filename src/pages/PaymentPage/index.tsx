@@ -11,6 +11,7 @@ import PaymentButton from './components/PaymentButton';
 import PaymentMethod from './components/PaymentMethod';
 
 export interface StudyRoomInfo {
+  studyRoomId: number;
   workplaceName: string;
   studyRoomTitle: string;
   studyRoomPrice: number;
@@ -37,8 +38,8 @@ export interface CheckState {
 export type PayMethodType = 'TOSS' | 'KAKAOPAY' | null;
 
 const PaymentPage = () => {
-  const studyroomId = 309;
   const studyRoomInfo: StudyRoomInfo = {
+    studyRoomId: 309,
     workplaceName: 'ABC 스터디룸',
     studyRoomTitle: 'ROOM A',
     studyRoomPrice: 3500,
@@ -100,7 +101,7 @@ const PaymentPage = () => {
           />
         </div>
         <PaymentButton
-          studyroomId={studyroomId}
+          studyRoomInfo={studyRoomInfo}
           reservationForm={reservationForm}
           onSetErrorMessage={setErrorMessage}
           checkState={checkState}
