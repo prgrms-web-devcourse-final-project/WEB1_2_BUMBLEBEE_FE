@@ -1,13 +1,20 @@
 import { Dispatch, SetStateAction, useState } from 'react';
+import { GetWorkPlaceData } from '@typings/types';
 import DetailComponent from './DetailComponent';
 import WorkPlaceReview from './WorkPlaceReview';
 import RoomSelect from './RoomSelect';
 
 interface TabComponentProps {
   setIsBtnDisabled: Dispatch<SetStateAction<boolean>>;
+  workplaceDetailData: GetWorkPlaceData;
+  workplaceId: number;
 }
 
-const TabComponent = ({ setIsBtnDisabled }: TabComponentProps) => {
+const TabComponent = ({
+  setIsBtnDisabled,
+  workplaceDetailData,
+  workplaceId,
+}: TabComponentProps) => {
   const tabs = ['상세정보', '룸 선택', '리뷰 (3)'];
   const [activeTab, setActiveTab] = useState(0);
 
@@ -33,7 +40,9 @@ const TabComponent = ({ setIsBtnDisabled }: TabComponentProps) => {
         </button>
       ))}
       <div className='flex justify-center pb-[110px] pt-[26px]'>
-        {activeTab === 0 && <DetailComponent />}
+        {activeTab === 0 && (
+          <DetailComponent workplaceDetailData={workplaceDetailData} />
+        )}
         {activeTab === 1 && <RoomSelect setIsBtnDisabled={setIsBtnDisabled} />}
         {activeTab === 2 && <WorkPlaceReview />}
       </div>
