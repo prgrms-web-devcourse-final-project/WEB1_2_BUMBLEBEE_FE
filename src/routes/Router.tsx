@@ -65,7 +65,7 @@ const router = createBrowserRouter([
     element: <RegisterSpace />,
   },
   {
-    path: '/detail',
+    path: '/detail/:workplaceId',
     element: <DetailPage />,
   },
   {
