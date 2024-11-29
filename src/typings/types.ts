@@ -70,6 +70,8 @@ export interface Alarm {}
 export interface PostReservationData {
   reservationName: string;
   reservationPhoneNumber: string;
+  reservationCapacity: number;
+  reservationPrice: number;
   startTime: Date;
   endTime: Date;
 }

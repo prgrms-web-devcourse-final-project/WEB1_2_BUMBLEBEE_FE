@@ -3,9 +3,13 @@ import { authInstance } from '.';
 
 // 예약 등록
 export const postReservation = async (
+  studyroomId: number,
   reservation: PostReservationData,
-): Promise<void> => {
-  const response = await authInstance.post('/api/v1/reservations', reservation);
+): Promise<number> => {
+  const response = await authInstance.post(
+    `/api/v1/reservations/${studyroomId}`,
+    reservation,
+  );
   return response.data;
 };
 

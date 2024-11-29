@@ -10,6 +10,12 @@ import PaymentAgree from './components/PaymentAgree';
 import PaymentButton from './components/PaymentButton';
 import PaymentMethod from './components/PaymentMethod';
 
+export interface StudyRoomInfo {
+  workplaceName: string;
+  studyRoomTitle: string;
+  studyRoomPrice: number;
+}
+
 export interface ReservationFormData {
   name: string;
   phoneNumber: string;
@@ -31,6 +37,15 @@ export interface CheckState {
 export type PayMethodType = 'TOSS' | 'KAKAOPAY' | null;
 
 const PaymentPage = () => {
+  const studyroomId = 309;
+  const studyRoomInfo: StudyRoomInfo = {
+    workplaceName: 'ABC 스터디룸',
+    studyRoomTitle: 'ROOM A',
+    studyRoomPrice: 3500,
+  };
+
+  const [totalAmount, setTotalAmount] = useState(0);
+
   const [reservationForm, setReservationForm] = useState<ReservationFormData>({
     name: '',
     phoneNumber: '',
@@ -56,7 +71,7 @@ const PaymentPage = () => {
       <MainLayout>
         <HeaderOnlyTitle title='예약 확인 및 결제' />
         <div className='flex h-auto flex-col gap-4 pb-[110px]'>
-          <PaymentRoomCard />
+          <PaymentRoomCard studyRoomInfo={studyRoomInfo} />
           <ReservationInfo
             reservationForm={reservationForm}
             onSetReservationForm={setReservationForm}
@@ -68,7 +83,11 @@ const PaymentPage = () => {
             onSetCheckState={setCheckState}
             errorMessage={errorMessage}
           />
-          <ReservationPrice />
+          <ReservationPrice
+            studyRoomInfo={studyRoomInfo}
+            totalAmount={totalAmount}
+            onSetTotalAmount={setTotalAmount}
+          />
           <PaymentAgree
             checkState={checkState}
             onSetCheckState={setCheckState}
@@ -81,10 +100,12 @@ const PaymentPage = () => {
           />
         </div>
         <PaymentButton
+          studyroomId={studyroomId}
           reservationForm={reservationForm}
           onSetErrorMessage={setErrorMessage}
           checkState={checkState}
           payMethod={payMethod}
+          totalAmount={totalAmount}
         />
       </MainLayout>
     </>

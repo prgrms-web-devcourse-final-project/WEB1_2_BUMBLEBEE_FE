@@ -23,7 +23,7 @@ export const getS3URL = async (): Promise<string> => {
 export const postStudyRoom = async (
   studyroom: StudyRoomData,
 ): Promise<void> => {
-  const response = await authInstance.post('/api/v1/studyroom', studyroom);
+  const response = await authInstance.post(`'/api/v1/studyroom'`, studyroom);
   return response.data;
 };
 

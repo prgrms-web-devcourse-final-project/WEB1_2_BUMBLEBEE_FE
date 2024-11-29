@@ -1,8 +1,15 @@
 import DetailTitle from '@components/DetailTitle';
 import useSearchStore from '@store/searchStore';
 import { getFormattedDateFunction } from '@utils/formatTime';
+import type { StudyRoomInfo } from '..';
 
-const PaymentRoomCard = () => {
+interface PaymentRoomCardProps {
+  studyRoomInfo: StudyRoomInfo;
+}
+
+const PaymentRoomCard = (props: PaymentRoomCardProps) => {
+  const { studyRoomInfo } = props;
+  const { workplaceName, studyRoomTitle } = studyRoomInfo;
   const { searchDate, formattedTime, searchPeople } = useSearchStore();
 
   const formattedDate = getFormattedDateFunction(searchDate);
@@ -17,11 +24,11 @@ const PaymentRoomCard = () => {
           alt='결제 스터디룸 사진'
         />
         <div className='flex w-[186px] flex-col gap-2'>
-          <div className='font-normal'>ROOM A</div>
+          <div className='font-normal'>{studyRoomTitle}</div>
           <div className='flex flex-col gap-1 text-xs'>
             <div className='flex gap-[10px]'>
               <span>장소</span>
-              <span className='font-normal'>ABC 스터디룸</span>
+              <span className='font-normal'>{workplaceName}</span>
             </div>
             <div className='flex gap-[10px]'>
               <span>일정</span>
