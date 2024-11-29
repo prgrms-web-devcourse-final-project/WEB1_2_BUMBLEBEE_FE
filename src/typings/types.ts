@@ -150,7 +150,7 @@ export interface SearchStudyRoomData {
 // 사업장
 export interface WorkPlaceData {
   workplaceName: string;
-  WorkplacePhoneNumber: string;
+  workplacePhoneNumber: string;
   workplaceDescription: string;
   workplaceAddress: string;
   imageUrl: string;
