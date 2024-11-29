@@ -1,9 +1,10 @@
 import MainLayout from '@layouts/MainLayout';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const PaymentSuccessPage = () => {
   const location = useLocation();
   const responseData = location.state;
+  const navigate = useNavigate();
 
   const { orderName, totalAmount } = responseData;
 
@@ -31,6 +32,7 @@ const PaymentSuccessPage = () => {
         <button
           type='button'
           className='flex h-[48px] w-[155px] items-center justify-center rounded-lg border border-primary py-[15px] text-primary'
+          onClick={() => navigate('/reservation-list')}
         >
           결제 관리로 이동
         </button>
