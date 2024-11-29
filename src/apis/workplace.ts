@@ -105,7 +105,7 @@ export const getWorkPlace = async (
 export const getPositionWorkPlace = async (
   position: GetPositionWorkPlace,
 ): Promise<GetPositionWorkPlaceData> => {
-  const response = await defaultInstance.get('/api/v1/workplace/distance', {
+  const response = await defaultInstance.get('/api/v1/workplace', {
     params: position,
   });
   return response.data;

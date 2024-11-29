@@ -178,7 +178,17 @@ export interface GetPositionWorkPlace {
 }
 
 export interface GetPositionWorkPlaceData {
-  workplaces: GetWorkPlaceData[];
+  workplaceId: number;
+  workplaceName: string;
+  workplaceAddress: string;
+  imageUrl: string;
+  stars: number;
+  reviewCount: number;
+  distance: number;
+}
+
+export interface GetPositionWorkPlaceList {
+  workplaces: GetPositionWorkPlaceData[];
 }
 
 // 특정 사업자의 사업장
