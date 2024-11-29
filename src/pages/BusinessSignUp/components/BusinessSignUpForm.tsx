@@ -8,6 +8,7 @@ import {
 } from '@utils/validationCheckRegex';
 import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
 import BusinessNumber from './BusinessNumber';
+import useBusinessSignUp from '../hooks/useBusinessSignUp';
 
 const BusinessSignUpForm = () => {
   const navigate = useNavigate();
@@ -69,9 +70,25 @@ const BusinessSignUpForm = () => {
     setErrorMessage(newErrorMessage);
   };
 
+  const { mutate } = useBusinessSignUp();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     isValid();
+    if (
+      isValidBusinessNumber(hostFormData.businessNumber) &&
+      isValidNickname(hostFormData.nickname) &&
+      isValidEmail(hostFormData.email) &&
+      isValidPassword(hostFormData.password) &&
+      hostFormData.password === hostFormData.passwordCheck
+    ) {
+      mutate({
+        businessName: hostFormData.nickname,
+        businessEmail: hostFormData.email,
+        businessPwd: hostFormData.password,
+        businessNum: hostFormData.businessNumber,
+      });
+    }
   };
 
   return (

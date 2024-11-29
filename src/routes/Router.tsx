@@ -29,6 +29,7 @@ import ChatListPage from '@pages/ChatListPage';
 import ChatPage from '@pages/ChatPage';
 import PaymentFailPage from '@pages/PaymentPage/PaymentFailPage';
 import PaymentLoadingPage from '@pages/PaymentPage/PaymentLoadingPage';
+import OAuth from '@pages/UserLogin/components/OAuth';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: '/login/user',
     element: <UserLogin />,
+  },
+  {
+    path: '/courses',
+    element: <OAuth />,
   },
   {
     path: '/login/business',

@@ -7,6 +7,7 @@ import axios, {
 } from 'axios';
 import { BASE_URL } from '@constants/constants';
 import { getAuthToken, removeAuthToken, setAuthToken } from '@utils/auth';
+import useAuthStore from '@store/authStore';
 
 // Default Instance
 const defaultInstance: AxiosInstance = axios.create({
@@ -26,27 +27,17 @@ const authInstance: AxiosInstance = axios.create({
     accept: 'application/json',
     'Content-Type': 'application/json',
   },
-});
-
-// 회원가입 & 로그인 용
-const tokenInstance: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
-  timeout: 2000,
-  headers: {
-    accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
   withCredentials: true,
 });
 
 // response interceptor (토큰 갱신)
-tokenInstance.interceptors.response.use(
+authInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
     // token 갱신하기
     if (error.response && error.response.status === 401) {
       try {
-        const response = await tokenInstance.post(
+        const response = await authInstance.post(
           '/reissue',
           {},
           { withCredentials: true },
@@ -60,12 +51,14 @@ tokenInstance.interceptors.response.use(
           if (originalRequest.headers) {
             originalRequest.headers.Authorization = `Bearer ${accessToken}`;
           }
-          return await tokenInstance(originalRequest); // 실패했던 요청 재시도
+          return await authInstance(originalRequest); // 실패했던 요청 재시도
         }
       } catch (refreshError) {
         // 로그아웃 처리
+        const { storeLogout } = useAuthStore();
         removeAuthToken();
-        tokenInstance.post('/logout');
+        authInstance.post('/logout');
+        storeLogout();
         window.location.replace('/');
       }
     }
@@ -126,4 +119,4 @@ defaultInstance.interceptors.response.use(
 );
 authInstance.interceptors.response.use(responseInterceptor, errorInterceptor);
 
-export { defaultInstance, authInstance, tokenInstance };
+export { defaultInstance, authInstance };
