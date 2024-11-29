@@ -22,7 +22,6 @@ const KakaoMap = (props: KakaoMapProps) => {
 
   // 사용자 위치 가져오기
   useEffect(() => {
-    console.log('실행');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
