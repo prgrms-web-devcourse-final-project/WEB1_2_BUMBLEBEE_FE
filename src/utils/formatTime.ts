@@ -10,10 +10,29 @@ export const getDateFunction = (timeString: string) => {
   return dateString;
 };
 
+// date타입에서 YYYY-MM-DD 추출해 YYYY.MM.DD로 변환
+export const getStringFromDate = (value: Date) => {
+  const year = value.getFullYear();
+  const month = (value.getMonth() + 1).toString().padStart(2, '0');
+  const day = value.getDate().toString().padStart(2, '0');
+  const dateString = `${year}.${month}.${day}`;
+
+  return dateString;
+};
+
 // YYYY-MM-DDTHH:mm:ss 에서 시간(HH:mm) 추출
 export const getTimeFunction = (timeString: string) => {
   const hour = new Date(timeString).getHours().toString().padStart(2, '0');
   const minutes = new Date(timeString).getMinutes().toString().padStart(2, '0');
+  const formattedTimeString = `${hour}:${minutes}`;
+
+  return formattedTimeString;
+};
+
+// date타입에서 시간(HH:mm) 추출
+export const getStringFromDateTime = (value: Date) => {
+  const hour = value.getHours().toString().padStart(2, '0');
+  const minutes = value.getMinutes().toString().padStart(2, '0');
   const formattedTimeString = `${hour}:${minutes}`;
 
   return formattedTimeString;
