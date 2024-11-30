@@ -12,11 +12,7 @@ const DetailPage = () => {
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
 
   if (isLoading) {
-    return <p>로딩중...</p>;
-  }
-
-  if (!data) {
-    return <p>데이터를 받아오는 데 실패했습니다.</p>;
+    return <p>로딩중</p>;
   }
 
   return (
@@ -28,11 +24,13 @@ const DetailPage = () => {
           alt='사업장 사진'
           className='h-[240px] w-[100%]'
         />
-        <TabComponent
-          setIsBtnDisabled={setIsBtnDisabled}
-          workplaceDetailData={data}
-          workplaceId={Number(workplaceId)}
-        />
+        {data && (
+          <TabComponent
+            setIsBtnDisabled={setIsBtnDisabled}
+            workplaceDetailData={data}
+            workplaceId={Number(workplaceId)}
+          />
+        )}
       </div>
       <DetailNavigation isBtnDisabled={isBtnDisabled} />
     </MainLayout>

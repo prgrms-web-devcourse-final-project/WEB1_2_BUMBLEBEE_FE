@@ -45,7 +45,7 @@ export const getMyReview = async (): Promise<Review[]> => {
 export const postReview = async (
   data: PostReviewRequestBody,
 ): Promise<Review> => {
-  const response = await authInstance.post('api/v1/review/register', data);
+  const response = await authInstance.post('/api/v1/review/register', data);
   return response.data;
 };
 

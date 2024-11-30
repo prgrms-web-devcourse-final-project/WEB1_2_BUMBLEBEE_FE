@@ -1,6 +1,6 @@
 import RoomComponent from '@pages/RegisterSpace/components/RoomComponent';
 import { Dispatch, SetStateAction, useState } from 'react';
-import useGetStudyroomOfWorkplace from '../hooks/useGetStudyRoomOfWorkplace';
+import useGetStudyroomOfWorkplace from '../hooks/useGetStudyroomOfWorkplace';
 
 interface RoomSelectProps {
   setIsBtnDisabled: Dispatch<SetStateAction<boolean>>;
@@ -16,6 +16,7 @@ const RoomSelect = ({ setIsBtnDisabled, workplaceId }: RoomSelectProps) => {
     setIsBtnDisabled(false);
     setSelectedRoomId(id);
   };
+
   return (
     <div className='w-custom'>
       {data ? (
