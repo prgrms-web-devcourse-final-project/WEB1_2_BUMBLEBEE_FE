@@ -22,7 +22,7 @@ const UserButtonContainer = () => {
   };
 
   return (
-    <div className='absolute top-[255px] flex w-[330px] flex-col gap-[18px]'>
+    <div className='absolute top-[265px] flex w-[330px] flex-col gap-[18px]'>
       <div className='flex flex-col gap-[10px]'>
         <button
           type='button'
