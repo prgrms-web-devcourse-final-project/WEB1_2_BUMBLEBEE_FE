@@ -187,3 +187,71 @@ export interface GetBusinessWorkPlaceData {
   businessName: string;
   workplaces: GetWorkPlaceData[];
 }
+
+// 결제 검증 시 요청값
+export interface OrderFormData {
+  orderId: string;
+  orderName: string;
+  totalAmount: number;
+  memberName: string;
+  memberPhoneNum: string;
+  tossPaymentMethod: string; // 'CARD'
+}
+
+// 결제 검증 시 응답값
+export interface PostPaymentsData {
+  orderId: string;
+  orderName: string;
+  totalAmount: number;
+  memberName: string;
+  memberPhoneNum: string;
+  tossPaymentMethod: string;
+  successUrl: string;
+  failUrl: string;
+  failReason?: string; // null허용
+  cancelYN?: boolean; // null허용
+  cancelReason?: string; // null허용
+  createdAt?: string; //  null허용
+}
+
+// 결제 성공 시 요청값
+export interface PaymentsSuccess {
+  paymentKey: string;
+  orderId: string;
+  amount: number;
+}
+
+// 결제 성공 시 응답값
+export interface PaymentsSuccessData {
+  mid: string;
+  version: string;
+  paymentKey: string;
+  orderId: string;
+  orderName: string;
+  currency: string;
+  method: string;
+  totalAmount: string;
+  balanceAmount: string;
+  suppliedAmount: string;
+  vat: string;
+  status: string;
+  requestedAt: string;
+  approvedAt: string;
+  useEscrow: string;
+  cultureExpense: string;
+  type: string;
+}
+
+// 결제 실패 시 요청값
+export interface PaymentsFail {
+  code: string;
+  message: string;
+  orderId: number;
+}
+
+// 결제 실패 시 응답값
+export interface PaymentFailData {
+  errorCode: string;
+  errorMessage: string;
+  orderId: number;
+}

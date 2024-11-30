@@ -1,4 +1,12 @@
-import { GetAllReservationData, PostReservationData } from '@typings/types';
+import {
+  GetAllReservationData,
+  OrderFormData,
+  PaymentsFail,
+  PaymentsSuccess,
+  PaymentsSuccessData,
+  PostPaymentsData,
+  PostReservationData,
+} from '@typings/types';
 import { authInstance } from '.';
 
 // 예약 등록
@@ -20,3 +28,41 @@ export const getAllReservation = async (): Promise<GetAllReservationData> => {
 };
 
 // 사업자의 예약자 조회
+
+// 결제 검증
+export const postPaymentsToss = async (
+  orderForm: OrderFormData,
+): Promise<PostPaymentsData> => {
+  const response = await authInstance.post('/api/v1/payments/toss', orderForm);
+  return response.data;
+};
+
+// 결제 성공
+export const postPaymentsSuccess = async (
+  payment: PaymentsSuccess,
+): Promise<PaymentsSuccessData> => {
+  const response = await authInstance.post('/api/v1/payments/toss/success', {
+    params: {
+      paymentKey: payment.paymentKey,
+      orderId: payment.orderId,
+      amount: payment.amount,
+    },
+  });
+
+  return response.data;
+};
+
+// 결제 실패
+export const postPaymentsFail = async (
+  payment: PaymentsFail,
+): Promise<PaymentsSuccessData> => {
+  const response = await authInstance.post('/api/v1/payments/toss/fail', {
+    params: {
+      code: payment.code,
+      message: payment.message,
+      orderId: payment.orderId,
+    },
+  });
+
+  return response.data;
+};
