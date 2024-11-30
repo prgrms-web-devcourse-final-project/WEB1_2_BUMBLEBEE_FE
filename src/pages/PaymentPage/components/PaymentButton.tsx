@@ -5,8 +5,9 @@ import {
 import { ERROR_MESSAGE } from '@constants/constants';
 import { v4 as uuidv4 } from 'uuid';
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
-import { postReservation } from '@apis/reservation';
+import { postPaymentsToss, postReservation } from '@apis/reservation';
 import useSearchStore from '@store/searchStore';
+import { PostPaymentsData } from '@typings/types';
 import type {
   ReservationFormData,
   ErrorMessageType,
@@ -74,25 +75,25 @@ const PaymentButton = (props: PaymentButtonProps) => {
 
   const clientKey = import.meta.env.VITE_APP_TOSS_CLIENT_KEY;
   const customerKey = uuidv4();
+  const orderId = uuidv4();
 
-  const handlePayment = async (): Promise<void> => {
+  const handlePayment = async (response: PostPaymentsData): Promise<void> => {
     const tossPayments = await loadTossPayments(clientKey);
     const payment = tossPayments.payment({ customerKey });
-    const orderId = uuidv4();
 
-    const formattedPhoneNumber = reservationForm.phoneNumber.replace(/-/g, '');
+    const formattedPhoneNumber = response.memberPhoneNum.replace(/-/g, '');
     await payment
       .requestPayment({
-        method: 'CARD',
+        method: response.tossPaymentMethod,
         amount: {
           currency: 'KRW',
-          value: totalAmount,
+          value: response.totalAmount,
         },
-        orderId,
-        orderName,
-        successUrl: `${window.location.origin}/payment-loading`,
-        failUrl: `${window.location.origin}/payment-fail`,
-        customerName: reservationForm.name,
+        orderId: response.orderId,
+        orderName: response.orderName,
+        successUrl: `${window.location.origin}/api/v1/payments/toss/success`, // `${window.location.origin}/payment-loading`
+        failUrl: `${window.location.origin}/api/v1/payments/toss/fail`, // `${window.location.origin}/payment-fail`
+        customerName: response.memberName,
         customerMobilePhone: formattedPhoneNumber,
         card: {
           useEscrow: false,
@@ -127,12 +128,37 @@ const PaymentButton = (props: PaymentButtonProps) => {
         startTime,
         endTime,
       };
-      const reservationId = await postReservation(
-        studyRoomInfo.studyRoomId,
-        reservationData,
-      );
-      console.log(reservationId);
-      handlePayment();
+
+      const orderForm = {
+        orderId,
+        orderName,
+        totalAmount,
+        memberName: reservationForm.name,
+        memberPhoneNum: reservationForm.phoneNumber,
+        tossPaymentMethod: 'CARD',
+      };
+
+      try {
+        // 예약 요청
+        const reservationId = await postReservation(
+          studyRoomInfo.studyRoomId,
+          reservationData,
+        );
+        console.log('Reservation ID:', reservationId);
+
+        // 결제 검증
+        const paymentResponse = await postPaymentsToss(
+          reservationId,
+          orderForm,
+        );
+        console.log('결제 검증 여부', paymentResponse);
+
+        // 결제 요청
+        const paymentResult = handlePayment(paymentResponse);
+        console.log('결제 성공 여부', paymentResult);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

@@ -31,9 +31,13 @@ export const getAllReservation = async (): Promise<GetAllReservationData> => {
 
 // 결제 검증
 export const postPaymentsToss = async (
+  reservationId: number,
   orderForm: OrderFormData,
 ): Promise<PostPaymentsData> => {
-  const response = await authInstance.post('/api/v1/payments/toss', orderForm);
+  const response = await authInstance.post(
+    `/api/v1/payments/toss?reservationId=${reservationId}`,
+    orderForm,
+  );
   return response.data;
 };
 

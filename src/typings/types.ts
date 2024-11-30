@@ -205,13 +205,13 @@ export interface PostPaymentsData {
   totalAmount: number;
   memberName: string;
   memberPhoneNum: string;
-  tossPaymentMethod: string;
+  tossPaymentMethod: 'CARD';
   successUrl: string;
   failUrl: string;
-  failReason?: string; // null허용
-  cancelYN?: boolean; // null허용
-  cancelReason?: string; // null허용
-  createdAt?: string; //  null허용
+  failReason: string | null; // null허용
+  cancelYN: boolean | null; // null허용
+  cancelReason: string | null; // null허용
+  createdAt: string | null; //  null허용
 }
 
 // 결제 성공 시 요청값
