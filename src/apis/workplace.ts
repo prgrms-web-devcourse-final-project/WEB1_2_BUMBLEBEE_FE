@@ -115,8 +115,8 @@ export const postPositionWorkPlace = async ({
     mapPosition,
     {
       params: {
-        positionLat: nowPosition.latitude,
-        positionLon: nowPosition.longitude,
+        latitude: nowPosition.latitude,
+        longitude: nowPosition.longitude,
       },
     },
   );

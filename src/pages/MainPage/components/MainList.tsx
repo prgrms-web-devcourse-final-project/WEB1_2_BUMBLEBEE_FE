@@ -47,6 +47,8 @@ const MainList = (props: MainListProps) => {
       </div>
       <div className='mx-auto flex w-custom flex-col gap-4'>
         {data &&
+          data.workplaces &&
+          data.workplaces.length > 0 &&
           data.workplaces.map((item) => (
             <StudyRoomCard
               key={item.workplaceName}

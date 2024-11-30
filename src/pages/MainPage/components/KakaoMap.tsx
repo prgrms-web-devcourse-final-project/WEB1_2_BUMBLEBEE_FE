@@ -21,6 +21,28 @@ const KakaoMap = (props: KakaoMapProps) => {
   const [center, setCenter] = useState(position.center);
   const [mapInstance, setMapInstance] = useState<kakao.maps.Map | null>(null);
 
+  const { mutate: getWorkPlace } = useGetWorkplaceMutation();
+
+  const handleBoundsChange = debounce((map) => {
+    const bound = map.getBounds();
+    onSetMapPosition({
+      topRight: {
+        lat: bound.getNorthEast().getLat(),
+        lng: bound.getNorthEast().getLng(),
+      },
+      bottomLeft: {
+        lat: bound.getSouthWest().getLat(),
+        lng: bound.getSouthWest().getLng(),
+      },
+    });
+    const newNowPosition = {
+      latitude: position.center.lat,
+      longitude: position.center.lng,
+    };
+
+    getWorkPlace({ nowPosition: newNowPosition, mapPosition });
+  }, 500);
+
   // 사용자 위치 가져오기
   useEffect(() => {
     if (navigator.geolocation) {
@@ -56,27 +78,6 @@ const KakaoMap = (props: KakaoMapProps) => {
     }
   }, [onSetPosition]);
 
-  const { mutate: getWorkPlace } = useGetWorkplaceMutation();
-
-  const handleBoundsChange = debounce((map) => {
-    const bound = map.getBounds();
-    onSetMapPosition({
-      topRight: {
-        lat: bound.getNorthEast().getLat(),
-        lng: bound.getNorthEast().getLng(),
-      },
-      bottomLeft: {
-        lat: bound.getSouthWest().getLat(),
-        lng: bound.getSouthWest().getLng(),
-      },
-    });
-    const newNowPosition = {
-      latitude: position.center.lat,
-      longitude: position.center.lng,
-    };
-    getWorkPlace({ nowPosition: newNowPosition, mapPosition });
-  }, 500);
-
   useEffect(() => {
     if (mapInstance) {
       const bound = mapInstance.getBounds();
@@ -90,8 +91,14 @@ const KakaoMap = (props: KakaoMapProps) => {
           lng: bound.getSouthWest().getLng(),
         },
       });
+      const newNowPosition = {
+        latitude: position.center.lat,
+        longitude: position.center.lng,
+      };
+      getWorkPlace({ nowPosition: newNowPosition, mapPosition });
     }
-  }, [mapInstance, onSetMapPosition]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapInstance]);
 
   return (
     <div className='relative h-[298px] w-[375px]'>
@@ -128,6 +135,8 @@ const KakaoMap = (props: KakaoMapProps) => {
             }}
           />
           {data &&
+            data.workplaces &&
+            data.workplaces.length > 0 &&
             data.workplaces.map((item, index) => (
               <MapMarker
                 // eslint-disable-next-line react/no-array-index-key
