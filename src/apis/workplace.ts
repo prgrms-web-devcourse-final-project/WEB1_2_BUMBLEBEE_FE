@@ -103,19 +103,23 @@ export const getWorkPlace = async (
 };
 
 // 위치 기반 사업장 조회
-export const getPositionWorkPlace = async ({
+export const postPositionWorkPlace = async ({
   nowPosition,
   mapPosition,
 }: {
   nowPosition: NowPosition;
   mapPosition: MapPosition;
 }): Promise<GetPositionWorkPlaceList> => {
-  const response = await defaultInstance.get('/api/v1/workplace', {
-    params: {
-      ...nowPosition, // latitude, longitude
-      ...mapPosition, // topRight, bottomLeft
+  const response = await defaultInstance.post(
+    '/api/v1/workplace/distance',
+    mapPosition,
+    {
+      params: {
+        positionLat: nowPosition.latitude,
+        positionLon: nowPosition.longitude,
+      },
     },
-  });
+  );
   return response.data;
 };
 

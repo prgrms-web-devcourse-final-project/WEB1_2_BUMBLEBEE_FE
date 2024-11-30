@@ -36,6 +36,8 @@ const MainPage = () => {
     longitude: position.center.lng,
   };
 
+  console.log('now', nowPosition);
+  console.log('map', mapPosition);
   const { data } = useGetWorkplaceData(nowPosition, mapPosition);
   return (
     <>

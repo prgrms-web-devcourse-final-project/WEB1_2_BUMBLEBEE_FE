@@ -1,4 +1,4 @@
-import { getPositionWorkPlace } from '@apis/workplace';
+import { postPositionWorkPlace } from '@apis/workplace';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   GetPositionWorkPlaceList,
@@ -12,7 +12,7 @@ export const useGetWorkplaceData = (
 ) => {
   const { data, isLoading, isError } = useQuery<GetPositionWorkPlaceList>({
     queryKey: ['nearWorkplace', nowPosition, mapPosition],
-    queryFn: () => getPositionWorkPlace({ nowPosition, mapPosition }),
+    queryFn: () => postPositionWorkPlace({ nowPosition, mapPosition }),
   });
 
   return { data, isLoading, isError };
@@ -26,7 +26,7 @@ export const useGetWorkplaceMutation = () => {
     Error,
     { nowPosition: NowPosition; mapPosition: MapPosition }
   >({
-    mutationFn: getPositionWorkPlace,
+    mutationFn: postPositionWorkPlace,
     onSuccess: (_, variables) => {
       const { nowPosition, mapPosition } = variables;
       queryClient.invalidateQueries({

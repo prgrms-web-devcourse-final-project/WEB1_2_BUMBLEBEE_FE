@@ -19,6 +19,7 @@ const KakaoMap = (props: KakaoMapProps) => {
   const { position, onSetPosition, mapPosition, onSetMapPosition, data } =
     props;
   const [center, setCenter] = useState(position.center);
+  const [mapInstance, setMapInstance] = useState<kakao.maps.Map | null>(null);
 
   // 사용자 위치 가져오기
   useEffect(() => {
@@ -76,6 +77,22 @@ const KakaoMap = (props: KakaoMapProps) => {
     getWorkPlace({ nowPosition: newNowPosition, mapPosition });
   }, 500);
 
+  useEffect(() => {
+    if (mapInstance) {
+      const bound = mapInstance.getBounds();
+      onSetMapPosition({
+        topRight: {
+          lat: bound.getNorthEast().getLat(),
+          lng: bound.getNorthEast().getLng(),
+        },
+        bottomLeft: {
+          lat: bound.getSouthWest().getLat(),
+          lng: bound.getSouthWest().getLng(),
+        },
+      });
+    }
+  }, [mapInstance, onSetMapPosition]);
+
   return (
     <div className='relative h-[298px] w-[375px]'>
       {position.isLoading ? (
@@ -91,6 +108,9 @@ const KakaoMap = (props: KakaoMapProps) => {
           center={center}
           className='h-full w-full'
           level={3}
+          onCreate={(map) => {
+            setMapInstance(map);
+          }}
           onDragEnd={(map) => {
             const latlng = map.getCenter();
             setCenter({ lat: latlng.getLat(), lng: latlng.getLng() });
