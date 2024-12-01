@@ -138,27 +138,20 @@ const PaymentButton = (props: PaymentButtonProps) => {
         tossPaymentMethod: 'CARD',
       };
 
-      try {
-        // 예약 요청
-        const reservationId = await postReservation(
-          studyRoomInfo.studyRoomId,
-          reservationData,
-        );
-        console.log('Reservation ID:', reservationId);
+      // 예약 요청
+      const reservationId = await postReservation(
+        studyRoomInfo.studyRoomId,
+        reservationData,
+      );
+      console.log('Reservation ID:', reservationId);
 
-        // 결제 검증
-        const paymentResponse = await postPaymentsToss(
-          reservationId,
-          orderForm,
-        );
-        console.log('결제 검증 여부', paymentResponse);
+      // 결제 검증
+      const paymentResponse = await postPaymentsToss(reservationId, orderForm);
+      console.log('결제 검증 여부', paymentResponse);
 
-        // 결제 요청
-        const paymentResult = handlePayment(paymentResponse);
-        console.log('결제 성공 여부', paymentResult);
-      } catch (error) {
-        console.log(error);
-      }
+      // 결제 요청
+      const paymentResult = handlePayment(paymentResponse);
+      console.log('결제 성공 여부', paymentResult);
     }
   };
 
