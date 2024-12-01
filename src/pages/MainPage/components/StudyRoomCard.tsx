@@ -1,25 +1,41 @@
+import { GetPositionWorkPlaceData } from '@typings/types';
 import { FaStar } from 'react-icons/fa6';
 
-const StudyRoomCard = () => {
+interface StudyRoomCardProps {
+  studyroom: GetPositionWorkPlaceData;
+}
+
+const StudyRoomCard = ({ studyroom }: StudyRoomCardProps) => {
+  const {
+    workplaceName,
+    workplaceAddress,
+    imageUrl,
+    stars,
+    reviewCount,
+    distance,
+  } = studyroom;
+
+  const formattedAddress = workplaceAddress.split(' ').slice(0, 3).join(' ');
+
   return (
     <div className='hover: flex h-[116px] w-custom cursor-pointer gap-[18px] rounded-[10px] border-primary bg-white p-3 shadow-custom hover:border-[1px]'>
       <img
-        src='src/assets/images/roomit_logo.png'
+        src={imageUrl}
         alt='스터디룸 사진'
         className='h-[90px] w-[90px] object-cover'
       />
       <div className='flex h-[90px] w-full flex-col content-between justify-between'>
         <div className='flex-col gap-1'>
-          <p className='font-normal'>ABC 스터디룸</p>
+          <p className='font-normal'>{workplaceName}</p>
           <div className='flex gap-[10px]'>
-            <span className='text-xs font-normal'>1.5km</span>
-            <span className='text-xs'>서울 서초구 서초동</span>
+            <span className='text-xs font-normal'>{distance}km</span>
+            <span className='text-xs'>{formattedAddress}</span>
           </div>
         </div>
         <div className='flex items-center gap-1 text-xs'>
           <FaStar className='text-primary' />
-          <span>4.0</span>
-          <span>(25)</span>
+          <span>{stars}</span>
+          <span>({reviewCount})</span>
         </div>
       </div>
     </div>
