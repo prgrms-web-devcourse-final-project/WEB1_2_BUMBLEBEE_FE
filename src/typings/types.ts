@@ -170,15 +170,30 @@ export interface GetWorkPlaceData extends WorkPlacePutData {
 }
 
 // 사업장 위치
-export interface GetPositionWorkPlace {
-  topLeft: { lat: number; lng: number };
-  bottomRight: { lat: number; lng: number };
-  positionLat: number;
-  positionLng: number;
+export interface MapPosition {
+  topRight: { lat: number; lng: number };
+  bottomLeft: { lat: number; lng: number };
+}
+
+export interface NowPosition {
+  latitude: number;
+  longitude: number;
 }
 
 export interface GetPositionWorkPlaceData {
-  workplaces: GetWorkPlaceData[];
+  workplaceId: number;
+  workplaceName: string;
+  workplaceAddress: string;
+  imageUrl: string;
+  stars: number;
+  reviewCount: number;
+  latitude: number; //
+  longitude: number;
+  distance: number;
+}
+
+export interface GetPositionWorkPlaceList {
+  workplaces: GetPositionWorkPlaceData[];
 }
 
 // 특정 사업자의 사업장
