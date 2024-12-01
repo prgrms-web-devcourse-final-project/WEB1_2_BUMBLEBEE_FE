@@ -10,11 +10,13 @@ export const useGetWorkplaceData = (
   nowPosition: NowPosition,
   mapPosition: MapPosition,
 ) => {
+  const isMapEnabled =
+    mapPosition.topRight.lat !== 0 || mapPosition.bottomLeft.lat !== 0;
   const { data, isLoading, isError, refetch } =
     useQuery<GetPositionWorkPlaceList>({
       queryKey: ['nearWorkplace', nowPosition, mapPosition],
       queryFn: () => postPositionWorkPlace({ nowPosition, mapPosition }),
-      enabled: false,
+      enabled: isMapEnabled,
     });
 
   return { data, isLoading, isError, refetch };

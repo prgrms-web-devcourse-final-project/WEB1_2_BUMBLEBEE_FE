@@ -12,7 +12,7 @@ interface KakaoMapProps {
   position: Position;
   onSetPosition: Dispatch<React.SetStateAction<Position>>;
   mapPosition: MapPosition;
-  onSetMapPosition: (value: MapPosition) => void;
+  onSetMapPosition: Dispatch<React.SetStateAction<MapPosition>>;
   data: GetPositionWorkPlaceList | undefined;
   refetch: (
     options?: RefetchOptions | undefined,
@@ -88,6 +88,27 @@ const KakaoMap = (props: KakaoMapProps) => {
     }
   }, [onSetPosition]);
 
+  const handleMapCreate = (map: kakao.maps.Map) => {
+    onSetMapPosition((prevPosition) => {
+      const bounds = map.getBounds();
+      const newPosition = {
+        topRight: {
+          lat: bounds.getNorthEast().getLat(),
+          lng: bounds.getNorthEast().getLng(),
+        },
+        bottomLeft: {
+          lat: bounds.getSouthWest().getLat(),
+          lng: bounds.getSouthWest().getLng(),
+        },
+      };
+      if (JSON.stringify(prevPosition) === JSON.stringify(newPosition)) {
+        return prevPosition;
+      }
+      return newPosition;
+    });
+    refetch();
+  };
+
   return (
     <div className='relative h-[298px] w-[375px]'>
       {position.isLoading ? (
@@ -104,6 +125,7 @@ const KakaoMap = (props: KakaoMapProps) => {
           className='h-full w-full'
           level={3}
           ref={mapRef}
+          onCreate={(map) => handleMapCreate(map)}
           onDragEnd={(map) => {
             const latlng = map.getCenter();
             setCenter({ lat: latlng.getLat(), lng: latlng.getLng() });
@@ -123,10 +145,9 @@ const KakaoMap = (props: KakaoMapProps) => {
           {data &&
             data.workplaces &&
             data.workplaces.length > 0 &&
-            data.workplaces.map((item, index) => (
+            data.workplaces.map((item) => (
               <MapMarker
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
+                key={item.latitude}
                 position={{ lat: item.latitude, lng: item.longitude }}
                 image={{
                   src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',

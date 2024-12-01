@@ -37,8 +37,6 @@ const MainPage = () => {
   };
 
   const { data, refetch } = useGetWorkplaceData(nowPosition, mapPosition);
-  console.log(nowPosition, mapPosition);
-  console.log(data);
 
   return (
     <>
