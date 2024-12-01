@@ -156,6 +156,13 @@ export interface WorkPlaceData {
   imageUrl: string;
   workplaceStartTime: string;
   workplaceEndTime: string;
+  studyRoomList: {
+    title: string;
+    description: string;
+    imageUrl: string;
+    price: number;
+    capacity: number;
+  }[];
 }
 
 // 사업장 수정
