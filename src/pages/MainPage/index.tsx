@@ -36,7 +36,10 @@ const MainPage = () => {
     longitude: position.center.lng,
   };
 
-  const { data } = useGetWorkplaceData(nowPosition, mapPosition);
+  const { data, refetch } = useGetWorkplaceData(nowPosition, mapPosition);
+  console.log(nowPosition, mapPosition);
+  console.log(data);
+
   return (
     <>
       <MainLayout>
@@ -47,6 +50,7 @@ const MainPage = () => {
           mapPosition={mapPosition}
           onSetMapPosition={setMapPosition}
           data={data}
+          refetch={refetch}
         />
         <MainList data={data} />
         <BottomNavigation />

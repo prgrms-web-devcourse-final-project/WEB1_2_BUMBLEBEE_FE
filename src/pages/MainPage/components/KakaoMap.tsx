@@ -1,9 +1,10 @@
-import { Dispatch, useEffect, useState } from 'react';
+import { Dispatch, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
 import { MoonLoader } from 'react-spinners';
 import { debounce } from 'lodash';
 import { GetPositionWorkPlaceList, MapPosition } from '@typings/types';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { useGetWorkplaceMutation } from '../hooks/useGetWorkplaceData';
 import type { Position } from '..';
 
@@ -13,13 +14,22 @@ interface KakaoMapProps {
   mapPosition: MapPosition;
   onSetMapPosition: (value: MapPosition) => void;
   data: GetPositionWorkPlaceList | undefined;
+  refetch: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<GetPositionWorkPlaceList, Error>>;
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const { position, onSetPosition, mapPosition, onSetMapPosition, data } =
-    props;
+  const {
+    position,
+    onSetPosition,
+    mapPosition,
+    onSetMapPosition,
+    data,
+    refetch,
+  } = props;
   const [center, setCenter] = useState(position.center);
-  const [mapInstance, setMapInstance] = useState<kakao.maps.Map | null>(null);
+  const mapRef = useRef<kakao.maps.Map>(null);
 
   const { mutate: getWorkPlace } = useGetWorkplaceMutation();
 
@@ -78,28 +88,6 @@ const KakaoMap = (props: KakaoMapProps) => {
     }
   }, [onSetPosition]);
 
-  useEffect(() => {
-    if (mapInstance) {
-      const bound = mapInstance.getBounds();
-      onSetMapPosition({
-        topRight: {
-          lat: bound.getNorthEast().getLat(),
-          lng: bound.getNorthEast().getLng(),
-        },
-        bottomLeft: {
-          lat: bound.getSouthWest().getLat(),
-          lng: bound.getSouthWest().getLng(),
-        },
-      });
-      const newNowPosition = {
-        latitude: position.center.lat,
-        longitude: position.center.lng,
-      };
-      getWorkPlace({ nowPosition: newNowPosition, mapPosition });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapInstance]);
-
   return (
     <div className='relative h-[298px] w-[375px]'>
       {position.isLoading ? (
@@ -115,9 +103,7 @@ const KakaoMap = (props: KakaoMapProps) => {
           center={center}
           className='h-full w-full'
           level={3}
-          onCreate={(map) => {
-            setMapInstance(map);
-          }}
+          ref={mapRef}
           onDragEnd={(map) => {
             const latlng = map.getCenter();
             setCenter({ lat: latlng.getLat(), lng: latlng.getLng() });
