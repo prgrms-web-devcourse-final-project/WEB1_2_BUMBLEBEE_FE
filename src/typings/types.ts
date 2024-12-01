@@ -199,10 +199,6 @@ export interface GetPositionWorkPlaceData {
   distance: number;
 }
 
-// export interface GetPositionWorkPlaceList {
-//   workplaces: GetPositionWorkPlaceData[];
-// }
-
 // 특정 사업자의 사업장
 export interface GetBusinessWorkPlaceData {
   businessId: number;
