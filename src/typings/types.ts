@@ -246,12 +246,12 @@ export interface PaymentsSuccessData {
 export interface PaymentsFail {
   code: string;
   message: string;
-  orderId: number;
+  orderId: string;
 }
 
 // 결제 실패 시 응답값
 export interface PaymentFailData {
   errorCode: string;
   errorMessage: string;
-  orderId: number;
+  orderId: string;
 }

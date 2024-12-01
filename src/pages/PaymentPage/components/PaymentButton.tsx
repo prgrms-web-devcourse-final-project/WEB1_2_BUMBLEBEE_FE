@@ -91,8 +91,8 @@ const PaymentButton = (props: PaymentButtonProps) => {
         },
         orderId: response.orderId,
         orderName: response.orderName,
-        successUrl: `${window.location.origin}/api/v1/payments/toss/success`, // `${window.location.origin}/payment-loading`
-        failUrl: `${window.location.origin}/api/v1/payments/toss/fail`, // `${window.location.origin}/payment-fail`
+        successUrl: `${window.location.origin}/payment-loading`, // `${window.location.origin}/payment-loading` or `${window.location.origin}/api/v1/payments/toss/success`
+        failUrl: `${window.location.origin}/payment-fail`, // `${window.location.origin}/payment-fail` or `${window.location.origin}/api/v1/payments/toss/fail`
         customerName: response.memberName,
         customerMobilePhone: formattedPhoneNumber,
         card: {

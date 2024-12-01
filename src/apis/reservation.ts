@@ -1,6 +1,7 @@
 import {
   GetAllReservationData,
   OrderFormData,
+  PaymentFailData,
   PaymentsFail,
   PaymentsSuccess,
   PaymentsSuccessData,
@@ -59,7 +60,7 @@ export const postPaymentsSuccess = async (
 // 결제 실패
 export const postPaymentsFail = async (
   payment: PaymentsFail,
-): Promise<PaymentsSuccessData> => {
+): Promise<PaymentFailData> => {
   const response = await authInstance.post('/api/v1/payments/toss/fail', {
     params: {
       code: payment.code,
