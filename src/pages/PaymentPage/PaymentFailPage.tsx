@@ -1,18 +1,42 @@
+import { postPaymentsFail } from '@apis/reservation';
 import MainLayout from '@layouts/MainLayout';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const PaymentFailPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const responseData = location.state;
+  const [searchParams] = useSearchParams();
+  const [errorMessage, setErrorMessage] = useState<string>('결제 실패');
 
-  console.log('Response Data:', responseData);
+  useEffect(() => {
+    const requestData = {
+      orderId: searchParams.get('orderId'),
+      message: searchParams.get('message'),
+      code: searchParams.get('code'),
+    };
+
+    const paymentsFail = async () => {
+      if (requestData.orderId && requestData.message && requestData.code) {
+        const response = await postPaymentsFail({
+          orderId: requestData.orderId,
+          message: requestData.message,
+          code: requestData.code,
+        });
+        setErrorMessage(response.errorMessage);
+      } else {
+        throw new Error('필요한 값이 누락되었습니다.');
+      }
+    };
+
+    paymentsFail();
+  }, [navigate, searchParams]);
+
   return (
     <MainLayout>
       <div className='mx-auto -mt-[93px] flex h-[100vh] flex-col items-center justify-center gap-6'>
         <div className='flex w-custom flex-col items-center justify-center gap-3'>
           <div className='text-xl font-medium'>결제 실패</div>
-          <div>{responseData.message}</div>
+          <div>{errorMessage}</div>
         </div>
         <button
           type='button'
