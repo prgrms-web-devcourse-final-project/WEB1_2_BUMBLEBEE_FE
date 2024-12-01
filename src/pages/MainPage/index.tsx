@@ -38,48 +38,6 @@ const MainPage = () => {
 
   const { data, refetch } = useGetWorkplaceData(nowPosition, mapPosition);
 
-  console.log(data);
-  // const data = {
-  //   workplaces: [
-  //     {
-  //       workplaceId: 4,
-  //       workplaceName: '옐로스톤 스터디룸',
-  //       workplaceAddress: '서울 강남구 강남대로94길 21',
-  //       imageUrl:
-  //         'https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150901_244%2F14410338887412ja3X_JPEG%2FSUBMIT_1416958175779_35966443.jpg',
-  //       stars: 4.0,
-  //       reviewCount: 30,
-  //       positionLat: 37.4997243135104,
-  //       positionLon: 127.02896610336,
-  //       distance: 1.57,
-  //     },
-  //     {
-  //       workplaceId: 3,
-  //       workplaceName: '영글 강남스터디룸',
-  //       workplaceAddress: '서울 강남구 학동로1길 19 금성빌딩 5층',
-  //       imageUrl:
-  //         'https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20240808_204%2F1723106102664gSDVA_JPEG%2FIMG_2165.jpeg',
-  //       stars: 3.0,
-  //       reviewCount: 50,
-  //       positionLat: 37.5126594626812,
-  //       positionLon: 127.02157831586,
-  //       distance: 9.49,
-  //     },
-  //     {
-  //       workplaceId: 2,
-  //       workplaceName: '타임유스터디카페 망월사역점',
-  //       workplaceAddress: '경기 의정부시 평화로 170',
-  //       imageUrl:
-  //         'https://search.pstatic.net/common/?src=https%3A%2F%2Fpup-review-phinf.pstatic.net%2FMjAyMzEwMTZfMjc2%2FMDAxNjk3MzgzNDI1NjQz.aEqLbREqc0WCz2b68vkjm_XYVvLVwgzgHraaYWyfvekg.lYdNs4Bwc7FP0GX5GYbW-GD7-kJja96OFoiQDIjTUWcg.JPEG%2Fupload_31fe1a883e90afdbbb1320bbc10',
-  //       stars: 3.3333333333333335,
-  //       reviewCount: 30,
-  //       positionLat: 37.706967295248,
-  //       positionLon: 127.048476534971,
-  //       distance: 23.108376076947753,
-  //     },
-  //   ],
-  // };
-
   return (
     <>
       <MainLayout>
