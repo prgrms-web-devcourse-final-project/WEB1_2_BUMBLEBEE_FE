@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GetPositionWorkPlaceList } from '@typings/types';
+import { GetPositionWorkPlaceData } from '@typings/types';
 import StudyRoomCard from './StudyRoomCard';
 
 type TabList = {
@@ -10,14 +10,14 @@ type TabList = {
 };
 
 interface MainListProps {
-  data: GetPositionWorkPlaceList | undefined;
+  data: GetPositionWorkPlaceData[] | undefined;
 }
 
 const MainList = (props: MainListProps) => {
   const { data } = props;
-  const [activeTab, setActiveTab] = useState('기본');
+  const [activeTab, setActiveTab] = useState('주변 스터디룸');
   const tabList: TabList = {
-    기본: {
+    '주변 스터디룸': {
       title: '내 주변 스터디룸',
       context: '내 주변 가까운 스터디룸을 확인해보세요 !',
     },
@@ -46,15 +46,25 @@ const MainList = (props: MainListProps) => {
         <p className='text-sm'>{tabList[activeTab].context}</p>
       </div>
       <div className='mx-auto flex w-custom flex-col gap-4'>
-        {data &&
-          data.workplaces &&
-          data.workplaces.length > 0 &&
-          data.workplaces.map((item) => (
+        {activeTab === '주변 스터디룸' &&
+          data &&
+          data.length > 0 &&
+          data.map((item) => (
             <StudyRoomCard
               key={item.workplaceName}
               studyroom={item}
             />
           ))}
+        {activeTab === '주변 스터디룸' && (!data || data.length === 0) && (
+          <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
+            주변 스터디룸이 없습니다.
+          </div>
+        )}
+        {activeTab === '맞춤형 추천' && (
+          <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
+            추천 스터디룸이 없습니다.
+          </div>
+        )}
       </div>
     </div>
   );

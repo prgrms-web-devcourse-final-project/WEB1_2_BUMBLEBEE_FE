@@ -194,13 +194,9 @@ export interface GetPositionWorkPlaceData {
   imageUrl: string;
   stars: number;
   reviewCount: number;
-  latitude: number; //
-  longitude: number;
+  positionLat: number; //
+  positionLon: number;
   distance: number;
-}
-
-export interface GetPositionWorkPlaceList {
-  workplaces: GetPositionWorkPlaceData[];
 }
 
 // 특정 사업자의 사업장
