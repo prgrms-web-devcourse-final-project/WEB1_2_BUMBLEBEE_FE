@@ -170,15 +170,30 @@ export interface GetWorkPlaceData extends WorkPlacePutData {
 }
 
 // 사업장 위치
-export interface GetPositionWorkPlace {
-  topLeft: { lat: number; lng: number };
-  bottomRight: { lat: number; lng: number };
-  positionLat: number;
-  positionLng: number;
+export interface MapPosition {
+  topRight: { lat: number; lng: number };
+  bottomLeft: { lat: number; lng: number };
+}
+
+export interface NowPosition {
+  latitude: number;
+  longitude: number;
 }
 
 export interface GetPositionWorkPlaceData {
-  workplaces: GetWorkPlaceData[];
+  workplaceId: number;
+  workplaceName: string;
+  workplaceAddress: string;
+  imageUrl: string;
+  stars: number;
+  reviewCount: number;
+  latitude: number; //
+  longitude: number;
+  distance: number;
+}
+
+export interface GetPositionWorkPlaceList {
+  workplaces: GetPositionWorkPlaceData[];
 }
 
 // 특정 사업자의 사업장
@@ -186,4 +201,72 @@ export interface GetBusinessWorkPlaceData {
   businessId: number;
   businessName: string;
   workplaces: GetWorkPlaceData[];
+}
+
+// 결제 검증 시 요청값
+export interface OrderFormData {
+  orderId: string;
+  orderName: string;
+  totalAmount: number;
+  memberName: string;
+  memberPhoneNum: string;
+  tossPaymentMethod: string; // 'CARD'
+}
+
+// 결제 검증 시 응답값
+export interface PostPaymentsData {
+  orderId: string;
+  orderName: string;
+  totalAmount: number;
+  memberName: string;
+  memberPhoneNum: string;
+  tossPaymentMethod: 'CARD';
+  successUrl: string;
+  failUrl: string;
+  failReason: string | null; // null허용
+  cancelYN: boolean | null; // null허용
+  cancelReason: string | null; // null허용
+  createdAt: string | null; //  null허용
+}
+
+// 결제 성공 시 요청값
+export interface PaymentsSuccess {
+  paymentKey: string;
+  orderId: string;
+  amount: number;
+}
+
+// 결제 성공 시 응답값
+export interface PaymentsSuccessData {
+  mid: string;
+  version: string;
+  paymentKey: string;
+  orderId: string;
+  orderName: string;
+  currency: string;
+  method: string;
+  totalAmount: string;
+  balanceAmount: string;
+  suppliedAmount: string;
+  vat: string;
+  status: string;
+  requestedAt: string;
+  approvedAt: string;
+  useEscrow: string;
+  cultureExpense: string;
+  type: string;
+}
+
+// 결제 실패 시 요청값
+export interface PaymentsFail {
+  code: string;
+  message: string;
+  orderId: string;
+}
+
+// 결제 실패 시 응답값
+export interface PaymentFailData {
+  errorCode: string;
+  errorMessage: string;
+  orderId: string;
 }

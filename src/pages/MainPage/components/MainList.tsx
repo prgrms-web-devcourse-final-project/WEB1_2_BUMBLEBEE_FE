@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GetPositionWorkPlaceList } from '@typings/types';
 import StudyRoomCard from './StudyRoomCard';
 
 type TabList = {
@@ -8,7 +9,12 @@ type TabList = {
   };
 };
 
-const MainList = () => {
+interface MainListProps {
+  data: GetPositionWorkPlaceList | undefined;
+}
+
+const MainList = (props: MainListProps) => {
+  const { data } = props;
   const [activeTab, setActiveTab] = useState('기본');
   const tabList: TabList = {
     기본: {
@@ -22,7 +28,7 @@ const MainList = () => {
   };
 
   return (
-    <div className='relative z-10 -mt-2 mb-[94px] h-auto w-[375px] rounded-t-[10px] bg-white pb-[110px] shadow-custom'>
+    <div className='relative z-10 -mt-2 mb-[94px] min-h-[429px] w-[375px] rounded-t-[10px] bg-white pb-[110px] shadow-custom'>
       <nav className='it flex h-[60px] w-full items-center justify-center'>
         {Object.keys(tabList).map((tab) => (
           <button
@@ -40,9 +46,15 @@ const MainList = () => {
         <p className='text-sm'>{tabList[activeTab].context}</p>
       </div>
       <div className='mx-auto flex w-custom flex-col gap-4'>
-        <StudyRoomCard />
-        <StudyRoomCard />
-        <StudyRoomCard />
+        {data &&
+          data.workplaces &&
+          data.workplaces.length > 0 &&
+          data.workplaces.map((item) => (
+            <StudyRoomCard
+              key={item.workplaceName}
+              studyroom={item}
+            />
+          ))}
       </div>
     </div>
   );

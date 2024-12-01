@@ -1,44 +1,34 @@
+import { postPaymentsSuccess } from '@apis/reservation';
 import MainLayout from '@layouts/MainLayout';
-import axios from 'axios';
-import { Buffer } from 'buffer';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
-
-const secretKey = import.meta.env.VITE_APP_TOSS_SECRET_KEY;
 
 const PaymentLoadingPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const paymentInstance = axios.create({
-      baseURL: 'https://api.tosspayments.com',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${Buffer.from(`${secretKey}:`).toString('base64')}`,
-      },
-    });
-
     const requestData = {
       orderId: searchParams.get('orderId'),
       amount: searchParams.get('amount'),
       paymentKey: searchParams.get('paymentKey'),
     };
 
-    const paymentConfirm = async () => {
-      try {
-        const response = await paymentInstance.post(
-          '/v1/payments/confirm',
-          requestData,
-        );
-        navigate('/payment-success', { state: response.data });
-      } catch (error) {
-        navigate('/payment-fail', { state: error });
+    const paymentsSuccess = async () => {
+      if (requestData.orderId && requestData.amount && requestData.paymentKey) {
+        const response = await postPaymentsSuccess({
+          orderId: requestData.orderId,
+          amount: Number(requestData.amount),
+          paymentKey: requestData.paymentKey,
+        });
+        navigate('/payment-success', { state: response });
+      } else {
+        throw new Error('결제에 필요한 값이 누락되었습니다.');
       }
     };
 
-    paymentConfirm();
+    paymentsSuccess();
   }, [navigate, searchParams]);
 
   return (
