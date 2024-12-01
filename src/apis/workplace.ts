@@ -1,6 +1,6 @@
 import {
   GetBusinessWorkPlaceData,
-  GetPositionWorkPlaceList,
+  GetPositionWorkPlaceData,
   GetWorkPlaceData,
   MapPosition,
   NowPosition,
@@ -113,17 +113,19 @@ export const postPositionWorkPlace = async ({
 }: {
   nowPosition: NowPosition;
   mapPosition: MapPosition;
-}): Promise<GetPositionWorkPlaceList> => {
-  const response = await defaultInstance.post(
-    '/api/v1/workplace/distance',
-    mapPosition,
-    {
-      params: {
-        latitude: nowPosition.latitude,
-        longitude: nowPosition.longitude,
-      },
+}): Promise<GetPositionWorkPlaceData[]> => {
+  const response = await defaultInstance.post('/api/v1/workplace/distance', {
+    topRight: {
+      lat: mapPosition.topRight.lat,
+      lng: mapPosition.topRight.lng,
     },
-  );
+    bottomLeft: {
+      lat: mapPosition.bottomLeft.lat,
+      lng: mapPosition.bottomLeft.lng,
+    },
+    latitude: nowPosition.latitude,
+    longitude: nowPosition.longitude,
+  });
   return response.data;
 };
 

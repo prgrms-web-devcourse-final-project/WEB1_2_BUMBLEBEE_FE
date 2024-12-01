@@ -3,7 +3,7 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
 import { MoonLoader } from 'react-spinners';
 import { debounce } from 'lodash';
-import { GetPositionWorkPlaceList, MapPosition } from '@typings/types';
+import { GetPositionWorkPlaceData, MapPosition } from '@typings/types';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { useGetWorkplaceMutation } from '../hooks/useGetWorkplaceData';
 import type { Position } from '..';
@@ -13,10 +13,10 @@ interface KakaoMapProps {
   onSetPosition: Dispatch<React.SetStateAction<Position>>;
   mapPosition: MapPosition;
   onSetMapPosition: Dispatch<React.SetStateAction<MapPosition>>;
-  data: GetPositionWorkPlaceList | undefined;
+  data: GetPositionWorkPlaceData[] | undefined;
   refetch: (
     options?: RefetchOptions | undefined,
-  ) => Promise<QueryObserverResult<GetPositionWorkPlaceList, Error>>;
+  ) => Promise<QueryObserverResult<GetPositionWorkPlaceData[], Error>>;
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
@@ -51,7 +51,7 @@ const KakaoMap = (props: KakaoMapProps) => {
     };
 
     getWorkPlace({ nowPosition: newNowPosition, mapPosition });
-  }, 500);
+  }, 1000);
 
   // 사용자 위치 가져오기
   useEffect(() => {
@@ -132,23 +132,12 @@ const KakaoMap = (props: KakaoMapProps) => {
           }}
           onBoundsChanged={(map) => handleBoundsChange(map)}
         >
-          <MapMarker
-            position={position.center}
-            image={{
-              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-              size: {
-                width: 24,
-                height: 35,
-              },
-            }}
-          />
           {data &&
-            data.workplaces &&
-            data.workplaces.length > 0 &&
-            data.workplaces.map((item) => (
+            data.length > 0 &&
+            data.map((item) => (
               <MapMarker
-                key={item.latitude}
-                position={{ lat: item.latitude, lng: item.longitude }}
+                key={item.positionLat}
+                position={{ lat: item.positionLat, lng: item.positionLon }}
                 image={{
                   src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
                   size: {
