@@ -15,9 +15,14 @@ import {
 import { authInstance, defaultInstance } from '.';
 
 // 프리사인드 URL 얻기
-export const getS3URL = async (): Promise<string> => {
-  const response = await authInstance.get('/api/generate-presigned-url');
-  return response.data;
+export const getS3URL = async (
+  extension: string,
+  fileName: string,
+): Promise<string> => {
+  const response = await authInstance.get('/api/generate-presigned-url', {
+    params: { extension, fileName },
+  });
+  return response.data.presignedUrl;
 };
 
 // 스터디룸 등록
@@ -68,8 +73,7 @@ export const getSearchStudyRoom = async (
 export const postWorkPlace = async (
   workplace: WorkPlaceData,
 ): Promise<void> => {
-  const response = await authInstance.post('/api/v1/workplace', workplace);
-  return response.data;
+  await authInstance.post('/api/v1/workplace', workplace);
 };
 
 // 사업장 정보 수정

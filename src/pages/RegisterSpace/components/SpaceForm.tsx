@@ -3,12 +3,15 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { Space } from '@typings/types';
 import { IoMdClose } from 'react-icons/io';
+import axios from 'axios';
+import { getS3URL } from '@apis/workplace';
 import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
 import SelectOpenTime from './SelectOpenTime';
 import Address from './Address';
 import WorkSpaceImage from './WorkSpaceImage';
 import RoomComponent from './RoomComponent';
+import usePostWorkPlace from '../hooks/usePostWorkPlace';
 
 interface SpaceFormProps {
   spaceFormData: Space;
@@ -122,10 +125,70 @@ const SpaceForm = ({
     return pass;
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const uploadImageToS3 = (url: string, file: File) => {
+    axios.put(url, file);
+  };
+
+  const { mutate } = usePostWorkPlace();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isValid()) {
-      // api 호출
+    isValid();
+
+    if (
+      isValidSpaceName(spaceFormData.spaceName) &&
+      spaceFormData.description !== '' &&
+      spaceFormData.openTime !== '선택' &&
+      spaceFormData.closedTime !== '선택' &&
+      isValidNumber(spaceFormData.phoneNumber) &&
+      isValidAddress(spaceFormData.address.detail) &&
+      spaceFormData.spaceImage !== null &&
+      spaceFormData.rooms.length !== 0
+    ) {
+      // 사업장 사진
+      const workPlaceFileExtension = spaceFormData.spaceImage.name
+        .split('.')
+        .pop()!;
+      const s3URL = await getS3URL(
+        workPlaceFileExtension,
+        spaceFormData.spaceName,
+      );
+      uploadImageToS3(s3URL, spaceFormData.spaceImage);
+
+      // 룸 사진
+      const allRoomImages = spaceFormData.rooms.flatMap(
+        ({ roomImages, roomName }) =>
+          roomImages.map(({ file }) => ({
+            file,
+            roomName,
+          })),
+      );
+
+      await Promise.all(
+        allRoomImages.map(({ file, roomName }) =>
+          getS3URL(
+            file.name.split('.').pop()!,
+            `${spaceFormData.spaceName}/${roomName}`,
+          ).then((roomImageS3URL) => uploadImageToS3(roomImageS3URL, file)),
+        ),
+      );
+
+      mutate({
+        workplaceName: spaceFormData.spaceName,
+        workplacePhoneNumber: spaceFormData.phoneNumber,
+        workplaceDescription: spaceFormData.description,
+        workplaceAddress: `${spaceFormData.address.basic}, ${spaceFormData.address.detail}`,
+        imageUrl: spaceFormData.spaceName,
+        workplaceStartTime: spaceFormData.openTime,
+        workplaceEndTime: spaceFormData.closedTime,
+        studyRoomList: spaceFormData.rooms.map((room) => ({
+          title: room.roomName,
+          price: Number(room.price),
+          capacity: room.people,
+          description: room.description,
+          imageUrl: `${spaceFormData.spaceName}/${room.roomName}`,
+        })),
+      });
     }
   };
 
@@ -248,7 +311,16 @@ const SpaceForm = ({
                   onClick={() => clickRoom(item.id)}
                   className='mb-[10px]'
                 >
-                  <RoomComponent room={item} />
+                  <RoomComponent
+                    room={{
+                      id: 0,
+                      title: item.roomName,
+                      capacity: item.people,
+                      description: item.description,
+                      imageUrl: item.roomImages[0].url,
+                      price: Number(item.price),
+                    }}
+                  />
                 </button>
                 <button
                   type='button'
