@@ -1,6 +1,5 @@
 import { GetWorkPlaceData } from '@typings/types';
-import { BsTelephoneFill } from 'react-icons/bs';
-import { FaMapMarkerAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 const DetailComponent = ({
@@ -16,25 +15,28 @@ const DetailComponent = ({
 
   return (
     <div className='w-custom'>
-      <div className='flex items-center'>
-        <BsTelephoneFill
-          size='16px'
-          color='#c3c3c3'
-        />
-        <span className='ml-[10px] text-[16px]'>
-          {workplaceDetailData.workplacePhoneNumber}
-        </span>
+      <div className='flex flex-col gap-3'>
+        <div className='flex items-center'>
+          <FaPhoneAlt
+            color='#c3c3c3'
+            className='ml-[2.5px] size-4'
+          />
+          <span className='ml-[12px] text-[16px]'>
+            {workplaceDetailData.workplacePhoneNumber}
+          </span>
+        </div>
+        <div className='flex items-center'>
+          <FaMapMarkerAlt
+            color='#c3c3c3'
+            className='size-5'
+          />
+          <span className='ml-[10px] text-[16px]'>
+            {workplaceDetailData.workplaceAddress}
+          </span>
+        </div>
       </div>
-      <div className='mb-[16px] mt-[16px] flex'>
-        <FaMapMarkerAlt
-          size='25px'
-          color='#c3c3c3'
-        />
-        <span className='ml-[10px] text-[16px]'>
-          {workplaceDetailData.workplaceAddress}
-        </span>
-      </div>
-      <div className='h-[140px] w-custom'>
+
+      <div className='mt-3 h-[140px] w-custom'>
         <Map
           center={center}
           className='h-full w-full'
@@ -54,6 +56,7 @@ const DetailComponent = ({
           />
         </Map>
       </div>
+
       <hr className='border-top my-[26px] border-dashed border-subfont' />
       <p className='whitespace-pre-wrap text-[16px]'>
         {workplaceDetailData.workplaceDescription}

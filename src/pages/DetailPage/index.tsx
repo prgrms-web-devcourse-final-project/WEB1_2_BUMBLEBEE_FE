@@ -18,7 +18,7 @@ const DetailPage = () => {
   return (
     <MainLayout headerType='both'>
       <HeaderWithTitle title={data?.workplaceName || 'Unknown'} />
-      <div className='pt-[14px]'>
+      <div className='pt-[10px]'>
         <img
           src={data?.imageUrl}
           alt='사업장 사진'
