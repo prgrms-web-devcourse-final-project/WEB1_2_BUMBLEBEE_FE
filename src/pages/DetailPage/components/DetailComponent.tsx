@@ -12,6 +12,7 @@ const DetailComponent = ({
     lat: Number(workplaceDetailData.latitude),
     lng: Number(workplaceDetailData.longitude),
   };
+  console.log(workplaceDetailData, center);
 
   return (
     <div className='w-custom'>
