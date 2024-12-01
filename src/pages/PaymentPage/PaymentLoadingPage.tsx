@@ -15,29 +15,20 @@ const PaymentLoadingPage = () => {
       paymentKey: searchParams.get('paymentKey'),
     };
 
-    const paymentSuccess = async () => {
-      try {
-        if (
-          requestData.orderId &&
-          requestData.amount &&
-          requestData.paymentKey
-        ) {
-          const response = await postPaymentsSuccess({
-            orderId: requestData.orderId,
-            amount: Number(requestData.amount),
-            paymentKey: requestData.paymentKey,
-          });
-          navigate('/payment-success', { state: response });
-        } else {
-          throw new Error('결제에 필요한 값이 누락되었습니다.');
-        }
-      } catch (error) {
-        // navigate('/payment-fail', { state: error });
-        console.log(error);
+    const paymentsSuccess = async () => {
+      if (requestData.orderId && requestData.amount && requestData.paymentKey) {
+        const response = await postPaymentsSuccess({
+          orderId: requestData.orderId,
+          amount: Number(requestData.amount),
+          paymentKey: requestData.paymentKey,
+        });
+        navigate('/payment-success', { state: response });
+      } else {
+        throw new Error('결제에 필요한 값이 누락되었습니다.');
       }
     };
 
-    paymentSuccess();
+    paymentsSuccess();
   }, [navigate, searchParams]);
 
   return (

@@ -15,24 +15,20 @@ const PaymentFailPage = () => {
       code: searchParams.get('code'),
     };
 
-    const paymentSuccess = async () => {
-      try {
-        if (requestData.orderId && requestData.message && requestData.code) {
-          const response = await postPaymentsFail({
-            orderId: requestData.orderId,
-            message: requestData.message,
-            code: requestData.code,
-          });
-          setErrorMessage(response.errorMessage);
-        } else {
-          throw new Error('필요한 값이 누락되었습니다.');
-        }
-      } catch (error) {
-        console.log(error);
+    const paymentsFail = async () => {
+      if (requestData.orderId && requestData.message && requestData.code) {
+        const response = await postPaymentsFail({
+          orderId: requestData.orderId,
+          message: requestData.message,
+          code: requestData.code,
+        });
+        setErrorMessage(response.errorMessage);
+      } else {
+        throw new Error('필요한 값이 누락되었습니다.');
       }
     };
 
-    paymentSuccess();
+    paymentsFail();
   }, [navigate, searchParams]);
 
   return (
