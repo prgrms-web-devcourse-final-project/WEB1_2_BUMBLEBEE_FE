@@ -1,51 +1,54 @@
 import { IoAdd } from 'react-icons/io5';
 import ManagementPlaceCard from './ManagementPlaceCard';
+import { useGetWorkplacesList } from '../hooks/useGetBusinessWorkplaces';
 
-export interface WorkPlace {
-  workPlaceId: number;
-  workplaceName: string;
-  workplaceAddress: string;
-  workPlacePhoneNumber: string;
-  createdAt: string;
-  numberOfRooms: number;
-  workplaceImage: string;
-}
+// export interface WorkPlace {
+//   workPlaceId: number;
+//   workplaceName: string;
+//   workplaceAddress: string;
+//   workPlacePhoneNumber: string;
+//   createdAt: string;
+//   numberOfRooms: number;
+//   workplaceImage: string;
+// }
 
-const workPlaceList: WorkPlace[] = [
-  {
-    workPlaceId: 1,
-    workplaceName: '스터디랩',
-    workplaceAddress: '경기 수원시 팔달구 권광로 274 2층',
-    workPlacePhoneNumber: '031-111-2222',
-    createdAt: '2024-06-07T13:02:34',
-    numberOfRooms: 10,
-    workplaceImage:
-      'https://modo-phinf.pstatic.net/20180304_61/1520159998510ED9Yt_JPEG/mosaSDaCsR.jpeg',
-  },
-  {
-    workPlaceId: 2,
-    workplaceName: 'ABC 스터디카페',
-    workplaceAddress: '경기 수원시 팔달구 권광로 274 2층',
-    workPlacePhoneNumber: '031-222-2222',
-    createdAt: '2024-06-08T13:02:34',
-    numberOfRooms: 17,
-    workplaceImage:
-      'https://modo-phinf.pstatic.net/20180304_61/1520159998510ED9Yt_JPEG/mosaSDaCsR.jpeg',
-  },
-];
+// const workPlaceList: WorkPlace[] = [
+//   {
+//     workPlaceId: 1,
+//     workplaceName: '스터디랩',
+//     workplaceAddress: '경기 수원시 팔달구 권광로 274 2층',
+//     workPlacePhoneNumber: '031-111-2222',
+//     createdAt: '2024-06-07T13:02:34',
+//     numberOfRooms: 10,
+//     workplaceImage:
+//       'https://modo-phinf.pstatic.net/20180304_61/1520159998510ED9Yt_JPEG/mosaSDaCsR.jpeg',
+//   },
+//   {
+//     workPlaceId: 2,
+//     workplaceName: 'ABC 스터디카페',
+//     workplaceAddress: '경기 수원시 팔달구 권광로 274 2층',
+//     workPlacePhoneNumber: '031-222-2222',
+//     createdAt: '2024-06-08T13:02:34',
+//     numberOfRooms: 17,
+//     workplaceImage:
+//       'https://modo-phinf.pstatic.net/20180304_61/1520159998510ED9Yt_JPEG/mosaSDaCsR.jpeg',
+//   },
+// ];
 
 const ManagementPlaceList = () => {
-  const sortedWorkPlaceList = [...workPlaceList].sort((b, a) => {
+  const workplaces = useGetWorkplacesList();
+
+  const sortedWorkPlaceList = [...workplaces].sort((b, a) => {
     return +new Date(a.createdAt) - +new Date(b.createdAt);
   });
 
   return (
     <div className='mt-[6px] flex w-[375px] flex-col justify-center'>
-      {workPlaceList.length > 0 &&
+      {workplaces.length > 0 &&
         sortedWorkPlaceList.map((item) => {
           return (
             <ManagementPlaceCard
-              key={item.workPlaceId}
+              key={item.workplaceId}
               item={item}
             />
           );
