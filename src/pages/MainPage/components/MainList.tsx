@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GetPositionWorkPlaceData } from '@typings/types';
 import StudyRoomCard from './StudyRoomCard';
 
 type TabList = {
@@ -8,10 +9,15 @@ type TabList = {
   };
 };
 
-const MainList = () => {
-  const [activeTab, setActiveTab] = useState('기본');
+interface MainListProps {
+  data: GetPositionWorkPlaceData[] | undefined;
+}
+
+const MainList = (props: MainListProps) => {
+  const { data } = props;
+  const [activeTab, setActiveTab] = useState('주변 스터디룸');
   const tabList: TabList = {
-    기본: {
+    '주변 스터디룸': {
       title: '내 주변 스터디룸',
       context: '내 주변 가까운 스터디룸을 확인해보세요 !',
     },
@@ -22,7 +28,7 @@ const MainList = () => {
   };
 
   return (
-    <div className='relative z-10 -mt-2 mb-[94px] h-auto w-[375px] rounded-t-[10px] bg-white pb-[110px] shadow-custom'>
+    <div className='relative z-10 -mt-2 mb-[94px] min-h-[429px] w-[375px] rounded-t-[10px] bg-white pb-[110px] shadow-custom'>
       <nav className='it flex h-[60px] w-full items-center justify-center'>
         {Object.keys(tabList).map((tab) => (
           <button
@@ -40,9 +46,25 @@ const MainList = () => {
         <p className='text-sm'>{tabList[activeTab].context}</p>
       </div>
       <div className='mx-auto flex w-custom flex-col gap-4'>
-        <StudyRoomCard />
-        <StudyRoomCard />
-        <StudyRoomCard />
+        {activeTab === '주변 스터디룸' &&
+          data &&
+          data.length > 0 &&
+          data.map((item) => (
+            <StudyRoomCard
+              key={item.workplaceName}
+              studyroom={item}
+            />
+          ))}
+        {activeTab === '주변 스터디룸' && (!data || data.length === 0) && (
+          <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
+            주변 스터디룸이 없습니다.
+          </div>
+        )}
+        {activeTab === '맞춤형 추천' && (
+          <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
+            추천 스터디룸이 없습니다.
+          </div>
+        )}
       </div>
     </div>
   );

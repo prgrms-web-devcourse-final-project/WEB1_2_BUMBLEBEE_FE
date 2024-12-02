@@ -17,7 +17,6 @@ const defaultInstance: AxiosInstance = axios.create({
     accept: 'application/json',
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
 });
 
 // Auth Instance

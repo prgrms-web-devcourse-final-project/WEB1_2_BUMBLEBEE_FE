@@ -1,8 +1,9 @@
 import {
   GetBusinessWorkPlaceData,
-  GetPositionWorkPlace,
   GetPositionWorkPlaceData,
   GetWorkPlaceData,
+  MapPosition,
+  NowPosition,
   SearchStudyRoom,
   SearchStudyRoomData,
   StudyRoomData,
@@ -14,9 +15,14 @@ import {
 import { authInstance, defaultInstance } from '.';
 
 // 프리사인드 URL 얻기
-export const getS3URL = async (): Promise<string> => {
-  const response = await authInstance.get('/api/generate-presigned-url');
-  return response.data;
+export const getS3URL = async (
+  extension: string,
+  fileName: string,
+): Promise<string> => {
+  const response = await authInstance.get('/api/generate-presigned-url', {
+    params: { extension, fileName },
+  });
+  return response.data.presignedUrl;
 };
 
 // 스터디룸 등록
@@ -67,8 +73,7 @@ export const getSearchStudyRoom = async (
 export const postWorkPlace = async (
   workplace: WorkPlaceData,
 ): Promise<void> => {
-  const response = await authInstance.post('/api/v1/workplace', workplace);
-  return response.data;
+  await authInstance.post('/api/v1/workplace', workplace);
 };
 
 // 사업장 정보 수정
@@ -102,11 +107,24 @@ export const getWorkPlace = async (
 };
 
 // 위치 기반 사업장 조회
-export const getPositionWorkPlace = async (
-  position: GetPositionWorkPlace,
-): Promise<GetPositionWorkPlaceData> => {
-  const response = await defaultInstance.get('/api/v1/workplace/distance', {
-    params: position,
+export const postPositionWorkPlace = async ({
+  nowPosition,
+  mapPosition,
+}: {
+  nowPosition: NowPosition;
+  mapPosition: MapPosition;
+}): Promise<GetPositionWorkPlaceData[]> => {
+  const response = await defaultInstance.post('/api/v1/workplace/distance', {
+    topRight: {
+      lat: mapPosition.topRight.lat,
+      lng: mapPosition.topRight.lng,
+    },
+    bottomLeft: {
+      lat: mapPosition.bottomLeft.lat,
+      lng: mapPosition.bottomLeft.lng,
+    },
+    latitude: nowPosition.latitude,
+    longitude: nowPosition.longitude,
   });
   return response.data;
 };
