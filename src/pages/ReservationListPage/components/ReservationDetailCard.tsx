@@ -1,20 +1,27 @@
-import { getDateFunction, getTimeFunction } from '@utils/formatTime';
+import { getStringFromDate, getStringFromDateTime } from '@utils/formatTime';
 import ButtonInCard from '@components/ButtonInCard';
-import { Reservation } from '@pages/WriteReviewPage/components/ReservationInfo';
 import { useNavigate } from 'react-router-dom';
 import ListStyle from '@components/ListStyle';
 import { useState } from 'react';
 import Modal from '@components/Modal';
+import { GetAllReservation } from '@typings/types';
 
-const ReservationDetailCard = ({ item }: { item: Reservation }) => {
-  const { name, date, time, endtime, room, people, price, img, createdAt } =
-    item;
+const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
+  const {
+    workplaceName,
+    reservationCreatedAt,
+    startTime,
+    endTime,
+    studyRoomCapacity,
+    price,
+    studyRoomUrl,
+  } = item;
   const navigate = useNavigate();
 
   const [modalOpen, setModalOpen] = useState(false);
 
   const now = new Date();
-  const gap = +new Date(time) - +now;
+  const gap = +startTime - +now;
 
   // 예약 시간으로부터 24시간 전인지 확인
   const buttonType = (timeGap: number): string => {
@@ -51,33 +58,33 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
       <div className='mx-auto flex w-custom flex-col gap-[18px] border-b border-solid border-b-black px-[13px] py-[24px]'>
         <div className='flex items-center gap-[18px]'>
           <img
-            src={img}
+            src={studyRoomUrl}
             alt='스터디룸 사진'
             className='h-[118px] w-[118px] object-cover'
           />
 
           <div className='flex w-[auto] flex-col gap-[7px]'>
-            <p className='text-[16px] font-medium'>{name}</p>
+            <p className='text-[16px] font-medium'>{workplaceName}</p>
             <ul className='flex flex-col gap-[2px] text-[12px]'>
               <ListStyle
                 name='예약일'
-                value={date}
+                value={getStringFromDate(startTime)}
               />
               <ListStyle
                 name='예약시간'
-                value={`${getTimeFunction(time)} ~ ${getTimeFunction(endtime as string)}`}
+                value={`${getStringFromDateTime(startTime)} ~ ${getStringFromDateTime(endTime)}`}
               />
               <ListStyle
                 name='예약된 룸'
-                value={room}
+                value='룸 이름'
               />
               <ListStyle
                 name='인원'
-                value={`${people}인`}
+                value={`${studyRoomCapacity}인`}
               />
               <ListStyle
                 name='결제일'
-                value={getDateFunction(createdAt as string)}
+                value={getStringFromDate(reservationCreatedAt)}
               />
             </ul>
           </div>
