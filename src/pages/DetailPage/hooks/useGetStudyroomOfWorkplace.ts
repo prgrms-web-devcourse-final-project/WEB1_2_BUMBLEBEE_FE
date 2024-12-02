@@ -3,7 +3,7 @@ import { getWorkplaceStudyRoom } from '../../../apis/workplace';
 
 const useGetStudyroomOfWorkplace = (workplaceId: number) => {
   const { data, isLoading } = useQuery({
-    queryKey: ['studyroomOfWorkplace'],
+    queryKey: ['studyroomOfWorkplace', workplaceId],
     queryFn: () => getWorkplaceStudyRoom(workplaceId),
   });
   return { data, isLoading };

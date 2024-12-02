@@ -5,10 +5,15 @@ import ListStyle from '@components/ListStyle';
 import { GetWorkPlaceData } from '@typings/types';
 import { useState } from 'react';
 import Modal from '@components/Modal';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useDeleteBusinessPlace from '../hooks/useDeleteBusinessPlace';
+import { useGetNumberOfRooms } from '../hooks/useGetBusinessWorkplaces';
 
-const ManagementPlaceCard = ({ item }: { item: GetWorkPlaceData }) => {
+interface ManagementPlaceCardProps {
+  item: GetWorkPlaceData;
+}
+
+const ManagementPlaceCard = ({ item }: ManagementPlaceCardProps) => {
   const {
     workplaceId,
     workplaceName,
@@ -21,13 +26,16 @@ const ManagementPlaceCard = ({ item }: { item: GetWorkPlaceData }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
+  const numberOfRooms = useGetNumberOfRooms(workplaceId);
   const { mutate: deleteMutation } = useDeleteBusinessPlace(workplaceId);
 
+  // 사업장 삭제
   const handleDeleteBusinessWorkplace = () => {
     deleteMutation();
     setModalOpen(() => false);
   };
 
+  // 사업장 수정 페이지로 이동
   const handleMoveWorkplaceEditPage = (pageId: number) => {
     navigate(`/modify-Space/${pageId}`);
   };
@@ -37,10 +45,12 @@ const ManagementPlaceCard = ({ item }: { item: GetWorkPlaceData }) => {
       <div className='mx-auto flex w-custom flex-col gap-4 border-b border-solid border-b-black px-[13px] py-[26px]'>
         <div className='flex justify-between'>
           <div className='flex flex-col items-start gap-2'>
-            <div className='flex cursor-pointer items-center gap-1.5 font-medium'>
-              {workplaceName}
-              <MdArrowForwardIos className='w-3' />
-            </div>
+            <Link to={`/detail/${workplaceId}`}>
+              <div className='flex cursor-pointer items-center gap-1.5 font-medium'>
+                {workplaceName}
+                <MdArrowForwardIos className='w-3' />
+              </div>
+            </Link>
 
             <ul className='flex flex-col gap-1 text-[12px]'>
               <ListStyle
@@ -53,7 +63,7 @@ const ManagementPlaceCard = ({ item }: { item: GetWorkPlaceData }) => {
               />
               <ListStyle
                 name='룸 수'
-                value={0}
+                value={numberOfRooms}
               />
               <ListStyle
                 name='등록일'
