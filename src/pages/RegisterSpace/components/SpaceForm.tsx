@@ -18,6 +18,7 @@ interface SpaceFormProps {
   changeFormdata: (data: Partial<Space>) => void;
   addRoom: () => void;
   clickRoom: (id: string) => void;
+  modify: boolean;
 }
 
 const SpaceForm = ({
@@ -25,6 +26,7 @@ const SpaceForm = ({
   changeFormdata,
   addRoom,
   clickRoom,
+  modify,
 }: SpaceFormProps) => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -349,7 +351,7 @@ const SpaceForm = ({
           type='submit'
           className='btn-primary mt-[40px] text-[16px]'
         >
-          공간 등록 완료
+          {modify ? '수정 완료' : '공간 등록 완료'}
         </button>
       </form>
     </div>
