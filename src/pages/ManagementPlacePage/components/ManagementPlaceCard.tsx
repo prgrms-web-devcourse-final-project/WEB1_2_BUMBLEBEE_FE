@@ -5,6 +5,7 @@ import ListStyle from '@components/ListStyle';
 import { GetWorkPlaceData } from '@typings/types';
 import { useState } from 'react';
 import Modal from '@components/Modal';
+import { useNavigate } from 'react-router-dom';
 import useDeleteBusinessPlace from '../hooks/useDeleteBusinessPlace';
 
 const ManagementPlaceCard = ({ item }: { item: GetWorkPlaceData }) => {
@@ -17,6 +18,7 @@ const ManagementPlaceCard = ({ item }: { item: GetWorkPlaceData }) => {
     imageUrl,
   } = item;
 
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
   const { mutate: deleteMutation } = useDeleteBusinessPlace(workplaceId);
@@ -24,6 +26,10 @@ const ManagementPlaceCard = ({ item }: { item: GetWorkPlaceData }) => {
   const handleDeleteBusinessWorkplace = () => {
     deleteMutation();
     setModalOpen(() => false);
+  };
+
+  const handleMoveWorkplaceEditPage = (pageId: number) => {
+    navigate(`/modify-Space/${pageId}`);
   };
 
   return (
@@ -68,7 +74,10 @@ const ManagementPlaceCard = ({ item }: { item: GetWorkPlaceData }) => {
               name='삭제'
               onClickFunction={() => setModalOpen(true)}
             />
-            <ButtonInCard name='수정' />
+            <ButtonInCard
+              name='수정'
+              onClickFunction={() => handleMoveWorkplaceEditPage(workplaceId)}
+            />
           </div>
         </div>
       </div>
