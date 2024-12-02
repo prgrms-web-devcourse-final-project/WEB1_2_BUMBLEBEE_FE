@@ -14,7 +14,7 @@ export type Space = {
   closedTime: string;
   phoneNumber: string;
   address: { basic: string; detail: string };
-  spaceImage: File | null;
+  spaceImage: File | { url: string } | null;
   rooms: Room[];
 };
 
@@ -107,6 +107,7 @@ export interface Review extends PostReviewRequestBody {
 
 // 스터디룸 정보
 export interface StudyRoomData {
+  id: number;
   title: string;
   description: string;
   imageUrl: string;
