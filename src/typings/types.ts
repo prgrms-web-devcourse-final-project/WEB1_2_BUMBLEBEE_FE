@@ -91,18 +91,25 @@ export interface GetAllReservationData {
   reservations: GetAllReservation[];
 }
 
-// 리뷰 작성, 수정
-export interface PostReviewRequestBody {
-  workplaceId: number;
+// 리뷰 수정
+export interface PutReviewRequestBody {
   reviewContent: string;
   reviewRating: number;
 }
 
+// 리뷰 작성
+export interface PostReviewRequestBody extends PutReviewRequestBody {
+  reservatinId: number;
+  workPlaceName: string;
+}
+
 // 리뷰 정보
-export interface Review extends PostReviewRequestBody {
+export interface Review {
   reviewId: number;
-  workplaceName: string;
+  studyRoomName: string;
   reviewDate: Date;
+  reviewContent: string;
+  reviewRating: number;
 }
 
 // 스터디룸 정보

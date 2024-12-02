@@ -4,7 +4,7 @@ import { getFormattedDateFunction } from '@utils/formatTime';
 import { Review } from '@typings/types';
 
 const MyReviewCard = ({ item }: { item: Review }) => {
-  const { reviewContent, reviewRating, workplaceName, reviewDate } = item;
+  const { reviewContent, reviewRating, studyRoomName, reviewDate } = item;
 
   const showRatingWithStar = (rating: number) => {
     const result = [];
@@ -21,7 +21,8 @@ const MyReviewCard = ({ item }: { item: Review }) => {
     <div className='mx-auto flex w-custom flex-col gap-[13px] border-b border-solid border-b-black px-[13px] py-[26px]'>
       <div className='flex items-start justify-between'>
         <div className='flex cursor-pointer items-center gap-1.5 font-medium'>
-          {workplaceName}
+          {/* {workplaceName} */}
+          사업장 이름
           <MdArrowForwardIos className='w-3' />
         </div>
         <img
@@ -32,6 +33,7 @@ const MyReviewCard = ({ item }: { item: Review }) => {
       </div>
 
       <div className='flex flex-col gap-2'>
+        <div className='text-xs'>{studyRoomName}</div>
         <div className='flex text-xs text-primary'>
           {showRatingWithStar(reviewRating)}
         </div>
