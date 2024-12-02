@@ -11,8 +11,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^5.60.5",
     "@tosspayments/tosspayments-sdk": "^2.3.2",
+    "@types/stompjs": "^2.3.9",
     "@types/uuid": "^10.0.0",
     "axios": "^1.7.7",
     "buffer": "^6.0.3",
