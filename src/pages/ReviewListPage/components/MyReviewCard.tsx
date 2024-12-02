@@ -1,10 +1,10 @@
 import { MdArrowForwardIos } from 'react-icons/md';
 import { FaStar, FaRegStar } from 'react-icons/fa6';
-import { getDateFunction } from '@utils/formatTime';
-import { Review } from './MyReviewList';
+import { getFormattedDateFunction } from '@utils/formatTime';
+import { Review } from '@typings/types';
 
 const MyReviewCard = ({ item }: { item: Review }) => {
-  const { name, reviewContent, reviewRating, createdAt, img } = item;
+  const { reviewContent, reviewRating, workplaceName, reviewDate } = item;
 
   const showRatingWithStar = (rating: number) => {
     const result = [];
@@ -21,11 +21,11 @@ const MyReviewCard = ({ item }: { item: Review }) => {
     <div className='mx-auto flex w-custom flex-col gap-[13px] border-b border-solid border-b-black px-[13px] py-[26px]'>
       <div className='flex items-start justify-between'>
         <div className='flex cursor-pointer items-center gap-1.5 font-medium'>
-          {name}
+          {workplaceName}
           <MdArrowForwardIos className='w-3' />
         </div>
         <img
-          src={img}
+          src='사진'
           alt='스터디룸 사진'
           className='h-[50px] w-[50px] cursor-pointer object-cover'
         />
@@ -38,7 +38,9 @@ const MyReviewCard = ({ item }: { item: Review }) => {
         <p className='text-sm'>{reviewContent}</p>
       </div>
 
-      <div className='text-xs text-subfont'>{getDateFunction(createdAt)}</div>
+      <div className='text-xs text-subfont'>
+        {getFormattedDateFunction(reviewDate)}
+      </div>
     </div>
   );
 };

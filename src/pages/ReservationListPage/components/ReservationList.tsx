@@ -1,4 +1,5 @@
 import { Reservation } from '@pages/WriteReviewPage/components/ReservationInfo';
+import { useGetAllReservations } from '@pages/UserMypage/hooks/useGetMyReservations';
 import ReservationDetailCard from './ReservationDetailCard';
 
 const reservationCardList: Reservation[] = [
@@ -53,6 +54,9 @@ const reservationCardList: Reservation[] = [
 ];
 
 const ReservationList = () => {
+  const { data } = useGetAllReservations();
+  console.log(data);
+
   // 최근 결제 순으로 정렬
   const sortedReservationList = [...reservationCardList].sort(
     (b, a) =>
