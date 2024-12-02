@@ -40,7 +40,7 @@ authInstance.interceptors.response.use(
         const response = await authInstance.post('/reissue');
 
         if (response.status === 200) {
-          const { token } = response.data;
+          const token = response.headers.authorization;
           setAuthToken(token);
 
           const originalRequest = error.config as AxiosRequestConfig;

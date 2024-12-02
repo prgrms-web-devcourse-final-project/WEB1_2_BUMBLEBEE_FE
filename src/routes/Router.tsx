@@ -30,6 +30,7 @@ import ChatPage from '@pages/ChatPage';
 import PaymentFailPage from '@pages/PaymentPage/PaymentFailPage';
 import PaymentLoadingPage from '@pages/PaymentPage/PaymentLoadingPage';
 import OAuth from '@pages/UserLogin/components/OAuth';
+import ModifySpace from '@pages/ModifySpace';
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
   {
     path: '/register-Space',
     element: <RegisterSpace />,
+  },
+  {
+    path: '/modify-Space/:workplaceId',
+    element: <ModifySpace />,
   },
   {
     path: '/detail/:workplaceId',
