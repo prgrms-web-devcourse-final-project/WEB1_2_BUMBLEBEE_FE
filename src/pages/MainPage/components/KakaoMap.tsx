@@ -7,6 +7,7 @@ import { GetPositionWorkPlaceData, MapPosition } from '@typings/types';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { useGetWorkplaceMutation } from '../hooks/useGetWorkplaceData';
 import type { Position } from '..';
+import PlaceModal from './PlaceModal';
 
 interface KakaoMapProps {
   position: Position;
@@ -159,6 +160,7 @@ const KakaoMap = (props: KakaoMapProps) => {
           </div>
         </Map>
       )}
+      <PlaceModal />
     </div>
   );
 };
