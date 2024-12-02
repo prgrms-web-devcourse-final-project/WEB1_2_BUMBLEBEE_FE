@@ -1,4 +1,4 @@
-import { postPaymentsSuccess } from '@apis/reservation';
+import { getPaymentsSuccess } from '@apis/reservation';
 import MainLayout from '@layouts/MainLayout';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -17,7 +17,7 @@ const PaymentLoadingPage = () => {
 
     const paymentsSuccess = async () => {
       if (requestData.orderId && requestData.amount && requestData.paymentKey) {
-        const response = await postPaymentsSuccess({
+        const response = await getPaymentsSuccess({
           orderId: requestData.orderId,
           amount: Number(requestData.amount),
           paymentKey: requestData.paymentKey,
