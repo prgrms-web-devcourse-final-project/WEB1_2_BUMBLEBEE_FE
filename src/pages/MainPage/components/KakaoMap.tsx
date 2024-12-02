@@ -110,6 +110,21 @@ const KakaoMap = (props: KakaoMapProps) => {
     refetch();
   };
 
+  // 모달
+  const [selectedPlace, setSelectedPlace] =
+    useState<GetPositionWorkPlaceData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleMarkerClick = (item: GetPositionWorkPlaceData) => {
+    setSelectedPlace(item);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPlace(null);
+    setIsModalOpen(false);
+  };
+
   return (
     <div className='relative h-[298px] w-[375px]'>
       {position.isLoading ? (
@@ -137,7 +152,7 @@ const KakaoMap = (props: KakaoMapProps) => {
             data.length > 0 &&
             data.map((item) => (
               <MapMarker
-                // onClick={() => alert(item.workplaceName)}
+                onClick={() => handleMarkerClick(item)}
                 key={item.positionLat}
                 position={{ lat: item.positionLat, lng: item.positionLon }}
                 image={{
@@ -160,7 +175,12 @@ const KakaoMap = (props: KakaoMapProps) => {
           </div>
         </Map>
       )}
-      <PlaceModal />
+      {isModalOpen && selectedPlace && (
+        <PlaceModal
+          place={selectedPlace}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 };

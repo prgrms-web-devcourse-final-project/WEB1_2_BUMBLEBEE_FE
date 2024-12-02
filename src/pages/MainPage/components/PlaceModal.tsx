@@ -1,22 +1,45 @@
-import React from 'react';
+import { GetPositionWorkPlaceData } from '@typings/types';
+import { useEffect, useRef } from 'react';
 
-const PlaceModal = () => {
+interface PlaceModalProps {
+  place: GetPositionWorkPlaceData;
+  onClose: () => void;
+}
+
+const PlaceModal = (props: PlaceModalProps) => {
+  const { place, onClose } = props;
+
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const handleOutsideClose = (e: { target: unknown }) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClose);
+
+    return () => document.removeEventListener('mousedown', handleOutsideClose);
+  }, []);
+
   return (
     <div className='fixed left-[50%] top-0 z-[1500] flex h-[100%] w-[375px] translate-x-[-50%] items-center justify-center bg-[rgba(0,0,0,0.4)]'>
-      <div className='flex h-auto min-h-[140px] w-[280px] flex-col rounded-lg bg-[rgba(255,255,255,0.98)] text-center'>
+      <div
+        ref={modalRef}
+        className='flex h-auto min-h-[140px] w-[280px] flex-col rounded-lg bg-[rgba(255,255,255,0.98)] text-center'
+      >
         <div className='flex h-auto min-h-[140px] items-center justify-between px-4 py-5'>
           <img
-            src='https://modo-phinf.pstatic.net/20180304_61/1520159998510ED9Yt_JPEG/mosaSDaCsR.jpeg?type=w1100'
+            src={place.imageUrl}
             alt='사업장 사진'
             className='h-20 w-20 rounded-lg object-cover'
           />
 
           <div className='flex w-[150px] flex-col items-start gap-[6px] text-sm'>
-            <p className='px-1 font-medium'>ㄱㄴㄷ 스터디룸</p>
-            <p className='px-1 text-left text-xs'>서울 강남구 강남대로94길</p>
+            <p className='px-1 text-left font-medium'>{place.workplaceName}</p>
+            <p className='px-1 text-left text-xs'>{place.workplaceAddress}</p>
             <button
               type='button'
-              className='flex h-7 w-[150px] cursor-pointer items-center justify-center rounded-[8px] bg-primary text-xs text-white'
+              className='flex h-7 w-[150px] cursor-pointer items-center justify-center rounded-[4px] bg-primary text-xs text-white'
             >
               상세보기
             </button>
