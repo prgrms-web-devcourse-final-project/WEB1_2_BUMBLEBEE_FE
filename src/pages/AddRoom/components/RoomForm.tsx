@@ -8,9 +8,15 @@ interface RoomFormProps {
   room: Room;
   updateRoomData: (data: Partial<Room>) => void;
   completeAdd: (id: string) => void;
+  modify: boolean;
 }
 
-const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
+const RoomForm = ({
+  room,
+  updateRoomData,
+  completeAdd,
+  modify,
+}: RoomFormProps) => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -160,7 +166,7 @@ const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
           type='submit'
           className='btn-primary mt-[40px] text-[16px]'
         >
-          룸 등록 완료
+          {modify ? '완료' : '룸 등록 완료'}
         </button>
       </form>
     </div>
