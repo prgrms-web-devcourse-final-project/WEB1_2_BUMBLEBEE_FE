@@ -22,7 +22,7 @@ const defaultInstance: AxiosInstance = axios.create({
 // Auth Instance
 const authInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
-  // timeout: 2000,
+  timeout: 2000,
   headers: {
     accept: 'application/json',
     'Content-Type': 'application/json',
