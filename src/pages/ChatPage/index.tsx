@@ -27,7 +27,42 @@ const ChatPage = () => {
     setMessages(messageList);
   };
 
-  // 새 메시지 전송
+  // 소켓 연결
+  const connect = () => {
+    try {
+      const client = new Client({
+        brokerURL: `ws://localhost:3000/api/v1/chat/room/${roomId}`, // 경로 재설정 필요
+        reconnectDelay: 5000, // 자동 재연결
+      });
+      client.activate();
+      setStompClient(client);
+
+      // 구독
+      client.onConnect = () => {
+        client.subscribe(`/sub/chat/room/${roomId}`, (message: IMessage) => {
+          // 경로 재설정 필요
+          try {
+            const newMessage = JSON.parse(message.body);
+            console.log(newMessage);
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+          } catch (error) {
+            console.error('오류가 발생했습니다:', error);
+          }
+        });
+      };
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const disConnect = () => {
+    // 연결 끊기
+    if (stompClient === null) {
+      return;
+    }
+    stompClient.deactivate();
+  };
+
   const sendMessage = (inputValue: string) => {
     if (stompClient && stompClient.connected && inputValue) {
       const chatMessage: SendMessageRequest = {
@@ -47,32 +82,10 @@ const ChatPage = () => {
     getUserNickName();
     loadMessage();
 
-    // 클라이언트
-    const client = new Client({
-      brokerURL: `ws://localhost:3000/api/v1/chat/room/${roomId}`, // 경로 재설정 필요
-      reconnectDelay: 5000, // 자동 재연결
-    });
-    client.activate();
-    setStompClient(client);
-
-    // 구독
-    client.onConnect = () => {
-      client.subscribe(`/sub/chat/room/${roomId}`, (message: IMessage) => {
-        // 경로 재설정 필요
-        try {
-          const newMessage = JSON.parse(message.body);
-          console.log(newMessage);
-          setMessages((prevMessages) => [...prevMessages, newMessage]);
-        } catch (error) {
-          console.error('오류가 발생했습니다:', error);
-        }
-      });
-    };
-    return () => {
-      client.deactivate();
-    };
+    connect();
+    return () => disConnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roomId]);
+  }, []);
 
   return (
     <>
