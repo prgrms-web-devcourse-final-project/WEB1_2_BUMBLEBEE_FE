@@ -93,12 +93,12 @@ const KakaoMap = (props: KakaoMapProps) => {
       const bounds = map.getBounds();
       const newPosition = {
         topRight: {
-          lat: bounds.getNorthEast().getLat(),
-          lng: bounds.getNorthEast().getLng(),
+          lat: bounds.getNorthEast().getLat() + 0.1,
+          lng: bounds.getNorthEast().getLng() + 0.1,
         },
         bottomLeft: {
-          lat: bounds.getSouthWest().getLat(),
-          lng: bounds.getSouthWest().getLng(),
+          lat: bounds.getSouthWest().getLat() - 0.1,
+          lng: bounds.getSouthWest().getLng() - 0.1,
         },
       };
       if (JSON.stringify(prevPosition) === JSON.stringify(newPosition)) {
@@ -136,6 +136,7 @@ const KakaoMap = (props: KakaoMapProps) => {
             data.length > 0 &&
             data.map((item) => (
               <MapMarker
+                // onClick={() => alert(item.workplaceName)}
                 key={item.positionLat}
                 position={{ lat: item.positionLat, lng: item.positionLon }}
                 image={{
