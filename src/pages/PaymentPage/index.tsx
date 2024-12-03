@@ -39,7 +39,7 @@ export type PayMethodType = 'TOSS' | 'KAKAOPAY' | null;
 
 const PaymentPage = () => {
   const studyRoomInfo: StudyRoomInfo = {
-    studyRoomId: 309,
+    studyRoomId: 1,
     workplaceName: 'ABC 스터디룸',
     studyRoomTitle: 'ROOM A',
     studyRoomPrice: 3500,
