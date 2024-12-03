@@ -4,10 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import ListStyle from '@components/ListStyle';
 import { useState } from 'react';
 import Modal from '@components/Modal';
-import { GetAllReservation } from '@typings/types';
+import { Reservation } from '@typings/types';
 import { MdArrowForwardIos } from 'react-icons/md';
 
-const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
+const ReservationDetailCard = ({ item }: { item: Reservation }) => {
   const {
     workplaceId,
     workplaceName,
@@ -24,7 +24,7 @@ const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const now = new Date();
-  const gap = +startTime - +now;
+  const gap = +new Date(startTime) - +now;
 
   // 예약 시간으로부터 24시간 전인지 확인
   const buttonType = (timeGap: number): string => {
@@ -69,21 +69,14 @@ const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
   return (
     <>
       <div className='mx-auto flex w-custom flex-col gap-[18px] border-b border-solid border-b-black px-[13px] py-[24px]'>
-        <div className='flex items-center gap-[18px]'>
-          <img
-            src={workplaceImageUrl}
-            alt='스터디룸 사진'
-            className='h-[118px] w-[118px] object-cover'
-          />
+        <div className='flex w-[auto] flex-col gap-4'>
+          <span className='flex items-center gap-1 text-[16px] font-medium'>
+            <Link to={`/detail/${workplaceId}`}>{workplaceName}</Link>
+            <MdArrowForwardIos />
+          </span>
 
-          <div className='flex w-[auto] flex-col gap-[7px]'>
-            <Link to={`/detail/${workplaceId}`}>
-              <div className='flex gap-2'>
-                <span className='text-[16px] font-medium'>{workplaceName}</span>
-                <MdArrowForwardIos />
-              </div>
-            </Link>
-            <ul className='flex flex-col gap-[2px] text-[12px]'>
+          <div className='flex items-center justify-between'>
+            <ul className='flex flex-col gap-1 text-[12px]'>
               <ListStyle
                 name='예약일'
                 value={getDateFunction(startTime)}
@@ -94,7 +87,7 @@ const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
               />
               <ListStyle
                 name='예약된 룸'
-                value='룸 이름'
+                value={studyRoomName}
               />
               <ListStyle
                 name='인원'
@@ -105,6 +98,11 @@ const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
                 value={getDateFunction(reservationCreatedAt)}
               />
             </ul>
+            <img
+              src={workplaceImageUrl}
+              alt='스터디룸 사진'
+              className='h-[118px] w-[118px] bg-subfont object-cover'
+            />
           </div>
         </div>
         <div className='flex items-center justify-between'>

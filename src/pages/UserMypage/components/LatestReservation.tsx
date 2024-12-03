@@ -1,8 +1,8 @@
 import ListStyle from '@components/ListStyle';
-import { GetAllReservation } from '@typings/types';
+import { Reservation } from '@typings/types';
 import { getDateFunction, getTimeFunction } from '@utils/formatTime';
 
-const LatestReservation = ({ data }: { data: GetAllReservation }) => {
+const LatestReservation = ({ data }: { data: Reservation }) => {
   const {
     workplaceName,
     workplaceImageUrl,
@@ -12,8 +12,6 @@ const LatestReservation = ({ data }: { data: GetAllReservation }) => {
     studyRoomCapacity,
     price,
   } = data;
-
-  console.log(typeof startTime);
 
   return (
     <div className='flex h-[172px] w-[330px] flex-col rounded-[10px] bg-white p-[16px] shadow-[0_0_6px_0_rgba(0,0,0,0.25)]'>

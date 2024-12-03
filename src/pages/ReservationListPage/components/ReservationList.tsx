@@ -1,18 +1,35 @@
-import { useGetAllMyReservations } from '../hooks/useGetAllMyReservations';
+import useGetAllMyReservations from '../hooks/useGetAllMyReservations';
 import ReservationDetailCard from './ReservationDetailCard';
 
 const ReservationList = () => {
-  const reservationCardList = useGetAllMyReservations();
+  const { reservationList } = useGetAllMyReservations();
 
   // 최근 결제 순으로 정렬
-  const sortedReservationList = [...reservationCardList].sort(
-    (b, a) => +a.reservationCreatedAt - +b.reservationCreatedAt,
+  const sortedReservationList = [...reservationList].sort(
+    (b, a) => +new Date(a.startTime) - +new Date(b.startTime),
   );
+
+  console.log(reservationList);
 
   return (
     <>
-      {reservationCardList && reservationCardList.length > 0 ? (
+      {reservationList && reservationList.length > 0 ? (
         <div className='mt-[6px] flex w-[375px] flex-col justify-center pb-24'>
+          <div className='mx-auto flex w-custom justify-end gap-1 text-sm text-subfont'>
+            <button
+              type='button'
+              className='active:text-focusColor'
+            >
+              최근 결제순
+            </button>
+            <span>|</span>
+            <button
+              type='button'
+              className='active:text-focusColor'
+            >
+              예약일순
+            </button>
+          </div>
           {sortedReservationList.map((item) => {
             return (
               <ReservationDetailCard

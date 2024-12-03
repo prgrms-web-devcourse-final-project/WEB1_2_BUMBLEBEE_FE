@@ -77,7 +77,7 @@ export interface PostReservationData {
 }
 
 // 예약 정보
-export interface GetAllReservation {
+export interface Reservation {
   reservationId: number;
   workplaceId: number;
   workplaceName: string;
@@ -91,7 +91,7 @@ export interface GetAllReservation {
 }
 
 export interface GetAllReservationData {
-  reservations: GetAllReservation[];
+  reservations: Reservation[];
 }
 
 // 리뷰 수정
@@ -115,9 +115,8 @@ export interface Review extends PostReviewRequestBody {
   // workplace img url: string;
 }
 
-// 스터디룸 정보
+// 스터디룸 등록
 export interface StudyRoomData {
-  id: number;
   title: string;
   description: string;
   imageUrl: string;
