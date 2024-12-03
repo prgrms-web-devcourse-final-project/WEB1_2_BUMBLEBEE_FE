@@ -1,4 +1,4 @@
-import { postPaymentsFail } from '@apis/reservation';
+import { getPaymentsFail } from '@apis/reservation';
 import MainLayout from '@layouts/MainLayout';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -17,7 +17,7 @@ const PaymentFailPage = () => {
 
     const paymentsFail = async () => {
       if (requestData.orderId && requestData.message && requestData.code) {
-        const response = await postPaymentsFail({
+        const response = await getPaymentsFail({
           orderId: requestData.orderId,
           message: requestData.message,
           code: requestData.code,
