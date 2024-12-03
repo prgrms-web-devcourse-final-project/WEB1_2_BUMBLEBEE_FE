@@ -19,7 +19,7 @@ export const postReservation = async (
     `/api/v1/reservations/${studyroomId}`,
     reservation,
   );
-  return response.data;
+  return response.data.reservationId;
 };
 
 // 사용자의 최근 예약 전체 조회

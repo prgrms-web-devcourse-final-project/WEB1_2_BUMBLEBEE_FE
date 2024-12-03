@@ -123,8 +123,8 @@ const PaymentButton = (props: PaymentButtonProps) => {
       const reservationData = {
         reservationName: reservationForm.name,
         reservationPhoneNumber: reservationForm.phoneNumber,
-        reservationCapacity: searchPeople,
-        reservationPrice: totalAmount,
+        capacity: searchPeople,
+        price: totalAmount,
         startTime,
         endTime,
       };
@@ -143,8 +143,6 @@ const PaymentButton = (props: PaymentButtonProps) => {
         studyRoomInfo.studyRoomId,
         reservationData,
       );
-
-      // const reservationId = 7;
       console.log('Reservation ID:', reservationId);
 
       // 결제 검증
