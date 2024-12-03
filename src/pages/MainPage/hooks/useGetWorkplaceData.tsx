@@ -15,7 +15,7 @@ export const useGetWorkplaceData = (
   const { data, isLoading, isError, refetch } = useQuery<
     GetPositionWorkPlaceData[]
   >({
-    queryKey: ['nearWorkplace', nowPosition, mapPosition],
+    queryKey: ['nearWorkplace', nowPosition],
     queryFn: () => postPositionWorkPlace({ nowPosition, mapPosition }),
     enabled: isMapEnabled,
   });
@@ -33,9 +33,9 @@ export const useGetWorkplaceMutation = () => {
   >({
     mutationFn: postPositionWorkPlace,
     onSuccess: (_, variables) => {
-      const { nowPosition, mapPosition } = variables;
+      const { nowPosition } = variables;
       queryClient.invalidateQueries({
-        queryKey: ['nearWorkplace', nowPosition, mapPosition],
+        queryKey: ['nearWorkplace', nowPosition],
       });
     },
     onError: (error) => {
