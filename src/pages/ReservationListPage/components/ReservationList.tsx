@@ -1,4 +1,4 @@
-import useGetAllMyReservations from '../hooks/useGetAllMyReservations';
+import { useGetAllMyReservations } from '../hooks/useGetAllMyReservations';
 import ReservationDetailCard from './ReservationDetailCard';
 
 const ReservationList = () => {
@@ -16,7 +16,7 @@ const ReservationList = () => {
           {sortedReservationList.map((item) => {
             return (
               <ReservationDetailCard
-                key={item.workplaceName}
+                key={item.reservationId}
                 item={item}
               />
             );

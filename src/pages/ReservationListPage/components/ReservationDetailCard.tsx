@@ -1,20 +1,23 @@
-import { getStringFromDate, getStringFromDateTime } from '@utils/formatTime';
+import { getDateFunction, getTimeFunction } from '@utils/formatTime';
 import ButtonInCard from '@components/ButtonInCard';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ListStyle from '@components/ListStyle';
 import { useState } from 'react';
 import Modal from '@components/Modal';
 import { GetAllReservation } from '@typings/types';
+import { MdArrowForwardIos } from 'react-icons/md';
 
 const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
   const {
+    workplaceId,
     workplaceName,
     reservationCreatedAt,
     startTime,
     endTime,
     studyRoomCapacity,
     price,
-    studyRoomUrl,
+    workplaceImageUrl,
+    studyRoomName,
   } = item;
   const navigate = useNavigate();
 
@@ -45,7 +48,17 @@ const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
   };
 
   const handleReviewButton = () => {
-    navigate('/write-review');
+    navigate('/write-review', {
+      state: {
+        workplaceName: `${workplaceName}`,
+        studyRoomName: `${studyRoomName}`,
+        reservationCreatedAt: `${reservationCreatedAt}`,
+        reservationDay: `${getDateFunction(startTime)}`,
+        reservationTime: `${getTimeFunction(startTime)} ~ ${getTimeFunction(endTime)}`,
+        studyRoomCapacity: `${studyRoomCapacity}`,
+        price: `${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
+      },
+    });
   };
 
   const handleCancelPayment = () => {
@@ -58,21 +71,26 @@ const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
       <div className='mx-auto flex w-custom flex-col gap-[18px] border-b border-solid border-b-black px-[13px] py-[24px]'>
         <div className='flex items-center gap-[18px]'>
           <img
-            src={studyRoomUrl}
+            src={workplaceImageUrl}
             alt='스터디룸 사진'
             className='h-[118px] w-[118px] object-cover'
           />
 
           <div className='flex w-[auto] flex-col gap-[7px]'>
-            <p className='text-[16px] font-medium'>{workplaceName}</p>
+            <Link to={`/detail/${workplaceId}`}>
+              <div className='flex gap-2'>
+                <span className='text-[16px] font-medium'>{workplaceName}</span>
+                <MdArrowForwardIos />
+              </div>
+            </Link>
             <ul className='flex flex-col gap-[2px] text-[12px]'>
               <ListStyle
                 name='예약일'
-                value={getStringFromDate(startTime)}
+                value={getDateFunction(startTime)}
               />
               <ListStyle
                 name='예약시간'
-                value={`${getStringFromDateTime(startTime)} ~ ${getStringFromDateTime(endTime)}`}
+                value={`${getTimeFunction(startTime)} ~ ${getTimeFunction(endTime)}`}
               />
               <ListStyle
                 name='예약된 룸'
@@ -84,7 +102,7 @@ const ReservationDetailCard = ({ item }: { item: GetAllReservation }) => {
               />
               <ListStyle
                 name='결제일'
-                value={getStringFromDate(reservationCreatedAt)}
+                value={getDateFunction(reservationCreatedAt)}
               />
             </ul>
           </div>

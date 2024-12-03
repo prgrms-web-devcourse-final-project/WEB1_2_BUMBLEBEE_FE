@@ -78,13 +78,16 @@ export interface PostReservationData {
 
 // 예약 정보
 export interface GetAllReservation {
+  reservationId: number;
+  workplaceId: number;
   workplaceName: string;
-  reservationCreatedAt: Date;
-  startTime: Date;
-  endTime: Date;
+  workplaceImageUrl: string;
+  studyRoomName: string;
+  reservationCreatedAt: string;
+  startTime: string;
+  endTime: string;
   studyRoomCapacity: number;
   price: number;
-  studyRoomUrl: string;
 }
 
 export interface GetAllReservationData {
@@ -104,12 +107,12 @@ export interface PostReviewRequestBody extends PutReviewRequestBody {
 }
 
 // 리뷰 정보
-export interface Review {
+export interface Review extends PostReviewRequestBody {
   reviewId: number;
+  workplaceId: number;
   studyRoomName: string;
-  reviewDate: Date;
-  reviewContent: string;
-  reviewRating: number;
+  reviewDate: string;
+  // workplace img url: string;
 }
 
 // 스터디룸 정보

@@ -1,6 +1,6 @@
 import { MdArrowForwardIos } from 'react-icons/md';
 import { FaStar, FaRegStar } from 'react-icons/fa6';
-import { getFormattedDateFunction } from '@utils/formatTime';
+import { getDateFunction } from '@utils/formatTime';
 import { Review } from '@typings/types';
 
 const MyReviewCard = ({ item }: { item: Review }) => {
@@ -40,9 +40,7 @@ const MyReviewCard = ({ item }: { item: Review }) => {
         <p className='text-sm'>{reviewContent}</p>
       </div>
 
-      <div className='text-xs text-subfont'>
-        {getFormattedDateFunction(reviewDate)}
-      </div>
+      <div className='text-xs text-subfont'>{getDateFunction(reviewDate)}</div>
     </div>
   );
 };

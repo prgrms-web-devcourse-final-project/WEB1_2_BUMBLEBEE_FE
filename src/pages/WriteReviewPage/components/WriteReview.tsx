@@ -3,7 +3,7 @@ import { FaStar, FaRegStar } from 'react-icons/fa6';
 
 const WriteReview = () => {
   const [rating, setRating] = useState<number>(0);
-  const [cntText, setCntText] = useState<string>('');
+  const [reviewContent, setReviewContent] = useState<string>('');
 
   // 별 표시
   const handleStarClick = () => {
@@ -31,7 +31,7 @@ const WriteReview = () => {
       content = content.substring(0, 100);
     }
 
-    setCntText(content);
+    setReviewContent(content);
   };
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -51,11 +51,12 @@ const WriteReview = () => {
           <textarea
             className='main-textarea h-[100%] text-sm'
             placeholder='100자 이내로 이용 후기를 작성해주세요.'
+            value={reviewContent}
             onChange={handleCntTextLength}
             maxLength={100}
           />
           <span className='absolute bottom-4 right-3.5 text-sm text-subfont'>
-            {cntText.length}/100
+            {reviewContent.length}/100
           </span>
         </div>
         <button

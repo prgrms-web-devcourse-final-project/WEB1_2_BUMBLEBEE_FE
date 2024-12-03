@@ -1,4 +1,5 @@
 import {
+  GetAllReservation,
   GetAllReservationData,
   OrderFormData,
   PaymentFailData,
@@ -24,6 +25,12 @@ export const postReservation = async (
 
 // 사용자의 최근 예약 전체 조회
 export const getAllReservation = async (): Promise<GetAllReservationData> => {
+  const response = await authInstance.get(`/api/v1/all/reservations/member`);
+  return response.data;
+};
+
+// 사용자의 최근 예약 한 건 조회
+export const getLatestReservation = async (): Promise<GetAllReservation> => {
   const response = await authInstance.get(`/api/v1/reservations/member`);
   return response.data;
 };
