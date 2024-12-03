@@ -1,6 +1,7 @@
 import { GetPositionWorkPlaceData } from '@typings/types';
 import { useEffect, useRef } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 interface PlaceModalProps {
   place: GetPositionWorkPlaceData;
@@ -21,6 +22,12 @@ const PlaceModal = (props: PlaceModalProps) => {
 
     return () => document.removeEventListener('mousedown', handleOutsideClose);
   }, [onClose]);
+
+  const navigate = useNavigate();
+  const handleClickDetail = () => {
+    onClose();
+    navigate(`/detail/${place.workplaceId}`);
+  };
 
   return (
     <div className='fixed left-[50%] top-0 z-[1500] flex h-[100%] w-[375px] translate-x-[-50%] items-center justify-center bg-[rgba(0,0,0,0.4)]'>
@@ -52,6 +59,7 @@ const PlaceModal = (props: PlaceModalProps) => {
           <button
             type='button'
             className='flex h-8 w-[232px] cursor-pointer items-center justify-center rounded-[4px] bg-primary text-xs text-white'
+            onClick={handleClickDetail}
           >
             상세보기
           </button>

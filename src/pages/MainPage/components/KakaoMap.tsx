@@ -1,4 +1,4 @@
-import { Dispatch, useEffect, useRef, useState } from 'react';
+import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
 import { debounce } from 'lodash';
@@ -119,10 +119,10 @@ const KakaoMap = (props: KakaoMapProps) => {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setSelectedPlace(null);
     setIsModalOpen(false);
-  };
+  }, []);
 
   return (
     <div className='relative h-[298px] w-[375px]'>
