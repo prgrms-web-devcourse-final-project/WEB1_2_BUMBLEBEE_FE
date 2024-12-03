@@ -1,26 +1,27 @@
 import LabelWithInput from '@components/LabelWithInput';
-
-const user = {
-  name: 'HYUN',
-  email: 'hyun@gmail.com',
-  phone: '010-1111-2222',
-  birth: '2002.12.22',
-};
+import useGetUserData from '@pages/UserMypage/hooks/useGetUserData';
+import { getDateFunction } from '@utils/formatTime';
 
 const UserInfoBox = () => {
+  const { user } = useGetUserData();
+
   return (
     <div className='flex flex-col gap-10'>
       <LabelWithInput
         label='닉네임'
-        value={user.name}
+        value={user.nickName}
       />
       <LabelWithInput
         label='이메일'
         value={user.email}
       />
       <LabelWithInput
+        label='전화번호'
+        value={user.phoneNumber}
+      />
+      <LabelWithInput
         label='생년월일'
-        value={user.birth}
+        value={getDateFunction(user.birthDay)}
       />
     </div>
   );

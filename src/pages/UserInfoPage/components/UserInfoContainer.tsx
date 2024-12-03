@@ -18,7 +18,7 @@ const UserInfoContainer = () => {
           className='flex h-[30px] items-center gap-1 self-end text-subfont active:text-primary'
           onClick={handleMoveEditPage}
         >
-          정보 수정하기
+          수정하기
           <MdArrowForwardIos />
         </button>
       </div>
