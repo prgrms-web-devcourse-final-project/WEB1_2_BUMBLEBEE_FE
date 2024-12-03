@@ -1,3 +1,4 @@
+// 등록 시, 상태관리 타입
 export type Room = {
   id: string;
   roomName: string;
@@ -6,7 +7,7 @@ export type Room = {
   people: number;
   roomImages: { url: string; file: File }[];
 };
-
+// 등록 시, 상태관리 타입
 export type Space = {
   spaceName: string;
   description: string;
@@ -105,12 +106,11 @@ export interface Review extends PostReviewRequestBody {
   reviewDate: Date;
 }
 
-// 스터디룸 정보
+// 스터디룸 등록
 export interface StudyRoomData {
-  id: number;
-  title: string;
+  studyRoomName: string;
   description: string;
-  imageUrl: string[];
+  imageUrl: string;
   price: number;
   capacity: number;
 }
@@ -120,9 +120,22 @@ export interface StudyRoomPutData extends StudyRoomData {
   studyRoomId: number;
 }
 
+// 스터디룸 상세 정보
+export interface StudyRoomDetail {
+  studyRoomId: number;
+  workplaceId: number;
+  workplaceName: string;
+  studyRoomName: string;
+  description: string;
+  imageUrl: string[];
+  price: number;
+  capacity: number;
+}
+
+// 사업장의 스터디룸(list) 찾기
 export interface WorkplaceStudyRoomData {
-  id: number;
-  title: string;
+  studyRoomId: number;
+  studyRoomName: string;
   description: string;
   imageUrl: string;
   price: number;
@@ -158,7 +171,7 @@ export interface WorkPlaceData {
   workplaceStartTime: string;
   workplaceEndTime: string;
   studyRoomList: {
-    title: string;
+    studyRoomName: string;
     description: string;
     imageUrl: string;
     price: number;

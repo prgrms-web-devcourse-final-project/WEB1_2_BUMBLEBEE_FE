@@ -178,7 +178,7 @@ const SpaceForm = ({
         workplaceStartTime: spaceFormData.openTime,
         workplaceEndTime: spaceFormData.closedTime,
         studyRoomList: spaceFormData.rooms.map((room) => ({
-          title: room.roomName,
+          studyRoomName: room.roomName,
           price: Number(room.price),
           capacity: room.people,
           description: room.description,
@@ -309,8 +309,8 @@ const SpaceForm = ({
                 >
                   <RoomComponent
                     room={{
-                      id: 0,
-                      title: item.roomName,
+                      studyRoomId: 0,
+                      studyRoomName: item.roomName,
                       capacity: item.people,
                       description: item.description,
                       imageUrl: item.roomImages[0].url,
