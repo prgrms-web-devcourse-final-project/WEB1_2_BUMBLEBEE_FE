@@ -87,7 +87,7 @@ const PaymentButton = (props: PaymentButtonProps) => {
         method: response.tossPaymentMethod,
         amount: {
           currency: 'KRW',
-          value: response.totalAmount,
+          value: response.amount,
         },
         orderId: response.orderId,
         orderName: response.orderName,

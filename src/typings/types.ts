@@ -221,7 +221,7 @@ export interface OrderFormData {
 export interface PostPaymentsData {
   orderId: string;
   orderName: string;
-  totalAmount: number;
+  amount: number;
   memberName: string;
   memberPhoneNum: string;
   tossPaymentMethod: 'CARD';
