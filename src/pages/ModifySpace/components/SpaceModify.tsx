@@ -5,27 +5,27 @@ import { Space } from '@typings/types';
 import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import { getS3URL } from '@apis/workplace';
-import PhoneNumber from './PhoneNumber';
-import SelectClosedTime from './SelectClosedTime';
-import SelectOpenTime from './SelectOpenTime';
-import Address from './Address';
-import WorkSpaceImage from './WorkSpaceImage';
-import RoomComponent from './RoomComponent';
-import usePostWorkPlace from '../hooks/usePostWorkPlace';
+import SelectOpenTime from '@pages/RegisterSpace/components/SelectOpenTime';
+import SelectClosedTime from '@pages/RegisterSpace/components/SelectClosedTime';
+import PhoneNumber from '@pages/RegisterSpace/components/PhoneNumber';
+import Address from '@pages/RegisterSpace/components/Address';
+import WorkSpaceImage from '@pages/RegisterSpace/components/WorkSpaceImage';
+import RoomComponent from '@pages/RegisterSpace/components/RoomComponent';
+import usePostWorkPlace from '@pages/RegisterSpace/hooks/usePostWorkPlace';
 
-interface SpaceFormProps {
+interface SpaceModifyProps {
   spaceFormData: Space;
   changeFormdata: (data: Partial<Space>) => void;
   addRoom: () => void;
   clickRoom: (id: string) => void;
 }
 
-const SpaceForm = ({
+const SpaceModify = ({
   spaceFormData,
   changeFormdata,
   addRoom,
   clickRoom,
-}: SpaceFormProps) => {
+}: SpaceModifyProps) => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -288,6 +288,12 @@ const SpaceForm = ({
             {errorMessage.imageError}
           </div>
         )}
+        <button
+          type='submit'
+          className='btn-primary mt-[40px] text-[16px]'
+        >
+          수정하기
+        </button>
         <div className='relative mt-[40px] flex flex-col'>
           <label
             htmlFor='spaceName'
@@ -345,15 +351,9 @@ const SpaceForm = ({
             />
           </button>
         </div>
-        <button
-          type='submit'
-          className='btn-primary mt-[40px] text-[16px]'
-        >
-          공간 등록 완료
-        </button>
       </form>
     </div>
   );
 };
 
-export default SpaceForm;
+export default SpaceModify;

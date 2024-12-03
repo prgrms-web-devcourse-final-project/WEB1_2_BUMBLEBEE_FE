@@ -14,7 +14,7 @@ export type Space = {
   closedTime: string;
   phoneNumber: string;
   address: { basic: string; detail: string };
-  spaceImage: File | { url: string } | null;
+  spaceImage: File | null;
   rooms: Room[];
 };
 
@@ -110,7 +110,7 @@ export interface StudyRoomData {
   id: number;
   title: string;
   description: string;
-  imageUrl: string;
+  imageUrl: string[];
   price: number;
   capacity: number;
 }
