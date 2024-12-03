@@ -90,10 +90,6 @@ export interface Reservation {
   price: number;
 }
 
-export interface GetAllReservationData {
-  reservations: Reservation[];
-}
-
 // 리뷰 수정
 export interface PutReviewRequestBody {
   reviewContent: string;
