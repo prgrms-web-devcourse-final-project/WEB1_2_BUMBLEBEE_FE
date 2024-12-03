@@ -1,7 +1,6 @@
 import { Dispatch, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
-import { MoonLoader } from 'react-spinners';
 import { debounce } from 'lodash';
 import { GetPositionWorkPlaceData, MapPosition } from '@typings/types';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
