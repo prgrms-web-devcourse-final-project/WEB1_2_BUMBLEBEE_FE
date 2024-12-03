@@ -87,23 +87,27 @@ const onError = (message: string): never => {
 const errorInterceptor = (error: AxiosError) => {
   if (error.response) {
     const { status } = error.response;
-
+    console.log(error);
     switch (status) {
       case 400:
-        onError('400 에러');
+        onError('요청이 올바르지 않습니다.');
         break;
       case 401: {
-        onError('401 에러');
+        onError('인증이 만료되었습니다.');
         break;
       }
       case 403: {
-        onError('403 에러');
+        onError('접근 권한이 없습니다.');
         break;
       }
       default: {
-        onError(`에러가 발생했습니다. ${error.message}`);
+        onError(`알 수 없는 오류가 발생했습니다. ${error.message}`);
       }
     }
+  }
+
+  if (!error.response) {
+    onError('네트워크 연결을 확인해주세요.');
   }
 
   return Promise.reject(error);
