@@ -44,9 +44,8 @@ export const getMyReview = async (): Promise<Review[]> => {
 // 리뷰 작성
 export const postReview = async (
   data: PostReviewRequestBody,
-): Promise<Review> => {
-  const response = await authInstance.post('/api/v1/review/register', data);
-  return response.data;
+): Promise<void> => {
+  await authInstance.post('/api/v1/review/register', data);
 };
 
 // 리뷰 수정
