@@ -16,11 +16,11 @@ import { authInstance, defaultInstance } from '.';
 
 // 프리사인드 URL 얻기
 export const getS3URL = async (
-  extension: string,
   fileName: string,
+  fileLocation: string,
 ): Promise<string> => {
   const response = await authInstance.get('/api/generate-presigned-url', {
-    params: { extension, fileName },
+    params: { fileName, fileLocation },
   });
   return response.data.presignedUrl;
 };

@@ -146,11 +146,8 @@ const SpaceForm = ({
       spaceFormData.rooms.length !== 0
     ) {
       // 사업장 사진
-      const workPlaceFileExtension = spaceFormData.spaceImage.name
-        .split('.')
-        .pop()!;
       const s3URL = await getS3URL(
-        workPlaceFileExtension,
+        spaceFormData.spaceImage.name,
         spaceFormData.spaceName,
       );
       uploadImageToS3(s3URL, spaceFormData.spaceImage);
@@ -166,10 +163,9 @@ const SpaceForm = ({
 
       await Promise.all(
         allRoomImages.map(({ file, roomName }) =>
-          getS3URL(
-            file.name.split('.').pop()!,
-            `${spaceFormData.spaceName}/${roomName}`,
-          ).then((roomImageS3URL) => uploadImageToS3(roomImageS3URL, file)),
+          getS3URL(file.name, `${spaceFormData.spaceName}/${roomName}`).then(
+            (roomImageS3URL) => uploadImageToS3(roomImageS3URL, file),
+          ),
         ),
       );
 
@@ -178,7 +174,7 @@ const SpaceForm = ({
         workplacePhoneNumber: spaceFormData.phoneNumber,
         workplaceDescription: spaceFormData.description,
         workplaceAddress: `${spaceFormData.address.basic}, ${spaceFormData.address.detail}`,
-        imageUrl: spaceFormData.spaceName,
+        imageUrl: `${spaceFormData.spaceName}/${spaceFormData.spaceImage.name}`,
         workplaceStartTime: spaceFormData.openTime,
         workplaceEndTime: spaceFormData.closedTime,
         studyRoomList: spaceFormData.rooms.map((room) => ({
