@@ -80,30 +80,17 @@ authInstance.interceptors.request.use(
 const responseInterceptor = (response: AxiosResponse) => response;
 
 // error handling
-const onError = (message: string): never => {
-  throw new Error(message);
+export const onError = (message: string): void => {
+  console.log(message);
 };
 
 const errorInterceptor = (error: AxiosError) => {
   if (error.response) {
-    const { status } = error.response;
-    console.log(error);
-    switch (status) {
-      case 400:
-        onError('요청이 올바르지 않습니다.');
-        break;
-      case 401: {
-        onError('인증이 만료되었습니다.');
-        break;
-      }
-      case 403: {
-        onError('접근 권한이 없습니다.');
-        break;
-      }
-      default: {
-        onError(`알 수 없는 오류가 발생했습니다. ${error.message}`);
-      }
-    }
+    const { message } = error.response.data as {
+      code: string;
+      message: string;
+    };
+    onError(message || '요청 처리 중 오류가 발생했습니다.');
   }
 
   if (!error.response) {

@@ -104,7 +104,7 @@ const PaymentButton = (props: PaymentButtonProps) => {
       })
       .catch((error) => {
         if (error.code === 'USER_CANCEL') {
-          console.log('유저 취소');
+          console.log('유저가 결제를 취소했습니다');
         } else {
           console.log(error.message);
         }
@@ -113,6 +113,7 @@ const PaymentButton = (props: PaymentButtonProps) => {
 
   const handlePaymentButton = async () => {
     isValid();
+
     if (
       isValidKoreanName(reservationForm.name) &&
       isValidUserPhoneNumber(reservationForm.phoneNumber) &&
@@ -138,20 +139,24 @@ const PaymentButton = (props: PaymentButtonProps) => {
         tossPaymentMethod: 'CARD',
       };
 
-      // 예약 요청
-      const reservationId = await postReservation(
-        studyRoomInfo.studyRoomId,
-        reservationData,
-      );
-      console.log('Reservation ID:', reservationId);
+      try {
+        // 예약 요청
+        const reservationId = await postReservation(
+          studyRoomInfo.studyRoomId,
+          reservationData,
+        );
 
-      // 결제 검증
-      const paymentResponse = await postPaymentsToss(reservationId, orderForm);
-      console.log('결제 검증 여부', paymentResponse);
+        // 결제 검증
+        const paymentResponse = await postPaymentsToss(
+          reservationId,
+          orderForm,
+        );
 
-      // 결제 요청
-      const paymentResult = handlePayment(paymentResponse);
-      console.log('결제 성공 여부', paymentResult);
+        // 결제 승인 요청
+        await handlePayment(paymentResponse);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
