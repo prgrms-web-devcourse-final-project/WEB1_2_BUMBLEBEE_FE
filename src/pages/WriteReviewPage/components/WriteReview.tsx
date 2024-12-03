@@ -18,7 +18,7 @@ const WriteReview = ({
     reviewRating: 0,
   });
 
-  const { mutate: writeReview } = usePostReview(postData);
+  const { mutate: writeReview } = usePostReview();
 
   // 별 표시
   const handleStarClick = () => {
@@ -54,7 +54,7 @@ const WriteReview = ({
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(postData);
-    writeReview();
+    writeReview(postData);
   };
 
   return (

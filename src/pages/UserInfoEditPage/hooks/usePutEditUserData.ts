@@ -10,7 +10,6 @@ const usePutEditUserData = () => {
   const editUser = useMutation({
     mutationFn: (user: Member) => putEditMemberInformation(user),
     onSuccess: () => {
-      console.log('정보 수정 완료');
       queryClient.invalidateQueries({ queryKey: ['member'] });
       navigate('/user-info');
     },

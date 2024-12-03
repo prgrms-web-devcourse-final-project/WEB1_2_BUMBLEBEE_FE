@@ -96,7 +96,6 @@ const UserEditForm = ({ user }: { user: Member }) => {
       isValidUserPhoneNumber(newInformation.phoneNumber)
     ) {
       editUser(newData);
-      console.log(`정보 수정 완료: ${newInformation}`);
     } else {
       setErrorMessage(errors);
     }
