@@ -9,9 +9,7 @@ const UserInfoContainer = () => {
 
   const handleMoveEditPage = () => {
     navigate('/user-info-edit', {
-      state: {
-        userData: user,
-      },
+      state: user,
     });
   };
 
