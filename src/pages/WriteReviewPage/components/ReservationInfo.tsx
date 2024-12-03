@@ -1,18 +1,9 @@
 import ListStyle from '@components/ListStyle';
+import { WriteReviewProps } from '..';
 
-interface ReservationInfoProp {
-  workplaceName: string;
-  reservationCreatedAt: string;
-  reservationTime: string;
-  studyRoomCapacity: number;
-  price: string;
-  reservationDay: string;
-  studyRoomName: string;
-}
-
-const ReservationInfo = ({ item }: { item: ReservationInfoProp }) => {
+const ReservationInfo = ({ item }: { item: WriteReviewProps }) => {
   const {
-    workplaceName,
+    workPlaceName,
     reservationTime,
     studyRoomCapacity,
     price,
@@ -23,7 +14,7 @@ const ReservationInfo = ({ item }: { item: ReservationInfoProp }) => {
 
   return (
     <div className='mx-[22.5px] my-[26px] flex w-custom flex-col gap-1 px-[8px]'>
-      <p className='mb-3 text-base font-normal'>{workplaceName}</p>
+      <p className='mb-3 text-base font-normal'>{workPlaceName}</p>
       <ul className='flex flex-col gap-1 text-[12px]'>
         <ListStyle
           name='예약일'

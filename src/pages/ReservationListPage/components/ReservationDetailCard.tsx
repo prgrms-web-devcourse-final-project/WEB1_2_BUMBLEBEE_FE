@@ -18,6 +18,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
     price,
     workplaceImageUrl,
     studyRoomName,
+    reservationId,
   } = item;
   const navigate = useNavigate();
 
@@ -50,13 +51,14 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
   const handleReviewButton = () => {
     navigate('/write-review', {
       state: {
-        workplaceName: `${workplaceName}`,
+        workPlaceName: `${workplaceName}`,
         studyRoomName: `${studyRoomName}`,
         reservationCreatedAt: `${getDateFunction(reservationCreatedAt)}`,
         reservationDay: `${getDateFunction(startTime)}`,
         reservationTime: `${getTimeFunction(startTime)} ~ ${getTimeFunction(endTime)}`,
         studyRoomCapacity: `${studyRoomCapacity}`,
         price: `${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
+        reservationId: `${reservationId}`,
       },
     });
   };
