@@ -1,4 +1,4 @@
-import { postPaymentsSuccess } from '@apis/reservation';
+import { getPaymentsSuccess } from '@apis/reservation';
 import MainLayout from '@layouts/MainLayout';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -10,18 +10,16 @@ const PaymentLoadingPage = () => {
 
   useEffect(() => {
     const requestData = {
-      orderId: searchParams.get('orderId'),
-      amount: searchParams.get('amount'),
-      paymentKey: searchParams.get('paymentKey'),
+      orderId: searchParams.get('orderId') || '',
+      amount: Number(searchParams.get('amount')) || 0,
+      paymentKey: searchParams.get('paymentKey') || '',
     };
 
     const paymentsSuccess = async () => {
       if (requestData.orderId && requestData.amount && requestData.paymentKey) {
-        const response = await postPaymentsSuccess({
-          orderId: requestData.orderId,
-          amount: Number(requestData.amount),
-          paymentKey: requestData.paymentKey,
-        });
+        console.log(requestData);
+        const response = await getPaymentsSuccess(requestData);
+        console.log(response);
         navigate('/payment-success', { state: response });
       } else {
         throw new Error('결제에 필요한 값이 누락되었습니다.');

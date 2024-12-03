@@ -70,8 +70,8 @@ export interface Alarm {}
 export interface PostReservationData {
   reservationName: string;
   reservationPhoneNumber: string;
-  reservationCapacity: number;
-  reservationPrice: number;
+  capacity: number;
+  price: number;
   startTime: Date;
   endTime: Date;
 }
@@ -230,7 +230,7 @@ export interface OrderFormData {
 export interface PostPaymentsData {
   orderId: string;
   orderName: string;
-  totalAmount: number;
+  amount: number;
   memberName: string;
   memberPhoneNum: string;
   tossPaymentMethod: 'CARD';
