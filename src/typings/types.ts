@@ -77,37 +77,42 @@ export interface PostReservationData {
 }
 
 // 예약 정보
-export interface GetAllReservation {
+export interface Reservation {
+  reservationId: number;
+  workplaceId: number;
   workplaceName: string;
-  reservationCreatedAt: Date;
-  startTime: Date;
-  endTime: Date;
+  workplaceImageUrl: string;
+  studyRoomName: string;
+  reservationCreatedAt: string;
+  startTime: string;
+  endTime: string;
   studyRoomCapacity: number;
   price: number;
-  studyRoomUrl: string;
 }
 
-export interface GetAllReservationData {
-  reservations: GetAllReservation[];
-}
-
-// 리뷰 작성, 수정
-export interface PostReviewRequestBody {
-  workplaceId: number;
+// 리뷰 수정
+export interface PutReviewRequestBody {
   reviewContent: string;
   reviewRating: number;
+}
+
+// 리뷰 작성
+export interface PostReviewRequestBody extends PutReviewRequestBody {
+  reservatinId: number;
+  workPlaceName: string;
 }
 
 // 리뷰 정보
 export interface Review extends PostReviewRequestBody {
   reviewId: number;
-  workplaceName: string;
-  reviewDate: Date;
+  workplaceId: number;
+  studyRoomName: string;
+  reviewDate: string;
+  // workplace img url: string;
 }
 
-// 스터디룸 정보
+// 스터디룸 등록
 export interface StudyRoomData {
-  id: number;
   title: string;
   description: string;
   imageUrl: string;
