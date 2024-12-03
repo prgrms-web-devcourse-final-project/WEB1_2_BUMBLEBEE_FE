@@ -8,6 +8,7 @@ import { loadTossPayments } from '@tosspayments/tosspayments-sdk';
 import { postPaymentsToss, postReservation } from '@apis/reservation';
 import useSearchStore from '@store/searchStore';
 import { PostPaymentsData } from '@typings/types';
+import { toast } from 'react-toastify';
 import type {
   ReservationFormData,
   ErrorMessageType,
@@ -15,7 +16,6 @@ import type {
   PayMethodType,
   StudyRoomInfo,
 } from '..';
-import { toast } from 'react-toastify';
 
 interface PaymentButtonProps {
   studyRoomInfo: StudyRoomInfo;
