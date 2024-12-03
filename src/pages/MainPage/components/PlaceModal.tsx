@@ -43,7 +43,7 @@ const PlaceModal = (props: PlaceModalProps) => {
               className='h-[60px] w-[60px] rounded-lg object-cover'
             />
             <div className='flex w-[150px] flex-col items-start justify-center gap-[6px] text-sm'>
-              <div className='flex gap-[3px]'>
+              <div className='flex'>
                 <FaMapMarkerAlt className='text-base leading-none' />
                 <p className='px-1 text-left font-medium leading-none'>
                   {place.workplaceName}
