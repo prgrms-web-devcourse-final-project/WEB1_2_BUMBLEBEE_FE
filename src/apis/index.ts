@@ -8,6 +8,7 @@ import axios, {
 import { BASE_URL } from '@constants/constants';
 import { getAuthToken, removeAuthToken, setAuthToken } from '@utils/auth';
 import useAuthStore from '@store/authStore';
+import { toast } from 'react-toastify';
 
 // Default Instance
 const defaultInstance: AxiosInstance = axios.create({
@@ -81,7 +82,7 @@ const responseInterceptor = (response: AxiosResponse) => response;
 
 // error handling
 export const onError = (message: string): void => {
-  console.log(message);
+  toast.error(message);
 };
 
 const errorInterceptor = (error: AxiosError) => {
