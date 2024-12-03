@@ -127,54 +127,44 @@ const KakaoMap = (props: KakaoMapProps) => {
 
   return (
     <div className='relative h-[298px] w-[375px]'>
-      {position.isLoading ? (
-        <div className='flex h-full w-full items-center justify-center'>
-          <MoonLoader
-            color='#50BEAD'
-            size={30}
-            speedMultiplier={0.7}
-          />
+      <Map
+        center={center}
+        className='h-full w-full'
+        level={3}
+        ref={mapRef}
+        onCreate={(map) => handleMapCreate(map)}
+        onDragEnd={(map) => {
+          const latlng = map.getCenter();
+          setCenter({ lat: latlng.getLat(), lng: latlng.getLng() });
+        }}
+        onBoundsChanged={(map) => handleBoundsChange(map)}
+      >
+        {data &&
+          data.length > 0 &&
+          data.map((item) => (
+            <MapMarker
+              onClick={() => handleMarkerClick(item)}
+              key={item.positionLat}
+              position={{ lat: item.positionLat, lng: item.positionLon }}
+              image={{
+                src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+                size: {
+                  width: 24,
+                  height: 35,
+                },
+              }}
+            />
+          ))}
+        <div className='absolute right-0 top-0 z-10 m-4'>
+          <button
+            type='button'
+            className='flex h-[45px] w-[45px] cursor-pointer items-center justify-center rounded-full bg-white shadow-custom'
+            onClick={() => setCenter(position.center)}
+          >
+            <MdMyLocation />
+          </button>
         </div>
-      ) : (
-        <Map
-          center={center}
-          className='h-full w-full'
-          level={3}
-          ref={mapRef}
-          onCreate={(map) => handleMapCreate(map)}
-          onDragEnd={(map) => {
-            const latlng = map.getCenter();
-            setCenter({ lat: latlng.getLat(), lng: latlng.getLng() });
-          }}
-          onBoundsChanged={(map) => handleBoundsChange(map)}
-        >
-          {data &&
-            data.length > 0 &&
-            data.map((item) => (
-              <MapMarker
-                onClick={() => handleMarkerClick(item)}
-                key={item.positionLat}
-                position={{ lat: item.positionLat, lng: item.positionLon }}
-                image={{
-                  src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-                  size: {
-                    width: 24,
-                    height: 35,
-                  },
-                }}
-              />
-            ))}
-          <div className='absolute right-0 top-0 z-10 m-4'>
-            <button
-              type='button'
-              className='flex h-[45px] w-[45px] cursor-pointer items-center justify-center rounded-full bg-white shadow-custom'
-              onClick={() => setCenter(position.center)}
-            >
-              <MdMyLocation />
-            </button>
-          </div>
-        </Map>
-      )}
+      </Map>
       {isModalOpen && selectedPlace && (
         <PlaceModal
           place={selectedPlace}
