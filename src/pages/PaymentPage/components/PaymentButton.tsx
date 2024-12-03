@@ -15,6 +15,7 @@ import type {
   PayMethodType,
   StudyRoomInfo,
 } from '..';
+import { toast } from 'react-toastify';
 
 interface PaymentButtonProps {
   studyRoomInfo: StudyRoomInfo;
@@ -104,9 +105,9 @@ const PaymentButton = (props: PaymentButtonProps) => {
       })
       .catch((error) => {
         if (error.code === 'USER_CANCEL') {
-          console.log('유저가 결제를 취소했습니다');
+          toast.error('유저가 결제를 취소했습니다');
         } else {
-          console.log(error.message);
+          toast.error(error.message);
         }
       });
   };
@@ -139,24 +140,17 @@ const PaymentButton = (props: PaymentButtonProps) => {
         tossPaymentMethod: 'CARD',
       };
 
-      try {
-        // 예약 요청
-        const reservationId = await postReservation(
-          studyRoomInfo.studyRoomId,
-          reservationData,
-        );
+      // 예약 요청
+      const reservationId = await postReservation(
+        studyRoomInfo.studyRoomId,
+        reservationData,
+      );
 
-        // 결제 검증
-        const paymentResponse = await postPaymentsToss(
-          reservationId,
-          orderForm,
-        );
+      // 결제 검증
+      const paymentResponse = await postPaymentsToss(reservationId, orderForm);
 
-        // 결제 승인 요청
-        await handlePayment(paymentResponse);
-      } catch (error) {
-        console.log(error);
-      }
+      // 결제 승인 요청
+      await handlePayment(paymentResponse);
     }
   };
 
