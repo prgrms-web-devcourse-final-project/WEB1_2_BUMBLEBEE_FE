@@ -98,7 +98,7 @@ export interface PutReviewRequestBody {
 
 // 리뷰 작성
 export interface PostReviewRequestBody extends PutReviewRequestBody {
-  reservatinId: number;
+  reservationId: number;
   workPlaceName: string;
 }
 
