@@ -52,7 +52,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
       state: {
         workplaceName: `${workplaceName}`,
         studyRoomName: `${studyRoomName}`,
-        reservationCreatedAt: `${reservationCreatedAt}`,
+        reservationCreatedAt: `${getDateFunction(reservationCreatedAt)}`,
         reservationDay: `${getDateFunction(startTime)}`,
         reservationTime: `${getTimeFunction(startTime)} ~ ${getTimeFunction(endTime)}`,
         studyRoomCapacity: `${studyRoomCapacity}`,
@@ -105,7 +105,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
             />
           </div>
         </div>
-        <div className='flex items-center justify-between'>
+        <div className='flex items-end justify-between'>
           {buttonType(gap) === 'cancelPayment' && (
             <ButtonInCard
               name='결제 취소'
@@ -119,11 +119,11 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
             />
           )}
           {buttonType(gap) === 'none' && (
-            <span className='text-[12px] text-primary'>
+            <span className='flex h-[34px] flex-col justify-end text-[12px] text-primary'>
               방문 24시간 전입니다.
             </span>
           )}
-          <span className='self-end text-[14px] font-normal'>
+          <span className='text-[14px] font-normal'>
             {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
           </span>
         </div>

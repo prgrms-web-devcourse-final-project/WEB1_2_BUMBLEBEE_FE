@@ -2,11 +2,12 @@ import ListStyle from '@components/ListStyle';
 
 interface ReservationInfoProp {
   workplaceName: string;
-  reservationCreatedAt: Date;
+  reservationCreatedAt: string;
   reservationTime: string;
   studyRoomCapacity: number;
   price: string;
   reservationDay: string;
+  studyRoomName: string;
 }
 
 const ReservationInfo = ({ item }: { item: ReservationInfoProp }) => {
@@ -16,12 +17,14 @@ const ReservationInfo = ({ item }: { item: ReservationInfoProp }) => {
     studyRoomCapacity,
     price,
     reservationDay,
+    reservationCreatedAt,
+    studyRoomName,
   } = item;
 
   return (
-    <div className='mx-[22.5px] my-[26px] w-custom px-[8px]'>
+    <div className='mx-[22.5px] my-[26px] flex w-custom flex-col gap-1 px-[8px]'>
       <p className='mb-3 text-base font-normal'>{workplaceName}</p>
-      <ul className='flex flex-col gap-[4px] text-[12px]'>
+      <ul className='flex flex-col gap-1 text-[12px]'>
         <ListStyle
           name='예약일'
           value={reservationDay}
@@ -32,7 +35,7 @@ const ReservationInfo = ({ item }: { item: ReservationInfoProp }) => {
         />
         <ListStyle
           name='예약된 룸'
-          value='!룸 이름'
+          value={studyRoomName}
         />
         <ListStyle
           name='인원'
@@ -41,6 +44,10 @@ const ReservationInfo = ({ item }: { item: ReservationInfoProp }) => {
         <ListStyle
           name='금액'
           value={`${price} 원`}
+        />
+        <ListStyle
+          name='결제일'
+          value={reservationCreatedAt}
         />
       </ul>
     </div>
