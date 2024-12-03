@@ -6,7 +6,7 @@ const ReservationList = () => {
   const { reservationList } = useGetAllMyReservations();
   const [activeSortButton, setActiveSortButton] = useState(false);
 
-  // 최근 결제 순으로 정렬
+  // 최근 결제일순으로 정렬
   const sortedReservationWithPayment = useCallback(() => {
     return [...reservationList].sort(
       (b, a) =>
@@ -35,7 +35,7 @@ const ReservationList = () => {
               className={!activeSortButton ? 'text-focusColor' : 'text-subfont'}
               onClick={() => setActiveSortButton(!activeSortButton)}
             >
-              최근 결제순
+              최근 결제일순
             </button>
             <span>|</span>
             <button
