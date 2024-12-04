@@ -11,4 +11,15 @@ const removeAuthToken = () => {
   localStorage.removeItem('accessToken');
 };
 
-export { setAuthToken, getAuthToken, removeAuthToken };
+// role 저장
+
+const setRole = (role: string) => {
+  localStorage.setItem('role', role);
+};
+
+const getRole = () => {
+  const role = localStorage.getItem('role');
+  return role;
+};
+
+export { setAuthToken, getAuthToken, removeAuthToken, setRole, getRole };

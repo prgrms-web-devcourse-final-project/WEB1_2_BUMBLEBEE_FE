@@ -3,10 +3,10 @@ import LogoutButton from '@components/LogoutButton';
 import { useNavigate } from 'react-router-dom';
 import LatestReservation from './LatestReservation';
 import CategoryButton from './CategoryButton';
-import { useGetLatestReservation } from '../hooks/useGetMyReservations';
+import useGetLatestReservation from '../hooks/useGetLatestReservation';
 
 const UserButtonContainer = () => {
-  const latestReservation = useGetLatestReservation();
+  const { latestReservation } = useGetLatestReservation();
   const navigate = useNavigate();
 
   const handleMoveReservationList = () => {

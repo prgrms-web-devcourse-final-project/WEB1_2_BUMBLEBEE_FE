@@ -16,9 +16,8 @@ export const getBusinessAlarm = async (): Promise<BusinessAlarm> => {
 // 사업자 정보 수정
 export const putEditBusinessInformation = async (
   data: Business,
-): Promise<Business> => {
-  const response = await authInstance.put('/api/v1/business', data);
-  return response.data;
+): Promise<void> => {
+  await authInstance.put('/api/v1/business', data);
 };
 
 // 사업자 탈퇴

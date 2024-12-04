@@ -1,9 +1,24 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa6';
+import usePostReview from '../hooks/usePostReview';
 
-const WriteReview = () => {
-  const [rating, setRating] = useState<number>(0);
-  const [cntText, setCntText] = useState<string>('');
+interface WriteReviewProps {
+  reservationIdInfo: number;
+  workPlaceNameInfo: string;
+}
+
+const WriteReview = ({
+  reservationIdInfo,
+  workPlaceNameInfo,
+}: WriteReviewProps) => {
+  const [postData, setPostData] = useState({
+    reservationId: reservationIdInfo,
+    workPlaceName: workPlaceNameInfo,
+    reviewContent: '',
+    reviewRating: 0,
+  });
+
+  const { mutate: writeReview } = usePostReview();
 
   // 별 표시
   const handleStarClick = () => {
@@ -12,11 +27,13 @@ const WriteReview = () => {
       result.push(
         <span
           key={i + 1}
-          onClick={() => setRating(i + 1)}
+          onClick={() =>
+            setPostData((prev) => ({ ...prev, reviewRating: i + 1 }))
+          }
           role='button'
           tabIndex={0}
         >
-          {i + 1 <= rating ? <FaStar /> : <FaRegStar />}
+          {i + 1 <= postData.reviewRating ? <FaStar /> : <FaRegStar />}
         </span>,
       );
     }
@@ -31,11 +48,13 @@ const WriteReview = () => {
       content = content.substring(0, 100);
     }
 
-    setCntText(content);
+    setPostData((prev) => ({ ...prev, reviewContent: content }));
   };
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(postData);
+    writeReview(postData);
   };
 
   return (
@@ -51,11 +70,12 @@ const WriteReview = () => {
           <textarea
             className='main-textarea h-[100%] text-sm'
             placeholder='100자 이내로 이용 후기를 작성해주세요.'
+            value={postData.reviewContent}
             onChange={handleCntTextLength}
             maxLength={100}
           />
           <span className='absolute bottom-4 right-3.5 text-sm text-subfont'>
-            {cntText.length}/100
+            {postData.reviewContent.length}/100
           </span>
         </div>
         <button

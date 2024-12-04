@@ -1,51 +1,48 @@
 import CommonInput from '@components/CommonInput';
-import { ERROR_MESSAGE } from '@constants/constants';
-import { insertBirthHyphen } from '@utils/autoHyphen';
+import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
+import { Member } from '@typings/types';
+import { insertBirthHyphen, insertPhoneNumberHyphen } from '@utils/autoHyphen';
 import {
   isValidBirth,
   isValidEmail,
   isValidNickname,
+  isValidUserPhoneNumber,
 } from '@utils/validationCheckRegex';
 import { ChangeEvent, FormEvent, useState } from 'react';
-
-interface EditData {
-  nickname: string;
-  email: string;
-  birth: string;
-}
+import usePutEditUserData from '../hooks/usePutEditUserData';
 
 interface EditErrorMessage {
   nicknameError?: string;
   emailError?: string;
   birthError?: string;
+  phoneNumberError?: string;
+  sexError?: string;
 }
 
-const user = {
-  nickname: 'HYUN',
-  email: 'hyun@gmail.com',
-  phone: '010-1111-2222',
-  birth: '2002-12-22',
-};
-
-const UserEditForm = () => {
-  const [newInformation, setNewInformation] = useState<EditData>({
-    nickname: user.nickname,
+const UserEditForm = ({ user }: { user: Member }) => {
+  const [newInformation, setNewInformation] = useState<Member>({
+    nickName: user.nickName,
     email: user.email,
-    birth: user.birth,
+    birthDay: user.birthDay,
+    sex: user.sex,
+    phoneNumber: user.phoneNumber,
   });
   const [errorMessage, setErrorMessage] = useState<EditErrorMessage>({});
+  const { mutate: editUser } = usePutEditUserData();
 
   const handleGetNewValue = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value: originValue } = e.target;
     let value = originValue;
 
-    if (name === 'birth') {
+    if (name === 'birthDay') {
       value = insertBirthHyphen(value) || '';
     }
-
     // 닉네임이면 글자수 체크
-    if (name === 'nickname' && value.length > 10) {
+    if (name === 'nickName' && value.length > 10) {
       value = value.substring(0, 10);
+    }
+    if (name === 'phoneNumber') {
+      value = insertPhoneNumberHyphen(value) || '';
     }
 
     setNewInformation({ ...newInformation, [name]: value });
@@ -56,16 +53,24 @@ const UserEditForm = () => {
       nicknameError: '',
       emailError: '',
       birthError: '',
+      phoneNumberError: '',
+      sexError: '',
     };
 
-    if (!isValidNickname(newInformation.nickname)) {
+    if (newInformation.sex === '') {
+      errors.sexError = ERROR_MESSAGE.gender;
+    }
+    if (!isValidNickname(newInformation.nickName)) {
       errors.nicknameError = ERROR_MESSAGE.nickname;
     }
     if (!isValidEmail(newInformation.email)) {
       errors.emailError = ERROR_MESSAGE.email;
     }
-    if (!isValidBirth(newInformation.birth)) {
+    if (!isValidBirth(newInformation.birthDay)) {
       errors.birthError = ERROR_MESSAGE.birth;
+    }
+    if (!isValidUserPhoneNumber(newInformation.phoneNumber)) {
+      errors.phoneNumberError = ERROR_MESSAGE.phonNumber;
     }
 
     return errors;
@@ -77,19 +82,21 @@ const UserEditForm = () => {
 
     const errors = isValid();
     const newData = {
-      nickname: newInformation.nickname,
+      nickName: newInformation.nickName,
       email: newInformation.email,
-      birth: newInformation.birth,
+      birthDay: newInformation.birthDay,
+      sex: newInformation.sex,
+      phoneNumber: newInformation.phoneNumber,
     };
 
     if (
+      newInformation.sex !== '' &&
       isValidEmail(newInformation.email) &&
-      isValidNickname(newInformation.nickname) &&
-      isValidBirth(newInformation.birth)
+      isValidNickname(newInformation.nickName) &&
+      isValidBirth(newInformation.birthDay) &&
+      isValidUserPhoneNumber(newInformation.phoneNumber)
     ) {
-      console.log(
-        `정보 수정 완료: ${newData.nickname}, ${newData.birth}, ${newData.email}`,
-      );
+      editUser(newData);
     } else {
       setErrorMessage(errors);
     }
@@ -101,12 +108,54 @@ const UserEditForm = () => {
       onSubmit={onSubmitHandler}
     >
       <div className='flex flex-col gap-6'>
+        <div className='flex flex-col gap-3'>
+          <p className='mr-[34px] text-[14px] font-normal'>성별</p>
+          <div className='flex'>
+            <div className='flex items-center'>
+              <input
+                type='radio'
+                name='sex'
+                value='MALE'
+                className='mr-[6px]'
+                onChange={handleGetNewValue}
+                checked={newInformation.sex === 'MALE'}
+              />
+              <label
+                htmlFor='MALE'
+                className='mr-[20px] text-[14px]'
+              >
+                남자
+              </label>
+            </div>
+            <div className='flex items-center'>
+              <input
+                type='radio'
+                name='sex'
+                value='FEMALE'
+                className='w-[14px mr-[6px] h-[14px]'
+                onChange={handleGetNewValue}
+                checked={newInformation.sex === 'FEMALE'}
+              />
+              <label
+                htmlFor='FEMALE'
+                className='text-[14px]'
+              >
+                여자
+              </label>
+            </div>
+          </div>
+          {errorMessage.sexError && (
+            <p className='text-[12px] font-medium text-[#F83A3A]'>
+              {errorMessage.sexError}
+            </p>
+          )}
+        </div>
         <div className='flex flex-col gap-1'>
           <CommonInput
             label='닉네임'
-            name='nickname'
-            placeholder='새로운 닉네임을 입력하세요.'
-            value={newInformation.nickname}
+            name='nickName'
+            placeholder={PLACEHOLDER.nickname}
+            value={newInformation.nickName}
             onChangeFunction={handleGetNewValue}
             maxLength={10}
           />
@@ -120,7 +169,7 @@ const UserEditForm = () => {
           <CommonInput
             label='이메일'
             name='email'
-            placeholder='새로운 이메일을 입력하세요.'
+            placeholder={PLACEHOLDER.email}
             value={newInformation.email}
             onChangeFunction={handleGetNewValue}
           />
@@ -132,10 +181,24 @@ const UserEditForm = () => {
         </div>
         <div className='flex flex-col gap-1'>
           <CommonInput
+            label='전화번호'
+            name='phoneNumber'
+            placeholder={PLACEHOLDER.phonNumber}
+            value={newInformation.phoneNumber}
+            onChangeFunction={handleGetNewValue}
+          />
+          {errorMessage.phoneNumberError && (
+            <p className='text-[12px] font-medium text-[#F83A3A]'>
+              {errorMessage.phoneNumberError}
+            </p>
+          )}
+        </div>
+        <div className='flex flex-col gap-1'>
+          <CommonInput
             label='생년월일'
-            name='birth'
+            name='birthDay'
             placeholder='YYYY-MM-DD'
-            value={newInformation.birth}
+            value={newInformation.birthDay}
             onChangeFunction={handleGetNewValue}
           />
           {errorMessage.birthError && (

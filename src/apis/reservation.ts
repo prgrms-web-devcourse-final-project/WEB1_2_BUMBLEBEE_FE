@@ -1,5 +1,4 @@
 import {
-  GetAllReservationData,
   OrderFormData,
   PaymentFailData,
   PaymentsFail,
@@ -7,6 +6,7 @@ import {
   PaymentsSuccessData,
   PostPaymentsData,
   PostReservationData,
+  Reservation,
 } from '@typings/types';
 import { authInstance } from '.';
 
@@ -19,12 +19,18 @@ export const postReservation = async (
     `/api/v1/reservations/${studyroomId}`,
     reservation,
   );
-  return response.data;
+  return response.data.reservationId;
 };
 
 // 사용자의 최근 예약 전체 조회
-export const getAllReservation = async (): Promise<GetAllReservationData> => {
-  const response = await authInstance.get(`/api/v1/reservations/member`);
+export const getAllReservation = async (): Promise<Reservation[]> => {
+  const response = await authInstance.get('/api/v1/all/reservations/member');
+  return response.data;
+};
+
+// 사용자의 최근 예약 한 건 조회
+export const getLatestReservation = async (): Promise<Reservation> => {
+  const response = await authInstance.get('/api/v1/reservations/member');
   return response.data;
 };
 
@@ -43,10 +49,10 @@ export const postPaymentsToss = async (
 };
 
 // 결제 성공
-export const postPaymentsSuccess = async (
+export const getPaymentsSuccess = async (
   payment: PaymentsSuccess,
 ): Promise<PaymentsSuccessData> => {
-  const response = await authInstance.post('/api/v1/payments/toss/success', {
+  const response = await authInstance.get('/api/v1/payments/toss/success', {
     params: {
       paymentKey: payment.paymentKey,
       orderId: payment.orderId,
@@ -58,10 +64,10 @@ export const postPaymentsSuccess = async (
 };
 
 // 결제 실패
-export const postPaymentsFail = async (
+export const getPaymentsFail = async (
   payment: PaymentsFail,
 ): Promise<PaymentFailData> => {
-  const response = await authInstance.post('/api/v1/payments/toss/fail', {
+  const response = await authInstance.get('/api/v1/payments/toss/fail', {
     params: {
       code: payment.code,
       message: payment.message,

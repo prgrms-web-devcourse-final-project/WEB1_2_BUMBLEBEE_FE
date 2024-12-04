@@ -1,5 +1,6 @@
 import CommonInput from '@components/CommonInput';
-import { ERROR_MESSAGE } from '@constants/constants';
+import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
+import { Business } from '@typings/types';
 import { insertBusinessNumberHyphen } from '@utils/autoHyphen';
 import {
   isValidBusinessNumber,
@@ -7,12 +8,7 @@ import {
   isValidNickname,
 } from '@utils/validationCheckRegex';
 import { ChangeEvent, FormEvent, useState } from 'react';
-
-interface EditData {
-  nickname: string;
-  email: string;
-  businessNumber: string;
-}
+import usePutEditBusinessData from '../hooks/usePutEditBusinessData';
 
 interface EditErrorMessage {
   nicknameError?: string;
@@ -20,30 +16,24 @@ interface EditErrorMessage {
   businessNumberError?: string;
 }
 
-const host = {
-  nickname: 'HOST',
-  email: 'host@gmail.com',
-  businessNumber: '000-00-00000',
-};
-
-const HostEditForm = () => {
-  const [newInformation, setNewInformation] = useState<EditData>({
-    nickname: host.nickname,
-    email: host.email,
-    businessNumber: host.businessNumber,
+const HostEditForm = ({ business }: { business: Business }) => {
+  const [newInformation, setNewInformation] = useState<Business>({
+    businessName: business.businessName,
+    businessEmail: business.businessEmail,
+    businessNum: business.businessNum,
   });
   const [errorMessage, setErrorMessage] = useState<EditErrorMessage>({});
+  const { mutate: editBusiness } = usePutEditBusinessData();
 
   const handleGetNewValue = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value: originValue } = e.target;
     let value = originValue;
 
     // 닉네임이면 글자수 체크
-    if (name === 'nickname' && value.length > 10) {
+    if (name === 'businessName' && value.length > 10) {
       value = value.substring(0, 10);
     }
-
-    if (name === 'businessNumber') {
+    if (name === 'businessNum') {
       value = insertBusinessNumberHyphen(value) || '';
     }
 
@@ -57,13 +47,13 @@ const HostEditForm = () => {
       businessNumberError: '',
     };
 
-    if (!isValidNickname(newInformation.nickname)) {
+    if (!isValidNickname(newInformation.businessName)) {
       errors.nicknameError = ERROR_MESSAGE.nickname;
     }
-    if (!isValidEmail(newInformation.email)) {
+    if (!isValidEmail(newInformation.businessEmail)) {
       errors.emailError = ERROR_MESSAGE.email;
     }
-    if (!isValidBusinessNumber(newInformation.businessNumber)) {
+    if (!isValidBusinessNumber(newInformation.businessNum)) {
       errors.businessNumberError = ERROR_MESSAGE.businessNumber;
     }
 
@@ -76,19 +66,17 @@ const HostEditForm = () => {
 
     const errors = isValid();
     const newData = {
-      nickname: newInformation.nickname,
-      email: newInformation.email,
-      businessNumber: newInformation.businessNumber,
+      businessName: newInformation.businessName,
+      businessEmail: newInformation.businessEmail,
+      businessNum: newInformation.businessNum,
     };
 
     if (
-      isValidEmail(newInformation.email) &&
-      isValidNickname(newInformation.nickname) &&
-      isValidBusinessNumber(newInformation.businessNumber)
+      isValidEmail(newInformation.businessEmail) &&
+      isValidNickname(newInformation.businessName) &&
+      isValidBusinessNumber(newInformation.businessNum)
     ) {
-      console.log(
-        `정보 수정 완료: ${newData.nickname}, ${newData.businessNumber}, ${newData.email}`,
-      );
+      editBusiness(newData);
     } else {
       setErrorMessage(errors);
     }
@@ -103,9 +91,9 @@ const HostEditForm = () => {
         <div className='flex flex-col gap-1'>
           <CommonInput
             label='닉네임'
-            name='nickname'
-            placeholder='새로운 닉네임을 입력하세요.'
-            value={newInformation.nickname}
+            name='businessName'
+            placeholder={PLACEHOLDER.nickname}
+            value={newInformation.businessName}
             onChangeFunction={handleGetNewValue}
             maxLength={10}
           />
@@ -118,9 +106,9 @@ const HostEditForm = () => {
         <div className='flex flex-col gap-1'>
           <CommonInput
             label='이메일'
-            name='email'
-            placeholder='새로운 이메일을 입력하세요.'
-            value={newInformation.email}
+            name='businessEmail'
+            placeholder={PLACEHOLDER.email}
+            value={newInformation.businessEmail}
             onChangeFunction={handleGetNewValue}
           />
           {errorMessage.emailError && (
@@ -132,9 +120,9 @@ const HostEditForm = () => {
         <div className='flex flex-col gap-1'>
           <CommonInput
             label='사업자 등록번호'
-            name='businessNumber'
-            placeholder='000-00-00000'
-            value={newInformation.businessNumber}
+            name='businessNum'
+            placeholder={PLACEHOLDER.businessNumber}
+            value={newInformation.businessNum}
             onChangeFunction={handleGetNewValue}
           />
           {errorMessage.businessNumberError && (
