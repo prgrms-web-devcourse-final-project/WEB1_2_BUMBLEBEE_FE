@@ -3,7 +3,6 @@ import './ReservationDate.css';
 import moment from 'moment';
 import useSearchStore from '@store/searchStore';
 import { usePossibleTimeMutation } from '@pages/ReservationPage/hooks/useGetPossibleTime';
-import { useEffect } from 'react';
 
 type DatePiece = Date | null;
 type SelectedDate = DatePiece | [DatePiece, DatePiece];
