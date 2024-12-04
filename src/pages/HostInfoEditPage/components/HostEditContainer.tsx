@@ -19,9 +19,9 @@ const HostEditContainer = () => {
 
   return (
     <>
-      <div className='relative mt-14 flex w-[375px] flex-col'>
+      <div className='relative mt-10 flex w-[375px] flex-col'>
         <HostEditForm business={business} />
-        <div className='absolute bottom-[-280px] left-[50%] translate-x-[-50%]'>
+        <div className='absolute bottom-[-300px] left-[50%] translate-x-[-50%]'>
           <DeleteAccountButton onClickButton={() => setModalOpen(true)} />
         </div>
       </div>

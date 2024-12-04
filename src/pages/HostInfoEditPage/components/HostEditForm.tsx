@@ -92,7 +92,7 @@ const HostEditForm = ({ business }: { business: Business }) => {
           <CommonInput
             label='닉네임'
             name='businessName'
-            placeholder='새로운 닉네임을 입력하세요.'
+            placeholder={PLACEHOLDER.nickname}
             value={newInformation.businessName}
             onChangeFunction={handleGetNewValue}
             maxLength={10}
@@ -107,7 +107,7 @@ const HostEditForm = ({ business }: { business: Business }) => {
           <CommonInput
             label='이메일'
             name='businessEmail'
-            placeholder='새로운 이메일을 입력하세요.'
+            placeholder={PLACEHOLDER.email}
             value={newInformation.businessEmail}
             onChangeFunction={handleGetNewValue}
           />
