@@ -87,7 +87,7 @@ export interface Reservation {
   reservationCreatedAt: string;
   startTime: string;
   endTime: string;
-  studyRoomCapacity: number;
+  reservationCapacity: number;
   price: number;
 }
 
