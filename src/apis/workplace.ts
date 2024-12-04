@@ -7,6 +7,7 @@ import {
   SearchStudyRoom,
   SearchStudyRoomData,
   StudyRoomData,
+  StudyRoomDetailData,
   StudyRoomPutData,
   WorkPlaceData,
   WorkPlacePutData,
@@ -135,3 +136,11 @@ export const getBusinessWorkPlace =
     const response = await authInstance.get('/api/v1/workplace/business');
     return response.data;
   };
+
+// 스터디룸 상세 정보 조회
+export const getStudyroomDetail = async (
+  studyroomId: number,
+): Promise<StudyRoomDetailData> => {
+  const response = await authInstance.get(`api/v1/studyroom/${studyroomId}`);
+  return response.data;
+};
