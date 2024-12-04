@@ -87,10 +87,18 @@ export const onError = (message: string): void => {
 
 const errorInterceptor = (error: AxiosError) => {
   if (error.response) {
-    const { message } = error.response.data as {
+    const { message, code } = error.response.data as {
       code: string;
       message: string;
     };
+    if (
+      // 특정 코드(B004, B005, B006)에서는 toast를 띄우지 않음
+      error.response.status === 409 &&
+      ['B004', 'B005', 'B006'].includes(code)
+    ) {
+      return Promise.reject(error);
+    }
+
     onError(message || '요청 처리 중 오류가 발생했습니다.');
   }
 
