@@ -57,7 +57,7 @@ export interface BusinessAlarm {}
 export interface Member {
   nickName: string;
   phoneNumber: string;
-  birthDay: Date;
+  birthDay: string;
   sex: string;
   email: string;
   createdAt?: string;
