@@ -40,7 +40,6 @@ const ChatPage = () => {
       // 구독
       client.onConnect = () => {
         client.subscribe(`/sub/chat/room/${roomId}`, (message: IMessage) => {
-          // 경로 재설정 필요
           try {
             const newMessage = JSON.parse(message.body);
             console.log(newMessage);
@@ -72,7 +71,7 @@ const ChatPage = () => {
         timestamp: new Date().toISOString(),
       };
       stompClient.publish({
-        destination: '/pub/chat/room', // 경로 재설정 필요
+        destination: '/pub/sendMessage',
         body: JSON.stringify(chatMessage),
       });
     }
