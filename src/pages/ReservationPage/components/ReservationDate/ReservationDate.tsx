@@ -15,17 +15,13 @@ const ReservationDate = (props: ReservationDateProps) => {
   const { studyroomId } = props;
   const { searchDate, setDate, setTime, setFormattedTime } = useSearchStore();
   const { mutate } = usePossibleTimeMutation();
-  useEffect(() => {
-    if (searchDate) {
-      mutate({ studyRoomId: studyroomId, checkDate: searchDate });
-      setTime([]);
-      setFormattedTime([]);
-    }
-  }, [searchDate, studyroomId, mutate, setTime, setFormattedTime]);
 
   const handleChangeDate = (newDate: SelectedDate) => {
     if (newDate instanceof Date) {
       setDate(newDate);
+      mutate({ studyRoomId: studyroomId, checkDate: newDate });
+      setTime([]);
+      setFormattedTime([]);
     }
   };
   return (
@@ -39,6 +35,7 @@ const ReservationDate = (props: ReservationDateProps) => {
         prev2Label={null}
         next2Label={null}
         showFixedNumberOfWeeks
+        minDate={new Date()}
       />
     </div>
   );
