@@ -5,7 +5,7 @@ export type Room = {
   description: string;
   price: string;
   people: number;
-  roomImages: { url: string; file: File }[];
+  roomImages: { url: string; file: File | null }[];
 };
 // 등록 시, 상태관리 타입
 export type Space = {
@@ -15,7 +15,7 @@ export type Space = {
   closedTime: string;
   phoneNumber: string;
   address: { basic: string; detail: string };
-  spaceImage: File | null;
+  spaceImage: { url: string; file: File | null };
   rooms: Room[];
 };
 
@@ -173,9 +173,33 @@ export interface WorkPlaceData {
   workplacePhoneNumber: string;
   workplaceDescription: string;
   workplaceAddress: string;
-  imageUrl: string;
   workplaceStartTime: string;
   workplaceEndTime: string;
+  studyRoomList: {
+    studyRoomName: string;
+    description: string;
+    price: number;
+    capacity: number;
+  }[];
+}
+
+// 사업장 수정
+export interface WorkPlacePutData {
+  workplaceId: number;
+  workplaceName: string;
+  workplacePhoneNumber: string;
+  workplaceDescription: string;
+  workplaceAddress: string;
+  workplaceStartTime: string;
+  workplaceEndTime: string;
+}
+
+export interface GetWorkPlaceData extends WorkPlaceData {
+  workplaceId: number;
+  createdAt: string;
+  longitude: string;
+  latitude: string;
+  imageUrl: string;
   studyRoomList: {
     studyRoomName: string;
     description: string;
@@ -183,17 +207,6 @@ export interface WorkPlaceData {
     price: number;
     capacity: number;
   }[];
-}
-
-// 사업장 수정
-export interface WorkPlacePutData extends WorkPlaceData {
-  workplaceId: number;
-}
-
-export interface GetWorkPlaceData extends WorkPlacePutData {
-  createdAt: string;
-  longitude: string;
-  latitude: string;
 }
 
 // 사업장 위치

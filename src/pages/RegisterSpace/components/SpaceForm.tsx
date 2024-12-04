@@ -5,6 +5,7 @@ import { Space } from '@typings/types';
 import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import { getS3URL } from '@apis/workplace';
+import { useNavigate } from 'react-router-dom';
 import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
 import SelectOpenTime from './SelectOpenTime';
@@ -76,8 +77,8 @@ const SpaceForm = ({
     roomError: '',
   });
 
-  let pass = true;
   const isValid = () => {
+    let pass = true;
     const newErrorMessage = {
       spaceNameError: '',
       descriptionError: '',
@@ -129,7 +130,8 @@ const SpaceForm = ({
     axios.put(url, file);
   };
 
-  const { mutate } = usePostWorkPlace();
+  const { mutateAsync } = usePostWorkPlace();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -142,39 +144,15 @@ const SpaceForm = ({
       spaceFormData.closedTime !== '선택' &&
       isValidNumber(spaceFormData.phoneNumber) &&
       isValidAddress(spaceFormData.address.detail) &&
-      spaceFormData.spaceImage !== null &&
+      spaceFormData.spaceImage.file !== null &&
       spaceFormData.rooms.length !== 0
     ) {
-      // 사업장 사진
-      const s3URL = await getS3URL(
-        spaceFormData.spaceImage.name,
-        spaceFormData.spaceName,
-      );
-      uploadImageToS3(s3URL, spaceFormData.spaceImage);
-
-      // 룸 사진
-      const allRoomImages = spaceFormData.rooms.flatMap(
-        ({ roomImages, roomName }) =>
-          roomImages.map(({ file }) => ({
-            file,
-            roomName,
-          })),
-      );
-
-      await Promise.all(
-        allRoomImages.map(({ file, roomName }) =>
-          getS3URL(file.name, `${spaceFormData.spaceName}/${roomName}`).then(
-            (roomImageS3URL) => uploadImageToS3(roomImageS3URL, file),
-          ),
-        ),
-      );
-
-      mutate({
+      // 이미지 제외 post 요청
+      const { workplaceId, studyroomId } = await mutateAsync({
         workplaceName: spaceFormData.spaceName,
         workplacePhoneNumber: spaceFormData.phoneNumber,
         workplaceDescription: spaceFormData.description,
         workplaceAddress: `${spaceFormData.address.basic}, ${spaceFormData.address.detail}`,
-        imageUrl: `${spaceFormData.spaceName}/${spaceFormData.spaceImage.name}`,
         workplaceStartTime: spaceFormData.openTime,
         workplaceEndTime: spaceFormData.closedTime,
         studyRoomList: spaceFormData.rooms.map((room) => ({
@@ -182,9 +160,34 @@ const SpaceForm = ({
           price: Number(room.price),
           capacity: room.people,
           description: room.description,
-          imageUrl: `${spaceFormData.spaceName}/${room.roomName}`,
         })),
       });
+
+      // 그 이후에 사업장 사진 업로드
+      const s3URL = await getS3URL(
+        spaceFormData.spaceImage.file.name,
+        `workplace-${workplaceId}`,
+      );
+      uploadImageToS3(s3URL, spaceFormData.spaceImage.file);
+
+      // 룸 사진 업로드
+      const allRoomImages = spaceFormData.rooms.flatMap(({ roomImages }, idx) =>
+        roomImages.map(({ file }) => ({
+          file,
+          roodId: studyroomId[idx],
+        })),
+      );
+      await Promise.all(
+        allRoomImages.map(({ file, roodId }) =>
+          getS3URL(
+            file!.name,
+            `workplace-${workplaceId}/studyroom-${roodId}`,
+          ).then((roomImageS3URL) => uploadImageToS3(roomImageS3URL, file!)),
+        ),
+      );
+
+      // 마지막에 메인 페이지로 이동
+      navigate('/');
     }
   };
 
