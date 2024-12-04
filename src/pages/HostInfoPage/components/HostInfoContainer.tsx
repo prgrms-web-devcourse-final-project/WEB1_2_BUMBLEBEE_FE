@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { MdArrowForwardIos } from 'react-icons/md';
+import useGetBusinessData from '@pages/HostMypage/hooks/useGetBusinessData';
 import HostInfoBox from './HostInfoBox';
 
 const HostInfoContainer = () => {
   const navigate = useNavigate();
+  const { business } = useGetBusinessData();
 
   const handleMoveEditPage = () => {
-    navigate('/host-info-edit');
+    navigate('/host-info-edit', { state: business });
   };
 
   return (
@@ -18,7 +20,7 @@ const HostInfoContainer = () => {
           className='flex h-[30px] items-center gap-1 self-end text-subfont active:text-primary'
           onClick={handleMoveEditPage}
         >
-          정보 수정하기
+          수정하기
           <MdArrowForwardIos />
         </button>
       </div>
