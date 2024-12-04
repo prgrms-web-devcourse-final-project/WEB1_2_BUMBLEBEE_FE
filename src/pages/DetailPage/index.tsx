@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import DetailNavigation from './components/DetailNavigation';
 import TabComponent from './components/TabComponent';
-import useGetWorplaceData from './hooks/useGetWorkplaceData';
+import useGetWorkplaceData from './hooks/useGetWorkplaceData';
 
 const DetailPage = () => {
   const { workplaceId } = useParams() as { workplaceId: string };
-  const { data, isLoading } = useGetWorplaceData(Number(workplaceId));
+  const { data, isLoading } = useGetWorkplaceData(Number(workplaceId));
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
 
   if (isLoading) {

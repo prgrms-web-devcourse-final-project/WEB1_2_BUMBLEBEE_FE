@@ -143,7 +143,7 @@ export interface WorkplaceStudyRoomData {
   studyRoomId: number;
   studyRoomName: string;
   description: string;
-  imageUrl: string;
+  imageUrl: string[];
   price: number;
   capacity: number;
 }

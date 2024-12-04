@@ -316,7 +316,7 @@ const SpaceForm = ({
                       studyRoomName: item.roomName,
                       capacity: item.people,
                       description: item.description,
-                      imageUrl: item.roomImages[0].url,
+                      imageUrl: item.roomImages.map((image) => image.url),
                       price: Number(item.price),
                     }}
                   />

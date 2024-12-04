@@ -4,7 +4,7 @@ const RoomComponent = ({ room }: { room: WorkplaceStudyRoomData }) => {
   return (
     <div className='flex h-[120px] w-custom items-center rounded-[10px] bg-white px-[14px] py-[10px] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.2)]'>
       <img
-        src={room.imageUrl}
+        src={room.imageUrl[0]}
         alt='사진'
         className='h-[94px] w-[94px] object-cover'
       />
