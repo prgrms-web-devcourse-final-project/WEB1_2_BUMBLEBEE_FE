@@ -24,6 +24,7 @@ const ReservationPage = () => {
     price: 7000,
     capacity: 4,
   };
+
   return (
     <MainLayout>
       <HeaderOnlyTitle title={data?.studyRoomName || '스터디룸'} />

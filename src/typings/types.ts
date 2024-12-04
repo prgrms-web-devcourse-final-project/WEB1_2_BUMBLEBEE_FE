@@ -146,6 +146,14 @@ export interface StudyRoomDetailData {
   capacity: number;
 }
 
+// 스터디룸의 예약 가능한 시간대
+export interface PossibleTime {
+  capacity: number;
+  possibleTime: string[];
+  startTime: string;
+  endTime: string;
+}
+
 // 스터디룸 검색
 export interface SearchStudyRoom {
   workplaceAddress: string;
