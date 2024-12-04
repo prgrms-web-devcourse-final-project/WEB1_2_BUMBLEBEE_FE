@@ -6,6 +6,7 @@ import useSearchStore from '@store/searchStore';
 import ResultBar from './components/ResultBar';
 import RoomCard from './components/RoomCard';
 import { useGetSearchStudyRoom } from './hooks/useGetSearchStudyRoom';
+import { SyncLoader } from 'react-spinners';
 
 const SearchResult = () => {
   const {
@@ -27,7 +28,8 @@ const SearchResult = () => {
     endDateTime,
     reservationCapacity,
   };
-  // const { data } = useGetSearchStudyRoom(searchData);
+  // const { data, isLoading } = useGetSearchStudyRoom(searchData);
+  const isLoading = false;
   const data = [
     {
       workplaceName: '타임유스터디카페 민락점',
@@ -84,7 +86,18 @@ const SearchResult = () => {
         <HeaderWithTitle title='검색 결과' />
         <ResultBar />
         <div className='mt-4 flex h-auto flex-col pb-[94px]'>
+          {isLoading && (
+            <div className='flex h-[300px] w-full items-center justify-center'>
+              <SyncLoader color='#50BEAD' />
+            </div>
+          )}
+          {!isLoading && data.length === 0 && (
+            <div className='flex h-[300px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
+              검색 결과가 없습니다.
+            </div>
+          )}
           {data &&
+            data.length > 0 &&
             data.map((item) => (
               <RoomCard
                 item={item}
