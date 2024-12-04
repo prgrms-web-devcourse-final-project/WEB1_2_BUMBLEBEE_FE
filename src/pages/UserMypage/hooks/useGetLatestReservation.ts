@@ -6,7 +6,7 @@ const useGetLatestReservation = () => {
     queryKey: ['latestReservation'],
     queryFn: () => getLatestReservation(),
   });
-  return { data };
+  return { latestReservation: data };
 };
 
 export default useGetLatestReservation;
