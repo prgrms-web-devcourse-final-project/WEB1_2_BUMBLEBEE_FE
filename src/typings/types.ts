@@ -58,7 +58,7 @@ export interface BusinessAlarm {}
 export interface Member {
   nickName: string;
   phoneNumber: string;
-  birthDay: Date;
+  birthDay: string;
   sex: string;
   email: string;
   createdAt?: string;
@@ -99,7 +99,7 @@ export interface PutReviewRequestBody {
 
 // 리뷰 작성
 export interface PostReviewRequestBody extends PutReviewRequestBody {
-  reservatinId: number;
+  reservationId: number;
   workPlaceName: string;
 }
 

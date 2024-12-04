@@ -14,11 +14,8 @@ export const getUserAlarm = async (): Promise<Alarm> => {
 };
 
 // 회원 정보 수정
-export const putEditMemberInformation = async (
-  data: Member,
-): Promise<Member> => {
-  const response = await authInstance.put('/api/v1/member', data);
-  return response.data;
+export const putEditMemberInformation = async (data: Member): Promise<void> => {
+  await authInstance.put('/api/v1/member', data);
 };
 
 // 사용자 탈퇴
