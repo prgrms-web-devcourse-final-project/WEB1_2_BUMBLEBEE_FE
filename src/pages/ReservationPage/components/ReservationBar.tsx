@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import ReservationDate from './ReservationDate/ReservationDate';
 import ReservationTime from './ReservationTime';
 import ReservationPeople from './ReservationPeople';
-import useGetPossibleTime from '../hooks/useGetPossibleTime';
+import { useGetPossibleTime } from '../hooks/useGetPossibleTime';
 
 interface ReservationBarProps {
   studyroomId: number;
@@ -101,7 +101,7 @@ const ReservationBar = (props: ReservationBarProps) => {
         >
           {formattedPeople}
         </button>
-        {showSelect.date && <ReservationDate />}
+        {showSelect.date && <ReservationDate studyroomId={studyroomId} />}
         {showSelect.time && <ReservationTime data={data} />}
         {showSelect.people && <ReservationPeople data={data} />}
       </div>

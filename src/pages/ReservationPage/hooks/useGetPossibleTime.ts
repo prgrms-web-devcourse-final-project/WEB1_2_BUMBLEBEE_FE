@@ -1,8 +1,10 @@
 import { getPossibleTime } from '@apis/workplace';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { PossibleTime } from '@typings/types';
 
-const useGetPossibleTime = (studyRoomId: number, checkDate: Date) => {
+type ModifyDateType = { studyRoomId: number; checkDate: Date };
+
+export const useGetPossibleTime = (studyRoomId: number, checkDate: Date) => {
   const { data, isLoading, isError } = useQuery<PossibleTime>({
     queryKey: ['studyroomDetail', studyRoomId, checkDate],
     queryFn: () => getPossibleTime(studyRoomId, checkDate),
@@ -11,4 +13,17 @@ const useGetPossibleTime = (studyRoomId: number, checkDate: Date) => {
   return { data: (data ?? {}) as PossibleTime, isLoading, isError };
 };
 
-export default useGetPossibleTime;
+export const usePossibleTimeMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<PossibleTime, Error, ModifyDateType>({
+    mutationFn: ({ studyRoomId, checkDate }) =>
+      getPossibleTime(studyRoomId, checkDate),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['studyroomDetail'] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+};
