@@ -71,8 +71,10 @@ export const getWorkplaceStudyRoom = async (
 export const getSearchStudyRoom = async (
   searchStudyRoom: SearchStudyRoom,
 ): Promise<SearchStudyRoomData[]> => {
-  const response = await defaultInstance.get('api/v1/studyroom/available', {
-    params: searchStudyRoom,
+  const response = await defaultInstance.request({
+    url: '/api/v1/studyroom/available',
+    method: 'GET',
+    data: searchStudyRoom,
   });
   return response.data;
 };
