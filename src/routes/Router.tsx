@@ -134,7 +134,7 @@ const router = createBrowserRouter([
     element: <SearchResult />,
   },
   {
-    path: '/reservation',
+    path: '/reservation/:studyroomId',
     element: <ReservationPage />,
   },
   {

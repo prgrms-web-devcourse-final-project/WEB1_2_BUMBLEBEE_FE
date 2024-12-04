@@ -4,9 +4,11 @@ import {
   GetWorkPlaceData,
   MapPosition,
   NowPosition,
+  PossibleTime,
   SearchStudyRoom,
   SearchStudyRoomData,
   StudyRoomData,
+  StudyRoomDetailData,
   StudyRoomPutData,
   WorkPlaceData,
   WorkPlacePutData,
@@ -146,3 +148,28 @@ export const getBusinessWorkPlace =
     const response = await authInstance.get('/api/v1/workplace/business');
     return response.data;
   };
+
+// 스터디룸 상세 정보 조회
+export const getStudyroomDetail = async (
+  studyRoomId: number,
+): Promise<StudyRoomDetailData> => {
+  const response = await defaultInstance.get(
+    `/api/v1/studyroom/${studyRoomId}`,
+  );
+  return response.data;
+};
+
+// 스터디룸의 예약 가능한 시간대 조회
+export const getPossibleTime = async (
+  studyRoomId: number,
+  checkDate: Date,
+): Promise<PossibleTime> => {
+  const formattedDate = checkDate.toISOString().split('T')[0];
+  const response = await defaultInstance.get(
+    `api/v1/studyroom/search/${studyRoomId}`,
+    {
+      params: { checkDate: formattedDate },
+    },
+  );
+  return response.data;
+};
