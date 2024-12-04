@@ -7,7 +7,7 @@ const useGetUserData = () => {
     queryKey: ['member'],
     queryFn: () => getUserData(),
   });
-  return { user: (data ?? []) as Member };
+  return { user: (data ?? {}) as Member };
 };
 
 export default useGetUserData;

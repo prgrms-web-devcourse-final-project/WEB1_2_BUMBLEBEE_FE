@@ -18,28 +18,36 @@ import { authInstance, defaultInstance } from '.';
 
 // 프리사인드 URL 얻기
 export const getS3URL = async (
-  extension: string,
   fileName: string,
+  fileLocation: string,
 ): Promise<string> => {
   const response = await authInstance.get('/api/generate-presigned-url', {
-    params: { extension, fileName },
+    params: { fileName, fileLocation },
   });
   return response.data.presignedUrl;
 };
 
 // 스터디룸 등록
 export const postStudyRoom = async (
+  workPlaceId: string,
   studyroom: StudyRoomData,
-): Promise<void> => {
-  const response = await authInstance.post('/api/v1/studyroom', studyroom);
+): Promise<{ studyroomId: number }> => {
+  const response = await authInstance.post(
+    `/api/v1/studyroom/${workPlaceId}`,
+    studyroom,
+  );
   return response.data;
 };
 
 // 스터디룸 정보 수정
 export const putStudyRoom = async (
+  studyRoomId: string,
   studyroom: StudyRoomPutData,
 ): Promise<void> => {
-  const response = await authInstance.put('/api/v1/studyroom', studyroom);
+  const response = await authInstance.put(
+    `/api/v1/studyroom/${studyRoomId}`,
+    studyroom,
+  );
   return response.data;
 };
 
@@ -74,20 +82,23 @@ export const getSearchStudyRoom = async (
 // 사업장 등록
 export const postWorkPlace = async (
   workplace: WorkPlaceData,
-): Promise<void> => {
-  await authInstance.post('/api/v1/workplace', workplace);
+): Promise<{
+  workplaceId: number;
+  studyroomId: number[];
+}> => {
+  const response = await authInstance.post('/api/v1/workplace', workplace);
+  return response.data;
 };
 
 // 사업장 정보 수정
-export const putWorkPlace = async (
-  workplaceId: number,
-  workplace: WorkPlacePutData,
-): Promise<void> => {
-  const response = await authInstance.put(
-    `/api/v1/workplace/${workplaceId}`,
-    workplace,
-  );
-  return response.data;
+export const putWorkPlace = async ({
+  workplaceId,
+  workplace,
+}: {
+  workplaceId: number;
+  workplace: WorkPlacePutData;
+}): Promise<void> => {
+  await authInstance.put(`/api/v1/workplace/${workplaceId}`, workplace);
 };
 
 // 사업장 삭제

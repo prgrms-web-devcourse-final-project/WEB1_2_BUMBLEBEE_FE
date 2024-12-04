@@ -10,6 +10,14 @@ import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
 import BusinessNumber from './BusinessNumber';
 import useBusinessSignUp from '../hooks/useBusinessSignUp';
 
+export interface ErrorMsg {
+  businessNumberError?: string;
+  nicknameError?: string;
+  emailError?: string;
+  passwordError?: string;
+  checkPasswordError?: string;
+}
+
 const BusinessSignUpForm = () => {
   const navigate = useNavigate();
 
@@ -24,7 +32,7 @@ const BusinessSignUpForm = () => {
   // input 값 반영
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'nickname' && e.target.value.length > 8) {
-      e.target.value = e.target.value.substring(0, 8);
+      e.target.value = e.target.value.substring(0, 10);
     }
     setHostFormData({
       ...hostFormData,
@@ -32,7 +40,7 @@ const BusinessSignUpForm = () => {
     });
   };
 
-  const [errorMessage, setErrorMessage] = useState({
+  const [errorMessage, setErrorMessage] = useState<ErrorMsg>({
     businessNumberError: '',
     nicknameError: '',
     emailError: '',
@@ -70,7 +78,7 @@ const BusinessSignUpForm = () => {
     setErrorMessage(newErrorMessage);
   };
 
-  const { mutate } = useBusinessSignUp();
+  const { mutate } = useBusinessSignUp(setErrorMessage);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
