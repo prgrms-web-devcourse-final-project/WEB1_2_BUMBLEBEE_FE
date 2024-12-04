@@ -6,7 +6,7 @@ import CategoryButton from './CategoryButton';
 import useGetLatestReservation from '../hooks/useGetLatestReservation';
 
 const UserButtonContainer = () => {
-  const { data: latestReservation } = useGetLatestReservation();
+  const { latestReservation } = useGetLatestReservation();
   const navigate = useNavigate();
 
   const handleMoveReservationList = () => {
