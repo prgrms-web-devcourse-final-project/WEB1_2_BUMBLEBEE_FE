@@ -18,18 +18,18 @@ const LatestReservation = ({ data }: { data: Reservation }) => {
     <>
       <Link to='/reservation-list'>
         <div className='flex h-auto min-h-[172px] w-[330px] flex-col rounded-[10px] bg-white p-[16px] shadow-[0_0_6px_0_rgba(0,0,0,0.25)]'>
-          <div className='flex items-center justify-start gap-[13px]'>
+          <div className='flex justify-start gap-[13px]'>
             <img
               src={workplaceImageUrl}
               alt='스터디룸 사진'
-              className='h-[118px] w-[118px] self-start bg-subfont object-cover'
+              className='h-[118px] w-[118px] bg-subfont object-cover'
             />
 
             <div className='flex w-[170px] flex-col gap-[7px]'>
               <span className='break-word text-[16px] font-medium'>
                 {workplaceName}
               </span>
-              <ul className='flex flex-col gap-[2px] text-[12px]'>
+              <ul className='flex flex-col gap-1 text-[12px]'>
                 <ListStyle
                   name='예약일'
                   value={getDateFunction(startTime)}
