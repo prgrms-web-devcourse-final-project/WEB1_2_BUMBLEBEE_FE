@@ -28,7 +28,7 @@ const UserSignUpForm = () => {
   // input 값 반영
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === 'nickname' && e.target.value.length > 8) {
-      e.target.value = e.target.value.substring(0, 8);
+      e.target.value = e.target.value.substring(0, 10);
     }
     setUserFormData({
       ...userFormData,

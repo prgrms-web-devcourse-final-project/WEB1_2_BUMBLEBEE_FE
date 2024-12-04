@@ -27,6 +27,7 @@ const UserEditForm = ({ user }: { user: Member }) => {
     sex: user.sex,
     phoneNumber: user.phoneNumber,
   });
+  console.log(newInformation);
   const [errorMessage, setErrorMessage] = useState<EditErrorMessage>({});
   const { mutate: editUser } = usePutEditUserData();
 
@@ -57,6 +58,9 @@ const UserEditForm = ({ user }: { user: Member }) => {
       sexError: '',
     };
 
+    if (newInformation.sex === '') {
+      errors.sexError = ERROR_MESSAGE.gender;
+    }
     if (!isValidNickname(newInformation.nickName)) {
       errors.nicknameError = ERROR_MESSAGE.nickname;
     }
@@ -68,9 +72,6 @@ const UserEditForm = ({ user }: { user: Member }) => {
     }
     if (!isValidUserPhoneNumber(newInformation.phoneNumber)) {
       errors.phoneNumberError = ERROR_MESSAGE.phonNumber;
-    }
-    if (newInformation.sex === '') {
-      errors.sexError = ERROR_MESSAGE.gender;
     }
 
     return errors;
@@ -90,6 +91,7 @@ const UserEditForm = ({ user }: { user: Member }) => {
     };
 
     if (
+      newInformation.sex !== '' &&
       isValidEmail(newInformation.email) &&
       isValidNickname(newInformation.nickName) &&
       isValidBirth(newInformation.birthDay) &&
@@ -106,49 +108,49 @@ const UserEditForm = ({ user }: { user: Member }) => {
       className='mx-auto flex w-custom flex-col justify-center gap-10'
       onSubmit={onSubmitHandler}
     >
-      <div className='flex flex-col gap-3'>
-        <p className='mr-[34px] text-[14px] font-normal'>성별</p>
-        <div className='flex'>
-          <div className='flex items-center'>
-            <input
-              type='radio'
-              name='sex'
-              value='MALE'
-              className='mr-[6px]'
-              onChange={handleGetNewValue}
-              checked={newInformation.sex === 'MALE'}
-            />
-            <label
-              htmlFor='MALE'
-              className='mr-[20px] text-[14px]'
-            >
-              남자
-            </label>
-          </div>
-          <div className='flex items-center'>
-            <input
-              type='radio'
-              name='sex'
-              value='FEMALE'
-              className='w-[14px mr-[6px] h-[14px]'
-              onChange={handleGetNewValue}
-              checked={newInformation.sex === 'FEMALE'}
-            />
-            <label
-              htmlFor='FEMALE'
-              className='text-[14px]'
-            >
-              여자
-            </label>
-          </div>
-        </div>
-        {errorMessage.sexError && (
-          <p className='text-[12px] font-medium text-[#F83A3A]'>
-            {errorMessage.sexError}
-          </p>
-        )}
-      </div>
       <div className='flex flex-col gap-6'>
+        <div className='flex flex-col gap-3'>
+          <p className='mr-[34px] text-[14px] font-normal'>성별</p>
+          <div className='flex'>
+            <div className='flex items-center'>
+              <input
+                type='radio'
+                name='sex'
+                value='MALE'
+                className='mr-[6px]'
+                onChange={handleGetNewValue}
+                checked={newInformation.sex === 'MALE'}
+              />
+              <label
+                htmlFor='MALE'
+                className='mr-[20px] text-[14px]'
+              >
+                남자
+              </label>
+            </div>
+            <div className='flex items-center'>
+              <input
+                type='radio'
+                name='sex'
+                value='FEMALE'
+                className='w-[14px mr-[6px] h-[14px]'
+                onChange={handleGetNewValue}
+                checked={newInformation.sex === 'FEMALE'}
+              />
+              <label
+                htmlFor='FEMALE'
+                className='text-[14px]'
+              >
+                여자
+              </label>
+            </div>
+          </div>
+          {errorMessage.sexError && (
+            <p className='text-[12px] font-medium text-[#F83A3A]'>
+              {errorMessage.sexError}
+            </p>
+          )}
+        </div>
         <div className='flex flex-col gap-1'>
           <CommonInput
             label='닉네임'
