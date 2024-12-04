@@ -9,7 +9,7 @@ export interface WriteReviewProps {
   workPlaceName: string;
   reservationCreatedAt: string;
   reservationTime: string;
-  studyRoomCapacity: number;
+  reservationCapacity: number;
   price: string;
   reservationDay: string;
   studyRoomName: string;

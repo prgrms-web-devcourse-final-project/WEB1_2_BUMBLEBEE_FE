@@ -10,26 +10,26 @@ const LatestReservation = ({ data }: { data: Reservation }) => {
     studyRoomName,
     startTime,
     endTime,
-    studyRoomCapacity,
+    reservationCapacity,
     price,
   } = data;
 
   return (
     <>
       <Link to='/reservation-list'>
-        <div className='flex h-[172px] w-[330px] flex-col rounded-[10px] bg-white p-[16px] shadow-[0_0_6px_0_rgba(0,0,0,0.25)]'>
-          <div className='flex items-center justify-start gap-[10px]'>
-            <div className='h-[118px] w-[118px]'>
-              <img
-                src={workplaceImageUrl}
-                alt='스터디룸 사진'
-                className='object-cover'
-              />
-            </div>
+        <div className='flex h-auto min-h-[172px] w-[330px] flex-col rounded-[10px] bg-white p-[16px] shadow-[0_0_6px_0_rgba(0,0,0,0.25)]'>
+          <div className='flex justify-start gap-[13px]'>
+            <img
+              src={workplaceImageUrl}
+              alt='스터디룸 사진'
+              className='h-[118px] w-[118px] bg-subfont object-cover'
+            />
 
             <div className='flex w-[170px] flex-col gap-[7px]'>
-              <p className='text-[16px] font-medium'>{workplaceName}</p>
-              <ul className='flex flex-col gap-[2px] text-[12px]'>
+              <span className='break-word text-[16px] font-medium'>
+                {workplaceName}
+              </span>
+              <ul className='flex flex-col gap-1 text-[12px]'>
                 <ListStyle
                   name='예약일'
                   value={getDateFunction(startTime)}
@@ -44,7 +44,7 @@ const LatestReservation = ({ data }: { data: Reservation }) => {
                 />
                 <ListStyle
                   name='인원'
-                  value={`${studyRoomCapacity} 인`}
+                  value={`${reservationCapacity}인`}
                 />
               </ul>
             </div>

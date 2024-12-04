@@ -1,27 +1,41 @@
 import DetailTitle from '@components/DetailTitle';
+import { StudyRoomDetailData } from '@typings/types';
 import { GrNext } from 'react-icons/gr';
+import { useNavigate } from 'react-router-dom';
 
-const RoomDetail = () => {
+interface RoomDatailProps {
+  data: StudyRoomDetailData;
+}
+
+const RoomDetail = (props: RoomDatailProps) => {
+  const { data } = props;
+  const navigate = useNavigate();
   return (
-    <div className='mx-auto mt-8 flex w-custom flex-col gap-4'>
-      <DetailTitle title='룸 상세 정보'>
-        <button
-          type='button'
-          className='flex items-center justify-center gap-1 text-xs text-subfont'
-        >
-          123 스터디룸 <GrNext />
-        </button>
-      </DetailTitle>
-      <div className='whitespace-pre-wrap text-sm'>
-        강서구 내발산동 수명산파크 중심상가에 위치해있으며, 김포공항, 마곡,
-        마곡나루, 우장산, 화곡역 등에 가깝고 대로변에 위치하고 있어 접근성이
-        매우 용이합니다. <br />
-        관리자가 늦은 오후~새벽까지 상주하고 있어, 관리가 잘 되고 안전하게
-        이용하실 수 있습니다. <br />
-        스터디룸은 예약제로 운영중입니다.. * 간혹, 선예약이 있는 경우라도 조정을
-        통해, 최대한 이용하실 수 있는 방법을 찾을 수 있으니 전화나 톡톡으로
-        문의주시기 바랍니다. * 스터디존(1인석)은 총 60석으로 방문선착순
-        이용가능합니다.
+    <div className='mx-auto my-8 flex w-custom flex-col gap-6'>
+      <div className='flex flex-col gap-4'>
+        <DetailTitle title='룸 상세 정보'>
+          <button
+            type='button'
+            className='flex items-center justify-center gap-1 text-xs text-subfont'
+            onClick={() => navigate(`/detail/${data.workplaceId}`)}
+          >
+            {data.workplaceName} <GrNext />
+          </button>
+        </DetailTitle>
+        <div className='whitespace-pre-wrap text-sm'>{data.description}</div>
+      </div>
+      <div className='flex flex-col gap-4 pb-[110px]'>
+        <DetailTitle title='이용 정보' />
+        <div className='flex flex-col gap-2'>
+          <div className='flex items-center justify-between text-sm'>
+            <p className='font-medium'>1인당 1시간 이용 가격</p>
+            <p>{data && data.price && data.price.toLocaleString('ko-KR')}원</p>
+          </div>
+          <div className='flex items-center justify-between text-sm'>
+            <p className='font-medium'>수용 가능 인원</p>
+            <p>{data.capacity}명</p>
+          </div>
+        </div>
       </div>
     </div>
   );

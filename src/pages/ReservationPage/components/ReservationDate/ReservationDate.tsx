@@ -2,16 +2,25 @@ import Calendar from 'react-calendar';
 import './ReservationDate.css';
 import moment from 'moment';
 import useSearchStore from '@store/searchStore';
+import { usePossibleTimeMutation } from '@pages/ReservationPage/hooks/useGetPossibleTime';
 
 type DatePiece = Date | null;
-
 type SelectedDate = DatePiece | [DatePiece, DatePiece];
+interface ReservationDateProps {
+  studyroomId: number;
+}
 
-const ReservationDate = () => {
-  const { searchDate, setDate } = useSearchStore();
+const ReservationDate = (props: ReservationDateProps) => {
+  const { studyroomId } = props;
+  const { searchDate, setDate, setTime, setFormattedTime } = useSearchStore();
+  const { mutate } = usePossibleTimeMutation();
+
   const handleChangeDate = (newDate: SelectedDate) => {
     if (newDate instanceof Date) {
-      setDate(new Date(newDate));
+      setDate(newDate);
+      mutate({ studyRoomId: studyroomId, checkDate: newDate });
+      setTime([]);
+      setFormattedTime([]);
     }
   };
   return (
@@ -25,6 +34,7 @@ const ReservationDate = () => {
         prev2Label={null}
         next2Label={null}
         showFixedNumberOfWeeks
+        minDate={new Date()}
       />
     </div>
   );

@@ -77,3 +77,13 @@ export const getPaymentsFail = async (
 
   return response.data;
 };
+
+// 결제 취소
+export const postCancelPayment = async (id: number): Promise<void> => {
+  await authInstance.post('/api/v1/payments/toss/cancel', {
+    params: {
+      reservationId: id,
+      cancelReason: '단순변심',
+    },
+  });
+};

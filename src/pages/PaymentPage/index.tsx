@@ -1,6 +1,7 @@
 import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import PaymentRoomCard from './components/PaymentRoomCard';
 import ReservationInfo from './components/ReservationInfo';
 import CancelRule from './components/CancelRule';
@@ -38,12 +39,8 @@ export interface CheckState {
 export type PayMethodType = 'TOSS' | 'KAKAOPAY' | null;
 
 const PaymentPage = () => {
-  const studyRoomInfo: StudyRoomInfo = {
-    studyRoomId: 309,
-    workplaceName: 'ABC 스터디룸',
-    studyRoomTitle: 'ROOM A',
-    studyRoomPrice: 3500,
-  };
+  const location = useLocation();
+  const studyRoomInfo = location.state;
 
   const [totalAmount, setTotalAmount] = useState(0);
 
