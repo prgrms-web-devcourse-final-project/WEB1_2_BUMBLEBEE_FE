@@ -1,6 +1,8 @@
 import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
 import { useNavigate, useParams } from 'react-router-dom';
+import useSearchStore from '@store/searchStore';
+import { toast } from 'react-toastify';
 import ReservationBar from './components/ReservationBar';
 import ImageCarousel from './components/ImageCarousel';
 import RoomDetail from './components/RoomDetail';
@@ -10,8 +12,19 @@ const ReservationPage = () => {
   const navigate = useNavigate();
   const { studyroomId } = useParams<{ studyroomId: string }>();
   const { data } = useGetStudyroomDetail(Number(studyroomId));
-  console.log(data);
-  console.log(Number(studyroomId));
+  const { searchTime, searchPeople } = useSearchStore();
+
+  const handleClickReservation = () => {
+    if (searchTime.length === 0) {
+      toast.error('시간을 선택해주세요.');
+      return;
+    }
+    if (searchPeople === 0) {
+      toast.error('인원을 선택해주세요.');
+      return;
+    }
+    navigate('/payment');
+  };
 
   return (
     <MainLayout>
@@ -23,7 +36,7 @@ const ReservationPage = () => {
         <button
           type='button'
           className='btn-primary'
-          onClick={() => navigate('/payment')}
+          onClick={handleClickReservation}
         >
           예약하기
         </button>
