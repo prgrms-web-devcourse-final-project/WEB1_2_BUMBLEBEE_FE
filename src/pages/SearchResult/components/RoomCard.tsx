@@ -14,9 +14,9 @@ const RoomCard = (props: RoomCardProps) => {
         alt='스터디룸 사진'
         className='h-[110px] w-[110px] object-cover'
       />
-      <div className='flex w-[170px] flex-col gap-[10px]'>
-        <div>
-          <div className='flex justify-between'>
+      <div className='flex w-[210px] flex-col gap-[10px]'>
+        <div className='flex flex-col gap-1'>
+          <div className='flex items-start justify-between'>
             <p className='text-xs font-normal text-subfont'>
               {item.workplaceName}
             </p>
