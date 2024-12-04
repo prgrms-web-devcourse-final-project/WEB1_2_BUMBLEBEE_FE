@@ -5,28 +5,29 @@ import { Space } from '@typings/types';
 import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import { getS3URL } from '@apis/workplace';
-import { useNavigate } from 'react-router-dom';
-import PhoneNumber from './PhoneNumber';
-import SelectClosedTime from './SelectClosedTime';
-import SelectOpenTime from './SelectOpenTime';
-import Address from './Address';
-import WorkSpaceImage from './WorkSpaceImage';
-import RoomComponent from './RoomComponent';
-import usePostWorkPlace from '../hooks/usePostWorkPlace';
+import SelectOpenTime from '@pages/RegisterSpace/components/SelectOpenTime';
+import SelectClosedTime from '@pages/RegisterSpace/components/SelectClosedTime';
+import PhoneNumber from '@pages/RegisterSpace/components/PhoneNumber';
+import Address from '@pages/RegisterSpace/components/Address';
+import WorkSpaceImage from '@pages/RegisterSpace/components/WorkSpaceImage';
+import RoomComponent from '@pages/RegisterSpace/components/RoomComponent';
+import { useParams } from 'react-router-dom';
+import usePutWorkPlace from '../hooks/usePutWorkPlace';
+import useGetWorkPlaceInfo from '../hooks/useGetWorkPlaceInfo';
 
-interface SpaceFormProps {
+interface SpaceModifyProps {
   spaceFormData: Space;
   changeFormdata: (data: Partial<Space>) => void;
   addRoom: () => void;
   clickRoom: (id: string) => void;
 }
 
-const SpaceForm = ({
+const SpaceModify = ({
   spaceFormData,
   changeFormdata,
   addRoom,
   clickRoom,
-}: SpaceFormProps) => {
+}: SpaceModifyProps) => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -74,9 +75,9 @@ const SpaceForm = ({
     phoneNumberError: '',
     addressError: '',
     imageError: '',
-    roomError: '',
   });
 
+  const { workplaceId } = useParams() as { workplaceId: string };
   const isValid = () => {
     let pass = true;
     const newErrorMessage = {
@@ -86,7 +87,6 @@ const SpaceForm = ({
       phoneNumberError: '',
       addressError: '',
       imageError: '',
-      roomError: '',
     };
 
     if (!isValidSpaceName(spaceFormData.spaceName)) {
@@ -118,9 +118,6 @@ const SpaceForm = ({
       newErrorMessage.imageError = '이미지를 등록해주세요.';
       pass = false;
     }
-    if (spaceFormData.rooms.length === 0) {
-      newErrorMessage.roomError = '룸은 적어도 하나 이상 등록해야 합니다.';
-    }
 
     setErrorMessage(newErrorMessage);
     return pass;
@@ -130,12 +127,14 @@ const SpaceForm = ({
     axios.put(url, file);
   };
 
-  const { mutateAsync } = usePostWorkPlace();
-  const navigate = useNavigate();
+  const { mutateAsync } = usePutWorkPlace();
+  const { data: info } = useGetWorkPlaceInfo(Number(workplaceId));
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    isValid();
+    if (!isValid()) {
+      return;
+    }
 
     if (
       isValidSpaceName(spaceFormData.spaceName) &&
@@ -144,50 +143,28 @@ const SpaceForm = ({
       spaceFormData.closedTime !== '선택' &&
       isValidNumber(spaceFormData.phoneNumber) &&
       isValidAddress(spaceFormData.address.detail) &&
-      spaceFormData.spaceImage.file !== null &&
-      spaceFormData.rooms.length !== 0
+      spaceFormData.spaceImage.file !== null
     ) {
-      // 이미지 제외 post 요청
-      const { workplaceId, studyroomId } = await mutateAsync({
-        workplaceName: spaceFormData.spaceName,
-        workplacePhoneNumber: spaceFormData.phoneNumber,
-        workplaceDescription: spaceFormData.description,
-        workplaceAddress: `${spaceFormData.address.basic}, ${spaceFormData.address.detail}`,
-        workplaceStartTime: spaceFormData.openTime,
-        workplaceEndTime: spaceFormData.closedTime,
-        studyRoomList: spaceFormData.rooms.map((room) => ({
-          studyRoomName: room.roomName,
-          price: Number(room.price),
-          capacity: room.people,
-          description: room.description,
-        })),
+      await mutateAsync({
+        workplace: {
+          workplaceId: Number(workplaceId),
+          workplaceName: spaceFormData.spaceName,
+          workplacePhoneNumber: spaceFormData.phoneNumber,
+          workplaceDescription: spaceFormData.description,
+          workplaceAddress: `${spaceFormData.address.basic}, ${spaceFormData.address.detail}`,
+          workplaceStartTime: spaceFormData.openTime,
+          workplaceEndTime: spaceFormData.closedTime,
+        },
+        workplaceId: Number(workplaceId),
       });
 
-      // 그 이후에 사업장 사진 업로드
+      // 사업장 사진
+      const prevImgName = info?.imageUrl.split('/').pop();
       const s3URL = await getS3URL(
-        spaceFormData.spaceImage.file.name,
-        `workplace-${workplaceId}`,
+        prevImgName!,
+        `workplace-${workplaceId}/${prevImgName}`,
       );
       uploadImageToS3(s3URL, spaceFormData.spaceImage.file);
-
-      // 룸 사진 업로드
-      const allRoomImages = spaceFormData.rooms.flatMap(({ roomImages }, idx) =>
-        roomImages.map(({ file }) => ({
-          file,
-          roodId: studyroomId[idx],
-        })),
-      );
-      await Promise.all(
-        allRoomImages.map(({ file, roodId }) =>
-          getS3URL(
-            file!.name,
-            `workplace-${workplaceId}/studyroom-${roodId}`,
-          ).then((roomImageS3URL) => uploadImageToS3(roomImageS3URL, file!)),
-        ),
-      );
-
-      // 마지막에 메인 페이지로 이동
-      navigate('/');
     }
   };
 
@@ -287,6 +264,12 @@ const SpaceForm = ({
             {errorMessage.imageError}
           </div>
         )}
+        <button
+          type='submit'
+          className='btn-primary mt-[40px] text-[16px]'
+        >
+          수정하기
+        </button>
         <div className='relative mt-[40px] flex flex-col'>
           <label
             htmlFor='spaceName'
@@ -294,11 +277,6 @@ const SpaceForm = ({
           >
             룸 추가
           </label>
-          {errorMessage.roomError && (
-            <div className='absolute right-[0px] text-[12px] font-medium text-[#F83A3A]'>
-              {errorMessage.roomError}
-            </div>
-          )}
           {spaceFormData.rooms.length !== 0 &&
             spaceFormData.rooms.map((item) => (
               <div
@@ -344,15 +322,9 @@ const SpaceForm = ({
             />
           </button>
         </div>
-        <button
-          type='submit'
-          className='btn-primary mt-[40px] text-[16px]'
-        >
-          공간 등록 완료
-        </button>
       </form>
     </div>
   );
 };
 
-export default SpaceForm;
+export default SpaceModify;

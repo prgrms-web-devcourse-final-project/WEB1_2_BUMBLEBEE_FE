@@ -2,8 +2,8 @@ import { ChangeEvent } from 'react';
 import { IoMdClose } from 'react-icons/io';
 
 interface RoomImagesProps {
-  roomImages: { url: string; file: File }[];
-  onUpdateImages: (images: { url: string; file: File }[]) => void;
+  roomImages: { url: string; file: File | null }[];
+  onUpdateImages: (images: { url: string; file: File | null }[]) => void;
 }
 
 const RoomImage = ({ roomImages, onUpdateImages }: RoomImagesProps) => {
@@ -64,7 +64,7 @@ const RoomImage = ({ roomImages, onUpdateImages }: RoomImagesProps) => {
             <img
               src={url}
               alt=''
-              className='h-[82.5px] w-[82.5px]'
+              className='h-[82.5px] w-[82.5px] object-cover'
             />
             <button
               type='button'

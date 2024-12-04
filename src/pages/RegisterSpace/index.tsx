@@ -18,7 +18,10 @@ const RegisterSpace = () => {
       basic: '',
       detail: '',
     },
-    spaceImage: null,
+    spaceImage: {
+      url: '',
+      file: null,
+    },
     rooms: [],
   });
 
