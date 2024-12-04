@@ -20,9 +20,9 @@ const UserEditContainer = () => {
 
   return (
     <>
-      <div className='relative mt-10 flex w-[375px] flex-col'>
+      <div className='relative mt-10 flex w-[375px] flex-col items-center'>
         <UserEditForm user={user} />
-        <div className='absolute bottom-[-110px] left-[50%] translate-x-[-50%]'>
+        <div className='mb-4 mt-[100px]'>
           <DeleteAccountButton onClickButton={() => setModalOpen(true)} />
         </div>
       </div>

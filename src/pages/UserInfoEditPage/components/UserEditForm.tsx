@@ -27,7 +27,6 @@ const UserEditForm = ({ user }: { user: Member }) => {
     sex: user.sex,
     phoneNumber: user.phoneNumber,
   });
-  console.log(newInformation);
   const [errorMessage, setErrorMessage] = useState<EditErrorMessage>({});
   const { mutate: editUser } = usePutEditUserData();
 
