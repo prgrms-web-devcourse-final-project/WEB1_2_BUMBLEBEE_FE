@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Modal from '@components/Modal';
 import { Reservation } from '@typings/types';
 import { MdArrowForwardIos } from 'react-icons/md';
+import useCancelPayment from '../hooks/useCancelPayment';
 
 interface CancelPaymentText {
   buttonText: string;
@@ -26,6 +27,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
     reservationId,
   } = item;
   const navigate = useNavigate();
+  const { mutate: cancelPayment } = useCancelPayment();
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -71,7 +73,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
         reservationCreatedAt: `${getDateFunction(reservationCreatedAt)}`,
         reservationDay: `${getDateFunction(startTime)}`,
         reservationTime: `${getTimeFunction(startTime)} ~ ${getTimeFunction(endTime)}`,
-        studyRoomCapacity: `${reservationCapacity}`,
+        reservationCapacity: `${reservationCapacity}`,
         price: `${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
         reservationId: `${reservationId}`,
       },
@@ -79,7 +81,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
   };
 
   const handleCancelPayment = () => {
-    console.log('결제 취소');
+    cancelPayment(reservationId);
     setModalOpen(() => false);
   };
 
