@@ -6,7 +6,7 @@ const MyReviewList = () => {
 
   const sortedReviewList = myReviewList
     ? [...myReviewList].sort((b, a) => {
-        return +a.reviewDate - +b.reviewDate;
+        return +new Date(a.reviewDate) - +new Date(b.reviewDate);
       })
     : [];
 
