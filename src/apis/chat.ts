@@ -24,3 +24,11 @@ export const getChatListBusiness = async (): Promise<ChatListBusiness> => {
   const response = await authInstance.get('/api/v1/chat/room');
   return response.data;
 };
+
+// 채팅방 생성 요청
+export const postCreateChatRoom = async (
+  studyRoomId: number,
+): Promise<number> => {
+  const response = await authInstance.post('/api/v1/chat/create', studyRoomId);
+  return response.data;
+};
