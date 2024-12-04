@@ -118,11 +118,11 @@ const router = createBrowserRouter([
     element: <HostNotiPage />,
   },
   {
-    path: 'host-info',
+    path: '/host-info',
     element: <HostInfoPage />,
   },
   {
-    path: 'host-info-edit',
+    path: '/host-info-edit',
     element: <HostInfoEditPage />,
   },
   {

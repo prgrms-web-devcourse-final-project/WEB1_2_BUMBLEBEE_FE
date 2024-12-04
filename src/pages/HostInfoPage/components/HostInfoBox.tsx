@@ -1,25 +1,20 @@
 import LabelWithInput from '@components/LabelWithInput';
+import { Business } from '@typings/types';
 
-const host = {
-  name: 'HOST',
-  email: 'host@gmail.com',
-  businessNumber: '000-00-0000',
-};
-
-const HostInfoBox = () => {
+const HostInfoBox = ({ business }: { business: Business }) => {
   return (
     <div className='flex flex-col gap-10'>
       <LabelWithInput
         label='닉네임'
-        value={host.name}
+        value={business.businessName}
       />
       <LabelWithInput
         label='이메일'
-        value={host.email}
+        value={business.businessEmail}
       />
       <LabelWithInput
         label='사업자 등록번호'
-        value={host.businessNumber}
+        value={business.businessNum}
       />
     </div>
   );
