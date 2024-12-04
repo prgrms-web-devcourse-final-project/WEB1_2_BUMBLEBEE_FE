@@ -22,12 +22,15 @@ const RoomSelect = ({ setIsBtnDisabled, workplaceId }: RoomSelectProps) => {
       {data ? (
         data.map((item) => (
           <button
-            key={item.id}
+            key={item.studyRoomId}
             type='button'
-            onClick={() => handleClick(item.id)}
+            onClick={() => handleClick(item.studyRoomId)}
             className='mb-[16px] rounded-[10px]'
             style={{
-              border: selectedRoomId === item.id ? '1px solid #50BEAD' : 'none',
+              border:
+                selectedRoomId === item.studyRoomId
+                  ? '1px solid #50BEAD'
+                  : 'none',
             }}
           >
             <RoomComponent room={item} />
