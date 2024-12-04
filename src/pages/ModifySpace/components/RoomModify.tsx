@@ -1,8 +1,13 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Room } from '@typings/types';
-import RoomImage from './RoomImage';
-import CountPeople from './CountPeople';
+import RoomImage from '@pages/AddRoom/components/RoomImage';
+import CountPeople from '@pages/AddRoom/components/CountPeople';
+// import { validate } from 'uuid';
+// import { useParams } from 'react-router-dom';
+// import { getS3URL } from '@apis/workplace';
+// import axios from 'axios';
+// import useGetRoomListInfo from '../hooks/useGetRoomListInfo';
 
 interface RoomFormProps {
   room: Room;
@@ -10,7 +15,7 @@ interface RoomFormProps {
   completeAdd: (id: string) => void;
 }
 
-const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
+const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -59,7 +64,14 @@ const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
     return pass;
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  // const { workplaceId } = useParams() as { workplaceId: string };
+  // const { data: roomInfo } = useGetRoomListInfo(Number(workplaceId));
+
+  // const uploadImageToS3 = (url: string, file: File) => {
+  //   axios.put(url, file);
+  // };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isValid()) {
       completeAdd('');
@@ -160,11 +172,11 @@ const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
           type='submit'
           className='btn-primary mt-[40px] text-[16px]'
         >
-          룸 등록 완료
+          완료
         </button>
       </form>
     </div>
   );
 };
 
-export default RoomForm;
+export default RoomModify;

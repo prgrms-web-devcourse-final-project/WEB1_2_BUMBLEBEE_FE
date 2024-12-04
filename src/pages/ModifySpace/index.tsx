@@ -2,12 +2,12 @@ import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
 import { useCallback, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Room, Space, StudyRoomData } from '@typings/types';
-import SpaceForm from '@pages/RegisterSpace/components/SpaceForm';
+import { Room, Space } from '@typings/types';
 import { useParams } from 'react-router-dom';
-import RoomForm from '../AddRoom/components/RoomForm';
 import useGetWorkPlaceInfo from './hooks/useGetWorkPlaceInfo';
 import useGetRoomListInfo from './hooks/useGetRoomListInfo';
+import SpaceModify from './components/SpaceModify';
+import RoomModify from './components/RoomModify';
 
 const ModifySpace = () => {
   const { workplaceId } = useParams() as { workplaceId: string };
@@ -15,7 +15,6 @@ const ModifySpace = () => {
   const { data: roomInfo } = useGetRoomListInfo(Number(workplaceId));
   console.log(info);
   console.log(roomInfo);
-  const modify = true;
 
   // 공간 등록 + 룸 폼 상태관리
   const [spaceFormData, setSpaceFormData] = useState<Space>({
@@ -28,20 +27,22 @@ const ModifySpace = () => {
       basic: '',
       detail: '',
     },
-    spaceImage: null,
+    spaceImage: { file: null, url: '' },
     rooms: [],
   });
+
+  console.log(spaceFormData);
 
   useEffect(() => {
     if (info && roomInfo) {
       const [basic, ...detailParts] = info.workplaceAddress.split(',');
-      const roomList = roomInfo.map((room: StudyRoomData) => ({
-        id: String(room.id),
-        roomName: room.title,
+      const roomList = roomInfo.map((room) => ({
+        id: room.studyRoomId,
+        roomName: room.studyRoomName,
         description: room.description,
         price: String(room.price),
         people: room.capacity,
-        roomImages: [{ url: room.imageUrl, file: new File([], room.imageUrl) }],
+        roomImages: [{ url: room.imageUrl, file: null }],
       }));
 
       setSpaceFormData((prev) => ({
@@ -55,13 +56,17 @@ const ModifySpace = () => {
           basic,
           detail: detailParts.join(',').trim(),
         },
-        spaceImage: { url: info.imageUrl },
-        rooms: roomList,
+        spaceImage: {
+          url: info.imageUrl,
+          file: null,
+        },
+        rooms: roomList.map((room) => ({
+          ...room,
+          id: String(room.id),
+        })),
       }));
     }
   }, [info, roomInfo]);
-
-  console.log(spaceFormData);
 
   // 공간 등록에서 값 변경
   const onChange = useCallback((data: Partial<Space>) => {
@@ -112,19 +117,17 @@ const ModifySpace = () => {
       )}
       <hr className='fixed top-[93px] mx-[22.5px] h-0.5 w-custom border-0 bg-black' />
       {selectedRoomId ? (
-        <RoomForm
+        <RoomModify
           room={spaceFormData.rooms.find(({ id }) => id === selectedRoomId)!}
           updateRoomData={updateRoomData}
           completeAdd={setSelectedRoomId}
-          modify={modify}
         />
       ) : (
-        <SpaceForm
+        <SpaceModify
           spaceFormData={spaceFormData}
           changeFormdata={onChange}
           addRoom={addRoom}
           clickRoom={setSelectedRoomId}
-          modify={modify}
         />
       )}
     </MainLayout>
