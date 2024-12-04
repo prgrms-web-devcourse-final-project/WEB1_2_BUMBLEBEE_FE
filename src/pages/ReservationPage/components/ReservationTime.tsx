@@ -21,6 +21,9 @@ const ReservationTime = (props: ReservationTimeProps) => {
   const possibleTimeList = data.possibleTime;
 
   const setTimeArray = (newArray: string[]) => {
+    if (newArray.length === 0) {
+      return;
+    }
     const lastTime = newArray[newArray.length - 1];
     const [hour] = lastTime.split(':');
     const newTimeArray = [newArray[0], `${hour}:59`];
