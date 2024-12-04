@@ -8,8 +8,7 @@ interface ReservationTimeProps {
 const ReservationTime = (props: ReservationTimeProps) => {
   const { data } = props;
   const { searchTime, setTime, setFormattedTime } = useSearchStore();
-  // const times = { startTime: data.startTime, endTime: data.endTime };
-  const times = { startTime: '09:00', endTime: '23:00' };
+  const times = { startTime: data.startTime, endTime: data.endTime };
 
   const startHour: number = Number(times.startTime.split(':')[0]);
   const endHour: number = Number(times.endTime.split(':')[0]);
@@ -19,18 +18,7 @@ const ReservationTime = (props: ReservationTimeProps) => {
     return `${String(hour).padStart(2, '0')}:00`;
   });
 
-  // const possibleTimeList = data.possibleTime;
-  const possibleTimeList = [
-    '09:00',
-    '13:00',
-    '14:00',
-    '15:00',
-    '18:00',
-    '19:00',
-    '20:00',
-    '21:00',
-    '22:00',
-  ];
+  const possibleTimeList = data.possibleTime;
 
   const setTimeArray = (newArray: string[]) => {
     const lastTime = newArray[newArray.length - 1];

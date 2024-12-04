@@ -29,7 +29,7 @@ const RoomDetail = (props: RoomDatailProps) => {
         <div className='flex flex-col gap-2'>
           <div className='flex items-center justify-between text-sm'>
             <p className='font-medium'>1인당 1시간 이용 가격</p>
-            <p>{data.price.toLocaleString('ko-KR')}원</p>
+            <p>{data && data.price && data.price.toLocaleString('ko-KR')}원</p>
           </div>
           <div className='flex items-center justify-between text-sm'>
             <p className='font-medium'>수용 가능 인원</p>

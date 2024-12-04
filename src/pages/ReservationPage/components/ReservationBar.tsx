@@ -14,6 +14,8 @@ const ReservationBar = (props: ReservationBarProps) => {
   const { searchDate, searchTime, searchPeople } = useSearchStore();
   const { data } = useGetPossibleTime(studyroomId, searchDate);
 
+  console.log(data);
+
   const [showSelect, setShowSelect] = useState({
     date: false,
     time: false,

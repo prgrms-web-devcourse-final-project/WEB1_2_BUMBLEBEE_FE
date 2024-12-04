@@ -3,6 +3,7 @@ import './ReservationDate.css';
 import moment from 'moment';
 import useSearchStore from '@store/searchStore';
 import { usePossibleTimeMutation } from '@pages/ReservationPage/hooks/useGetPossibleTime';
+import { useEffect } from 'react';
 
 type DatePiece = Date | null;
 type SelectedDate = DatePiece | [DatePiece, DatePiece];
@@ -12,14 +13,19 @@ interface ReservationDateProps {
 
 const ReservationDate = (props: ReservationDateProps) => {
   const { studyroomId } = props;
-  const { searchDate, setDate } = useSearchStore();
+  const { searchDate, setDate, setTime, setFormattedTime } = useSearchStore();
   const { mutate } = usePossibleTimeMutation();
-  mutate({ studyRoomId: studyroomId, checkDate: searchDate });
+  useEffect(() => {
+    if (searchDate) {
+      mutate({ studyRoomId: studyroomId, checkDate: searchDate });
+      setTime([]);
+      setFormattedTime([]);
+    }
+  }, [searchDate, studyroomId, mutate, setTime, setFormattedTime]);
 
   const handleChangeDate = (newDate: SelectedDate) => {
     if (newDate instanceof Date) {
-      setDate(new Date(newDate));
-      mutate({ studyRoomId: studyroomId, checkDate: new Date(newDate) });
+      setDate(newDate);
     }
   };
   return (

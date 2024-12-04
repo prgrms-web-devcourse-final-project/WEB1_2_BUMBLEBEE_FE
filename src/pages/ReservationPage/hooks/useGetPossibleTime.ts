@@ -19,8 +19,11 @@ export const usePossibleTimeMutation = () => {
   return useMutation<PossibleTime, Error, ModifyDateType>({
     mutationFn: ({ studyRoomId, checkDate }) =>
       getPossibleTime(studyRoomId, checkDate),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['studyroomDetail'] });
+    onSuccess: (_, variables) => {
+      const { studyRoomId, checkDate } = variables;
+      queryClient.invalidateQueries({
+        queryKey: ['studyroomDetail', studyRoomId, checkDate],
+      });
     },
     onError: (error) => {
       console.log(error);

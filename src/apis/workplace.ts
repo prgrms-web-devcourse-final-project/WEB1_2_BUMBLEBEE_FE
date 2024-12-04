@@ -153,7 +153,9 @@ export const getBusinessWorkPlace =
 export const getStudyroomDetail = async (
   studyRoomId: number,
 ): Promise<StudyRoomDetailData> => {
-  const response = await defaultInstance.get(`api/v1/studyroom/${studyRoomId}`);
+  const response = await defaultInstance.get(
+    `/api/v1/studyroom/${studyRoomId}`,
+  );
   return response.data;
 };
 
