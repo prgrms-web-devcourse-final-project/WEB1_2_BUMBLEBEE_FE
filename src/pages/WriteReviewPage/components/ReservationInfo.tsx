@@ -5,7 +5,7 @@ const ReservationInfo = ({ item }: { item: WriteReviewProps }) => {
   const {
     workPlaceName,
     reservationTime,
-    studyRoomCapacity,
+    reservationCapacity,
     price,
     reservationDay,
     reservationCreatedAt,
@@ -30,7 +30,7 @@ const ReservationInfo = ({ item }: { item: WriteReviewProps }) => {
         />
         <ListStyle
           name='인원'
-          value={studyRoomCapacity}
+          value={reservationCapacity}
         />
         <ListStyle
           name='금액'
