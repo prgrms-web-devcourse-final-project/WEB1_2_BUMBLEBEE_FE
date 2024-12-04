@@ -90,6 +90,19 @@ export interface Reservation {
   price: number;
 }
 
+// 사업자의 예약자 확인
+export interface ReserverInfo {
+  workplaceName: string;
+  reservationName: string;
+  reservationPhoneNumber: string;
+  studyRoomName: string;
+  reservationCreatedAt: string;
+  reservationStartTime: string;
+  reservationEndTime: string;
+  reservationCapacity: number;
+  price: number;
+}
+
 // 리뷰 수정
 export interface PutReviewRequestBody {
   reviewContent: string;
