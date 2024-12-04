@@ -10,6 +10,14 @@ import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
 import BusinessNumber from './BusinessNumber';
 import useBusinessSignUp from '../hooks/useBusinessSignUp';
 
+export interface ErrorMsg {
+  businessNumberError?: string;
+  nicknameError?: string;
+  emailError?: string;
+  passwordError?: string;
+  checkPasswordError?: string;
+}
+
 const BusinessSignUpForm = () => {
   const navigate = useNavigate();
 
@@ -32,7 +40,7 @@ const BusinessSignUpForm = () => {
     });
   };
 
-  const [errorMessage, setErrorMessage] = useState({
+  const [errorMessage, setErrorMessage] = useState<ErrorMsg>({
     businessNumberError: '',
     nicknameError: '',
     emailError: '',
@@ -70,7 +78,7 @@ const BusinessSignUpForm = () => {
     setErrorMessage(newErrorMessage);
   };
 
-  const { mutate } = useBusinessSignUp();
+  const { mutate } = useBusinessSignUp(setErrorMessage);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

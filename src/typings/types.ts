@@ -1,12 +1,13 @@
+// 등록 시, 상태관리 타입
 export type Room = {
   id: string;
   roomName: string;
   description: string;
   price: string;
   people: number;
-  roomImages: { url: string; file: File }[];
+  roomImages: { url: string; file: File | null }[];
 };
-
+// 등록 시, 상태관리 타입
 export type Space = {
   spaceName: string;
   description: string;
@@ -14,7 +15,7 @@ export type Space = {
   closedTime: string;
   phoneNumber: string;
   address: { basic: string; detail: string };
-  spaceImage: File | { url: string } | null;
+  spaceImage: { url: string; file: File | null };
   rooms: Room[];
 };
 
@@ -126,7 +127,7 @@ export interface Review extends PostReviewRequestBody {
 
 // 스터디룸 등록
 export interface StudyRoomData {
-  title: string;
+  studyRoomName: string;
   description: string;
   imageUrl: string;
   price: number;
@@ -138,9 +139,22 @@ export interface StudyRoomPutData extends StudyRoomData {
   studyRoomId: number;
 }
 
+// 스터디룸 상세 정보
+export interface StudyRoomDetail {
+  studyRoomId: number;
+  workplaceId: number;
+  workplaceName: string;
+  studyRoomName: string;
+  description: string;
+  imageUrl: string[];
+  price: number;
+  capacity: number;
+}
+
+// 사업장의 스터디룸(list) 찾기
 export interface WorkplaceStudyRoomData {
-  id: number;
-  title: string;
+  studyRoomId: number;
+  studyRoomName: string;
   description: string;
   imageUrl: string;
   price: number;
@@ -172,27 +186,40 @@ export interface WorkPlaceData {
   workplacePhoneNumber: string;
   workplaceDescription: string;
   workplaceAddress: string;
-  imageUrl: string;
   workplaceStartTime: string;
   workplaceEndTime: string;
   studyRoomList: {
-    title: string;
+    studyRoomName: string;
     description: string;
-    imageUrl: string;
     price: number;
     capacity: number;
   }[];
 }
 
 // 사업장 수정
-export interface WorkPlacePutData extends WorkPlaceData {
+export interface WorkPlacePutData {
   workplaceId: number;
+  workplaceName: string;
+  workplacePhoneNumber: string;
+  workplaceDescription: string;
+  workplaceAddress: string;
+  workplaceStartTime: string;
+  workplaceEndTime: string;
 }
 
-export interface GetWorkPlaceData extends WorkPlacePutData {
+export interface GetWorkPlaceData extends WorkPlaceData {
+  workplaceId: number;
   createdAt: string;
   longitude: string;
   latitude: string;
+  imageUrl: string;
+  studyRoomList: {
+    studyRoomName: string;
+    description: string;
+    imageUrl: string;
+    price: number;
+    capacity: number;
+  }[];
 }
 
 // 사업장 위치
