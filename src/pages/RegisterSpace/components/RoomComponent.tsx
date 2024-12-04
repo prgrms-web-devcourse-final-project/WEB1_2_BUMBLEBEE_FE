@@ -6,10 +6,10 @@ const RoomComponent = ({ room }: { room: WorkplaceStudyRoomData }) => {
       <img
         src={room.imageUrl}
         alt='사진'
-        className='h-[94px] w-[94px]'
+        className='h-[94px] w-[94px] object-cover'
       />
       <div className='ml-[18px] w-[180px] text-start'>
-        <span className='text-[16px] font-normal'>{room.title}</span>
+        <span className='text-[16px] font-normal'>{room.studyRoomName}</span>
         <p className='-webkit-box webkit-box-orient-vertical line-clamp-2 h-[30px] overflow-hidden text-ellipsis text-[10px]'>
           {room.description}
         </p>
