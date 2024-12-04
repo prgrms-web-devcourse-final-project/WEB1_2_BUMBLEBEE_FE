@@ -37,7 +37,7 @@ const RoomCard = (props: RoomCardProps) => {
         <div className='flex flex-col gap-[6px]'>
           <div className='flex gap-[10px] text-xs'>
             <span className='font-normal'>{item.distance.toFixed(1)}km</span>
-            <span>
+            <span className='text-start'>
               {item.workplaceAddress.split(' ').slice(0, 3).join(' ')}
             </span>
           </div>
