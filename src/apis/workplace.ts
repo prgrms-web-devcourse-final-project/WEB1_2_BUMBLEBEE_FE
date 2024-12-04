@@ -63,7 +63,7 @@ export const getWorkplaceStudyRoom = async (
 export const getSearchStudyRoom = async (
   searchStudyRoom: SearchStudyRoom,
 ): Promise<SearchStudyRoomData[]> => {
-  const response = await authInstance.get('/api/v1/studyroom/search', {
+  const response = await defaultInstance.get('api/v1/studyroom/available', {
     params: searchStudyRoom,
   });
   return response.data;
