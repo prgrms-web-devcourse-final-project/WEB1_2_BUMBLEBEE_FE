@@ -1,5 +1,6 @@
 import { SearchStudyRoomData } from '@typings/types';
 import { FaStar } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 
 interface RoomCardProps {
   item: SearchStudyRoomData;
@@ -7,8 +8,13 @@ interface RoomCardProps {
 
 const RoomCard = (props: RoomCardProps) => {
   const { item } = props;
+  const navigate = useNavigate();
   return (
-    <div className='flex cursor-pointer items-center justify-between border-b border-b-black px-[13px] py-[26px] last:border-none'>
+    <button
+      type='button'
+      // onClick={() => navigate(`/reservation/${item.studyroomId}`)}
+      className='flex cursor-pointer items-center justify-between border-b border-b-black px-[13px] py-[26px] last:border-none'
+    >
       <img
         src={item.imageUrl}
         alt='스터디룸 사진'
@@ -26,7 +32,7 @@ const RoomCard = (props: RoomCardProps) => {
               <span>({item.reviewCount})</span>
             </div>
           </div>
-          <p className='font-medium'>{item.studyRoomName}</p>
+          <p className='text-start font-medium'>{item.studyRoomName}</p>
         </div>
         <div className='flex flex-col gap-[6px]'>
           <div className='flex gap-[10px] text-xs'>
@@ -35,7 +41,7 @@ const RoomCard = (props: RoomCardProps) => {
               {item.workplaceAddress.split(' ').slice(0, 3).join(' ')}
             </span>
           </div>
-          <div className='flex gap-[10px] text-xs'>
+          <div className='flex gap-[6px] text-xs'>
             <span>수용 가능 인원</span>
             <span className='font-normal'>{item.studyRoomCapacity}명</span>
           </div>
@@ -47,7 +53,7 @@ const RoomCard = (props: RoomCardProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
