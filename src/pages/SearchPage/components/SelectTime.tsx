@@ -70,6 +70,9 @@ const SelectTime = () => {
       >
         시간 선택
       </label>
+      <div className='flex w-[330px] items-center justify-end pb-2 text-xs font-medium text-primary'>
+        * 최소 2시간 예약 가능
+      </div>
       <div className='flex w-[330px] flex-wrap gap-x-[5px] gap-y-[10px]'>
         {timeList.map((timeItem: string) => (
           <button
