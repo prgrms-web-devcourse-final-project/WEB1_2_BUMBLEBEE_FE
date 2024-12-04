@@ -1,6 +1,15 @@
+import { ChatListBusiness, ChatListMember } from '@typings/types';
 import { GrNext } from 'react-icons/gr';
 
-const ChatCard = () => {
+interface ChatCardProps {
+  chat: ChatListMember | ChatListBusiness;
+}
+const ChatCard = (props: ChatCardProps) => {
+  const { chat } = props;
+
+  const roleId = 'memberId' in chat ? chat.memberId : chat.businessId;
+  console.log(roleId);
+
   return (
     <div className='flex h-[108px] w-custom items-center rounded-lg bg-white px-4 py-5 shadow-custom'>
       <div className='flex w-full flex-col gap-[10px]'>

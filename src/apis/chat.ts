@@ -14,13 +14,13 @@ export const getMessage = async (
 };
 
 // 채팅방 목록 조회 (사용자)
-export const getChatListMember = async (): Promise<ChatListMember> => {
+export const getChatListMember = async (): Promise<ChatListMember[]> => {
   const response = await authInstance.get('/api/v1/chat/room');
   return response.data;
 };
 
 // 채팅방 목록 조회 (사업자)
-export const getChatListBusiness = async (): Promise<ChatListBusiness> => {
+export const getChatListBusiness = async (): Promise<ChatListBusiness[]> => {
   const response = await authInstance.get('/api/v1/chat/room');
   return response.data;
 };
