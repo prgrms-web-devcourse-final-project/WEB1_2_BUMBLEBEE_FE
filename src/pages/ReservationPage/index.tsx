@@ -14,6 +14,13 @@ const ReservationPage = () => {
   const { data } = useGetStudyroomDetail(Number(studyroomId));
   const { searchTime, searchPeople } = useSearchStore();
 
+  const studyRoomInfo = {
+    studyRoomId: studyroomId,
+    workplaceName: data.workplaceName,
+    studyRoomTitle: data.studyRoomName,
+    studyRoomPrice: data.price,
+  };
+
   const handleClickReservation = () => {
     if (searchTime.length === 0) {
       toast.error('시간을 선택해주세요.');
@@ -23,7 +30,7 @@ const ReservationPage = () => {
       toast.error('인원을 선택해주세요.');
       return;
     }
-    navigate('/payment');
+    navigate('/payment', { state: studyRoomInfo });
   };
 
   return (
