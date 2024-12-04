@@ -89,8 +89,11 @@ const ReservationTime = (props: ReservationTimeProps) => {
   };
 
   return (
-    <div className='absolute top-20 flex flex-col gap-[4px] rounded-[10px] bg-white shadow-custom'>
-      <div className='flex w-[330px] flex-wrap items-center justify-center gap-[6px] py-3'>
+    <div className='absolute top-20 flex w-[330px] flex-col items-center gap-[4px] rounded-[10px] bg-white shadow-custom'>
+      <div className='flex w-[330px] items-center justify-end px-3 pt-3 text-xs font-medium text-primary'>
+        * 최소 2시간 예약 가능
+      </div>
+      <div className='flex w-[304px] flex-wrap items-center gap-[6px] pb-3 pt-2'>
         {timeList.map((timeItem: string) => (
           <button
             key={timeItem}
