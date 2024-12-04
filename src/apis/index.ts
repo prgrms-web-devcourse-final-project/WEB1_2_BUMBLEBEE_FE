@@ -8,6 +8,7 @@ import axios, {
 import { BASE_URL } from '@constants/constants';
 import { getAuthToken, removeAuthToken, setAuthToken } from '@utils/auth';
 import useAuthStore from '@store/authStore';
+import { toast } from 'react-toastify';
 
 // Default Instance
 const defaultInstance: AxiosInstance = axios.create({
@@ -40,7 +41,7 @@ authInstance.interceptors.response.use(
         const response = await authInstance.post('/reissue');
 
         if (response.status === 200) {
-          const { token } = response.data;
+          const token = response.headers.authorization;
           setAuthToken(token);
 
           const originalRequest = error.config as AxiosRequestConfig;
@@ -80,30 +81,21 @@ authInstance.interceptors.request.use(
 const responseInterceptor = (response: AxiosResponse) => response;
 
 // error handling
-const onError = (message: string): never => {
-  throw new Error(message);
+export const onError = (message: string): void => {
+  toast.error(message);
 };
 
 const errorInterceptor = (error: AxiosError) => {
   if (error.response) {
-    const { status } = error.response;
+    const { message } = error.response.data as {
+      code: string;
+      message: string;
+    };
+    onError(message || '요청 처리 중 오류가 발생했습니다.');
+  }
 
-    switch (status) {
-      case 400:
-        onError('400 에러');
-        break;
-      case 401: {
-        onError('401 에러');
-        break;
-      }
-      case 403: {
-        onError('403 에러');
-        break;
-      }
-      default: {
-        onError(`에러가 발생했습니다. ${error.message}`);
-      }
-    }
+  if (!error.response) {
+    onError('네트워크 연결을 확인해주세요.');
   }
 
   return Promise.reject(error);

@@ -1,4 +1,4 @@
-import { removeAuthToken, setAuthToken } from '@utils/auth';
+import { removeAuthToken, setAuthToken, setRole } from '@utils/auth';
 import { BusinessSignUpData, LoginData, UserSignUpData } from '@typings/types';
 import { authInstance, defaultInstance } from '.';
 
@@ -12,8 +12,10 @@ export const postUserLogin = async (user: LoginData): Promise<void> => {
   const response = await defaultInstance.post('/login/member', user, {
     withCredentials: true,
   });
-  const { token } = response.data;
+  const token = response.headers.authorization;
   setAuthToken(token);
+  const { role } = response.data;
+  setRole(role);
 };
 
 // 사업자 회원가입
@@ -28,8 +30,10 @@ export const postBusinessLogin = async (business: LoginData): Promise<void> => {
   const response = await defaultInstance.post('/login/business', business, {
     withCredentials: true,
   });
-  const { token } = response.data;
+  const token = response.headers.authorization;
   setAuthToken(token);
+  const { role } = response.data;
+  setRole(role);
 };
 
 // 로그아웃
