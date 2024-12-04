@@ -1,8 +1,14 @@
 import useSearchStore from '@store/searchStore';
+import { PossibleTime } from '@typings/types';
 
-const ReservationTime = () => {
+interface ReservationTimeProps {
+  data: PossibleTime;
+}
+
+const ReservationTime = (props: ReservationTimeProps) => {
+  const { data } = props;
   const { searchTime, setTime, setFormattedTime } = useSearchStore();
-  const times = { startTime: '09:00', endTime: '23:00' };
+  const times = { startTime: data.startTime, endTime: data.endTime };
 
   const startHour: number = Number(times.startTime.split(':')[0]);
   const endHour: number = Number(times.endTime.split(':')[0]);

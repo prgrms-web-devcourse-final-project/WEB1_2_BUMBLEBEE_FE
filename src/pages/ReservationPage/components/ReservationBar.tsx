@@ -3,9 +3,17 @@ import { useEffect, useRef, useState } from 'react';
 import ReservationDate from './ReservationDate/ReservationDate';
 import ReservationTime from './ReservationTime';
 import ReservationPeople from './ReservationPeople';
+import useGetPossibleTime from '../hooks/useGetPossibleTime';
 
-const ReservationBar = () => {
+interface ReservationBarProps {
+  studyroomId: number;
+}
+
+const ReservationBar = (props: ReservationBarProps) => {
+  const { studyroomId } = props;
   const { searchDate, searchTime, searchPeople } = useSearchStore();
+  const { data } = useGetPossibleTime(studyroomId, searchDate);
+
   const [showSelect, setShowSelect] = useState({
     date: false,
     time: false,
@@ -94,8 +102,8 @@ const ReservationBar = () => {
           {formattedPeople}
         </button>
         {showSelect.date && <ReservationDate />}
-        {showSelect.time && <ReservationTime />}
-        {showSelect.people && <ReservationPeople />}
+        {showSelect.time && <ReservationTime data={data} />}
+        {showSelect.people && <ReservationPeople data={data} />}
       </div>
     </>
   );
