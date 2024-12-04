@@ -1,13 +1,19 @@
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import useSearchStore from '@store/searchStore';
+import { PossibleTime } from '@typings/types';
 
-const ReservationPeople = () => {
+interface ReservationPeopleProps {
+  data: PossibleTime;
+}
+
+const ReservationPeople = (props: ReservationPeopleProps) => {
+  const { data } = props;
   const { searchPeople, setPeople } = useSearchStore();
 
   const handleCountClick = (count: string) => {
     if (count === 'decrease' && searchPeople > 0) {
       setPeople(searchPeople - 1);
-    } else if (count === 'increase') {
+    } else if (count === 'increase' && searchPeople < data.capacity) {
       setPeople(searchPeople + 1);
     }
   };

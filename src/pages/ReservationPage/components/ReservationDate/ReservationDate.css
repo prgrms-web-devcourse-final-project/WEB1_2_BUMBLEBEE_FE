@@ -79,6 +79,11 @@
   color: #c3c3c3;
 }
 
+/* 이전 날짜 */
+.react-calendar__tile:disabled {
+  color: #c3c3c3;
+}
+
 /* 호버됐을 때 색상 */
 .react-calendar__tile:enabled:hover {
   position: relative;
