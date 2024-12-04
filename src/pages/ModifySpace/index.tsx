@@ -15,7 +15,6 @@ const ModifySpace = () => {
   const { data: roomInfo } = useGetRoomListInfo(Number(workplaceId));
   console.log(info);
   console.log(roomInfo);
-  const modify = true;
 
   // 공간 등록 + 룸 폼 상태관리
   const [spaceFormData, setSpaceFormData] = useState<Space>({
@@ -28,7 +27,7 @@ const ModifySpace = () => {
       basic: '',
       detail: '',
     },
-    spaceImage: null,
+    spaceImage: { file: null, url: '' },
     rooms: [],
   });
 
@@ -37,14 +36,14 @@ const ModifySpace = () => {
   useEffect(() => {
     if (info && roomInfo) {
       const [basic, ...detailParts] = info.workplaceAddress.split(',');
-      // const roomList = roomInfo.map((room: StudyRoomData) => ({
-      //   id: String(room.id),
-      //   roomName: room.title,
-      //   description: room.description,
-      //   price: String(room.price),
-      //   people: room.capacity,
-      //   roomImages: [{ url: room.imageUrl, file: new File([], room.imageUrl) }],
-      // }));
+      const roomList = roomInfo.map((room) => ({
+        id: room.studyRoomId,
+        roomName: room.studyRoomName,
+        description: room.description,
+        price: String(room.price),
+        people: room.capacity,
+        roomImages: [{ url: room.imageUrl, file: null }],
+      }));
 
       setSpaceFormData((prev) => ({
         ...prev,
@@ -57,8 +56,14 @@ const ModifySpace = () => {
           basic,
           detail: detailParts.join(',').trim(),
         },
-        spaceImage: null,
-        // rooms: roomList,
+        spaceImage: {
+          url: info.imageUrl,
+          file: null,
+        },
+        rooms: roomList.map((room) => ({
+          ...room,
+          id: String(room.id),
+        })),
       }));
     }
   }, [info, roomInfo]);
@@ -116,7 +121,6 @@ const ModifySpace = () => {
           room={spaceFormData.rooms.find(({ id }) => id === selectedRoomId)!}
           updateRoomData={updateRoomData}
           completeAdd={setSelectedRoomId}
-          modify={modify}
         />
       ) : (
         <SpaceModify

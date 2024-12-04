@@ -11,7 +11,9 @@ import PhoneNumber from '@pages/RegisterSpace/components/PhoneNumber';
 import Address from '@pages/RegisterSpace/components/Address';
 import WorkSpaceImage from '@pages/RegisterSpace/components/WorkSpaceImage';
 import RoomComponent from '@pages/RegisterSpace/components/RoomComponent';
-import usePostWorkPlace from '@pages/RegisterSpace/hooks/usePostWorkPlace';
+import { useParams } from 'react-router-dom';
+import usePutWorkPlace from '../hooks/usePutWorkPlace';
+import useGetWorkPlaceInfo from '../hooks/useGetWorkPlaceInfo';
 
 interface SpaceModifyProps {
   spaceFormData: Space;
@@ -73,11 +75,11 @@ const SpaceModify = ({
     phoneNumberError: '',
     addressError: '',
     imageError: '',
-    roomError: '',
   });
 
-  let pass = true;
+  const { workplaceId } = useParams() as { workplaceId: string };
   const isValid = () => {
+    let pass = true;
     const newErrorMessage = {
       spaceNameError: '',
       descriptionError: '',
@@ -85,7 +87,6 @@ const SpaceModify = ({
       phoneNumberError: '',
       addressError: '',
       imageError: '',
-      roomError: '',
     };
 
     if (!isValidSpaceName(spaceFormData.spaceName)) {
@@ -117,9 +118,6 @@ const SpaceModify = ({
       newErrorMessage.imageError = '이미지를 등록해주세요.';
       pass = false;
     }
-    if (spaceFormData.rooms.length === 0) {
-      newErrorMessage.roomError = '룸은 적어도 하나 이상 등록해야 합니다.';
-    }
 
     setErrorMessage(newErrorMessage);
     return pass;
@@ -129,11 +127,14 @@ const SpaceModify = ({
     axios.put(url, file);
   };
 
-  const { mutate } = usePostWorkPlace();
+  const { mutateAsync } = usePutWorkPlace();
+  const { data: info } = useGetWorkPlaceInfo(Number(workplaceId));
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    isValid();
+    if (!isValid()) {
+      return;
+    }
 
     if (
       isValidSpaceName(spaceFormData.spaceName) &&
@@ -142,53 +143,28 @@ const SpaceModify = ({
       spaceFormData.closedTime !== '선택' &&
       isValidNumber(spaceFormData.phoneNumber) &&
       isValidAddress(spaceFormData.address.detail) &&
-      spaceFormData.spaceImage !== null &&
-      spaceFormData.rooms.length !== 0
+      spaceFormData.spaceImage.file !== null
     ) {
-      // 사업장 사진
-      const workPlaceFileExtension = spaceFormData.spaceImage.name
-        .split('.')
-        .pop()!;
-      const s3URL = await getS3URL(
-        workPlaceFileExtension,
-        spaceFormData.spaceName,
-      );
-      uploadImageToS3(s3URL, spaceFormData.spaceImage);
-
-      // 룸 사진
-      const allRoomImages = spaceFormData.rooms.flatMap(
-        ({ roomImages, roomName }) =>
-          roomImages.map(({ file }) => ({
-            file,
-            roomName,
-          })),
-      );
-
-      await Promise.all(
-        allRoomImages.map(({ file, roomName }) =>
-          getS3URL(
-            file.name.split('.').pop()!,
-            `${spaceFormData.spaceName}/${roomName}`,
-          ).then((roomImageS3URL) => uploadImageToS3(roomImageS3URL, file)),
-        ),
-      );
-
-      mutate({
-        workplaceName: spaceFormData.spaceName,
-        workplacePhoneNumber: spaceFormData.phoneNumber,
-        workplaceDescription: spaceFormData.description,
-        workplaceAddress: `${spaceFormData.address.basic}, ${spaceFormData.address.detail}`,
-        imageUrl: spaceFormData.spaceName,
-        workplaceStartTime: spaceFormData.openTime,
-        workplaceEndTime: spaceFormData.closedTime,
-        studyRoomList: spaceFormData.rooms.map((room) => ({
-          studyRoomName: room.roomName,
-          price: Number(room.price),
-          capacity: room.people,
-          description: room.description,
-          imageUrl: `${spaceFormData.spaceName}/${room.roomName}`,
-        })),
+      await mutateAsync({
+        workplace: {
+          workplaceId: Number(workplaceId),
+          workplaceName: spaceFormData.spaceName,
+          workplacePhoneNumber: spaceFormData.phoneNumber,
+          workplaceDescription: spaceFormData.description,
+          workplaceAddress: `${spaceFormData.address.basic}, ${spaceFormData.address.detail}`,
+          workplaceStartTime: spaceFormData.openTime,
+          workplaceEndTime: spaceFormData.closedTime,
+        },
+        workplaceId: Number(workplaceId),
       });
+
+      // 사업장 사진
+      const prevImgName = info?.imageUrl.split('/').pop();
+      const s3URL = await getS3URL(
+        prevImgName!,
+        `workplace-${workplaceId}/${prevImgName}`,
+      );
+      uploadImageToS3(s3URL, spaceFormData.spaceImage.file);
     }
   };
 
@@ -301,11 +277,6 @@ const SpaceModify = ({
           >
             룸 추가
           </label>
-          {errorMessage.roomError && (
-            <div className='absolute right-[0px] text-[12px] font-medium text-[#F83A3A]'>
-              {errorMessage.roomError}
-            </div>
-          )}
           {spaceFormData.rooms.length !== 0 &&
             spaceFormData.rooms.map((item) => (
               <div

@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE, PLACEHOLDER } from '@constants/constants';
+import { ERROR_MESSAGE, PLACEHOLDER, BASE_URL } from '@constants/constants';
 import { isValidEmail, isValidPassword } from '@utils/validationCheckRegex';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -105,7 +105,7 @@ const UserLoginForm = () => {
         </div>
         <div className='mt-[40px] flex w-custom justify-center'>
           <a
-            href='/oauth2/authorization/kakao'
+            href={`${BASE_URL}/oauth2/authorization/kakao`}
             className='mr-[12px]'
           >
             <img
@@ -113,7 +113,7 @@ const UserLoginForm = () => {
               alt='카카오 로고'
             />
           </a>
-          <a href='/oauth2/authorization/naver'>
+          <a href={`${BASE_URL}/oauth2/authorization/naver`}>
             <img
               src='/src/assets/icons/NaverLogo.svg'
               alt='네이버 로고'
