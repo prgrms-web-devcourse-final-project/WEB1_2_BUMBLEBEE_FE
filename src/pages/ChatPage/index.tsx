@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Client, IMessage } from '@stomp/stompjs';
 import { useParams } from 'react-router-dom';
 import { ChatMessageResponse, SendMessageRequest } from '@typings/types';
-import getMessage from '@apis/chat';
+import { getMessage } from '@apis/chat';
 import { getUserData } from '@apis/member';
 import MessageInput from './components/MessageInput';
 import MessageContainer from './components/MessageContainer';

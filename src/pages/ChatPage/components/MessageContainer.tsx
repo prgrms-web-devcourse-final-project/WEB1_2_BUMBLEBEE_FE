@@ -21,22 +21,24 @@ const MessageContainer = (props: MessageContainerProps) => {
   return (
     <div className='mt-4 flex h-full flex-col items-center gap-5'>
       <div className='text-xs text-subfont underline'>2024.11.14 목요일</div>
-      {messages.map((message) => {
-        if (message.sender === user) {
+      {messages &&
+        messages.length > 0 &&
+        messages.map((message) => {
+          if (message.sender === user) {
+            return (
+              <SendMessage
+                key={message.messageId}
+                message={message}
+              />
+            );
+          }
           return (
-            <SendMessage
+            <ReceiveMessage
               key={message.messageId}
               message={message}
             />
           );
-        }
-        return (
-          <ReceiveMessage
-            key={message.messageId}
-            message={message}
-          />
-        );
-      })}
+        })}
       <div ref={messageEndRef} />
     </div>
   );
