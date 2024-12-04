@@ -343,3 +343,17 @@ export interface ChatMessageResponse {
   content: string;
   timestamp: string;
 }
+
+// 채팅목록 조회 응답값 (사용자)
+export interface ChatListMember {
+  roomId: 1;
+  businessId: 1;
+  updatedAt: Date | null;
+}
+
+// 채팅목록 조회 응답값 (사업자)
+export interface ChatListBusiness {
+  roomId: 1;
+  memberId: 1;
+  updatedAt: Date | null;
+}
