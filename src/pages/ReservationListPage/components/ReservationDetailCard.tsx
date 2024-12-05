@@ -149,7 +149,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
         {modalOpen && (
           <Modal
             message='결제를 취소하시겠습니까?'
-            cancelPaymentMessage={`${cancelPaymentText}`}
+            cancelPaymentMessage={cancelPaymentText}
             onCancelButtonClick={() => setModalOpen(false)}
             onConfirmButtonClick={handleCancelPayment}
           />

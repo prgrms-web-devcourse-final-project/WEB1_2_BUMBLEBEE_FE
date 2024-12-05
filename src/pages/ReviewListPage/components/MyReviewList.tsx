@@ -2,18 +2,18 @@ import useGetMyReviewList from '../hooks/useGetMyReviewList';
 import MyReviewCard from './MyReviewCard';
 
 const MyReviewList = () => {
-  const { data: myReviewList } = useGetMyReviewList();
+  const { myReviewList } = useGetMyReviewList();
 
   const sortedReviewList = myReviewList
     ? [...myReviewList].sort((b, a) => {
-        return +a.reviewDate - +b.reviewDate;
+        return +new Date(a.reviewDate) - +new Date(b.reviewDate);
       })
     : [];
 
   return (
     <>
       {myReviewList && myReviewList.length > 0 ? (
-        <div className='mt-[6px] flex w-[375px] flex-col justify-center'>
+        <div className='mt-[6px] flex w-[375px] flex-col justify-center pb-24'>
           {sortedReviewList.map((item) => {
             return (
               <MyReviewCard
