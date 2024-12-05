@@ -7,6 +7,7 @@ import {
   PostPaymentsData,
   PostReservationData,
   Reservation,
+  ReserverInfo,
 } from '@typings/types';
 import { authInstance } from '.';
 
@@ -35,6 +36,10 @@ export const getLatestReservation = async (): Promise<Reservation> => {
 };
 
 // 사업자의 예약자 조회
+export const getAllReserver = async (): Promise<ReserverInfo> => {
+  const response = await authInstance.get('/api/v1/reservations/all/workplace');
+  return response.data;
+};
 
 // 결제 검증
 export const postPaymentsToss = async (
@@ -76,4 +81,14 @@ export const getPaymentsFail = async (
   });
 
   return response.data;
+};
+
+// 결제 취소
+export const postCancelPayment = async (id: number): Promise<void> => {
+  await authInstance.post('/api/v1/payments/toss/cancel', {
+    params: {
+      reservationId: id,
+      cancelReason: '단순변심',
+    },
+  });
 };

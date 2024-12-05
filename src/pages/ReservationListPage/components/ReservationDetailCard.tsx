@@ -6,6 +6,12 @@ import { useState } from 'react';
 import Modal from '@components/Modal';
 import { Reservation } from '@typings/types';
 import { MdArrowForwardIos } from 'react-icons/md';
+import useCancelPayment from '../hooks/useCancelPayment';
+
+interface CancelPaymentText {
+  buttonText: string;
+  cancelPaymentText: string;
+}
 
 const ReservationDetailCard = ({ item }: { item: Reservation }) => {
   const {
@@ -14,13 +20,14 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
     reservationCreatedAt,
     startTime,
     endTime,
-    studyRoomCapacity,
+    reservationCapacity,
     price,
     workplaceImageUrl,
     studyRoomName,
     reservationId,
   } = item;
   const navigate = useNavigate();
+  const { mutate: cancelPayment } = useCancelPayment();
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -28,13 +35,21 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
   const gap = +new Date(startTime) - +now;
 
   // 예약 시간으로부터 24시간 전인지 확인
-  const buttonType = (timeGap: number): string => {
+  const buttonType = (timeGap: number): CancelPaymentText => {
     let buttonText = '';
+    let cancelPaymentText = '';
     const MILLISECONDS_24_HOURS = 24 * 60 * 60 * 1000;
+    const MILLISECONDS_48_HOURS = MILLISECONDS_24_HOURS * 2;
 
     // 예약시간 24시간 전까지는 결제 취소 버튼
     if (timeGap > MILLISECONDS_24_HOURS) {
       buttonText = 'cancelPayment';
+      if (timeGap > MILLISECONDS_48_HOURS) {
+        cancelPaymentText = '총 금액의 100%가 환불됩니다.';
+      }
+      if (timeGap < MILLISECONDS_48_HOURS) {
+        cancelPaymentText = '총 금액의 50%가 환불됩니다.';
+      }
     }
     // 예약 시간 전 하루(24시간)동안은 버튼 없음
     if (timeGap > 0 && timeGap <= MILLISECONDS_24_HOURS) {
@@ -45,8 +60,10 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
       buttonText = 'review';
     }
 
-    return buttonText;
+    return { buttonText, cancelPaymentText };
   };
+
+  const { buttonText, cancelPaymentText } = buttonType(gap);
 
   const handleReviewButton = () => {
     navigate('/write-review', {
@@ -56,7 +73,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
         reservationCreatedAt: `${getDateFunction(reservationCreatedAt)}`,
         reservationDay: `${getDateFunction(startTime)}`,
         reservationTime: `${getTimeFunction(startTime)} ~ ${getTimeFunction(endTime)}`,
-        studyRoomCapacity: `${studyRoomCapacity}`,
+        reservationCapacity: `${reservationCapacity}`,
         price: `${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
         reservationId: `${reservationId}`,
       },
@@ -64,7 +81,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
   };
 
   const handleCancelPayment = () => {
-    console.log('결제 취소');
+    cancelPayment(reservationId);
     setModalOpen(() => false);
   };
 
@@ -93,7 +110,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
               />
               <ListStyle
                 name='인원'
-                value={`${studyRoomCapacity}인`}
+                value={`${reservationCapacity}인`}
               />
               <ListStyle
                 name='결제일'
@@ -108,19 +125,19 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
           </div>
         </div>
         <div className='flex items-end justify-between'>
-          {buttonType(gap) === 'cancelPayment' && (
+          {buttonText === 'cancelPayment' && (
             <ButtonInCard
               name='결제 취소'
               onClickFunction={() => setModalOpen(true)}
             />
           )}
-          {buttonType(gap) === 'review' && (
+          {buttonText === 'review' && (
             <ButtonInCard
               name='리뷰 작성'
               onClickFunction={handleReviewButton}
             />
           )}
-          {buttonType(gap) === 'none' && (
+          {buttonText === 'none' && (
             <span className='flex h-[34px] flex-col justify-end text-[12px] text-primary'>
               방문 24시간 전입니다.
             </span>
@@ -132,6 +149,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
         {modalOpen && (
           <Modal
             message='결제를 취소하시겠습니까?'
+            cancelPaymentMessage={cancelPaymentText}
             onCancelButtonClick={() => setModalOpen(false)}
             onConfirmButtonClick={handleCancelPayment}
           />

@@ -87,7 +87,20 @@ export interface Reservation {
   reservationCreatedAt: string;
   startTime: string;
   endTime: string;
-  studyRoomCapacity: number;
+  reservationCapacity: number;
+  price: number;
+}
+
+// 사업자의 예약자 확인
+export interface ReserverInfo {
+  workplaceName: string;
+  reservationName: string;
+  reservationPhoneNumber: string;
+  studyRoomName: string;
+  reservationCreatedAt: string;
+  reservationStartTime: string;
+  reservationEndTime: string;
+  reservationCapacity: number;
   price: number;
 }
 
@@ -103,13 +116,16 @@ export interface PostReviewRequestBody extends PutReviewRequestBody {
   workPlaceName: string;
 }
 
-// 리뷰 정보
-export interface Review extends PostReviewRequestBody {
+// 내가 작성한 리뷰 정보
+export interface Review {
   reviewId: number;
+  workplaceName: string;
   workplaceId: number;
   studyRoomName: string;
+  reviewContent: string;
+  reviewRating: number;
   reviewDate: string;
-  // workplace img url: string;
+  workplaceImageURL: string;
 }
 
 // 스터디룸 등록
@@ -146,6 +162,26 @@ export interface WorkplaceStudyRoomData {
   imageUrl: string;
   price: number;
   capacity: number;
+}
+
+// 스터디룸 상세 정보
+export interface StudyRoomDetailData {
+  studyRoomId: number;
+  workplaceId: number;
+  workplaceName: string;
+  studyRoomName: string;
+  description: string;
+  imageUrl: string[];
+  price: number;
+  capacity: number;
+}
+
+// 스터디룸의 예약 가능한 시간대
+export interface PossibleTime {
+  capacity: number;
+  possibleTime: string[];
+  startTime: string;
+  endTime: string;
 }
 
 // 스터디룸 검색

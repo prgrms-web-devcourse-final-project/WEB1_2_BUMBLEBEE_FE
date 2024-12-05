@@ -9,7 +9,7 @@ export interface WriteReviewProps {
   workPlaceName: string;
   reservationCreatedAt: string;
   reservationTime: string;
-  studyRoomCapacity: number;
+  reservationCapacity: number;
   price: string;
   reservationDay: string;
   studyRoomName: string;
@@ -19,6 +19,7 @@ const WriteReviewPage = () => {
   const location = useLocation();
   const reservationInfo: WriteReviewProps = { ...location.state };
   const { reservationId, workPlaceName } = reservationInfo;
+  console.log(reservationId);
 
   return (
     <MainLayout>
