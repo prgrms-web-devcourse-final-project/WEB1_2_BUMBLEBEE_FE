@@ -89,7 +89,7 @@ const ChatPage = () => {
     <>
       <MainLayout>
         <HeaderOnlyTitle title='ABC 스터디룸' />
-        <div className='fixed left-1/2 top-[93px] mb-4 flex h-[calc(100vh-93px-94px-16px)] w-custom -translate-x-1/2 overflow-hidden'>
+        <div className='fixed left-1/2 top-[93px] flex h-[calc(100vh-93px-94px)] w-custom -translate-x-1/2 overflow-hidden'>
           <div className='overflow-y-auto'>
             <MessageContainer
               messages={messages}
