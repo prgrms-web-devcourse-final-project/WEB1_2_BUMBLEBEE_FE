@@ -21,17 +21,17 @@ export const getFormattedDateFunction = (date: Date) => {
   return formattedDate.replace('일 (', '일(');
 };
 
-// Date 타입의 날짜를 YYYY.MM.DD W요일로 변환하는 함수
-export const getFormattedDateWeekFunction = (date: Date) => {
-  const formattedDate = date.toLocaleDateString('ko-KR', {
-    year: 'numeric', // 연도
+// Date 타입의 날짜를 YYYY년 MM월 DD일 W요일로 변환하는 함수
+export const getFormattedDateWeekFunction = (date: string) => {
+  const newDate = new Date(date);
+  const formattedDate = newDate.toLocaleDateString('ko-KR', {
+    year: 'numeric',
     month: 'long', // 월
     day: 'numeric', // 일
     weekday: 'short', // (요일)
   });
 
-  const [year, month, day, weekday] = formattedDate.match(/\d+|[가-힣]+/g)!;
-  return `${year}.${month}.${day} ${weekday}`;
+  return `${formattedDate}요일`;
 };
 
 // date타입에서 YYYY-MM-DD 추출해 YYYY.MM.DD로 변환

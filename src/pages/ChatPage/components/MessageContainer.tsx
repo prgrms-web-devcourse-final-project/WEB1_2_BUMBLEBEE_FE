@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { ChatMessageResponse } from '@typings/types';
+import { getFormattedDateWeekFunction } from '@utils/formatTime';
 import SendMessage from './SendMessage';
 import ReceiveMessage from './ReceiveMessage';
 
@@ -11,35 +12,52 @@ interface MessageContainerProps {
 const MessageContainer = (props: MessageContainerProps) => {
   const { messages, user } = props;
 
+  // 날짜 별로 매핑
+  const groupedMessages = messages.reduce<
+    Record<string, ChatMessageResponse[]>
+  >((acc, message) => {
+    const messageDate = getFormattedDateWeekFunction(message.timestamp);
+    if (!acc[messageDate]) {
+      acc[messageDate] = [];
+    }
+    acc[messageDate].push(message);
+    return acc;
+  }, {});
+
   // 메시지 목록이 업데이트될 때마다 최하단으로 스크롤
   const messageEndRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messageEndRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [messages]);
 
   return (
-    <div className='mt-8 flex w-custom flex-col items-center justify-end gap-5'>
-      <div className='text-xs text-subfont underline'>2024.11.14 목요일</div>
+    <>
       {messages &&
         messages.length > 0 &&
-        messages.map((message) => {
-          if (message.sender === user) {
-            return (
-              <SendMessage
-                key={message.messageId}
-                message={message}
-              />
-            );
-          }
-          return (
-            <ReceiveMessage
-              key={message.messageId}
-              message={message}
-            />
-          );
-        })}
+        Object.entries(groupedMessages).map(([date, dateMessages]) => (
+          <div
+            key={date}
+            className='mb-4 mt-8 flex w-custom flex-col items-center justify-end gap-5'
+          >
+            <div className='text-xs text-subfont underline'>{date}</div>
+
+            {dateMessages.map((message) =>
+              message.sender === user ? (
+                <SendMessage
+                  key={message.messageId}
+                  message={message}
+                />
+              ) : (
+                <ReceiveMessage
+                  key={message.messageId}
+                  message={message}
+                />
+              ),
+            )}
+          </div>
+        ))}
       <div ref={messageEndRef} />
-    </div>
+    </>
   );
 };
 

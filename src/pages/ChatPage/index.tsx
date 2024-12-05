@@ -11,7 +11,7 @@ import MessageInput from './components/MessageInput';
 import MessageContainer from './components/MessageContainer';
 
 const ChatPage = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const user = 'JohnDoe1';
   const { roomId } = useParams();
   const [messages, setMessages] = useState<ChatMessageResponse[]>([]); // 메시지 리스트
