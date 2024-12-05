@@ -12,7 +12,7 @@ const RoomCard = (props: RoomCardProps) => {
   return (
     <button
       type='button'
-      // onClick={() => navigate(`/reservation/${item.studyroomId}`)}
+      onClick={() => navigate(`/reservation/${item.studyRoomId}`)}
       className='flex cursor-pointer items-center justify-between border-b border-b-black px-[13px] py-[26px] last:border-none'
     >
       <img
