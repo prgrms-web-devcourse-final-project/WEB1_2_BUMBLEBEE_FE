@@ -2,7 +2,7 @@ import useGetMyReviewList from '../hooks/useGetMyReviewList';
 import MyReviewCard from './MyReviewCard';
 
 const MyReviewList = () => {
-  const { data: myReviewList } = useGetMyReviewList();
+  const { myReviewList } = useGetMyReviewList();
 
   const sortedReviewList = myReviewList
     ? [...myReviewList].sort((b, a) => {
