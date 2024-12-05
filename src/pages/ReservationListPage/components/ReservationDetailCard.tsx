@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Modal from '@components/Modal';
 import { Reservation } from '@typings/types';
 import { MdArrowForwardIos } from 'react-icons/md';
+import { FaArrowRight } from 'react-icons/fa6';
 import useCancelPayment from '../hooks/useCancelPayment';
 
 interface CancelPaymentText {
@@ -25,6 +26,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
     workplaceImageUrl,
     studyRoomName,
     reservationId,
+    existReview,
   } = item;
   const navigate = useNavigate();
   const { mutate: cancelPayment } = useCancelPayment();
@@ -131,11 +133,20 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
               onClickFunction={() => setModalOpen(true)}
             />
           )}
-          {buttonText === 'review' && (
+          {buttonText === 'review' && !existReview ? (
             <ButtonInCard
               name='리뷰 작성'
               onClickFunction={handleReviewButton}
             />
+          ) : (
+            <Link to='/review-list'>
+              <div className='flex h-[34px] items-end justify-end text-[12px] text-subfont active:text-focusColor'>
+                <span className='flex items-center gap-1'>
+                  리뷰 작성이 완료된 예약입니다
+                  <FaArrowRight />
+                </span>
+              </div>
+            </Link>
           )}
           {buttonText === 'none' && (
             <span className='flex h-[34px] flex-col justify-end text-[12px] text-primary'>

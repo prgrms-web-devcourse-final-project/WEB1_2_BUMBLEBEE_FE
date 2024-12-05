@@ -10,7 +10,9 @@ const usePostReview = () => {
   const writeReview = useMutation({
     mutationFn: (data: PostReviewRequestBody) => postReview(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['myReview'] });
+      queryClient.invalidateQueries({
+        queryKey: ['myReview', 'myReservationList'],
+      });
       navigate('/review-list');
     },
   });
