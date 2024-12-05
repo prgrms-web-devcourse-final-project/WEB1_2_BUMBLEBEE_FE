@@ -200,8 +200,8 @@ export interface PossibleTime {
 // 스터디룸 검색
 export interface SearchStudyRoom {
   address: string;
-  startDateTime: Date;
-  endDateTime: Date;
+  startDateTime: string;
+  endDateTime: string;
   reservationCapacity: number;
 }
 

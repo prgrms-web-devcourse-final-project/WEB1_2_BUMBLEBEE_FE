@@ -17,11 +17,8 @@ const SearchResult = () => {
     searchAddress: address,
   } = useSearchStore();
 
-  const startTimeString = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[0]}`;
-  const endTimeString = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[1]}`;
-
-  const startDateTime = new Date(startTimeString);
-  const endDateTime = new Date(endTimeString);
+  const startDateTime = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')}T${formattedTime[0]}:00`;
+  const endDateTime = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')}T${formattedTime[1]}:00`;
 
   const searchData: SearchStudyRoom = {
     address,
