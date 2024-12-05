@@ -125,7 +125,7 @@ export interface Review {
   reviewContent: string;
   reviewRating: number;
   reviewDate: string;
-  // workplace img url: string;
+  workplaceImageURL: string;
 }
 
 // 스터디룸 등록
