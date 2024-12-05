@@ -146,7 +146,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
                     onClickFunction={() => setModalOpen(true)}
                   />
                 ) : (
-                  <span className='flex h-[34px] flex-col justify-end text-[12px] text-red-500'>
+                  <span className='flex h-[34px] flex-col justify-end text-[12px] text-[#E49E9E]'>
                     결제 취소된 예약입니다.
                   </span>
                 ))}
