@@ -89,6 +89,7 @@ export interface Reservation {
   endTime: string;
   reservationCapacity: number;
   price: number;
+  existReview: boolean;
 }
 
 // 사업자의 예약자 확인
@@ -101,7 +102,10 @@ export interface ReserverInfo {
   reservationStartTime: string;
   reservationEndTime: string;
   reservationCapacity: number;
-  price: number;
+  workplaceImageUrl: string;
+  workplaceId: number;
+  reservationId: string;
+  reservationPrice: number;
 }
 
 // 리뷰 수정
