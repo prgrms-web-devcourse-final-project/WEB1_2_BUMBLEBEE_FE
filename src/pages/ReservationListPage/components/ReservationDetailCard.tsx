@@ -127,18 +127,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
           </div>
         </div>
         <div className='flex items-end justify-between'>
-          {buttonText === 'cancelPayment' && (
-            <ButtonInCard
-              name='결제 취소'
-              onClickFunction={() => setModalOpen(true)}
-            />
-          )}
-          {buttonText === 'review' && !existReview ? (
-            <ButtonInCard
-              name='리뷰 작성'
-              onClickFunction={handleReviewButton}
-            />
-          ) : (
+          {existReview ? (
             <Link to='/review-list'>
               <div className='flex h-[34px] items-end justify-end text-[12px] text-subfont active:text-focusColor'>
                 <span className='flex items-center gap-1'>
@@ -147,11 +136,26 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
                 </span>
               </div>
             </Link>
-          )}
-          {buttonText === 'none' && (
-            <span className='flex h-[34px] flex-col justify-end text-[12px] text-primary'>
-              방문 24시간 전입니다.
-            </span>
+          ) : (
+            <>
+              {buttonText === 'cancelPayment' && (
+                <ButtonInCard
+                  name='결제 취소'
+                  onClickFunction={() => setModalOpen(true)}
+                />
+              )}
+              {buttonText === 'review' && (
+                <ButtonInCard
+                  name='리뷰 작성'
+                  onClickFunction={handleReviewButton}
+                />
+              )}
+              {buttonText === 'none' && (
+                <span className='flex h-[34px] flex-col justify-end text-[12px] text-primary'>
+                  방문 24시간 전입니다.
+                </span>
+              )}
+            </>
           )}
           <span className='text-[14px] font-normal'>
             {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
