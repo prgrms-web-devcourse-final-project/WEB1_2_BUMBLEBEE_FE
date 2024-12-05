@@ -25,28 +25,28 @@ const ResultBar = () => {
       <button
         type='button'
         className='w-16 overflow-hidden text-ellipsis whitespace-nowrap border-r-2 border-subfont pr-1 text-center'
-        onClick={() => navigate('/search')}
+        onClick={() => navigate('/search', { state: true })}
       >
         {searchPlace}
       </button>
       <button
         type='button'
         className='w-20 border-r-2 border-subfont text-center'
-        onClick={() => navigate('/search')}
+        onClick={() => navigate('/search', { state: true })}
       >
         {formattedDate}
       </button>
       <button
         type='button'
         className='w-[100px] border-r-2 border-subfont text-center'
-        onClick={() => navigate('/search')}
+        onClick={() => navigate('/search', { state: true })}
       >
         {formattedTime}
       </button>
       <button
         type='button'
         className='w-8 text-center'
-        onClick={() => navigate('/search')}
+        onClick={() => navigate('/search', { state: true })}
       >
         {searchPeople}명
       </button>

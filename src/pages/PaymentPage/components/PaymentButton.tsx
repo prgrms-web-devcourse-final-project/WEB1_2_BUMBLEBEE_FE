@@ -38,11 +38,8 @@ const PaymentButton = (props: PaymentButtonProps) => {
 
   const { searchDate, formattedTime, searchPeople } = useSearchStore();
 
-  const startTimeString = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[0]}`;
-  const endTimeString = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')} ${formattedTime[1]}`;
-
-  const startTime = new Date(startTimeString);
-  const endTime = new Date(endTimeString);
+  const startTime = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')}T${formattedTime[0]}:00`;
+  const endTime = `${searchDate.getFullYear()}-${(searchDate.getMonth() + 1).toString().padStart(2, '0')}-${searchDate.getDate().toString().padStart(2, '0')}T${formattedTime[1]}:00`;
 
   const orderName = `${studyRoomInfo.workplaceName} ${studyRoomInfo.studyRoomTitle} 예약`;
 
@@ -114,6 +111,11 @@ const PaymentButton = (props: PaymentButtonProps) => {
 
   const handlePaymentButton = async () => {
     isValid();
+
+    if (totalAmount === 0) {
+      toast.error('결제 금액을 확인해주세요');
+      return;
+    }
 
     if (
       isValidKoreanName(reservationForm.name) &&

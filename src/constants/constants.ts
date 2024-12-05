@@ -12,6 +12,10 @@ export const ERROR_MESSAGE = {
   name: '성함을 올바르게 입력해주세요.',
   check: '필수 항목에 동의해주세요.',
   payMethod: '결제 수단을 선택해주세요.',
+  people: '인원을 선택해주세요.',
+  time: '시간을 선택해주세요.',
+  place: '장소를 선택해주세요.',
+  date: '날짜를 선택해주세요.',
 };
 
 export const PLACEHOLDER = {

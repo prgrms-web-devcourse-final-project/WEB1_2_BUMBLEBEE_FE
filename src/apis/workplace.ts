@@ -70,12 +70,13 @@ export const getWorkplaceStudyRoom = async (
 };
 
 // 예약 가능한 스터디룸 찾기
-export const getSearchStudyRoom = async (
+export const postSearchStudyRoom = async (
   searchStudyRoom: SearchStudyRoom,
 ): Promise<SearchStudyRoomData[]> => {
-  const response = await authInstance.get('/api/v1/studyroom/search', {
-    params: searchStudyRoom,
-  });
+  const response = await defaultInstance.post(
+    '/api/v1/studyroom/available',
+    searchStudyRoom,
+  );
   return response.data;
 };
 

@@ -13,10 +13,12 @@ interface PlaceListProps {
 
 const PlaceList = (props: PlaceListProps) => {
   const { onShowList, showList, searchList, isClickRef } = props;
-  const { setPlace } = useSearchStore();
-  const handleClickPlace = (placeName: string) => {
+  const { setPlace, setAddress } = useSearchStore();
+
+  const handleClickPlace = (placeName: string, addressName: string) => {
     isClickRef.current = true;
     setPlace(placeName);
+    setAddress(addressName);
     onShowList(!showList);
     setTimeout(() => {
       isClickRef.current = false;
@@ -32,7 +34,7 @@ const PlaceList = (props: PlaceListProps) => {
             <li
               key={map.place_name}
               className='flex h-[40px] cursor-pointer list-none items-center gap-2 border-b border-b-subfont px-2 py-3 text-sm last:border-none hover:bg-subfont hover:bg-opacity-50'
-              onClick={() => handleClickPlace(map.place_name)}
+              onClick={() => handleClickPlace(map.place_name, map.address_name)}
             >
               {map.category_group_code === 'SW8' ? (
                 <IoIosSubway className='text-lg text-[#454545]' />
