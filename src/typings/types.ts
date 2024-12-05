@@ -209,7 +209,7 @@ export interface SearchStudyRoom {
 export interface SearchStudyRoomData {
   workplaceName: string;
   studyRoomName: string;
-  studyRoomId: number;
+  studyroomId: number;
   reviewScore: number;
   reviewCount: number;
   workplaceAddress: string;
