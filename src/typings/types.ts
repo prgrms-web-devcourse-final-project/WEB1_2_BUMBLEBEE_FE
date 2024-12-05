@@ -343,6 +343,7 @@ export interface ChatMessageResponse {
   sender: string;
   content: string;
   timestamp: string;
+  senderType: 'member' | 'business';
 }
 
 // 채팅목록 조회 응답값 (사용자)

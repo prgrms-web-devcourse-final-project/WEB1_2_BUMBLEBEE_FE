@@ -12,7 +12,7 @@ import MessageContainer from './components/MessageContainer';
 
 const ChatPage = () => {
   const location = useLocation();
-  const user = location.state;
+  const user = 'JohnDoe1';
   const { roomId } = useParams();
   const [messages, setMessages] = useState<ChatMessageResponse[]>([]); // 메시지 리스트
   const [stompClient, setStompClient] = useState<Client | null>(null); // STOMP 클라이언트
@@ -54,6 +54,7 @@ const ChatPage = () => {
   };
 
   const disConnect = () => {
+    console.log('연결끊기');
     // 연결 끊기
     if (stompClient === null) {
       return;
@@ -70,20 +71,22 @@ const ChatPage = () => {
         timestamp: new Date().toISOString(),
         senderType: 'member',
       };
+
       stompClient.publish({
         destination: '/pub/sendMessage',
         body: JSON.stringify(chatMessage),
       });
+      loadMessage();
+      console.log(chatMessage);
+      console.log(messages);
     }
   };
 
   useEffect(() => {
     loadMessage();
-
     connect();
     return () => disConnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [roomId]);
 
   return (
     <>
