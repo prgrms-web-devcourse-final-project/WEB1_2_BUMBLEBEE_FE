@@ -36,7 +36,7 @@ const MyReviewCard = ({ item }: { item: Review }) => {
         <img
           src={workplaceImageURL}
           alt='스터디룸 사진'
-          className='h-[50px] w-[50px] cursor-pointer object-cover'
+          className='h-[50px] w-[50px] object-cover'
         />
       </div>
 
