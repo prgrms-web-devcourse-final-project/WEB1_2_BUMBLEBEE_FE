@@ -12,7 +12,7 @@ const ChatListPage = () => {
     {
       roomId: 1,
       id: 1,
-      name: 'eun309',
+      name: 'JohnDoe2',
       updatedAt: '2024-12-02T12:30:00',
     },
   ];

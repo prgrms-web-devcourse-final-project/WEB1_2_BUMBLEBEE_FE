@@ -1,9 +1,4 @@
-import {
-  ChatListBusiness,
-  ChatListMember,
-  ChatListResponse,
-  ChatMessageResponse,
-} from '@typings/types';
+import { ChatListResponse, ChatMessageResponse } from '@typings/types';
 import { authInstance } from '.';
 
 // 메시지 기록 조회

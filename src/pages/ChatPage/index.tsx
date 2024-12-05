@@ -2,20 +2,40 @@ import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
 import { useEffect, useState } from 'react';
 import { Client, IMessage } from '@stomp/stompjs';
-import { useLocation, useParams } from 'react-router-dom';
-import { ChatMessageResponse, SendMessageRequest } from '@typings/types';
+import { useParams } from 'react-router-dom';
+import {
+  Business,
+  ChatMessageResponse,
+  Member,
+  SendMessageRequest,
+} from '@typings/types';
 import { getMessage } from '@apis/chat';
 import SockJS from 'sockjs-client';
 import { WS_URL } from '@constants/constants';
+import { getRole } from '@utils/auth';
+import { getUserData } from '@apis/member';
+import { getBusinessData } from '@apis/business';
 import MessageInput from './components/MessageInput';
 import MessageContainer from './components/MessageContainer';
 
 const ChatPage = () => {
-  // const location = useLocation();
-  const user = 'JohnDoe1';
   const { roomId } = useParams();
   const [messages, setMessages] = useState<ChatMessageResponse[]>([]); // 메시지 리스트
   const [stompClient, setStompClient] = useState<Client | null>(null); // STOMP 클라이언트
+
+  const role = getRole();
+  const [user, setUser] = useState<string>('');
+
+  const getUserNickName = async () => {
+    const userResponse =
+      role === 'USER_ROLE' ? await getUserData() : await getBusinessData();
+
+    if (role === 'USER_ROLE') {
+      setUser((userResponse as Member).nickName);
+    } else {
+      setUser((userResponse as Business).businessName);
+    }
+  };
 
   // 채팅 내용 불러오기
   const loadMessage = async () => {
@@ -69,7 +89,7 @@ const ChatPage = () => {
         content: inputValue,
         roomId: parseInt(roomId || '', 10),
         timestamp: new Date().toISOString(),
-        senderType: 'member',
+        senderType: 'business',
       };
 
       stompClient.publish({
@@ -83,9 +103,11 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
+    getUserNickName();
     loadMessage();
     connect();
     return () => disConnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomId]);
 
   return (
