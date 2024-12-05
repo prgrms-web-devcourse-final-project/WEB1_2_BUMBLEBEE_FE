@@ -4,7 +4,7 @@ import { SearchStudyRoom, SearchStudyRoomData } from '@typings/types';
 
 export const useGetSearchStudyRoom = (searchStudyRoom: SearchStudyRoom) => {
   const { data, isLoading, isError } = useQuery<SearchStudyRoomData[]>({
-    queryKey: ['searchStudyRoom'],
+    queryKey: ['searchStudyRoom', searchStudyRoom.address],
     queryFn: () => postSearchStudyRoom(searchStudyRoom),
   });
 
