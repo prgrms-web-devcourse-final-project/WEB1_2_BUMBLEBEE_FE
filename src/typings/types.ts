@@ -73,8 +73,8 @@ export interface PostReservationData {
   reservationPhoneNumber: string;
   capacity: number;
   price: number;
-  startTime: Date;
-  endTime: Date;
+  startTime: string;
+  endTime: string;
 }
 
 // 예약 정보
