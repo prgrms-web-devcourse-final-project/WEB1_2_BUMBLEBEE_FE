@@ -2,7 +2,7 @@ import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
 import { useEffect, useState } from 'react';
 import { Client, IMessage } from '@stomp/stompjs';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   Business,
   ChatMessageResponse,
@@ -19,6 +19,8 @@ import MessageInput from './components/MessageInput';
 import MessageContainer from './components/MessageContainer';
 
 const ChatPage = () => {
+  const location = useLocation();
+  const chatTitle = location.state;
   const { roomId } = useParams();
   const [messages, setMessages] = useState<ChatMessageResponse[]>([]); // 메시지 리스트
   const [stompClient, setStompClient] = useState<Client | null>(null); // STOMP 클라이언트
@@ -28,9 +30,9 @@ const ChatPage = () => {
 
   const getUserNickName = async () => {
     const userResponse =
-      role === 'USER_ROLE' ? await getUserData() : await getBusinessData();
+      role === 'ROLE_USER' ? await getUserData() : await getBusinessData();
 
-    if (role === 'USER_ROLE') {
+    if (role === 'ROLE_USER') {
       setUser((userResponse as Member).nickName);
     } else {
       setUser((userResponse as Business).businessName);
@@ -89,7 +91,7 @@ const ChatPage = () => {
         content: inputValue,
         roomId: parseInt(roomId || '', 10),
         timestamp: new Date().toISOString(),
-        senderType: 'business',
+        senderType: role === 'ROLE_USER' ? 'member' : 'business',
       };
 
       stompClient.publish({
@@ -113,7 +115,7 @@ const ChatPage = () => {
   return (
     <>
       <MainLayout>
-        <HeaderOnlyTitle title='ABC 스터디룸' />
+        <HeaderOnlyTitle title={chatTitle} />
         <div className='fixed left-1/2 top-[93px] flex h-[calc(100vh-93px-94px)] w-custom -translate-x-1/2 overflow-hidden'>
           <div className='overflow-y-auto'>
             <MessageContainer

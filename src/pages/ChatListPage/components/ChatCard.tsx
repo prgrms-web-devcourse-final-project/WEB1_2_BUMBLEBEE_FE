@@ -11,7 +11,7 @@ const ChatCard = (props: ChatCardProps) => {
 
   const navigate = useNavigate();
   const handleClickChat = () => {
-    navigate(`/chat/${chat.roomId}`);
+    navigate(`/chat/${chat.roomId}`, { state: chat.name });
   };
 
   return (
