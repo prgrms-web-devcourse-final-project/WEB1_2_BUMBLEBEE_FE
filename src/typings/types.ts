@@ -333,6 +333,7 @@ export interface SendMessageRequest {
   sender: string;
   content: string;
   timestamp: string;
+  senderType: 'member' | 'business';
 }
 
 // 메시지 조회 응답값
@@ -346,14 +347,16 @@ export interface ChatMessageResponse {
 
 // 채팅목록 조회 응답값 (사용자)
 export interface ChatListMember {
-  roomId: 1;
-  businessId: 1;
-  updatedAt: Date | null;
+  roomId: number;
+  businessId: number;
+  studyRoomName: string;
+  updatedAt: string;
 }
 
 // 채팅목록 조회 응답값 (사업자)
 export interface ChatListBusiness {
   roomId: 1;
   memberId: 1;
-  updatedAt: Date | null;
+  userName: string;
+  updatedAt: string;
 }

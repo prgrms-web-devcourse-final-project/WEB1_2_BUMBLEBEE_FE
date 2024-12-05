@@ -10,7 +10,7 @@ interface MessageContainerProps {
 
 const MessageContainer = (props: MessageContainerProps) => {
   const { messages, user } = props;
-
+  console.log(messages);
   // 메시지 목록이 업데이트될 때마다 최하단으로 스크롤
   const messageEndRef = useRef<HTMLDivElement | null>(null);
 

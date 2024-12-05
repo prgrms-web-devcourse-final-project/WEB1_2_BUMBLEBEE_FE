@@ -2,24 +2,20 @@ import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
 import { useEffect, useState } from 'react';
 import { Client, IMessage } from '@stomp/stompjs';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { ChatMessageResponse, SendMessageRequest } from '@typings/types';
 import { getMessage } from '@apis/chat';
-import { getUserData } from '@apis/member';
+import SockJS from 'sockjs-client';
+import { WS_URL } from '@constants/constants';
 import MessageInput from './components/MessageInput';
 import MessageContainer from './components/MessageContainer';
 
 const ChatPage = () => {
+  const location = useLocation();
+  const user = location.state;
   const { roomId } = useParams();
   const [messages, setMessages] = useState<ChatMessageResponse[]>([]); // 메시지 리스트
-  const [user, setUser] = useState<string>('');
   const [stompClient, setStompClient] = useState<Client | null>(null); // STOMP 클라이언트
-
-  // 닉네임 가져오기
-  const getUserNickName = async () => {
-    const userResponse = await getUserData();
-    setUser(userResponse.nickName);
-  };
 
   // 채팅 내용 불러오기
   const loadMessage = async () => {
@@ -31,24 +27,27 @@ const ChatPage = () => {
   const connect = () => {
     try {
       const client = new Client({
-        brokerURL: `ws://localhost:3000/api/v1/chat/room/${roomId}`, // 경로 재설정 필요
+        brokerURL: WS_URL,
+        webSocketFactory: () => new SockJS(WS_URL),
         reconnectDelay: 5000, // 자동 재연결
       });
-      client.activate();
-      setStompClient(client);
 
       // 구독
       client.onConnect = () => {
+        console.log('Connected');
         client.subscribe(`/sub/chat/room/${roomId}`, (message: IMessage) => {
           try {
             const newMessage = JSON.parse(message.body);
-            console.log(newMessage);
             setMessages((prevMessages) => [...prevMessages, newMessage]);
+            console.log('완료');
           } catch (error) {
             console.error('오류가 발생했습니다:', error);
           }
         });
       };
+
+      client.activate();
+      setStompClient(client);
     } catch (err) {
       console.error(err);
     }
@@ -69,6 +68,7 @@ const ChatPage = () => {
         content: inputValue,
         roomId: parseInt(roomId || '', 10),
         timestamp: new Date().toISOString(),
+        senderType: 'member',
       };
       stompClient.publish({
         destination: '/pub/sendMessage',
@@ -78,7 +78,6 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
-    getUserNickName();
     loadMessage();
 
     connect();
