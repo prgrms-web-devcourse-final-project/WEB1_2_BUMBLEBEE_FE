@@ -347,17 +347,9 @@ export interface ChatMessageResponse {
 }
 
 // 채팅목록 조회 응답값 (사용자)
-export interface ChatListMember {
+export interface ChatListResponse {
   roomId: number;
-  businessId: number;
-  studyRoomName: string;
-  updatedAt: string;
-}
-
-// 채팅목록 조회 응답값 (사업자)
-export interface ChatListBusiness {
-  roomId: 1;
-  memberId: 1;
-  userName: string;
+  id: number;
+  name: string;
   updatedAt: string;
 }
