@@ -64,7 +64,7 @@ const ReserverCard = ({ item }: { item: ReserverInfo }) => {
           <img
             src={workplaceImageUrl}
             alt='스터디룸 사진'
-            className='h-[50px] w-[50px] cursor-pointer object-cover'
+            className='h-[50px] w-[50px] object-cover'
           />
           <span className='self-end text-sm font-normal'>
             {reservationPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
