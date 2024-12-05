@@ -17,7 +17,7 @@ const LatestReservation = ({ data }: { data: Reservation }) => {
   return (
     <>
       <Link to='/reservation-list'>
-        <div className='flex h-auto min-h-[172px] w-[330px] flex-col rounded-[10px] bg-white p-[16px] shadow-[0_0_6px_0_rgba(0,0,0,0.25)]'>
+        <div className='flex h-auto min-h-[172px] w-[330px] flex-col rounded-[10px] bg-white p-[16px] shadow-custom'>
           <div className='flex justify-start gap-[13px]'>
             <img
               src={workplaceImageUrl}

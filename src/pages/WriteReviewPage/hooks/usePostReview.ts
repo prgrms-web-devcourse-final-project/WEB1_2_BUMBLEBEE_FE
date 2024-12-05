@@ -9,9 +9,10 @@ const usePostReview = () => {
 
   const writeReview = useMutation({
     mutationFn: (data: PostReviewRequestBody) => postReview(data),
-    onSuccess: (data) => {
-      console.log(data, '리뷰 작성 성공');
-      queryClient.invalidateQueries({ queryKey: ['myReview'] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['myReview', 'myReservationList'],
+      });
       navigate('/review-list');
     },
   });

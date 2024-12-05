@@ -53,7 +53,6 @@ const WriteReview = ({
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(postData);
     writeReview(postData);
   };
 
