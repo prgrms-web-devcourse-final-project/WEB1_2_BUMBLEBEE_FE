@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import useSearchStore from '@store/searchStore';
 import { debounce } from 'lodash';
+import { useLocation } from 'react-router-dom';
 import PlaceList, { Place } from './PlaceList';
 
 const PlaceSearch = () => {
@@ -9,6 +10,13 @@ const PlaceSearch = () => {
   const [searchList, setSearchList] = useState<Place[]>([]);
   const { searchPlace, setPlace } = useSearchStore();
   const isClickRef = useRef(false);
+
+  const location = useLocation();
+  const isBack = location.state || false;
+
+  if (isBack) {
+    isClickRef.current = isBack;
+  }
 
   const handleSearchPlace = useCallback(() => {
     if (!searchPlace) return;

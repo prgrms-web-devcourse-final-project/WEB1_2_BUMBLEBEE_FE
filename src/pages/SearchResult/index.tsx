@@ -4,6 +4,7 @@ import MainLayout from '@layouts/MainLayout';
 import { SearchStudyRoom } from '@typings/types';
 import useSearchStore from '@store/searchStore';
 import { SyncLoader } from 'react-spinners';
+import { useEffect } from 'react';
 import ResultBar from './components/ResultBar';
 import RoomCard from './components/RoomCard';
 import { useGetSearchStudyRoom } from './hooks/useGetSearchStudyRoom';
@@ -32,57 +33,12 @@ const SearchResult = () => {
   console.log(searchData);
   const { data, isLoading } = useGetSearchStudyRoom(searchData);
   console.log(data);
-  // const isLoading = false;
-  // const data = [
-  //   {
-  //     workplaceName: '타임유스터디카페 민락점',
-  //     studyRoomName: 'Room B',
-  //     reviewScore: 3.7142857142857144,
-  //     reviewCount: 7,
-  //     workplaceAddress: '경기 의정부시 용현로105번길 19, 완빌딩 2층',
-  //     studyRoomCapacity: 6,
-  //     studyRoomPrice: 8000,
-  //     imageUrl:
-  //       'https://elasticbeanstalk-ap-northeast-2-405894845535.s3.ap-northeast-2.amazonaws.com/타임유스터디카페 민락점/타임유 스터디카페.jpg',
-  //     distance: 0.0,
-  //   },
-  //   {
-  //     workplaceName: '타임유스터디카페 민락점',
-  //     studyRoomName: 'Room C',
-  //     reviewScore: 3.7142857142857144,
-  //     reviewCount: 7,
-  //     workplaceAddress: '경기 의정부시 용현로105번길 19, 완빌딩 2층',
-  //     studyRoomCapacity: 3,
-  //     studyRoomPrice: 6000,
-  //     imageUrl:
-  //       'https://elasticbeanstalk-ap-northeast-2-405894845535.s3.ap-northeast-2.amazonaws.com/타임유스터디카페 민락점/타임유 스터디카페.jpg',
-  //     distance: 0.0,
-  //   },
-  //   {
-  //     workplaceName: '타임유스터디카페 망월사역점',
-  //     studyRoomName: 'Quiet Room 1',
-  //     reviewScore: 3.3333333333333335,
-  //     reviewCount: 30,
-  //     workplaceAddress: '경기 의정부시 평화로 170, 빌딩 3층 301호',
-  //     studyRoomCapacity: 8,
-  //     studyRoomPrice: 10000,
-  //     imageUrl:
-  //       'https://elasticbeanstalk-ap-northeast-2-405894845535.s3.ap-northeast-2.amazonaws.com/타임유스터디카페 망월사역점/타임유스터디카페 망월사역점.jpg',
-  //     distance: 5.19,
-  //   },
-  //   {
-  //     workplaceName: '타임유스터디카페 망월사역점',
-  //     studyRoomName: 'Meeting Room',
-  //     reviewScore: 3.3333333333333335,
-  //     reviewCount: 30,
-  //     workplaceAddress: '경기 의정부시 평화로 170, 빌딩 3층 301호',
-  //     studyRoomCapacity: 12,
-  //     studyRoomPrice: 15000,
-  //     imageUrl:
-  //       'https://elasticbeanstalk-ap-northeast-2-405894845535.s3.ap-northeast-2.amazonaws.com/타임유스터디카페 망월사역점/타임유스터디카페 망월사역점.jpg',
-  //     distance: 5.19,
-  //   },
-  // ];
+
+  // 스크롤 상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <MainLayout headerType='both'>
