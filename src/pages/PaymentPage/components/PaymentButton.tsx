@@ -112,6 +112,11 @@ const PaymentButton = (props: PaymentButtonProps) => {
   const handlePaymentButton = async () => {
     isValid();
 
+    if (totalAmount === 0) {
+      toast.error('결제 금액을 확인해주세요');
+      return;
+    }
+
     if (
       isValidKoreanName(reservationForm.name) &&
       isValidUserPhoneNumber(reservationForm.phoneNumber) &&
