@@ -2,14 +2,17 @@ import { MdArrowForwardIos } from 'react-icons/md';
 import { FaStar, FaRegStar } from 'react-icons/fa6';
 import { getDateFunction } from '@utils/formatTime';
 import { Review } from '@typings/types';
+import { Link } from 'react-router-dom';
 
 const MyReviewCard = ({ item }: { item: Review }) => {
   const {
-    workPlaceName,
+    workplaceName,
+    workplaceId,
+    studyRoomName,
     reviewContent,
     reviewRating,
-    studyRoomName,
     reviewDate,
+    workplaceImageURL,
   } = item;
 
   const showRatingWithStar = (rating: number) => {
@@ -27,11 +30,11 @@ const MyReviewCard = ({ item }: { item: Review }) => {
     <div className='mx-auto flex w-custom flex-col gap-[13px] border-b border-solid border-b-black px-[13px] py-[26px]'>
       <div className='flex items-start justify-between'>
         <div className='flex cursor-pointer items-center gap-1.5 font-medium'>
-          {workPlaceName}
+          <Link to={`/detail/${workplaceId}`}>{workplaceName}</Link>
           <MdArrowForwardIos className='w-3' />
         </div>
         <img
-          src='사진'
+          src={workplaceImageURL}
           alt='스터디룸 사진'
           className='h-[50px] w-[50px] cursor-pointer object-cover'
         />

@@ -119,7 +119,7 @@ export interface PostReviewRequestBody extends PutReviewRequestBody {
 // 내가 작성한 리뷰 정보
 export interface Review {
   reviewId: number;
-  workPlaceName: string;
+  workplaceName: string;
   workplaceId: number;
   studyRoomName: string;
   reviewContent: string;

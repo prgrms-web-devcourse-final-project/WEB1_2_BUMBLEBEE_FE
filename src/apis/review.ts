@@ -37,7 +37,7 @@ export const getNextPage = async (
 
 // 내가 작성한 리뷰 조회 - 로그인
 export const getMyReview = async (): Promise<Review[]> => {
-  const response = await authInstance.get('/api/vi/review/me');
+  const response = await authInstance.get('/api/v1/review/me');
   return response.data;
 };
 

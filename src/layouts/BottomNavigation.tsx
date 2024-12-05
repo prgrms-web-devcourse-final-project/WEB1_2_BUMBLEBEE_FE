@@ -5,7 +5,6 @@ import { BiUser } from 'react-icons/bi';
 import useAuthStore from '@store/authStore';
 import { getRole } from '@utils/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 const BottomNavigation = () => {
   const navigate = useNavigate();
@@ -17,9 +16,17 @@ const BottomNavigation = () => {
 
   const navigationItems = [
     { icon: <AiFillHome />, label: '홈', path: '/' },
-    { icon: <BsChatDots />, label: '문의', path: isLogin ? '/chat-list' : '/' },
+    {
+      icon: <BsChatDots />,
+      label: '문의',
+      path: isLogin ? '/chat-list' : '/start',
+    },
     { icon: <CgSearch />, label: '검색', path: '/search' },
-    { icon: <BiUser />, label: '마이페이지', path: isLogin ? myPagePath : '/' },
+    {
+      icon: <BiUser />,
+      label: '마이페이지',
+      path: isLogin ? myPagePath : '/start',
+    },
   ];
 
   // 현재 경로를 기준으로 활성화된 탭 설정
@@ -30,7 +37,6 @@ const BottomNavigation = () => {
   const handleMovePage = (path: string) => {
     if (!isLogin && (path === '/chat-list' || path === myPagePath)) {
       navigate(path);
-      toast.error('로그인 후 이용해주세요');
       return;
     }
     navigate(path);
