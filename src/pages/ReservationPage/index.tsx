@@ -3,6 +3,7 @@ import MainLayout from '@layouts/MainLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSearchStore from '@store/searchStore';
 import { toast } from 'react-toastify';
+import { ERROR_MESSAGE } from '@constants/constants';
 import ReservationBar from './components/ReservationBar';
 import ImageCarousel from './components/ImageCarousel';
 import RoomDetail from './components/RoomDetail';
@@ -23,11 +24,11 @@ const ReservationPage = () => {
 
   const handleClickReservation = () => {
     if (searchTime.length === 0) {
-      toast.error('시간을 선택해주세요.');
+      toast.error(ERROR_MESSAGE.time);
       return;
     }
     if (searchPeople === 0) {
-      toast.error('인원을 선택해주세요.');
+      toast.error(ERROR_MESSAGE.people);
       return;
     }
     navigate('/payment', { state: studyRoomInfo });
