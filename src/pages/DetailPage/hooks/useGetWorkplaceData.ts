@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getWorkPlace } from '../../../apis/workplace';
 
-const useGetWorplaceData = (workplaceId: number) => {
+const useGetWorkplaceData = (workplaceId: number) => {
   const { data, isLoading } = useQuery({
     queryKey: ['workplaceDetail', workplaceId],
     queryFn: () => getWorkPlace(workplaceId),
@@ -9,4 +9,4 @@ const useGetWorplaceData = (workplaceId: number) => {
   return { data, isLoading };
 };
 
-export default useGetWorplaceData;
+export default useGetWorkplaceData;

@@ -108,6 +108,15 @@ export interface ReserverInfo {
   reservationPrice: number;
 }
 
+// 리뷰 전체 조회(페이징)
+export interface DetailReview {
+  memberNickName: string;
+  reviewRating: number;
+  reviewContent: string;
+  reviewDate: string;
+  reviewId: number;
+}
+
 // 리뷰 수정
 export interface PutReviewRequestBody {
   reviewContent: string;
@@ -163,7 +172,7 @@ export interface WorkplaceStudyRoomData {
   studyRoomId: number;
   studyRoomName: string;
   description: string;
-  imageUrl: string;
+  imageUrl: string[];
   price: number;
   capacity: number;
 }
@@ -247,6 +256,7 @@ export interface GetWorkPlaceData extends WorkPlaceData {
     price: number;
     capacity: number;
   }[];
+  reviewCount: number;
 }
 
 // 사업장 위치

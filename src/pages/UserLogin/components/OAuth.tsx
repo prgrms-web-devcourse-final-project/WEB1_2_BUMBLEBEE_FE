@@ -1,5 +1,5 @@
 import useAuthStore from '@store/authStore';
-import { setAuthToken } from '@utils/auth';
+import { setAuthToken, setRole } from '@utils/auth';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -11,8 +11,10 @@ const OAuth = () => {
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const accessToken = query.get('accessToken');
-    if (accessToken) {
+    const role = query.get('role');
+    if (accessToken && role) {
       setAuthToken(accessToken);
+      setRole(role);
       storeLogin();
       navigate('/');
     } else {

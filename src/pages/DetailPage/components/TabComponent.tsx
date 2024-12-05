@@ -15,7 +15,11 @@ const TabComponent = ({
   workplaceDetailData,
   workplaceId,
 }: TabComponentProps) => {
-  const tabs = ['상세정보', '룸 선택', '리뷰 (3)'];
+  const tabs = [
+    '상세정보',
+    '룸 선택',
+    `리뷰(${workplaceDetailData.reviewCount})`,
+  ];
   const [activeTab, setActiveTab] = useState(0);
 
   const handleClickTab = (index: number) => {
@@ -49,7 +53,9 @@ const TabComponent = ({
             workplaceId={workplaceId}
           />
         )}
-        {activeTab === 2 && <WorkPlaceReview />}
+        {activeTab === 2 && (
+          <WorkPlaceReview workplaceDetailData={workplaceDetailData} />
+        )}
       </div>
     </div>
   );
