@@ -30,9 +30,7 @@ const SearchResult = () => {
     reservationCapacity,
   };
 
-  console.log(searchData);
   const { data, isLoading } = useGetSearchStudyRoom(searchData);
-  console.log(data);
 
   // 스크롤 상단으로 이동
   useEffect(() => {
