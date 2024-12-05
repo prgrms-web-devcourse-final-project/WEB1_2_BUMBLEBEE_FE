@@ -22,7 +22,7 @@ const DetailPage = () => {
         <img
           src={data?.imageUrl}
           alt='사업장 사진'
-          className='h-[240px] w-[100%]'
+          className='h-[240px] w-[100%] object-cover'
         />
         {data && (
           <TabComponent

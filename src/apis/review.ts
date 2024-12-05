@@ -1,38 +1,18 @@
-import { PostReviewRequestBody, Review } from '@typings/types';
+import { DetailReview, PostReviewRequestBody, Review } from '@typings/types';
 import { authInstance, defaultInstance } from '.';
 
 // 상세페이지 리뷰 전체 목록 조회(비로그인)
 export const getAllReview = async (
-  workplaceId: string,
-  lastId?: string,
-  nextcursor?: string,
-): Promise<Review[]> => {
+  workplaceId: number,
+  nextCursor?: number,
+): Promise<{ data: DetailReview[]; nextCursor: number }> => {
   const response = await defaultInstance.get(
-    `/api/vi/review/workplace/${workplaceId}`,
+    `/api/v1/review/workplace/${workplaceId}`,
     {
-      params: {
-        lastId: lastId || null,
-        nextcusor: nextcursor || null,
-      },
+      params: nextCursor ? { lastId: nextCursor } : {},
     },
   );
   return response.data;
-};
-
-// 상세페이지 리뷰 전체 목록 조회(비로그인) - 첫 페이지 요청
-export const getFirstPage = async (workplaceId: string) => {
-  const firstPageReviews = await getAllReview(workplaceId);
-  return firstPageReviews;
-};
-
-// 상세페이지 리뷰 전체 목록 조회(비로그인) - 첫 페이지 이후 다음 페이지들 요청
-export const getNextPage = async (
-  workplaceId: string,
-  lastId: string,
-  nextcursor: string,
-) => {
-  const nextPageReviews = await getAllReview(workplaceId, lastId, nextcursor);
-  return nextPageReviews;
 };
 
 // 내가 작성한 리뷰 조회 - 로그인
