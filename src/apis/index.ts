@@ -6,7 +6,12 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios';
 import { BASE_URL } from '@constants/constants';
-import { getAuthToken, removeAuthToken, setAuthToken } from '@utils/auth';
+import {
+  getAuthToken,
+  removeAuthToken,
+  removeRole,
+  setAuthToken,
+} from '@utils/auth';
 import useAuthStore from '@store/authStore';
 import { toast } from 'react-toastify';
 
@@ -55,6 +60,7 @@ authInstance.interceptors.response.use(
         const { storeLogout } = useAuthStore();
         authInstance.post('/logout');
         removeAuthToken();
+        removeRole();
         storeLogout();
         window.location.replace('/');
       }
