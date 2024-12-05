@@ -6,8 +6,6 @@ const ReservationList = () => {
   const { reservationList } = useGetAllMyReservations();
   const [activeSortButton, setActiveSortButton] = useState(false);
 
-  console.log(reservationList)
-
   // 최근 결제일순으로 정렬
   const sortedReservationWithPayment = useCallback(() => {
     return [...reservationList].sort(
