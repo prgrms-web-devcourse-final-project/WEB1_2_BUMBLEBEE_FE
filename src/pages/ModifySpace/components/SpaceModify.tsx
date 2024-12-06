@@ -114,7 +114,7 @@ const SpaceModify = ({
         '주소는 5~100자 이내이며, 가능한 특수문자는 (,-())입니다.';
       pass = false;
     }
-    if (spaceFormData.spaceImage === null) {
+    if (spaceFormData.spaceImage.url === null) {
       newErrorMessage.imageError = '이미지를 등록해주세요.';
       pass = false;
     }
@@ -143,7 +143,7 @@ const SpaceModify = ({
       spaceFormData.closedTime !== '선택' &&
       isValidNumber(spaceFormData.phoneNumber) &&
       isValidAddress(spaceFormData.address.detail) &&
-      spaceFormData.spaceImage.file !== null
+      spaceFormData.spaceImage.url !== null
     ) {
       await mutateAsync({
         workplace: {
@@ -158,13 +158,12 @@ const SpaceModify = ({
         workplaceId: Number(workplaceId),
       });
 
-      // 사업장 사진
-      const prevImgName = info?.imageUrl.split('/').pop();
-      const s3URL = await getS3URL(
-        prevImgName!,
-        `workplace-${workplaceId}/${prevImgName}`,
-      );
-      uploadImageToS3(s3URL, spaceFormData.spaceImage.file);
+      // 사업장 사진 (수정을 한 경우에만)
+      if (spaceFormData.spaceImage.file !== null) {
+        const prevImgName = info?.imageUrl.split('/').pop();
+        const s3URL = await getS3URL(prevImgName!, `workplace-${workplaceId}`);
+        uploadImageToS3(s3URL, spaceFormData.spaceImage.file);
+      }
     }
   };
 
