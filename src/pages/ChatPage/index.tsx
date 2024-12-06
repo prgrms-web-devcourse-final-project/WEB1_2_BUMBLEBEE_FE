@@ -52,6 +52,7 @@ const ChatPage = () => {
       const client = new Client({
         brokerURL: WS_URL,
         webSocketFactory: () => new SockJS(WS_URL),
+        debug: (str) => console.log(str),
         reconnectDelay: 5000, // 자동 재연결
       });
 
