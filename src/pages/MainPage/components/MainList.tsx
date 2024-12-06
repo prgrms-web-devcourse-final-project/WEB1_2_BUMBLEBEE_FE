@@ -11,10 +11,12 @@ type TabList = {
 
 interface MainListProps {
   data: GetPositionWorkPlaceData[] | undefined;
+  isLoading: boolean;
+  isError: boolean;
 }
 
 const MainList = (props: MainListProps) => {
-  const { data } = props;
+  const { data, isLoading, isError } = props;
   const [activeTab, setActiveTab] = useState('주변 스터디룸');
   const tabList: TabList = {
     '주변 스터디룸': {
@@ -47,6 +49,7 @@ const MainList = (props: MainListProps) => {
       </div>
       <div className='mx-auto flex w-custom flex-col gap-4'>
         {activeTab === '주변 스터디룸' &&
+          !isLoading &&
           data &&
           data.length > 0 &&
           data.map((item) => (
@@ -55,11 +58,13 @@ const MainList = (props: MainListProps) => {
               studyroom={item}
             />
           ))}
-        {activeTab === '주변 스터디룸' && (!data || data.length === 0) && (
-          <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
-            주변 스터디룸이 없습니다.
-          </div>
-        )}
+        {(!isLoading || isError) &&
+          activeTab === '주변 스터디룸' &&
+          (!data || data.length === 0) && (
+            <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
+              주변 스터디룸이 없습니다.
+            </div>
+          )}
         {activeTab === '맞춤형 추천' && (
           <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
             추천 스터디룸이 없습니다.
