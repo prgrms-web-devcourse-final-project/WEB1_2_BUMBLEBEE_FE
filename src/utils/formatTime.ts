@@ -21,6 +21,19 @@ export const getFormattedDateFunction = (date: Date) => {
   return formattedDate.replace('일 (', '일(');
 };
 
+// Date 타입의 날짜를 YYYY년 MM월 DD일 W요일로 변환하는 함수
+export const getFormattedDateWeekFunction = (date: string) => {
+  const newDate = new Date(date);
+  const formattedDate = newDate.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long', // 월
+    day: 'numeric', // 일
+    weekday: 'short', // (요일)
+  });
+
+  return `${formattedDate}요일`;
+};
+
 // date타입에서 YYYY-MM-DD 추출해 YYYY.MM.DD로 변환
 export const getStringFromDate = (value: Date) => {
   const year = value.getFullYear();
@@ -47,6 +60,17 @@ export const getStringFromDateTime = (value: Date) => {
   const formattedTimeString = `${hour}:${minutes}`;
 
   return formattedTimeString;
+};
+
+export const getDatetoLocalDate = (date: Date) => {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+  const dd = String(date.getDate()).padStart(2, '0');
+  const HH = String(date.getHours()).padStart(2, '0');
+  const MM = String(date.getMinutes()).padStart(2, '0');
+  const SS = String(date.getSeconds()).padStart(2, '0');
+
+  return `${yyyy}-${mm}-${dd}T${HH}:${MM}:${SS}`;
 };
 
 // 시간 차이 구하는 함수

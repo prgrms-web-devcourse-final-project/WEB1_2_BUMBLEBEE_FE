@@ -158,7 +158,7 @@ const router = createBrowserRouter([
     element: <ChatListPage />,
   },
   {
-    path: '/chat',
+    path: '/chat/:roomId',
     element: <ChatPage />,
   },
   {
