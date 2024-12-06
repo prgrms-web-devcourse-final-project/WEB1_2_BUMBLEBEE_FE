@@ -73,8 +73,8 @@ export interface PostReservationData {
   reservationPhoneNumber: string;
   capacity: number;
   price: number;
-  startTime: Date;
-  endTime: Date;
+  startTime: string;
+  endTime: string;
 }
 
 // 예약 정보
@@ -89,6 +89,8 @@ export interface Reservation {
   endTime: string;
   reservationCapacity: number;
   price: number;
+  existReview: boolean;
+  state: string;
 }
 
 // 사업자의 예약자 확인
@@ -101,7 +103,19 @@ export interface ReserverInfo {
   reservationStartTime: string;
   reservationEndTime: string;
   reservationCapacity: number;
-  price: number;
+  workplaceImageUrl: string;
+  workplaceId: number;
+  reservationId: string;
+  reservationPrice: number;
+}
+
+// 리뷰 전체 조회(페이징)
+export interface DetailReview {
+  memberNickName: string;
+  reviewRating: number;
+  reviewContent: string;
+  reviewDate: string;
+  reviewId: number;
 }
 
 // 리뷰 수정
@@ -159,7 +173,7 @@ export interface WorkplaceStudyRoomData {
   studyRoomId: number;
   studyRoomName: string;
   description: string;
-  imageUrl: string;
+  imageUrl: string[];
   price: number;
   capacity: number;
 }
@@ -186,21 +200,24 @@ export interface PossibleTime {
 
 // 스터디룸 검색
 export interface SearchStudyRoom {
-  workplaceAddress: string;
-  startTime: string;
-  endTime: string;
-  capacity: number;
+  address: string;
+  startDateTime: string;
+  endDateTime: string;
+  reservationCapacity: number;
 }
 
 // 스터디룸 검색 결과
 export interface SearchStudyRoomData {
   workplaceName: string;
-  averageReviewScore: number;
-  studyRoomTitle: string;
+  studyRoomName: string;
+  studyroomId: number;
+  reviewScore: number;
+  reviewCount: number;
   workplaceAddress: string;
   studyRoomCapacity: number;
   studyRoomPrice: number;
   imageUrl: string;
+  distance: number;
 }
 
 // 사업장
@@ -243,6 +260,7 @@ export interface GetWorkPlaceData extends WorkPlaceData {
     price: number;
     capacity: number;
   }[];
+  reviewCount: number;
 }
 
 // 사업장 위치

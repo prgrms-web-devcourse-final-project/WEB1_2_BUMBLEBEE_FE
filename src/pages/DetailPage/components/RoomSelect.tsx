@@ -9,7 +9,6 @@ interface RoomSelectProps {
 
 const RoomSelect = ({ setIsBtnDisabled, workplaceId }: RoomSelectProps) => {
   const { data } = useGetStudyroomOfWorkplace(workplaceId);
-  console.log(data, workplaceId);
 
   const [selectedRoomId, setSelectedRoomId] = useState<number>();
   const handleClick = (id: number) => {

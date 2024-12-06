@@ -1,4 +1,9 @@
-import { removeAuthToken, setAuthToken, setRole } from '@utils/auth';
+import {
+  removeAuthToken,
+  removeRole,
+  setAuthToken,
+  setRole,
+} from '@utils/auth';
 import { BusinessSignUpData, LoginData, UserSignUpData } from '@typings/types';
 import { authInstance, defaultInstance } from '.';
 
@@ -40,4 +45,5 @@ export const postBusinessLogin = async (business: LoginData): Promise<void> => {
 export const postLogOut = async (): Promise<void> => {
   await authInstance.post('/logout');
   removeAuthToken();
+  removeRole();
 };

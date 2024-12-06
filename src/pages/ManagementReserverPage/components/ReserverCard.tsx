@@ -1,20 +1,22 @@
 import { MdArrowForwardIos } from 'react-icons/md';
 import { getDateFunction, getTimeFunction } from '@utils/formatTime';
 import ListStyle from '@components/ListStyle';
-import { ReserverInfo } from './ReserverList';
+import { ReserverInfo } from '@typings/types';
+import { Link } from 'react-router-dom';
 
 const ReserverCard = ({ item }: { item: ReserverInfo }) => {
   const {
-    studyroomTitle,
-    roomTitle,
+    workplaceName,
     reservationName,
-    reservationPhonenumber,
-    startTime,
-    endTime,
-    price,
-    studyroomImage,
-    createdAt,
-    numberOfReserver,
+    reservationPhoneNumber,
+    studyRoomName,
+    reservationCreatedAt,
+    reservationStartTime,
+    reservationEndTime,
+    reservationCapacity,
+    workplaceImageUrl,
+    workplaceId,
+    reservationPrice,
   } = item;
 
   return (
@@ -22,7 +24,7 @@ const ReserverCard = ({ item }: { item: ReserverInfo }) => {
       <div className='flex justify-between'>
         <div className='flex flex-col items-start gap-4'>
           <div className='flex cursor-pointer items-center gap-1.5 font-medium'>
-            {studyroomTitle}
+            <Link to={`/detail/${workplaceId}`}>{workplaceName}</Link>
             <MdArrowForwardIos className='w-3' />
           </div>
 
@@ -33,39 +35,40 @@ const ReserverCard = ({ item }: { item: ReserverInfo }) => {
             />
             <ListStyle
               name='전화번호'
-              value={reservationPhonenumber}
+              value={reservationPhoneNumber}
             />
             <ListStyle
               name='예약된 룸'
-              value={roomTitle}
+              value={studyRoomName}
             />
             <ListStyle
               name='예약일'
-              value={getDateFunction(startTime)}
+              value={getDateFunction(reservationStartTime)}
             />
             <ListStyle
               name='예약 시간'
-              value={`${getTimeFunction(startTime)} ~ ${getTimeFunction(endTime)}`}
+              value={`${getTimeFunction(reservationStartTime)} ~ ${getTimeFunction(reservationEndTime)}`}
             />
             <ListStyle
               name='인원'
-              value={`${numberOfReserver}인`}
+              value={`${reservationCapacity}인`}
             />
             <ListStyle
               name='결제일'
-              value={getDateFunction(createdAt)}
+              value={getDateFunction(reservationCreatedAt)}
             />
           </ul>
         </div>
 
         <div className='flex flex-col justify-between'>
           <img
-            src={studyroomImage}
+            src={workplaceImageUrl}
             alt='스터디룸 사진'
-            className='h-[50px] w-[50px] cursor-pointer object-cover'
+            className='h-[50px] w-[50px] object-cover'
           />
           <span className='self-end text-sm font-normal'>
-            {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
+            {reservationPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
+            원
           </span>
         </div>
       </div>

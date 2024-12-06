@@ -31,6 +31,7 @@ const SelectDate = () => {
         prev2Label={null}
         next2Label={null}
         showFixedNumberOfWeeks
+        minDate={new Date()}
       />
     </div>
   );

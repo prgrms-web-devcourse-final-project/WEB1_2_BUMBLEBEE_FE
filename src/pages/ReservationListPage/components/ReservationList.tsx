@@ -35,7 +35,7 @@ const ReservationList = () => {
               className={!activeSortButton ? 'text-focusColor' : 'text-subfont'}
               onClick={() => setActiveSortButton(!activeSortButton)}
             >
-              최근 결제일순
+              최근 결제순
             </button>
             <span>|</span>
             <button

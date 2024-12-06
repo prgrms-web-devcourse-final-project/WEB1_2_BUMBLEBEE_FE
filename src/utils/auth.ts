@@ -22,4 +22,15 @@ const getRole = () => {
   return role;
 };
 
-export { setAuthToken, getAuthToken, removeAuthToken, setRole, getRole };
+const removeRole = () => {
+  localStorage.removeItem('role');
+};
+
+export {
+  setAuthToken,
+  getAuthToken,
+  removeAuthToken,
+  setRole,
+  getRole,
+  removeRole,
+};
