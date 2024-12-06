@@ -18,6 +18,14 @@ export const ERROR_MESSAGE = {
   time: '시간을 선택해주세요.',
   place: '장소를 선택해주세요.',
   date: '날짜를 선택해주세요.',
+  spaceName: '사업장명은 특수문자 없이 20자 이내로 입력해주세요.',
+  description: '사업장 소개 문구를 입력해주세요.',
+  address: '주소는 5~100자 이내이며, 가능한 특수문자는 (,-())입니다.',
+  image: '이미지를 등록해주세요.',
+  room: '룸은 적어도 하나 이상 등록해야 합니다.',
+  roomName: '룸 이름을 입력해주세요.',
+  roomDescription: '룸 소개를 입력해주세요.',
+  priceAndPeople: '가격 또는 인원수를 필수로 입력해주세요.',
 };
 
 export const PLACEHOLDER = {

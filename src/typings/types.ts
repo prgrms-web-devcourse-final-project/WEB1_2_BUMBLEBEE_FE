@@ -146,14 +146,8 @@ export interface Review {
 export interface StudyRoomData {
   studyRoomName: string;
   description: string;
-  imageUrl: string;
   price: number;
   capacity: number;
-}
-
-// 스터디룸 수정
-export interface StudyRoomPutData extends StudyRoomData {
-  studyRoomId: number;
 }
 
 // 스터디룸 상세 정보
