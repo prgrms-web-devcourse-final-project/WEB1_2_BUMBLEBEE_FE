@@ -28,7 +28,9 @@ const RoomCard = (props: RoomCardProps) => {
             </p>
             <div className='flex items-center gap-[3px] text-xs'>
               <FaStar className='text-primary' />
-              <span>{item.reviewScore.toFixed(1)}</span>
+              <span>
+                {item.reviewScore > 0 ? item.reviewScore.toFixed(1) : 0}
+              </span>
               <span>({item.reviewCount})</span>
             </div>
           </div>

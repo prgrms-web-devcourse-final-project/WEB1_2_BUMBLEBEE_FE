@@ -1,16 +1,30 @@
+import { postCreateChatRoom } from '@apis/chat';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 interface DetailNavigationProps {
+  workplaceId: number;
   isBtnDisabled: boolean;
 }
 
-const DetailNavigation = ({ isBtnDisabled }: DetailNavigationProps) => {
+const DetailNavigation = ({
+  workplaceId,
+  isBtnDisabled,
+}: DetailNavigationProps) => {
+  const navigate = useNavigate();
+  const handleClickChat = async () => {
+    const roomId = await postCreateChatRoom(workplaceId);
+    console.log(roomId);
+    navigate(`/chat/${roomId}`);
+  };
+
   return (
     <div className='fixed bottom-0 z-10 flex h-[94px] w-[375px] items-center justify-center border-t border-subfont bg-white pb-[16px]'>
       <div className='flex'>
         <button
           type='button'
           className='flex h-[48px] w-[100px] items-center justify-center rounded-[8px] border border-primary'
+          onClick={handleClickChat}
         >
           <IoChatbubbleEllipsesOutline
             size='20px'

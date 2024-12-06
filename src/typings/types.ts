@@ -360,3 +360,30 @@ export interface PaymentFailData {
   errorMessage: string;
   orderId: string;
 }
+
+// 실시간 메시지 전송 요청값
+export interface SendMessageRequest {
+  roomId: number;
+  sender: string;
+  content: string;
+  timestamp: string;
+  senderType: 'member' | 'business';
+}
+
+// 메시지 조회 응답값
+export interface ChatMessageResponse {
+  messageId: number;
+  roomId: number;
+  sender: string;
+  content: string;
+  timestamp: string;
+  senderType: 'member' | 'business';
+}
+
+// 채팅목록 조회 응답값 (사용자)
+export interface ChatListResponse {
+  roomId: number;
+  id: number;
+  name: string;
+  updatedAt: string;
+}
