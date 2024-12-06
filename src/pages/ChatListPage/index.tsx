@@ -5,17 +5,17 @@ import ChatCard from './components/ChatCard';
 import useGetChatList from './hooks/useGetChatList';
 
 const ChatListPage = () => {
-  // const { data } = useGetChatList();
-  // console.log(data);
+  const { data } = useGetChatList();
+  console.log(data);
 
-  const data = [
-    {
-      roomId: 1,
-      id: 1,
-      name: 'JohnDoe2',
-      updatedAt: '2024-12-02T12:30:00',
-    },
-  ];
+  // const data = [
+  //   {
+  //     roomId: 1,
+  //     id: 1,
+  //     name: 'JohnDoe2',
+  //     updatedAt: '2024-12-02T12:30:00',
+  //   },
+  // ];
   return (
     <>
       <MainLayout headerType='both'>

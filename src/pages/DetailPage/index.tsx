@@ -32,7 +32,10 @@ const DetailPage = () => {
           />
         )}
       </div>
-      <DetailNavigation isBtnDisabled={isBtnDisabled} />
+      <DetailNavigation
+        workplaceId={data?.workplaceId}
+        isBtnDisabled={isBtnDisabled}
+      />
     </MainLayout>
   );
 };
