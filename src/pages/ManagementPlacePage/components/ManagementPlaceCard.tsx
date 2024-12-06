@@ -74,7 +74,7 @@ const ManagementPlaceCard = ({ item }: ManagementPlaceCardProps) => {
           <img
             src={imageUrl}
             alt='스터디룸 사진'
-            className='h-[50px] w-[50px] object-cover'
+            className='ml-3 h-[50px] w-[50px] object-cover'
           />
         </div>
 
