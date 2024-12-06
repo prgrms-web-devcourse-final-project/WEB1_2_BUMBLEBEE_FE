@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import usePositionStore from '@store/positionStore';
 import MainList from './components/MainList';
 import KakaoMap from './components/KakaoMap';
-import { useGetWorkplaceData } from './hooks/useGetWorkplaceData';
+import useGetWorkplaceData from './hooks/useGetWorkplaceData';
 
 const MainPage = () => {
   const { mapPosition, nowPosition } = usePositionStore();
@@ -15,7 +15,7 @@ const MainPage = () => {
     longitude: nowPosition.center.lng,
   };
 
-  const { data, refetch } = useGetWorkplaceData(position, mapPosition);
+  const { data } = useGetWorkplaceData(position, mapPosition);
 
   // 스크롤 상단으로 이동
   useEffect(() => {
@@ -26,10 +26,7 @@ const MainPage = () => {
     <>
       <MainLayout>
         <HeaderNoTitle />
-        <KakaoMap
-          data={data}
-          refetch={refetch}
-        />
+        <KakaoMap data={data} />
         <MainList data={data} />
         <BottomNavigation />
       </MainLayout>

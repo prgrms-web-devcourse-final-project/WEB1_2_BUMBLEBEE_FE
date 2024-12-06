@@ -1,22 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
-import { debounce } from 'lodash';
 import { GetPositionWorkPlaceData } from '@typings/types';
-import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import usePositionStore from '@store/positionStore';
-import { useGetWorkplaceMutation } from '../hooks/useGetWorkplaceData';
 import PlaceModal from './PlaceModal';
 
 interface KakaoMapProps {
   data: GetPositionWorkPlaceData[] | undefined;
-  refetch: (
-    options?: RefetchOptions | undefined,
-  ) => Promise<QueryObserverResult<GetPositionWorkPlaceData[], Error>>;
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const { data, refetch } = props;
+  const { data } = props;
 
   const {
     mapPosition,
@@ -29,29 +23,6 @@ const KakaoMap = (props: KakaoMapProps) => {
   } = usePositionStore();
 
   const mapRef = useRef<kakao.maps.Map>(null);
-
-  const { mutate: getWorkPlace } = useGetWorkplaceMutation();
-
-  const handleBoundsChange = debounce((map) => {
-    const bound = map.getBounds();
-    setMapPosition({
-      topRight: {
-        lat: bound.getNorthEast().getLat(),
-        lng: bound.getNorthEast().getLng(),
-      },
-      bottomLeft: {
-        lat: bound.getSouthWest().getLat(),
-        lng: bound.getSouthWest().getLng(),
-      },
-    });
-
-    const position = {
-      latitude: nowPosition.center.lat,
-      longitude: nowPosition.center.lng,
-    };
-
-    getWorkPlace({ nowPosition: position, mapPosition });
-  }, 1000);
 
   // 사용자 위치 가져오기
   useEffect(() => {
@@ -69,6 +40,7 @@ const KakaoMap = (props: KakaoMapProps) => {
     }
   }, [initializeCenterPosition, setNowPosition]);
 
+  // 지도 변경 시 데이터 새로 가져오기
   const handleMapCreate = (map: kakao.maps.Map) => {
     const bounds = map.getBounds();
     const newPosition = {
@@ -86,7 +58,6 @@ const KakaoMap = (props: KakaoMapProps) => {
     }
 
     setMapPosition(newPosition);
-    refetch();
   };
 
   // 모달
@@ -116,7 +87,6 @@ const KakaoMap = (props: KakaoMapProps) => {
           const latlng = map.getCenter();
           setCenterPosition({ lat: latlng.getLat(), lng: latlng.getLng() });
         }}
-        onBoundsChanged={(map) => handleBoundsChange(map)}
       >
         {data &&
           data.length > 0 &&
