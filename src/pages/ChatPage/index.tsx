@@ -15,6 +15,7 @@ import { WS_URL } from '@constants/constants';
 import { getRole } from '@utils/auth';
 import { getUserData } from '@apis/member';
 import { getBusinessData } from '@apis/business';
+import { getDatetoLocalDate } from '@utils/formatTime';
 import MessageInput from './components/MessageInput';
 import MessageContainer from './components/MessageContainer';
 
@@ -90,7 +91,7 @@ const ChatPage = () => {
         sender: user,
         content: inputValue,
         roomId: parseInt(roomId || '', 10),
-        timestamp: new Date().toISOString(),
+        timestamp: getDatetoLocalDate(new Date()),
         senderType: role === 'ROLE_USER' ? 'member' : 'business',
       };
 

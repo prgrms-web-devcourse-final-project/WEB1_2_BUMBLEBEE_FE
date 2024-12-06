@@ -62,6 +62,17 @@ export const getStringFromDateTime = (value: Date) => {
   return formattedTimeString;
 };
 
+export const getDatetoLocalDate = (date: Date) => {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+  const dd = String(date.getDate()).padStart(2, '0');
+  const HH = String(date.getHours()).padStart(2, '0');
+  const MM = String(date.getMinutes()).padStart(2, '0');
+  const SS = String(date.getSeconds()).padStart(2, '0');
+
+  return `${yyyy}-${mm}-${dd}T${HH}:${MM}:${SS}`;
+};
+
 // 시간 차이 구하는 함수
 export const getTimeDifference = (timeString: string) => {
   const milliSeconds = +new Date() - +new Date(timeString);
