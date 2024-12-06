@@ -6,6 +6,7 @@ import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import { getS3URL } from '@apis/workplace';
 import { useNavigate } from 'react-router-dom';
+import { ERROR_MESSAGE } from '@constants/constants';
 import PhoneNumber from './PhoneNumber';
 import SelectClosedTime from './SelectClosedTime';
 import SelectOpenTime from './SelectOpenTime';
@@ -78,7 +79,6 @@ const SpaceForm = ({
   });
 
   const isValid = () => {
-    let pass = true;
     const newErrorMessage = {
       spaceNameError: '',
       descriptionError: '',
@@ -90,40 +90,31 @@ const SpaceForm = ({
     };
 
     if (!isValidSpaceName(spaceFormData.spaceName)) {
-      newErrorMessage.spaceNameError =
-        '사업장명은 특수문자 없이 20자 이내로 입력해주세요.';
-      pass = false;
+      newErrorMessage.spaceNameError = ERROR_MESSAGE.spaceName;
     }
     if (spaceFormData.description === '') {
-      newErrorMessage.descriptionError = '사업장 소개 문구를 입력해주세요.';
-      pass = false;
+      newErrorMessage.descriptionError = ERROR_MESSAGE.description;
     }
     if (
       spaceFormData.openTime === '선택' ||
       spaceFormData.closedTime === '선택'
     ) {
-      newErrorMessage.timeError = '시간을 선택해주세요.';
-      pass = false;
+      newErrorMessage.timeError = ERROR_MESSAGE.time;
     }
     if (!isValidNumber(spaceFormData.phoneNumber)) {
-      newErrorMessage.phoneNumberError = '전화번호 형식을 확인해주세요.';
-      pass = false;
+      newErrorMessage.phoneNumberError = ERROR_MESSAGE.phonNumber;
     }
     if (!isValidAddress(spaceFormData.address.detail)) {
-      newErrorMessage.addressError =
-        '주소는 5~100자 이내이며, 가능한 특수문자는 (,-())입니다.';
-      pass = false;
+      newErrorMessage.addressError = ERROR_MESSAGE.address;
     }
-    if (spaceFormData.spaceImage === null) {
-      newErrorMessage.imageError = '이미지를 등록해주세요.';
-      pass = false;
+    if (spaceFormData.spaceImage.file === null) {
+      newErrorMessage.imageError = ERROR_MESSAGE.image;
     }
     if (spaceFormData.rooms.length === 0) {
-      newErrorMessage.roomError = '룸은 적어도 하나 이상 등록해야 합니다.';
+      newErrorMessage.roomError = ERROR_MESSAGE.room;
     }
 
     setErrorMessage(newErrorMessage);
-    return pass;
   };
 
   const uploadImageToS3 = (url: string, file: File) => {
