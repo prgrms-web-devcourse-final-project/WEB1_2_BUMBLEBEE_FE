@@ -1,11 +1,17 @@
 import { FormEvent, useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
 
-const MessageInput = () => {
+interface MessageInputProps {
+  OnSendMessage: (value: string) => void;
+}
+
+const MessageInput = (props: MessageInputProps) => {
+  const { OnSendMessage } = props;
   const [message, setMessage] = useState('');
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    OnSendMessage(message);
     setMessage('');
   };
 

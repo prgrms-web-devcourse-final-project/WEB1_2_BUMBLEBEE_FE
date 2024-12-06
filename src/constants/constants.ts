@@ -1,5 +1,7 @@
 export const BASE_URL = import.meta.env.VITE_APP_SERVER_URL;
 
+export const WS_URL = `${BASE_URL}ws`;
+
 export const ERROR_MESSAGE = {
   nickname: '닉네임은 공백없이 2~10자 이내로 입력해주세요.',
   email: '이메일 형식을 확인해주세요.',
