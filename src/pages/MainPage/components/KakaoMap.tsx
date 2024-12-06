@@ -25,6 +25,7 @@ const KakaoMap = (props: KakaoMapProps) => {
     setMapPosition,
     setNowPosition,
     setCenterPosition,
+    initializeCenterPosition,
   } = usePositionStore();
 
   const mapRef = useRef<kakao.maps.Map>(null);
@@ -63,13 +64,10 @@ const KakaoMap = (props: KakaoMapProps) => {
           },
           isLoading: false,
         });
-        setCenterPosition({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-        });
+        initializeCenterPosition();
       });
     }
-  }, [setCenterPosition, setNowPosition]);
+  }, [initializeCenterPosition, setNowPosition]);
 
   const handleMapCreate = (map: kakao.maps.Map) => {
     const bounds = map.getBounds();
@@ -111,7 +109,7 @@ const KakaoMap = (props: KakaoMapProps) => {
       <Map
         center={centerPosition}
         className='h-full w-full'
-        level={3}
+        level={5}
         ref={mapRef}
         onCreate={(map) => handleMapCreate(map)}
         onDragEnd={(map) => {

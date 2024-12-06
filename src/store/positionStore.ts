@@ -8,6 +8,8 @@ interface PositionState {
   setMapPosition: (mapPosition: MapPosition) => void;
   setNowPosition: (nowPosition: Position) => void;
   setCenterPosition: (centerPosition: CenterPosition) => void;
+  isInitialized: boolean;
+  initializeCenterPosition: () => void;
 }
 
 const usePositionStore = create<PositionState>((set) => ({
@@ -29,6 +31,17 @@ const usePositionStore = create<PositionState>((set) => ({
   setMapPosition: (mapPosition) => set({ mapPosition }),
   setNowPosition: (nowPosition) => set({ nowPosition }),
   setCenterPosition: (centerPosition) => set({ centerPosition }),
+  isInitialized: false,
+  initializeCenterPosition: () =>
+    set((state) => {
+      if (!state.isInitialized) {
+        return {
+          centerPosition: state.nowPosition.center,
+          isInitialized: true,
+        };
+      }
+      return state;
+    }),
 }));
 
 export default usePositionStore;
