@@ -49,11 +49,9 @@ authInstance.interceptors.response.use(
         if (response.status === 202) {
           const token = response.headers.authorization;
           setAuthToken(token);
-          console.log(token);
 
           const originalRequest = error.config as AxiosRequestConfig;
           if (originalRequest.headers) {
-            console.log(token);
             originalRequest.headers.Authorization = `Bearer ${token}`;
           }
           return await authInstance(originalRequest); // 실패했던 요청 재시도
