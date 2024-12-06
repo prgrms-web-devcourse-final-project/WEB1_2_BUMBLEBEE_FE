@@ -27,11 +27,14 @@ const ManagementPlaceCard = ({ item }: ManagementPlaceCardProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const numberOfRooms = useGetNumberOfRooms(workplaceId);
-  const { mutate: deleteMutation } = useDeleteBusinessPlace(workplaceId);
+  const { mutate: deleteMutation } = useDeleteBusinessPlace();
 
   // 사업장 삭제
   const handleDeleteBusinessWorkplace = () => {
-    deleteMutation();
+    deleteMutation({
+      workPlaceId: workplaceId,
+      fileLocation: `workplace-${workplaceId}`,
+    });
     setModalOpen(() => false);
   };
 
