@@ -1,5 +1,6 @@
 import { GetPositionWorkPlaceData } from '@typings/types';
 import { FaStar } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 
 interface StudyRoomCardProps {
   studyroom: GetPositionWorkPlaceData;
@@ -7,6 +8,7 @@ interface StudyRoomCardProps {
 
 const StudyRoomCard = ({ studyroom }: StudyRoomCardProps) => {
   const {
+    workplaceId,
     workplaceName,
     workplaceAddress,
     imageUrl,
@@ -16,9 +18,14 @@ const StudyRoomCard = ({ studyroom }: StudyRoomCardProps) => {
   } = studyroom;
 
   const formattedAddress = workplaceAddress.split(' ').slice(0, 3).join(' ');
+  const navigate = useNavigate();
 
   return (
-    <div className='flex h-[116px] w-custom cursor-pointer gap-[18px] rounded-[10px] border-primary bg-white p-3 shadow-custom active:border-[1px]'>
+    <button
+      type='button'
+      className='flex h-[116px] w-custom cursor-pointer gap-[18px] rounded-[10px] border-primary bg-white p-3 shadow-custom active:border-[1px]'
+      onClick={() => navigate(`/detail/${workplaceId}`)}
+    >
       <img
         src={imageUrl}
         alt='스터디룸 사진'
@@ -38,7 +45,7 @@ const StudyRoomCard = ({ studyroom }: StudyRoomCardProps) => {
           <span>({reviewCount})</span>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
