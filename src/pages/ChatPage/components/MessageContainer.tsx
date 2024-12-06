@@ -44,12 +44,12 @@ const MessageContainer = (props: MessageContainerProps) => {
             {dateMessages.map((message) =>
               message.sender === user ? (
                 <SendMessage
-                  key={message.messageId}
+                  key={message.timestamp}
                   message={message}
                 />
               ) : (
                 <ReceiveMessage
-                  key={message.messageId}
+                  key={message.timestamp}
                   message={message}
                 />
               ),

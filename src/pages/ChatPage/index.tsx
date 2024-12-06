@@ -60,7 +60,7 @@ const ChatPage = () => {
       client.onConnect = () => {
         console.log('Connected');
 
-        client.subscribe(`/sub/chat/room/${roomId}`, (message: IMessage) => {
+        client.subscribe(`/sub/chat`, (message: IMessage) => {
           try {
             const newMessage = JSON.parse(message.body);
             setMessages((prevMessages) => [...prevMessages, newMessage]);
