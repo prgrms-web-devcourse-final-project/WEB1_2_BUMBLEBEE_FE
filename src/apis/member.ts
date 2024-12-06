@@ -9,7 +9,7 @@ export const getUserData = async (): Promise<Member> => {
 
 // 유저 알림
 export const getUserAlarm = async (): Promise<Alarm> => {
-  const response = await authInstance.get('/api/v1/member/notification');
+  const response = await authInstance.get('/api/v1/notification/member');
   return response.data;
 };
 
