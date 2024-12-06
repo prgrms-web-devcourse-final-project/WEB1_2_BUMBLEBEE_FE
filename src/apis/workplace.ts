@@ -110,6 +110,15 @@ export const deleteWorkPlace = async (workplaceId: number): Promise<void> => {
   return response.data;
 };
 
+// 사업장 삭제 시 이미지 삭제
+export const deleteWorkPlaceImage = async (
+  fileLocation: string,
+): Promise<void> => {
+  await authInstance.delete(`/api/delete-folder`, {
+    params: { fileLocation },
+  });
+};
+
 // 사업장 정보 조회
 export const getWorkPlace = async (
   workplaceId: number,

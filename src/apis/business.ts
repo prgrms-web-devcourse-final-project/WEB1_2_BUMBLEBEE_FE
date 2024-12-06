@@ -9,7 +9,7 @@ export const getBusinessData = async (): Promise<Business> => {
 
 // 사업자 알림
 export const getBusinessAlarm = async (): Promise<BusinessAlarm> => {
-  const response = await authInstance.get('/api/v1/business/notification');
+  const response = await authInstance.get('/api/v1/notification/business');
   return response.data;
 };
 
