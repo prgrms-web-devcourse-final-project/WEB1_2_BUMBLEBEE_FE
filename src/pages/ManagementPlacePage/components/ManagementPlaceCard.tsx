@@ -43,8 +43,6 @@ const ManagementPlaceCard = ({ item }: ManagementPlaceCardProps) => {
     navigate(`/modify-Space/${pageId}`);
   };
 
-  console.log(workplaceId);
-
   return (
     <>
       <div className='mx-auto flex w-custom flex-col gap-4 border-b border-solid border-b-black px-[13px] py-[26px]'>
