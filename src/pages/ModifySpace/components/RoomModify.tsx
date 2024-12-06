@@ -4,12 +4,13 @@ import { Room } from '@typings/types';
 import RoomImage from '@pages/AddRoom/components/RoomImage';
 import CountPeople from '@pages/AddRoom/components/CountPeople';
 import { ERROR_MESSAGE } from '@constants/constants';
-
-// import { validate } from 'uuid';
-// import { useParams } from 'react-router-dom';
-// import { getS3URL } from '@apis/workplace';
-// import axios from 'axios';
-// import useGetRoomListInfo from '../hooks/useGetRoomListInfo';
+import { validate } from 'uuid';
+import { useParams } from 'react-router-dom';
+import { getS3URL } from '@apis/workplace';
+import axios from 'axios';
+import useGetRoomListInfo from '../hooks/useGetRoomListInfo';
+import usePostRoom from '../hooks/usePostRoom';
+import usePutRoom from '../hooks/usePutRoom';
 
 interface RoomFormProps {
   room: Room;
@@ -66,16 +67,81 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
     return pass;
   };
 
-  // const { workplaceId } = useParams() as { workplaceId: string };
-  // const { data: roomInfo } = useGetRoomListInfo(Number(workplaceId));
+  const { workplaceId } = useParams() as { workplaceId: string };
+  const { data: roomInfo } = useGetRoomListInfo(Number(workplaceId));
+  const { mutateAsync: postRoom } = usePostRoom();
+  const { mutateAsync: putRoom } = usePutRoom();
 
-  // const uploadImageToS3 = (url: string, file: File) => {
-  //   axios.put(url, file);
-  // };
+  const uploadImageToS3 = (url: string, file: File) => {
+    axios.put(url, file);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isValid()) {
+      if (validate(room.id)) {
+        // 룸 생성
+        const { studyroomId } = await postRoom({
+          workPlaceId: workplaceId,
+          studyroom: {
+            studyRoomName: room.roomName,
+            description: room.description,
+            price: Number(room.price),
+            capacity: room.people,
+          },
+        });
+
+        updateRoomData({ id: String(studyroomId) });
+
+        // 이미지 업로드
+        await Promise.all(
+          room.roomImages.map(({ file }) =>
+            getS3URL(
+              file!.name,
+              `workplace-${workplaceId}/studyroom-${studyroomId}`,
+            ).then((roomImageS3URL) => uploadImageToS3(roomImageS3URL, file!)),
+          ),
+        );
+      } else {
+        // 룸 수정
+        await putRoom({
+          studyRoomId: room.id,
+          studyroom: {
+            studyRoomName: room.roomName,
+            description: room.description,
+            price: Number(room.price),
+            capacity: room.people,
+          },
+        });
+
+        // 룸 사진 수정
+        const isImgModified =
+          room.roomImages.some(({ file }) => file !== null) ||
+          (roomInfo &&
+            roomInfo.find(({ studyRoomId }) => studyRoomId === Number(room.id))!
+              .imageUrl.length !== room.roomImages.length);
+
+        if (isImgModified) {
+          // 버켓 지우기 api 호출
+          // await Promise.all(
+          //   existingRoom.imageUrl.map((imageUrl) =>
+          //     deleteImageFromS3(imageUrl),
+          //   ), // 기존 이미지 삭제
+          // );
+
+          await Promise.all(
+            room.roomImages.map(({ file }) =>
+              getS3URL(
+                file!.name,
+                `workplace-${workplaceId}/studyroom-${room.id}`,
+              ).then((roomImageS3URL) =>
+                uploadImageToS3(roomImageS3URL, file!),
+              ),
+            ),
+          );
+        }
+      }
+
       completeAdd('');
     }
   };

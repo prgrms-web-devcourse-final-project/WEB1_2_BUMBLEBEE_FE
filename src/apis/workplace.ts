@@ -9,7 +9,6 @@ import {
   SearchStudyRoomData,
   StudyRoomData,
   StudyRoomDetailData,
-  StudyRoomPutData,
   WorkPlaceData,
   WorkPlacePutData,
   WorkplaceStudyRoomData,
@@ -40,15 +39,11 @@ export const postStudyRoom = async (
 };
 
 // 스터디룸 정보 수정
-export const putStudyRoom = async (
+export const putStudyRoom = (
   studyRoomId: string,
-  studyroom: StudyRoomPutData,
+  studyroom: StudyRoomData,
 ): Promise<void> => {
-  const response = await authInstance.put(
-    `/api/v1/studyroom/${studyRoomId}`,
-    studyroom,
-  );
-  return response.data;
+  return authInstance.put(`/api/v1/studyroom/${studyRoomId}`, studyroom);
 };
 
 // 스터디룸 삭제
