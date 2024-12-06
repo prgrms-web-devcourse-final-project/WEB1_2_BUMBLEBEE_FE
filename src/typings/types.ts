@@ -114,6 +114,7 @@ export interface ReserverInfo {
   workplaceId: number;
   reservationId: string;
   reservationPrice: number;
+  reservationState: string;
 }
 
 // 리뷰 전체 조회(페이징)
