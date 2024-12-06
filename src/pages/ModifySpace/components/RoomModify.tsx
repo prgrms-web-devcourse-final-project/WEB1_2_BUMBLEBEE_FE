@@ -6,7 +6,7 @@ import CountPeople from '@pages/AddRoom/components/CountPeople';
 import { ERROR_MESSAGE } from '@constants/constants';
 import { validate } from 'uuid';
 import { useParams } from 'react-router-dom';
-import { getS3URL } from '@apis/workplace';
+import { deleteWorkPlaceImage, getS3URL } from '@apis/workplace';
 import axios from 'axios';
 import useGetRoomListInfo from '../hooks/useGetRoomListInfo';
 import usePostRoom from '../hooks/usePostRoom';
@@ -102,6 +102,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
             ).then((roomImageS3URL) => uploadImageToS3(roomImageS3URL, file!)),
           ),
         );
+        console.log(room.roomName);
       } else {
         // 룸 수정
         await putRoom({
@@ -122,12 +123,15 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
               .imageUrl.length !== room.roomImages.length);
 
         if (isImgModified) {
-          // 버켓 지우기 api 호출
-          // await Promise.all(
-          //   existingRoom.imageUrl.map((imageUrl) =>
-          //     deleteImageFromS3(imageUrl),
-          //   ), // 기존 이미지 삭제
-          // );
+          // 룸 사진 들어있는 폴더 지우기
+          await Promise.all(
+            room.roomImages.map(() =>
+              deleteWorkPlaceImage(
+                `workplace-${workplaceId}/studyroom-${room.id}`,
+              ),
+            ),
+          );
+          // 룸 사진들 다시 올리기
 
           await Promise.all(
             room.roomImages.map(({ file }) =>
@@ -165,7 +169,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
             className='main-input'
             placeholder='룸 이름을 입력해주세요.'
             onChange={handleChange}
-            value={room.roomName}
+            value={room?.roomName}
           />
         </div>
         {errorMessage.roomNameError && (
@@ -182,7 +186,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
               룸 설명
             </label>
             <p className='text-[14px] font-normal text-subfont'>
-              {room.description.length}/200
+              {room?.description.length}/200
             </p>
           </div>
           <TextareaAutosize
@@ -192,7 +196,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
             className='main-textarea text-[14px]'
             placeholder='룸에 대한 설명을 입력해주세요.'
             onChange={handleChange}
-            value={room.description}
+            value={room?.description}
           />
         </div>
         {errorMessage.roomDescriptionError && (
@@ -201,7 +205,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
           </div>
         )}
         <RoomImage
-          roomImages={room.roomImages}
+          roomImages={room?.roomImages}
           onUpdateImages={(roomImages) => updateRoomData({ roomImages })}
         />
         {errorMessage.roomImagesError && (
@@ -223,7 +227,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
               className='main-input ml-[20px] h-[38px] w-[84px] rounded-[5px]'
               placeholder='ex) 3000'
               onChange={handleChange}
-              value={room.price}
+              value={room?.price}
             />
           </div>
           <CountPeople

@@ -48,10 +48,7 @@ export const putStudyRoom = (
 
 // 스터디룸 삭제
 export const deleteStudyRoom = async (studyRoomId: string): Promise<void> => {
-  const response = await authInstance.delete(
-    `/api/v1/studyroom/${studyRoomId}`,
-  );
-  return response.data;
+  return authInstance.delete(`/api/v1/studyroom/${studyRoomId}`);
 };
 
 // 사업장의 스터디룸 찾기

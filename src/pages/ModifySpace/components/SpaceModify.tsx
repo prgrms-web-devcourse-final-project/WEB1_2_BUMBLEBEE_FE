@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import { ERROR_MESSAGE } from '@constants/constants';
 import usePutWorkPlace from '../hooks/usePutWorkPlace';
 import useGetWorkPlaceInfo from '../hooks/useGetWorkPlaceInfo';
+import useDeleteRoom from '../hooks/useDeleteRoom';
 
 interface SpaceModifyProps {
   spaceFormData: Space;
@@ -41,7 +42,10 @@ const SpaceModify = ({
     changeFormdata({ [e.target.name]: e.target.value });
   };
 
+  const { mutate: deleteRoom } = useDeleteRoom();
+
   const handleDelete = (roomId: string) => {
+    deleteRoom(roomId);
     changeFormdata({
       rooms: spaceFormData.rooms.filter((item) => item.id !== roomId),
     });
