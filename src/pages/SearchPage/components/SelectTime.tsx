@@ -1,7 +1,9 @@
 import useSearchStore from '@store/searchStore';
+import { useEffect, useState } from 'react';
 
 const SelectTime = () => {
-  const { searchTime, setTime, setFormattedTime } = useSearchStore();
+  const { searchDate, searchTime, setTime, setFormattedTime } =
+    useSearchStore();
   const times = { startTime: '09:00', endTime: '23:00' };
 
   const startHour: number = Number(times.startTime.split(':')[0]);
@@ -11,6 +13,33 @@ const SelectTime = () => {
     const hour = startHour + i;
     return `${String(hour).padStart(2, '0')}:00`;
   });
+
+  const [possibleTimeList, setPossibleTimeList] = useState<string[]>(timeList);
+
+  useEffect(() => {
+    const todayDate = new Date();
+    const todayDateOnly = todayDate.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const searchDateOnly = searchDate.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+
+    // 오늘 날짜이면 현재 시간 이전에는 선택 안됨
+    if (todayDateOnly === searchDateOnly) {
+      const timeNow = todayDate.getHours();
+      const newPossibleTimeList = possibleTimeList.filter((time) => {
+        const hour = parseInt(time.split(':')[0], 10);
+        return hour > timeNow;
+      });
+      setPossibleTimeList(newPossibleTimeList);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchDate]);
 
   const setTimeArray = (newArray: string[]) => {
     if (newArray.length === 0) {
@@ -81,7 +110,7 @@ const SelectTime = () => {
           <button
             key={timeItem}
             type='button'
-            className={`flex h-[30px] w-[62px] items-center justify-center rounded-[5px] border-[1px] border-subfont px-[14px] py-[6px] text-xs ${searchTime.find((item) => item === timeItem) ? 'bg-primary text-white' : 'bg-white'}`}
+            className={`flex h-[30px] w-[62px] items-center justify-center rounded-[5px] border-[1px] border-subfont px-[14px] py-[6px] text-xs ${searchTime.find((item) => item === timeItem) ? 'bg-primary text-white' : ''} ${possibleTimeList.includes(timeItem) ? '' : 'pointer-events-none bg-[#C3C3C3] bg-opacity-100 text-[#454545]'}`}
             onClick={() => handleSelectTime(timeItem)}
           >
             {timeItem}

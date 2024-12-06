@@ -52,13 +52,15 @@ const ChatPage = () => {
       const client = new Client({
         brokerURL: WS_URL,
         webSocketFactory: () => new SockJS(WS_URL),
+        debug: (str) => console.log(str),
         reconnectDelay: 5000, // 자동 재연결
       });
 
       // 구독
       client.onConnect = () => {
         console.log('Connected');
-        client.subscribe(`/sub/chat/room/${roomId}`, (message: IMessage) => {
+
+        client.subscribe(`/sub/chat`, (message: IMessage) => {
           try {
             const newMessage = JSON.parse(message.body);
             setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -99,7 +101,6 @@ const ChatPage = () => {
         destination: '/pub/sendMessage',
         body: JSON.stringify(chatMessage),
       });
-      loadMessage();
       console.log(chatMessage);
       console.log(messages);
     }

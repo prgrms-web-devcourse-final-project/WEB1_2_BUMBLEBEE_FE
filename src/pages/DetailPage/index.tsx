@@ -11,6 +11,7 @@ const DetailPage = () => {
   const { workplaceId } = useParams() as { workplaceId: string };
   const { data, isLoading } = useGetWorkplaceData(Number(workplaceId));
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
+  const [selectedRoomId, setSelectedRoomId] = useState<number>(0);
 
   return (
     <MainLayout headerType='both'>
@@ -31,6 +32,8 @@ const DetailPage = () => {
               setIsBtnDisabled={setIsBtnDisabled}
               workplaceDetailData={data}
               workplaceId={Number(workplaceId)}
+              selectedRoomId={selectedRoomId}
+              setSelectedRoomId={setSelectedRoomId}
             />
           )}
         </div>
@@ -38,6 +41,7 @@ const DetailPage = () => {
       <DetailNavigation
         workplaceId={data?.workplaceId || 0}
         isBtnDisabled={isBtnDisabled}
+        selectedRoomId={selectedRoomId}
       />
     </MainLayout>
   );
