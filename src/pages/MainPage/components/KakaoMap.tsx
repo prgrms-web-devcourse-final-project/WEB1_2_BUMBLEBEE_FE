@@ -1,18 +1,14 @@
-import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { MdMyLocation } from 'react-icons/md';
 import { debounce } from 'lodash';
-import { GetPositionWorkPlaceData, MapPosition } from '@typings/types';
+import { GetPositionWorkPlaceData } from '@typings/types';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+import usePositionStore from '@store/positionStore';
 import { useGetWorkplaceMutation } from '../hooks/useGetWorkplaceData';
-import type { Position } from '..';
 import PlaceModal from './PlaceModal';
 
 interface KakaoMapProps {
-  position: Position;
-  onSetPosition: Dispatch<React.SetStateAction<Position>>;
-  mapPosition: MapPosition;
-  onSetMapPosition: Dispatch<React.SetStateAction<MapPosition>>;
   data: GetPositionWorkPlaceData[] | undefined;
   refetch: (
     options?: RefetchOptions | undefined,
@@ -20,22 +16,24 @@ interface KakaoMapProps {
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
+  const { data, refetch } = props;
+
   const {
-    position,
-    onSetPosition,
     mapPosition,
-    onSetMapPosition,
-    data,
-    refetch,
-  } = props;
-  const [center, setCenter] = useState(position.center);
+    nowPosition,
+    centerPosition,
+    setMapPosition,
+    setNowPosition,
+    setCenterPosition,
+  } = usePositionStore();
+
   const mapRef = useRef<kakao.maps.Map>(null);
 
   const { mutate: getWorkPlace } = useGetWorkplaceMutation();
 
   const handleBoundsChange = debounce((map) => {
     const bound = map.getBounds();
-    onSetMapPosition({
+    setMapPosition({
       topRight: {
         lat: bound.getNorthEast().getLat(),
         lng: bound.getNorthEast().getLng(),
@@ -45,67 +43,51 @@ const KakaoMap = (props: KakaoMapProps) => {
         lng: bound.getSouthWest().getLng(),
       },
     });
-    const newNowPosition = {
-      latitude: position.center.lat,
-      longitude: position.center.lng,
+
+    const position = {
+      latitude: nowPosition.center.lat,
+      longitude: nowPosition.center.lng,
     };
 
-    getWorkPlace({ nowPosition: newNowPosition, mapPosition });
+    getWorkPlace({ nowPosition: position, mapPosition });
   }, 1000);
 
   // 사용자 위치 가져오기
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          onSetPosition((prevPosition: Position) => ({
-            ...prevPosition,
-            center: {
-              lat: pos.coords.latitude,
-              lng: pos.coords.longitude,
-            },
-            isLoading: false,
-          }));
-          setCenter({
+      navigator.geolocation.getCurrentPosition((pos) => {
+        setNowPosition({
+          center: {
             lat: pos.coords.latitude,
             lng: pos.coords.longitude,
-          });
-        },
-        (err) => {
-          onSetPosition((prevPosition: Position) => ({
-            ...prevPosition,
-            errMsg: err.message,
-            isLoading: false,
-          }));
-        },
-      );
-    } else {
-      onSetPosition((prevPosition: Position) => ({
-        ...prevPosition,
-        errMsg: 'geolocation을 사용할 수 없음',
-        isLoading: false,
-      }));
+          },
+          isLoading: false,
+        });
+        setCenterPosition({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        });
+      });
     }
-  }, [onSetPosition]);
+  }, [setCenterPosition, setNowPosition]);
 
   const handleMapCreate = (map: kakao.maps.Map) => {
-    onSetMapPosition((prevPosition) => {
-      const bounds = map.getBounds();
-      const newPosition = {
-        topRight: {
-          lat: bounds.getNorthEast().getLat() + 0.1,
-          lng: bounds.getNorthEast().getLng() + 0.1,
-        },
-        bottomLeft: {
-          lat: bounds.getSouthWest().getLat() - 0.1,
-          lng: bounds.getSouthWest().getLng() - 0.1,
-        },
-      };
-      if (JSON.stringify(prevPosition) === JSON.stringify(newPosition)) {
-        return prevPosition;
-      }
-      return newPosition;
-    });
+    const bounds = map.getBounds();
+    const newPosition = {
+      topRight: {
+        lat: bounds.getNorthEast().getLat() + 0.1,
+        lng: bounds.getNorthEast().getLng() + 0.1,
+      },
+      bottomLeft: {
+        lat: bounds.getSouthWest().getLat() - 0.1,
+        lng: bounds.getSouthWest().getLng() - 0.1,
+      },
+    };
+    if (JSON.stringify(mapPosition) === JSON.stringify(newPosition)) {
+      return;
+    }
+
+    setMapPosition(newPosition);
     refetch();
   };
 
@@ -127,14 +109,14 @@ const KakaoMap = (props: KakaoMapProps) => {
   return (
     <div className='relative h-[298px] w-[375px]'>
       <Map
-        center={center}
+        center={centerPosition}
         className='h-full w-full'
         level={3}
         ref={mapRef}
         onCreate={(map) => handleMapCreate(map)}
         onDragEnd={(map) => {
           const latlng = map.getCenter();
-          setCenter({ lat: latlng.getLat(), lng: latlng.getLng() });
+          setCenterPosition({ lat: latlng.getLat(), lng: latlng.getLng() });
         }}
         onBoundsChanged={(map) => handleBoundsChange(map)}
       >
@@ -158,7 +140,7 @@ const KakaoMap = (props: KakaoMapProps) => {
           <button
             type='button'
             className='flex h-[45px] w-[45px] cursor-pointer items-center justify-center rounded-full bg-white shadow-custom'
-            onClick={() => setCenter(position.center)}
+            onClick={() => setCenterPosition(nowPosition.center)}
           >
             <MdMyLocation />
           </button>

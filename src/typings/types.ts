@@ -274,6 +274,19 @@ export interface NowPosition {
   longitude: number;
 }
 
+export interface CenterPosition {
+  lat: number;
+  lng: number;
+}
+
+export interface Position {
+  center: {
+    lat: number;
+    lng: number;
+  };
+  isLoading: boolean;
+}
+
 export interface GetPositionWorkPlaceData {
   workplaceId: number;
   workplaceName: string;
