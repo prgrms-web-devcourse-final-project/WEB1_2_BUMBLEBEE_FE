@@ -19,6 +19,7 @@
     "@types/uuid": "^10.0.0",
     "axios": "^1.7.7",
     "buffer": "^6.0.3",
+    "eventsource": "^2.0.2",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "react": "^18.3.1",
