@@ -14,11 +14,10 @@ const SelectTime = () => {
     return `${String(hour).padStart(2, '0')}:00`;
   });
 
-  const [possibleTimeList, setPossibleTimeList] = useState<string[]>([]);
+  const [possibleTimeList, setPossibleTimeList] = useState<string[]>(timeList);
 
   useEffect(() => {
     const todayDate = new Date();
-    setPossibleTimeList(timeList);
     const todayDateOnly = todayDate.toLocaleDateString('ko-KR', {
       year: 'numeric',
       month: '2-digit',
