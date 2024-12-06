@@ -63,6 +63,12 @@ const ModifySpace = () => {
         rooms: roomList.map((room) => ({
           ...room,
           id: String(room.id),
+          roomImages: room.roomImages.flatMap((image) =>
+            image.url.map((url) => ({
+              url,
+              file: image.file || null,
+            })),
+          ),
         })),
       }));
     }

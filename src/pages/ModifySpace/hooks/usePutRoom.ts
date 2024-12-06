@@ -1,17 +1,17 @@
-import { postStudyRoom } from '@apis/workplace';
+import { putStudyRoom } from '@apis/workplace';
 import { useMutation } from '@tanstack/react-query';
 import { StudyRoomData } from '@typings/types';
 
-const usePostRoom = () => {
+const usePutRoom = () => {
   return useMutation({
     mutationFn: ({
-      workPlaceId,
+      studyRoomId,
       studyroom,
     }: {
-      workPlaceId: string;
+      studyRoomId: string;
       studyroom: StudyRoomData;
-    }) => postStudyRoom(workPlaceId, studyroom),
+    }) => putStudyRoom(studyRoomId, studyroom),
   });
 };
 
-export default usePostRoom;
+export default usePutRoom;

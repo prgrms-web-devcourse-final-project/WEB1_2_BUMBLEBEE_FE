@@ -56,7 +56,7 @@ const RoomImage = ({ roomImages, onUpdateImages }: RoomImagesProps) => {
         />
       </div>
       <div className='mt-[10px] flex'>
-        {roomImages.map(({ url }) => (
+        {roomImages?.map(({ url }) => (
           <div
             key={url}
             className='group relative'

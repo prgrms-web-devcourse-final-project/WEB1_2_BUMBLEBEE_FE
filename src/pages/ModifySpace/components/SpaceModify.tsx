@@ -12,8 +12,10 @@ import Address from '@pages/RegisterSpace/components/Address';
 import WorkSpaceImage from '@pages/RegisterSpace/components/WorkSpaceImage';
 import RoomComponent from '@pages/RegisterSpace/components/RoomComponent';
 import { useParams } from 'react-router-dom';
+import { ERROR_MESSAGE } from '@constants/constants';
 import usePutWorkPlace from '../hooks/usePutWorkPlace';
 import useGetWorkPlaceInfo from '../hooks/useGetWorkPlaceInfo';
+import useDeleteRoom from '../hooks/useDeleteRoom';
 
 interface SpaceModifyProps {
   spaceFormData: Space;
@@ -40,7 +42,10 @@ const SpaceModify = ({
     changeFormdata({ [e.target.name]: e.target.value });
   };
 
+  const { mutate: deleteRoom } = useDeleteRoom();
+
   const handleDelete = (roomId: string) => {
+    deleteRoom(roomId);
     changeFormdata({
       rooms: spaceFormData.rooms.filter((item) => item.id !== roomId),
     });
@@ -79,7 +84,6 @@ const SpaceModify = ({
 
   const { workplaceId } = useParams() as { workplaceId: string };
   const isValid = () => {
-    let pass = true;
     const newErrorMessage = {
       spaceNameError: '',
       descriptionError: '',
@@ -90,37 +94,28 @@ const SpaceModify = ({
     };
 
     if (!isValidSpaceName(spaceFormData.spaceName)) {
-      newErrorMessage.spaceNameError =
-        '사업장명은 특수문자 없이 20자 이내로 입력해주세요.';
-      pass = false;
+      newErrorMessage.spaceNameError = ERROR_MESSAGE.spaceName;
     }
     if (spaceFormData.description === '') {
-      newErrorMessage.descriptionError = '사업장 소개 문구를 입력해주세요.';
-      pass = false;
+      newErrorMessage.descriptionError = ERROR_MESSAGE.description;
     }
     if (
       spaceFormData.openTime === '선택' ||
       spaceFormData.closedTime === '선택'
     ) {
-      newErrorMessage.timeError = '시간을 선택해주세요.';
-      pass = false;
+      newErrorMessage.timeError = ERROR_MESSAGE.time;
     }
     if (!isValidNumber(spaceFormData.phoneNumber)) {
-      newErrorMessage.phoneNumberError = '전화번호 형식을 확인해주세요.';
-      pass = false;
+      newErrorMessage.phoneNumberError = ERROR_MESSAGE.phonNumber;
     }
     if (!isValidAddress(spaceFormData.address.detail)) {
-      newErrorMessage.addressError =
-        '주소는 5~100자 이내이며, 가능한 특수문자는 (,-())입니다.';
-      pass = false;
+      newErrorMessage.addressError = ERROR_MESSAGE.address;
     }
-    if (spaceFormData.spaceImage === null) {
-      newErrorMessage.imageError = '이미지를 등록해주세요.';
-      pass = false;
+    if (spaceFormData.spaceImage.url === null) {
+      newErrorMessage.imageError = ERROR_MESSAGE.image;
     }
 
     setErrorMessage(newErrorMessage);
-    return pass;
   };
 
   const uploadImageToS3 = (url: string, file: File) => {
@@ -132,9 +127,7 @@ const SpaceModify = ({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isValid()) {
-      return;
-    }
+    isValid();
 
     if (
       isValidSpaceName(spaceFormData.spaceName) &&
@@ -143,7 +136,7 @@ const SpaceModify = ({
       spaceFormData.closedTime !== '선택' &&
       isValidNumber(spaceFormData.phoneNumber) &&
       isValidAddress(spaceFormData.address.detail) &&
-      spaceFormData.spaceImage.file !== null
+      spaceFormData.spaceImage.url !== null
     ) {
       await mutateAsync({
         workplace: {
@@ -158,13 +151,12 @@ const SpaceModify = ({
         workplaceId: Number(workplaceId),
       });
 
-      // 사업장 사진
-      const prevImgName = info?.imageUrl.split('/').pop();
-      const s3URL = await getS3URL(
-        prevImgName!,
-        `workplace-${workplaceId}/${prevImgName}`,
-      );
-      uploadImageToS3(s3URL, spaceFormData.spaceImage.file);
+      // 사업장 사진 (수정을 한 경우에만)
+      if (spaceFormData.spaceImage.file !== null) {
+        const prevImgName = info?.imageUrl.split('/').pop();
+        const s3URL = await getS3URL(prevImgName!, `workplace-${workplaceId}`);
+        uploadImageToS3(s3URL, spaceFormData.spaceImage.file);
+      }
     }
   };
 
