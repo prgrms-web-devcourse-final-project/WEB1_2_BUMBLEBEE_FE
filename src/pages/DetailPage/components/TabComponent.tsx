@@ -8,12 +8,16 @@ interface TabComponentProps {
   setIsBtnDisabled: Dispatch<SetStateAction<boolean>>;
   workplaceDetailData: GetWorkPlaceData;
   workplaceId: number;
+  selectedRoomId: number;
+  setSelectedRoomId: Dispatch<SetStateAction<number>>;
 }
 
 const TabComponent = ({
   setIsBtnDisabled,
   workplaceDetailData,
   workplaceId,
+  selectedRoomId,
+  setSelectedRoomId,
 }: TabComponentProps) => {
   const tabs = [
     '상세정보',
@@ -51,6 +55,8 @@ const TabComponent = ({
           <RoomSelect
             setIsBtnDisabled={setIsBtnDisabled}
             workplaceId={workplaceId}
+            selectedRoomId={selectedRoomId}
+            setSelectedRoomId={setSelectedRoomId}
           />
         )}
         {activeTab === 2 && (

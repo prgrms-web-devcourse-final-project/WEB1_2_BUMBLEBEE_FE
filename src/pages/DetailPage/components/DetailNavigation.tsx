@@ -5,17 +5,22 @@ import { useNavigate } from 'react-router-dom';
 interface DetailNavigationProps {
   workplaceId: number;
   isBtnDisabled: boolean;
+  selectedRoomId: number;
 }
 
 const DetailNavigation = ({
   workplaceId,
   isBtnDisabled,
+  selectedRoomId,
 }: DetailNavigationProps) => {
   const navigate = useNavigate();
   const handleClickChat = async () => {
     const roomId = await postCreateChatRoom(workplaceId);
-    console.log(roomId);
     navigate(`/chat/${roomId}`);
+  };
+
+  const handleSelectRoom = async () => {
+    navigate(`/reservation/${selectedRoomId}`);
   };
 
   return (
@@ -38,6 +43,7 @@ const DetailNavigation = ({
           type='button'
           className='ml-[8px] w-[222px] rounded-[8px] text-white'
           disabled={isBtnDisabled}
+          onClick={handleSelectRoom}
           style={{
             backgroundColor: isBtnDisabled === false ? '#50BEAD' : '#c3c3c3',
           }}

@@ -379,12 +379,11 @@ export interface SendMessageRequest {
 
 // 메시지 조회 응답값
 export interface ChatMessageResponse {
-  messageId: number;
   roomId: number;
   sender: string;
   content: string;
   timestamp: string;
-  senderType: 'member' | 'business';
+  isRead: boolean;
 }
 
 // 채팅목록 조회 응답값 (사용자)

@@ -1,22 +1,25 @@
 import RoomComponent from '@pages/RegisterSpace/components/RoomComponent';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Dispatch, SetStateAction } from 'react';
 import useGetStudyroomOfWorkplace from '../hooks/useGetStudyroomOfWorkplace';
 
 interface RoomSelectProps {
   setIsBtnDisabled: Dispatch<SetStateAction<boolean>>;
   workplaceId: number;
+  selectedRoomId: number;
+  setSelectedRoomId: Dispatch<SetStateAction<number>>;
 }
 
-const RoomSelect = ({ setIsBtnDisabled, workplaceId }: RoomSelectProps) => {
+const RoomSelect = ({
+  setIsBtnDisabled,
+  workplaceId,
+  selectedRoomId,
+  setSelectedRoomId,
+}: RoomSelectProps) => {
   const { data } = useGetStudyroomOfWorkplace(workplaceId);
-  const navigate = useNavigate();
 
-  const [selectedRoomId, setSelectedRoomId] = useState<number>();
   const handleClick = (id: number) => {
     setIsBtnDisabled(false);
     setSelectedRoomId(id);
-    navigate(`/reservation/${id}`);
   };
 
   return (
