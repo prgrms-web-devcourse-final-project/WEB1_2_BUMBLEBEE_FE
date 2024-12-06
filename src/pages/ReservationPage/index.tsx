@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useSearchStore from '@store/searchStore';
 import { toast } from 'react-toastify';
 import { ERROR_MESSAGE } from '@constants/constants';
-import { useEffect } from 'react';
 import ReservationBar from './components/ReservationBar';
 import ImageCarousel from './components/ImageCarousel';
 import RoomDetail from './components/RoomDetail';
@@ -34,11 +33,6 @@ const ReservationPage = () => {
     }
     navigate('/payment', { state: studyRoomInfo });
   };
-
-  // 스크롤 상단으로 이동
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <MainLayout>

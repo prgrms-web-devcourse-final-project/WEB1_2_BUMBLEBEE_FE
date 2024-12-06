@@ -1,7 +1,6 @@
 import MainLayout from '@layouts/MainLayout';
 import HeaderNoTitle from '@layouts/HeaderNoTitle';
 import BottomNavigation from '@layouts/BottomNavigation';
-import { useEffect } from 'react';
 import usePositionStore from '@store/positionStore';
 import MainList from './components/MainList';
 import KakaoMap from './components/KakaoMap';
@@ -19,11 +18,6 @@ const MainPage = () => {
     position,
     mapPosition,
   );
-
-  // 스크롤 상단으로 이동
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <>
