@@ -20,8 +20,6 @@ const ReserverCard = ({ item }: { item: ReserverInfo }) => {
     reservationState,
   } = item;
 
-  console.log(reservationState);
-
   return (
     <>
       <div className='relative mx-auto flex w-custom flex-col gap-2 border-b border-solid border-b-black px-[13px] py-[26px]'>
