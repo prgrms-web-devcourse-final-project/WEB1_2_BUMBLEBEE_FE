@@ -1,6 +1,7 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Room } from '@typings/types';
+import { ERROR_MESSAGE } from '@constants/constants';
 import RoomImage from './RoomImage';
 import CountPeople from './CountPeople';
 
@@ -39,19 +40,19 @@ const RoomForm = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
       priceError: '',
     };
     if (room.roomName === '') {
-      newErrorMessage.roomNameError = '룸 이름을 입력해주세요.';
+      newErrorMessage.roomNameError = ERROR_MESSAGE.roomName;
       pass = false;
     }
     if (room.description === '') {
-      newErrorMessage.roomDescriptionError = '룸 소개를 입력해주세요.';
+      newErrorMessage.roomDescriptionError = ERROR_MESSAGE.roomDescription;
       pass = false;
     }
     if (room.roomImages.length === 0) {
-      newErrorMessage.roomImagesError = '이미지를 등록해주세요.';
+      newErrorMessage.roomImagesError = ERROR_MESSAGE.image;
       pass = false;
     }
     if (room.price === '' || room.people === 0) {
-      newErrorMessage.priceError = '가격 또는 인원수를 필수로 입력해주세요.';
+      newErrorMessage.priceError = ERROR_MESSAGE.priceAndPeople;
       pass = false;
     }
 

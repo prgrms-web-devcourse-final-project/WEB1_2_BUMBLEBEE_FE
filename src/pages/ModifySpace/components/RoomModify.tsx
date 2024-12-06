@@ -3,11 +3,14 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { Room } from '@typings/types';
 import RoomImage from '@pages/AddRoom/components/RoomImage';
 import CountPeople from '@pages/AddRoom/components/CountPeople';
-// import { validate } from 'uuid';
-// import { useParams } from 'react-router-dom';
-// import { getS3URL } from '@apis/workplace';
-// import axios from 'axios';
-// import useGetRoomListInfo from '../hooks/useGetRoomListInfo';
+import { ERROR_MESSAGE } from '@constants/constants';
+import { validate } from 'uuid';
+import { useParams } from 'react-router-dom';
+import { deleteWorkPlaceImage, getS3URL } from '@apis/workplace';
+import axios from 'axios';
+import useGetRoomListInfo from '../hooks/useGetRoomListInfo';
+import usePostRoom from '../hooks/usePostRoom';
+import usePutRoom from '../hooks/usePutRoom';
 
 interface RoomFormProps {
   room: Room;
@@ -44,19 +47,19 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
       priceError: '',
     };
     if (room.roomName === '') {
-      newErrorMessage.roomNameError = '룸 이름을 입력해주세요.';
+      newErrorMessage.roomNameError = ERROR_MESSAGE.roomName;
       pass = false;
     }
     if (room.description === '') {
-      newErrorMessage.roomDescriptionError = '룸 소개를 입력해주세요.';
+      newErrorMessage.roomDescriptionError = ERROR_MESSAGE.roomDescription;
       pass = false;
     }
     if (room.roomImages.length === 0) {
-      newErrorMessage.roomImagesError = '이미지를 등록해주세요.';
+      newErrorMessage.roomImagesError = ERROR_MESSAGE.image;
       pass = false;
     }
     if (room.price === '' || room.people === 0) {
-      newErrorMessage.priceError = '가격 또는 인원수를 필수로 입력해주세요.';
+      newErrorMessage.priceError = ERROR_MESSAGE.priceAndPeople;
       pass = false;
     }
 
@@ -64,16 +67,85 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
     return pass;
   };
 
-  // const { workplaceId } = useParams() as { workplaceId: string };
-  // const { data: roomInfo } = useGetRoomListInfo(Number(workplaceId));
+  const { workplaceId } = useParams() as { workplaceId: string };
+  const { data: roomInfo } = useGetRoomListInfo(Number(workplaceId));
+  const { mutateAsync: postRoom } = usePostRoom();
+  const { mutateAsync: putRoom } = usePutRoom();
 
-  // const uploadImageToS3 = (url: string, file: File) => {
-  //   axios.put(url, file);
-  // };
+  const uploadImageToS3 = (url: string, file: File) => {
+    axios.put(url, file);
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isValid()) {
+      if (validate(room.id)) {
+        // 룸 생성
+        const { studyroomId } = await postRoom({
+          workPlaceId: workplaceId,
+          studyroom: {
+            studyRoomName: room.roomName,
+            description: room.description,
+            price: Number(room.price),
+            capacity: room.people,
+          },
+        });
+
+        updateRoomData({ id: String(studyroomId) });
+
+        // 이미지 업로드
+        await Promise.all(
+          room.roomImages.map(({ file }) =>
+            getS3URL(
+              file!.name,
+              `workplace-${workplaceId}/studyroom-${studyroomId}`,
+            ).then((roomImageS3URL) => uploadImageToS3(roomImageS3URL, file!)),
+          ),
+        );
+        console.log(room.roomName);
+      } else {
+        // 룸 수정
+        await putRoom({
+          studyRoomId: room.id,
+          studyroom: {
+            studyRoomName: room.roomName,
+            description: room.description,
+            price: Number(room.price),
+            capacity: room.people,
+          },
+        });
+
+        // 룸 사진 수정
+        const isImgModified =
+          room.roomImages.some(({ file }) => file !== null) ||
+          (roomInfo &&
+            roomInfo.find(({ studyRoomId }) => studyRoomId === Number(room.id))!
+              .imageUrl.length !== room.roomImages.length);
+
+        if (isImgModified) {
+          // 룸 사진 들어있는 폴더 지우기
+          await Promise.all(
+            room.roomImages.map(() =>
+              deleteWorkPlaceImage(
+                `workplace-${workplaceId}/studyroom-${room.id}`,
+              ),
+            ),
+          );
+          // 룸 사진들 다시 올리기
+
+          await Promise.all(
+            room.roomImages.map(({ file }) =>
+              getS3URL(
+                file!.name,
+                `workplace-${workplaceId}/studyroom-${room.id}`,
+              ).then((roomImageS3URL) =>
+                uploadImageToS3(roomImageS3URL, file!),
+              ),
+            ),
+          );
+        }
+      }
+
       completeAdd('');
     }
   };
@@ -97,7 +169,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
             className='main-input'
             placeholder='룸 이름을 입력해주세요.'
             onChange={handleChange}
-            value={room.roomName}
+            value={room?.roomName}
           />
         </div>
         {errorMessage.roomNameError && (
@@ -114,7 +186,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
               룸 설명
             </label>
             <p className='text-[14px] font-normal text-subfont'>
-              {room.description.length}/200
+              {room?.description.length}/200
             </p>
           </div>
           <TextareaAutosize
@@ -124,7 +196,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
             className='main-textarea text-[14px]'
             placeholder='룸에 대한 설명을 입력해주세요.'
             onChange={handleChange}
-            value={room.description}
+            value={room?.description}
           />
         </div>
         {errorMessage.roomDescriptionError && (
@@ -133,7 +205,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
           </div>
         )}
         <RoomImage
-          roomImages={room.roomImages}
+          roomImages={room?.roomImages}
           onUpdateImages={(roomImages) => updateRoomData({ roomImages })}
         />
         {errorMessage.roomImagesError && (
@@ -155,7 +227,7 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
               className='main-input ml-[20px] h-[38px] w-[84px] rounded-[5px]'
               placeholder='ex) 3000'
               onChange={handleChange}
-              value={room.price}
+              value={room?.price}
             />
           </div>
           <CountPeople

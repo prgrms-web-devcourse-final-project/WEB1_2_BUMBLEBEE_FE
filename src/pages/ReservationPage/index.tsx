@@ -8,6 +8,7 @@ import ReservationBar from './components/ReservationBar';
 import ImageCarousel from './components/ImageCarousel';
 import RoomDetail from './components/RoomDetail';
 import useGetStudyroomDetail from './hooks/useGetStudyroomDetail';
+import { useEffect } from 'react';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
@@ -33,6 +34,11 @@ const ReservationPage = () => {
     }
     navigate('/payment', { state: studyRoomInfo });
   };
+
+  // 스크롤 상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <MainLayout>

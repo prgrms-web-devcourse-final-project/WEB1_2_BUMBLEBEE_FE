@@ -32,7 +32,7 @@ const CountPeople = ({ room, updateRoomData }: CountPeopleProps) => {
         >
           <AiOutlineMinus />
         </button>
-        <span className='w-2 text-sm font-normal'>{room.people}</span>
+        <span className='w-2 text-sm font-normal'>{room?.people}</span>
         <button
           type='button'
           className='hover:text-primary'
