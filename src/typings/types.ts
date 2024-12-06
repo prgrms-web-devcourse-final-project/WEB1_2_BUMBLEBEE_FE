@@ -67,6 +67,13 @@ export interface Member {
 // 사용자 알림
 export interface Alarm {}
 
+// 실시간 알림
+export interface SseAlarm {
+  content: string;
+  createAt: string;
+  workplaceId: number;
+}
+
 // 예약 등록
 export interface PostReservationData {
   reservationName: string;
