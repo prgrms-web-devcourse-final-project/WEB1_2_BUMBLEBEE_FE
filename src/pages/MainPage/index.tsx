@@ -1,7 +1,7 @@
 import MainLayout from '@layouts/MainLayout';
 import HeaderNoTitle from '@layouts/HeaderNoTitle';
 import BottomNavigation from '@layouts/BottomNavigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MapPosition } from '@typings/types';
 import MainList from './components/MainList';
 import KakaoMap from './components/KakaoMap';
@@ -37,6 +37,11 @@ const MainPage = () => {
   };
 
   const { data, refetch } = useGetWorkplaceData(nowPosition, mapPosition);
+
+  // 스크롤 상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
