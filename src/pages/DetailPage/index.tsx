@@ -33,7 +33,7 @@ const DetailPage = () => {
         )}
       </div>
       <DetailNavigation
-        workplaceId={data?.workplaceId}
+        workplaceId={data?.workplaceId || 0}
         isBtnDisabled={isBtnDisabled}
       />
     </MainLayout>
