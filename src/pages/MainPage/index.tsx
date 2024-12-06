@@ -15,7 +15,10 @@ const MainPage = () => {
     longitude: nowPosition.center.lng,
   };
 
-  const { data } = useGetWorkplaceData(position, mapPosition);
+  const { data, isLoading, isError } = useGetWorkplaceData(
+    position,
+    mapPosition,
+  );
 
   // 스크롤 상단으로 이동
   useEffect(() => {
@@ -27,7 +30,11 @@ const MainPage = () => {
       <MainLayout>
         <HeaderNoTitle />
         <KakaoMap data={data} />
-        <MainList data={data} />
+        <MainList
+          data={data}
+          isLoading={isLoading}
+          isError={isError}
+        />
         <BottomNavigation />
       </MainLayout>
     </>
