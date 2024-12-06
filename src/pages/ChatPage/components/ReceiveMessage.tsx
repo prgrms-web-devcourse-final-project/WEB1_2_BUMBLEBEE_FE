@@ -6,11 +6,11 @@ interface ReceiveMessageProps {
 
 const ReceiveMessage = (props: ReceiveMessageProps) => {
   const { message } = props;
-  const formattedTime = message.timestamp
-    .split('T')[1]
-    .split(':')
-    .slice(0, 2)
-    .join(':');
+  const formattedTime = message.timestamp;
+  // .split('T')[1]
+  // .split(':')
+  // .slice(0, 2)
+  // .join(':');
   return (
     <div className='flex w-custom justify-start'>
       <div className='flex items-end gap-2'>
