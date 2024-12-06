@@ -58,6 +58,7 @@ const ChatPage = () => {
       // 구독
       client.onConnect = () => {
         console.log('Connected');
+
         client.subscribe(`/sub/chat/room/${roomId}`, (message: IMessage) => {
           try {
             const newMessage = JSON.parse(message.body);
@@ -99,7 +100,6 @@ const ChatPage = () => {
         destination: '/pub/sendMessage',
         body: JSON.stringify(chatMessage),
       });
-      loadMessage();
       console.log(chatMessage);
       console.log(messages);
     }

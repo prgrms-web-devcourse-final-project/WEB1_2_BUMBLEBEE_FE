@@ -19,6 +19,8 @@ export const getChatList = async (): Promise<ChatListResponse[]> => {
 export const postCreateChatRoom = async (
   workplaceId: number,
 ): Promise<number> => {
-  const response = await authInstance.post('/api/v1/chat/create', workplaceId);
+  const response = await authInstance.post('/api/v1/chat/create', {
+    workplaceId,
+  });
   return response.data;
 };

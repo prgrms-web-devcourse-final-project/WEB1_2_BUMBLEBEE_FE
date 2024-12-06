@@ -4,11 +4,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useSearchStore from '@store/searchStore';
 import { toast } from 'react-toastify';
 import { ERROR_MESSAGE } from '@constants/constants';
+import { useEffect } from 'react';
 import ReservationBar from './components/ReservationBar';
 import ImageCarousel from './components/ImageCarousel';
 import RoomDetail from './components/RoomDetail';
 import useGetStudyroomDetail from './hooks/useGetStudyroomDetail';
-import { useEffect } from 'react';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
