@@ -27,11 +27,14 @@ const ManagementPlaceCard = ({ item }: ManagementPlaceCardProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const numberOfRooms = useGetNumberOfRooms(workplaceId);
-  const { mutate: deleteMutation } = useDeleteBusinessPlace(workplaceId);
+  const { mutate: deleteMutation } = useDeleteBusinessPlace();
 
   // 사업장 삭제
   const handleDeleteBusinessWorkplace = () => {
-    deleteMutation();
+    deleteMutation({
+      workPlaceId: workplaceId,
+      fileLocation: `workplace-${workplaceId}`,
+    });
     setModalOpen(() => false);
   };
 
@@ -74,7 +77,7 @@ const ManagementPlaceCard = ({ item }: ManagementPlaceCardProps) => {
           <img
             src={imageUrl}
             alt='스터디룸 사진'
-            className='h-[50px] w-[50px] object-cover'
+            className='ml-3 h-[50px] w-[50px] object-cover'
           />
         </div>
 
