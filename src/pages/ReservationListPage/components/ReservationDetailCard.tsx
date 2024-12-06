@@ -27,6 +27,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
     studyRoomName,
     reservationId,
     existReview,
+    state,
   } = item;
   const navigate = useNavigate();
   const { mutate: cancelPayment } = useCancelPayment();
@@ -138,12 +139,17 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
             </Link>
           ) : (
             <>
-              {buttonText === 'cancelPayment' && (
-                <ButtonInCard
-                  name='결제 취소'
-                  onClickFunction={() => setModalOpen(true)}
-                />
-              )}
+              {buttonText === 'cancelPayment' &&
+                (state !== 'CANCELLED' ? (
+                  <ButtonInCard
+                    name='결제 취소'
+                    onClickFunction={() => setModalOpen(true)}
+                  />
+                ) : (
+                  <span className='flex h-[34px] flex-col justify-end text-[12px] text-[#E49E9E]'>
+                    결제 취소된 예약입니다.
+                  </span>
+                ))}
               {buttonText === 'review' && (
                 <ButtonInCard
                   name='리뷰 작성'

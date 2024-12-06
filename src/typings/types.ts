@@ -90,6 +90,7 @@ export interface Reservation {
   reservationCapacity: number;
   price: number;
   existReview: boolean;
+  state: string;
 }
 
 // 사업자의 예약자 확인
