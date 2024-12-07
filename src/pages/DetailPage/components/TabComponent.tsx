@@ -59,9 +59,14 @@ const TabComponent = ({
             setSelectedRoomId={setSelectedRoomId}
           />
         )}
-        {activeTab === 2 && (
-          <WorkPlaceReview workplaceDetailData={workplaceDetailData} />
-        )}
+        {activeTab === 2 &&
+          (workplaceDetailData.reviewCount === 0 ? (
+            <div className='text-[16px] font-normal text-subfont'>
+              등록된 리뷰가 없습니다.
+            </div>
+          ) : (
+            <WorkPlaceReview workplaceDetailData={workplaceDetailData} />
+          ))}
       </div>
     </div>
   );
