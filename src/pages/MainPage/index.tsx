@@ -3,6 +3,8 @@ import HeaderNoTitle from '@layouts/HeaderNoTitle';
 import BottomNavigation from '@layouts/BottomNavigation';
 import usePositionStore from '@store/positionStore';
 import useAuthStore from '@store/authStore';
+import { useEffect, useState } from 'react';
+import { getRole } from '@utils/auth';
 import MainList from './components/MainList';
 import KakaoMap from './components/KakaoMap';
 import {
@@ -24,12 +26,26 @@ const MainPage = () => {
   );
 
   const { isLogin } = useAuthStore();
+  const [isUser, setIsUser] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isLogin) {
+      const role = getRole();
+      if (role === 'ROLE_USER') {
+        setIsUser(true);
+      }
+    }
+  }, [isLogin]);
+
+  console.log(isLogin);
+  console.log(isUser);
+  console.log('query', isLogin && !isUser);
 
   const {
     data: recommendData,
     isLoading: isRecommendLoading,
     isError: isRecommendError,
-  } = useGetRecommendData(isLogin);
+  } = useGetRecommendData(isLogin, isUser);
   console.log(recommendData);
 
   return (
@@ -44,6 +60,8 @@ const MainPage = () => {
           recommendData={recommendData}
           isRecommendLoading={isRecommendLoading}
           isRecommendError={isRecommendError}
+          isLogin={isLogin}
+          isUser={isUser}
         />
         <BottomNavigation />
       </MainLayout>

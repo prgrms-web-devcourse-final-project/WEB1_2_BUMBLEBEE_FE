@@ -23,11 +23,11 @@ export const useGetWorkplaceData = (
   return { data, isLoading, isError, refetch };
 };
 
-export const useGetRecommendData = (isLogin: boolean) => {
+export const useGetRecommendData = (isLogin: boolean, isUser: boolean) => {
   const { data, isLoading, isError } = useQuery<GetPositionWorkPlaceData[]>({
-    queryKey: ['recommendWorkPlace'],
+    queryKey: ['recommendWorkPlace', isLogin, isUser],
     queryFn: () => getRecommendWorkPlace(),
-    enabled: isLogin,
+    enabled: isLogin && isUser,
   });
 
   return {

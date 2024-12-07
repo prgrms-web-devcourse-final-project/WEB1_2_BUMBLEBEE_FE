@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GetPositionWorkPlaceData } from '@typings/types';
 import useAuthStore from '@store/authStore';
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +18,8 @@ interface MainListProps {
   recommendData: GetPositionWorkPlaceData[];
   isRecommendLoading: boolean;
   isRecommendError: boolean;
+  isLogin: boolean;
+  isUser: boolean;
 }
 
 const MainList = (props: MainListProps) => {
@@ -28,21 +30,33 @@ const MainList = (props: MainListProps) => {
     recommendData,
     isRecommendLoading,
     isRecommendError,
+    isLogin,
+    isUser,
   } = props;
   const [activeTab, setActiveTab] = useState('주변 스터디룸');
-  const tabList: TabList = {
+  const [tabList, setTabList] = useState<TabList>({
     '주변 스터디룸': {
       title: '내 주변 스터디룸',
       context: '내 주변 가까운 스터디룸을 확인해보세요 !',
     },
-    '맞춤형 추천': {
-      title: '맞춤형 추천 스터디룸',
-      context: '나에게 맞는 스터디룸을 확인해보세요 !',
-    },
-  };
+  });
 
-  const { isLogin } = useAuthStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if ((!isLogin && !isUser) || isUser) {
+      setTabList({
+        '주변 스터디룸': {
+          title: '내 주변 스터디룸',
+          context: '내 주변 가까운 스터디룸을 확인해보세요 !',
+        },
+        '맞춤형 추천': {
+          title: '맞춤형 추천 스터디룸',
+          context: '나에게 맞는 스터디룸을 확인해보세요 !',
+        },
+      });
+    }
+  }, [isLogin, isUser]);
 
   return (
     <div className='relative z-10 -mt-2 mb-[94px] min-h-[429px] w-[375px] rounded-t-[10px] bg-white pb-[110px] shadow-custom'>
