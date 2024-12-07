@@ -11,6 +11,8 @@ type TabList = {
 };
 
 interface MainListProps {
+  activeTab: string;
+  OnSetActiveTab: (value: string) => void;
   data: GetPositionWorkPlaceData[] | undefined;
   isLoading: boolean;
   isError: boolean;
@@ -23,6 +25,8 @@ interface MainListProps {
 
 const MainList = (props: MainListProps) => {
   const {
+    activeTab,
+    OnSetActiveTab,
     data,
     isLoading,
     isError,
@@ -32,7 +36,6 @@ const MainList = (props: MainListProps) => {
     isLogin,
     isUser,
   } = props;
-  const [activeTab, setActiveTab] = useState('주변 스터디룸');
   const [tabList, setTabList] = useState<TabList>({
     '주변 스터디룸': {
       title: '내 주변 스터디룸',
@@ -65,7 +68,7 @@ const MainList = (props: MainListProps) => {
             type='button'
             key={tab}
             className={`h-full flex-1 text-base ${activeTab === tab ? 'border-b-2 border-b-primary text-black' : 'text-subfont'}`}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => OnSetActiveTab(tab)}
           >
             {tab}
           </button>

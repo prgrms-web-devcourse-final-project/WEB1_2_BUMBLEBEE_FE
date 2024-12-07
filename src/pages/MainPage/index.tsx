@@ -20,11 +20,13 @@ const MainPage = () => {
     longitude: nowPosition.center.lng,
   };
 
+  // 위치별 조회 데이터
   const { data, isLoading, isError } = useGetWorkplaceData(
     position,
     mapPosition,
   );
 
+  // 비로그인 / 사업자 / 사용자 확인
   const { isLogin } = useAuthStore();
   const [isUser, setIsUser] = useState<boolean>(false);
 
@@ -37,23 +39,28 @@ const MainPage = () => {
     }
   }, [isLogin]);
 
-  console.log(isLogin);
-  console.log(isUser);
-  console.log('query', isLogin && !isUser);
-
+  // 사업장 추천 데이터
   const {
     data: recommendData,
     isLoading: isRecommendLoading,
     isError: isRecommendError,
   } = useGetRecommendData(isLogin, isUser);
-  console.log(recommendData);
+
+  // 선택한 탭
+  const [activeTab, setActiveTab] = useState('주변 스터디룸');
 
   return (
     <>
       <MainLayout>
         <HeaderNoTitle />
-        <KakaoMap data={data} />
+        <KakaoMap
+          data={data}
+          activeTab={activeTab}
+          recommendData={recommendData}
+        />
         <MainList
+          activeTab={activeTab}
+          OnSetActiveTab={setActiveTab}
           data={data}
           isLoading={isLoading}
           isError={isError}

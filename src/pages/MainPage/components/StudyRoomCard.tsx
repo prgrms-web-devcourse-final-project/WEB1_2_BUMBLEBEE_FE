@@ -35,9 +35,11 @@ const StudyRoomCard = ({ studyroom }: StudyRoomCardProps) => {
         <div className='flex-col gap-1'>
           <p className='truncate text-start font-normal'>{workplaceName}</p>
           <div className='flex gap-[10px]'>
-            <span className='text-xs font-normal'>
-              {distance && `${distance.toFixed(2)}km`}
-            </span>
+            {distance && (
+              <span className='text-xs font-normal'>
+                {distance.toFixed(2)}km
+              </span>
+            )}
             <span className='text-start text-xs'>{formattedAddress}</span>
           </div>
         </div>
