@@ -14,7 +14,9 @@ const useCancelPayment = () => {
       }),
     onSuccess: () => {
       // 결제 취소 성공하면 예약 내역 쿼리 무효화
-      queryClient.invalidateQueries({ queryKey: ['myReservationList'] });
+      queryClient.invalidateQueries({
+        queryKey: ['myReservationList'],
+      });
     },
   });
   return cancelPayment;

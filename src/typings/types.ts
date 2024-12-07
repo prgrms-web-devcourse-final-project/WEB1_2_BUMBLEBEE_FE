@@ -72,6 +72,7 @@ export interface SseAlarm {
   content: string;
   createAt: string;
   workplaceId: number;
+  notificationType: string;
 }
 
 // 예약 등록

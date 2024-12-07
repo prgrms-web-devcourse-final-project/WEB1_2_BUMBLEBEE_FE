@@ -1,27 +1,33 @@
-import LogoAndNotification from '@components/LogoAndNotification';
-import NotiContainer from '@components/notiContainer';
-import { BASE_URL } from '@constants/constants';
-import useAuthStore from '@store/authStore';
-import { SseAlarm } from '@typings/types';
-import { getAuthToken, getRole } from '@utils/auth';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
+import { BASE_URL } from '@constants/constants';
+import { getAuthToken, getRole } from '@utils/auth';
+import LogoAndNotification from '@components/LogoAndNotification';
+import useAuthStore from '@store/authStore';
 import { useEffect, useState } from 'react';
+import { SseAlarm } from '@typings/types';
+import NotiContainer from '@components/NotiContainer';
 
 export interface TitleProps {
   title: string;
+}
+interface AlarmContent {
+  type: string;
+  workplaceId: number;
 }
 
 const HeaderWithTitle = ({ title }: TitleProps) => {
   const { isLogin } = useAuthStore();
   const role = getRole();
-  const [message, setMessage] = useState<string>('');
+  const [message, setMessage] = useState<AlarmContent>();
 
   useEffect(() => {
-    console.log('useEffect');
     const connect = () => {
       if (!isLogin || role === 'ROLE_USER') return;
 
-      setMessage('');
+      setMessage({
+        type: '',
+        workplaceId: 0,
+      });
       const EventSource = EventSourcePolyfill || NativeEventSource;
       const token = getAuthToken() || '';
       const eventSource = new EventSource(`${BASE_URL}/api/subscribe`, {
@@ -29,7 +35,6 @@ const HeaderWithTitle = ({ title }: TitleProps) => {
           Authorization: `Bearer ${token}`,
         },
         withCredentials: true,
-        // // eventpolyfill timeout이 45초로 설정되어 있어서 서버 30분에 맞춰 31분으로 지정
         heartbeatTimeout: 1860000,
       });
 
@@ -42,12 +47,17 @@ const HeaderWithTitle = ({ title }: TitleProps) => {
         console.log(newMessage);
 
         if (newMessage.content !== 'connected!') {
-          setMessage(newMessage.content);
-          console.log(newMessage);
+          if (newMessage.notificationType === 'REVIEW_CREATED') {
+            setMessage({
+              type: '새 리뷰 등록',
+              workplaceId: newMessage.workplaceId,
+            });
+          }
         }
       };
 
-      eventSource.onerror = async () => {
+      eventSource.onerror = async (error) => {
+        console.error('SSE Error:', error);
         eventSource.close();
 
         setTimeout(connect, 1000);
@@ -57,6 +67,7 @@ const HeaderWithTitle = ({ title }: TitleProps) => {
       // eslint-disable-next-line consistent-return
       return () => {
         try {
+          // 페이지 연결 시 구독 끊기
           eventSource.close();
           console.log('구독 끊기');
         } catch (error) {
@@ -80,8 +91,11 @@ const HeaderWithTitle = ({ title }: TitleProps) => {
           </p>
         </div>
       </div>
-      {isLogin && message && message !== 'connected!' && (
-        <NotiContainer message={message} />
+      {isLogin && message && message.type !== 'connected!' && (
+        <NotiContainer
+          message={message.type}
+          workplaceId={message.workplaceId}
+        />
       )}
     </>
   );
