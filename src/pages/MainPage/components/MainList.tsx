@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { GetPositionWorkPlaceData } from '@typings/types';
+import useAuthStore from '@store/authStore';
+import { useNavigate } from 'react-router-dom';
 import StudyRoomCard from './StudyRoomCard';
 
 type TabList = {
@@ -39,6 +41,9 @@ const MainList = (props: MainListProps) => {
     },
   };
 
+  const { isLogin } = useAuthStore();
+  const navigate = useNavigate();
+
   return (
     <div className='relative z-10 -mt-2 mb-[94px] min-h-[429px] w-[375px] rounded-t-[10px] bg-white pb-[110px] shadow-custom'>
       <nav className='it flex h-[60px] w-full items-center justify-center'>
@@ -68,6 +73,18 @@ const MainList = (props: MainListProps) => {
               studyroom={item}
             />
           ))}
+        {activeTab === '맞춤형 추천' && !isLogin && (
+          <div className='flex h-[150px] w-full flex-col items-center justify-center gap-2 text-sm font-normal text-subfont'>
+            로그인 후 이용이 가능합니다.
+            <button
+              type='button'
+              className='flex h-[40px] w-[100px] items-center justify-center rounded-lg border border-primary py-2 text-primary'
+              onClick={() => navigate('/start')}
+            >
+              로그인
+            </button>
+          </div>
+        )}
         {activeTab === '맞춤형 추천' &&
           !isRecommendLoading &&
           recommendData &&
@@ -87,6 +104,7 @@ const MainList = (props: MainListProps) => {
           )}
         {(!isRecommendLoading || isRecommendError) &&
           (!recommendData || recommendData.length === 0) &&
+          isLogin &&
           activeTab === '맞춤형 추천' && (
             <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
               추천 스터디룸이 없습니다.
