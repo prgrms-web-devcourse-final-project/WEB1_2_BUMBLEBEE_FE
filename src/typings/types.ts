@@ -374,7 +374,7 @@ export interface SendMessageRequest {
   sender: string;
   content: string;
   timestamp: string;
-  senderType: 'member' | 'business';
+  senderType: 'MEMBER' | 'BUSINESS';
 }
 
 // 메시지 조회 응답값

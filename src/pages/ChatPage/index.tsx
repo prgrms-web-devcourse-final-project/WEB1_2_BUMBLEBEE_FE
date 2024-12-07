@@ -94,7 +94,7 @@ const ChatPage = () => {
         content: inputValue,
         roomId: parseInt(roomId || '', 10),
         timestamp: getDatetoLocalDate(new Date()),
-        senderType: role === 'ROLE_USER' ? 'member' : 'business',
+        senderType: role === 'ROLE_USER' ? 'MEMBER' : 'BUSINESS',
       };
 
       stompClient.publish({

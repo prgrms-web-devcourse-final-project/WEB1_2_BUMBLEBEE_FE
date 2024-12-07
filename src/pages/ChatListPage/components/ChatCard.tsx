@@ -9,7 +9,7 @@ interface ChatCardProps {
 const ChatCard = (props: ChatCardProps) => {
   const { chat } = props;
   const userName =
-    'memberNickname' in chat ? chat.memberNickname : chat.workplaceName;
+    'memberId' in chat ? chat.memberNickname : chat.workplaceName;
   const navigate = useNavigate();
   const handleClickChat = () => {
     navigate(`/chat/${chat.roomId}`, { state: userName });

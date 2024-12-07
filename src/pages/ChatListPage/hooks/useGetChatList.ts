@@ -5,7 +5,7 @@ import { getRole } from '@utils/auth';
 
 const useGetChatList = () => {
   const role = getRole();
-  const queryKey = ['chatList'];
+  const queryKey = ['chatList', role];
   const queryFn =
     role === 'ROLE_USER' ? getChatListMember : getChatListBusiness;
   const { data, isLoading, isError } = useQuery<
