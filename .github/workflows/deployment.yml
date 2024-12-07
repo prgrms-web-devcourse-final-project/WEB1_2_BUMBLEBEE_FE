@@ -46,7 +46,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Deploy to S3
-        uses: aws-actions/s3-sync-action@v1
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
         env:
           SOURCE_DIR: './dist'
           AWS_REGION: 'ap-northeast-2'
