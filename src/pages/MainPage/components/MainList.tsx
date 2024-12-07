@@ -13,10 +13,20 @@ interface MainListProps {
   data: GetPositionWorkPlaceData[] | undefined;
   isLoading: boolean;
   isError: boolean;
+  recommendData: GetPositionWorkPlaceData[];
+  isRecommendLoading: boolean;
+  isRecommendError: boolean;
 }
 
 const MainList = (props: MainListProps) => {
-  const { data, isLoading, isError } = props;
+  const {
+    data,
+    isLoading,
+    isError,
+    recommendData,
+    isRecommendLoading,
+    isRecommendError,
+  } = props;
   const [activeTab, setActiveTab] = useState('주변 스터디룸');
   const tabList: TabList = {
     '주변 스터디룸': {
@@ -58,6 +68,16 @@ const MainList = (props: MainListProps) => {
               studyroom={item}
             />
           ))}
+        {activeTab === '맞춤형 추천' &&
+          !isRecommendLoading &&
+          recommendData &&
+          recommendData.length > 0 &&
+          recommendData.map((item) => (
+            <StudyRoomCard
+              key={item.workplaceName}
+              studyroom={item}
+            />
+          ))}
         {(!isLoading || isError) &&
           activeTab === '주변 스터디룸' &&
           (!data || data.length === 0) && (
@@ -65,11 +85,13 @@ const MainList = (props: MainListProps) => {
               주변 스터디룸이 없습니다.
             </div>
           )}
-        {activeTab === '맞춤형 추천' && (
-          <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
-            추천 스터디룸이 없습니다.
-          </div>
-        )}
+        {(!isRecommendLoading || isRecommendError) &&
+          (!recommendData || recommendData.length === 0) &&
+          activeTab === '맞춤형 추천' && (
+            <div className='flex h-[150px] w-full items-center justify-center text-[14px] font-normal text-subfont'>
+              추천 스터디룸이 없습니다.
+            </div>
+          )}
       </div>
     </div>
   );

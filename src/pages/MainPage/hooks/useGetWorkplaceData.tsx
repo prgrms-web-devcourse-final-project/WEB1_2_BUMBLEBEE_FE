@@ -1,4 +1,4 @@
-import { postPositionWorkPlace } from '@apis/workplace';
+import { getRecommendWorkPlace, postPositionWorkPlace } from '@apis/workplace';
 import { useQuery } from '@tanstack/react-query';
 import {
   GetPositionWorkPlaceData,
@@ -6,7 +6,7 @@ import {
   NowPosition,
 } from '@typings/types';
 
-const useGetWorkplaceData = (
+export const useGetWorkplaceData = (
   nowPosition: NowPosition,
   mapPosition: MapPosition,
 ) => {
@@ -23,4 +23,16 @@ const useGetWorkplaceData = (
   return { data, isLoading, isError, refetch };
 };
 
-export default useGetWorkplaceData;
+export const useGetRecommendData = (isLogin: boolean) => {
+  const { data, isLoading, isError } = useQuery<GetPositionWorkPlaceData[]>({
+    queryKey: ['recommendWorkPlace'],
+    queryFn: () => getRecommendWorkPlace(),
+    enabled: isLogin,
+  });
+
+  return {
+    data: (data ?? []) as GetPositionWorkPlaceData[],
+    isLoading,
+    isError,
+  };
+};

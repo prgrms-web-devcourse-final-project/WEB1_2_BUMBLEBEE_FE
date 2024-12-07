@@ -1,11 +1,14 @@
 import MainLayout from '@layouts/MainLayout';
 import HeaderNoTitle from '@layouts/HeaderNoTitle';
 import BottomNavigation from '@layouts/BottomNavigation';
-import { useEffect } from 'react';
 import usePositionStore from '@store/positionStore';
+import useAuthStore from '@store/authStore';
 import MainList from './components/MainList';
 import KakaoMap from './components/KakaoMap';
-import useGetWorkplaceData from './hooks/useGetWorkplaceData';
+import {
+  useGetWorkplaceData,
+  useGetRecommendData,
+} from './hooks/useGetWorkplaceData';
 
 const MainPage = () => {
   const { mapPosition, nowPosition } = usePositionStore();
@@ -20,10 +23,14 @@ const MainPage = () => {
     mapPosition,
   );
 
-  // 스크롤 상단으로 이동
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const { isLogin } = useAuthStore();
+
+  const {
+    data: recommendData,
+    isLoading: isRecommendLoading,
+    isError: isRecommendError,
+  } = useGetRecommendData(isLogin);
+  console.log(recommendData);
 
   return (
     <>
@@ -34,6 +41,9 @@ const MainPage = () => {
           data={data}
           isLoading={isLoading}
           isError={isError}
+          recommendData={recommendData}
+          isRecommendLoading={isRecommendLoading}
+          isRecommendError={isRecommendError}
         />
         <BottomNavigation />
       </MainLayout>
