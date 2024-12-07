@@ -251,7 +251,7 @@ const UserSignUpForm = () => {
         >
           가입 완료
         </button>
-        <div className='mt-[10px] flex justify-center'>
+        <div className='mt-[10px] flex justify-center pb-[80px]'>
           <span className='text-[12px] font-normal text-[#717171]'>
             이미 계정이 있으신가요?
           </span>

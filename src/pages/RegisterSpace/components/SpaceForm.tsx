@@ -183,7 +183,7 @@ const SpaceForm = ({
   };
 
   return (
-    <div className='flex flex-col items-center justify-center pb-24 pt-[35px]'>
+    <div className='flex flex-col items-center justify-center pb-[80px] pt-[35px]'>
       <form
         className='w-custom'
         onSubmit={handleSubmit}

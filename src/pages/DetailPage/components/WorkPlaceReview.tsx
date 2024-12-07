@@ -43,37 +43,35 @@ const WorkPlaceReview = ({
 
   return (
     <div className='w-custom'>
-      {reviewList?.pages?.map((page) => (
-        <div key={page.data[0]?.reviewId}>
-          {page.data.map((review) => (
-            <div
-              key={review.reviewId}
-              className='border-b border-subfont py-[16px] last:border-none'
-            >
-              <p className='mb-[8px] text-[16px] font-medium'>
-                {review.memberNickName}
-              </p>
-              <div className='flex flex-col'>
-                <div className='flex text-[12px] text-primary'>
-                  {showRatingWithStar(review.reviewRating)}
+      {reviewList?.pages?.map((page, pageIndex) => (
+        <div key={page.nextCursor || `page-${pageIndex}`}>
+          {page.data.map((review, reviewIndex) => {
+            // 페이지 내 마지막 리뷰인지 확인
+            const isLastReviewInPage = reviewIndex === page.data.length - 1;
+
+            return (
+              <div
+                key={review.reviewId}
+                className='border-b border-subfont py-[16px]'
+                ref={isLastReviewInPage ? observerRef : null} // 페이지의 마지막 리뷰에만 ref 적용
+              >
+                <p className='mb-[8px] text-[16px] font-medium'>
+                  {review.memberNickName}
+                </p>
+                <div className='flex flex-col'>
+                  <div className='flex text-[12px] text-primary'>
+                    {showRatingWithStar(review.reviewRating)}
+                  </div>
+                  <p className='mt-[6px] text-[14px]'>{review.reviewContent}</p>
                 </div>
-                <p className='mt-[6px] text-[14px]'>{review.reviewContent}</p>
+                <div className='mt-[11px] text-xs text-subfont'>
+                  {getDateFunction(review.reviewDate)}
+                </div>
               </div>
-              <div className='mt-[11px] text-xs text-subfont'>
-                {getDateFunction(review.reviewDate)}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ))}
-      {hasNextPage && (
-        <div
-          ref={observerRef}
-          className='text-center text-[14px]'
-        >
-          Loading more reviews...
-        </div>
-      )}
     </div>
   );
 };
