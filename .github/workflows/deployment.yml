@@ -2,7 +2,6 @@ name: Front Deployment
 on:
   push:
     branches:
-      - cicd
       - develop
 
 jobs:
