@@ -50,19 +50,19 @@
 
 @keyframes slideDown {
   0% {
-    transform: translateY(-100%);
+    transform: translate(-50%, -100%); /* translateX(-50%) 유지 */
     opacity: 0;
   }
   20% {
-    transform: translateY(0);
+    transform: translate(-50%, 0); /* Y축만 변경 */
     opacity: 1;
   }
   80% {
-    transform: translateY(0);
+    transform: translate(-50%, 0); /* Y축만 유지 */
     opacity: 1;
   }
   100% {
-    transform: translateY(-100%);
+    transform: translate(-50%, -100%); /* translateX(-50%) 유지 */
     opacity: 0;
   }
 }
