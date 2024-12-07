@@ -68,14 +68,5 @@
 }
 
 .notification {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #4caf50;
-  color: white;
-  padding: 16px;
-  border-radius: 4px;
-  z-index: 1000;
   animation: slideDown 1.5s ease-in-out forwards;
 }
