@@ -22,7 +22,7 @@ const TabComponent = ({
   const tabs = [
     '상세정보',
     '룸 선택',
-    `리뷰(${workplaceDetailData.reviewCount})`,
+    `리뷰 (${workplaceDetailData.reviewCount})`,
   ];
   const [activeTab, setActiveTab] = useState(0);
 
