@@ -1,11 +1,16 @@
 import MainLayout from '@layouts/MainLayout';
 import HeaderNoTitle from '@layouts/HeaderNoTitle';
 import BottomNavigation from '@layouts/BottomNavigation';
-import { useEffect } from 'react';
 import usePositionStore from '@store/positionStore';
+import useAuthStore from '@store/authStore';
+import { useEffect, useState } from 'react';
+import { getRole } from '@utils/auth';
 import MainList from './components/MainList';
 import KakaoMap from './components/KakaoMap';
-import useGetWorkplaceData from './hooks/useGetWorkplaceData';
+import {
+  useGetWorkplaceData,
+  useGetRecommendData,
+} from './hooks/useGetWorkplaceData';
 
 const MainPage = () => {
   const { mapPosition, nowPosition } = usePositionStore();
@@ -15,25 +20,55 @@ const MainPage = () => {
     longitude: nowPosition.center.lng,
   };
 
+  // 위치별 조회 데이터
   const { data, isLoading, isError } = useGetWorkplaceData(
     position,
     mapPosition,
   );
 
-  // 스크롤 상단으로 이동
+  // 비로그인 / 사업자 / 사용자 확인
+  const { isLogin } = useAuthStore();
+  const [isUser, setIsUser] = useState<boolean>(false);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (isLogin) {
+      const role = getRole();
+      if (role === 'ROLE_USER') {
+        setIsUser(true);
+      }
+    }
+  }, [isLogin]);
+
+  // 사업장 추천 데이터
+  const {
+    data: recommendData,
+    isLoading: isRecommendLoading,
+    isError: isRecommendError,
+  } = useGetRecommendData(isLogin, isUser);
+
+  // 선택한 탭
+  const [activeTab, setActiveTab] = useState('주변 스터디룸');
 
   return (
     <>
       <MainLayout>
         <HeaderNoTitle />
-        <KakaoMap data={data} />
+        <KakaoMap
+          data={data}
+          activeTab={activeTab}
+          recommendData={recommendData}
+        />
         <MainList
+          activeTab={activeTab}
+          OnSetActiveTab={setActiveTab}
           data={data}
           isLoading={isLoading}
           isError={isError}
+          recommendData={recommendData}
+          isRecommendLoading={isRecommendLoading}
+          isRecommendError={isRecommendError}
+          isLogin={isLogin}
+          isUser={isUser}
         />
         <BottomNavigation />
       </MainLayout>

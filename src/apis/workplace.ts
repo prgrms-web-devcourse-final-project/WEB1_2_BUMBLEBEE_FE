@@ -144,6 +144,14 @@ export const postPositionWorkPlace = async ({
   return response.data;
 };
 
+// 하이브리드 필터링 사업장 조회
+export const getRecommendWorkPlace = async (): Promise<
+  GetPositionWorkPlaceData[]
+> => {
+  const response = await authInstance.post('/api/v1/recommend');
+  return response.data;
+};
+
 // 사업자 사업장 조회
 export const getBusinessWorkPlace =
   async (): Promise<GetBusinessWorkPlaceData> => {

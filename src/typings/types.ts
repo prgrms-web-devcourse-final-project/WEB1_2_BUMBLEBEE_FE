@@ -290,7 +290,7 @@ export interface GetPositionWorkPlaceData {
   reviewCount: number;
   positionLat: number; //
   positionLon: number;
-  distance: number;
+  distance?: number;
 }
 
 // 특정 사업자의 사업장
