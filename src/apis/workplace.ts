@@ -174,6 +174,7 @@ export const getPossibleTime = async (
   studyRoomId: number,
   checkDate: Date,
 ): Promise<PossibleTime> => {
+  checkDate.setHours(checkDate.getHours() + 9);
   const formattedDate = checkDate.toISOString().split('T')[0];
   const response = await defaultInstance.get(
     `api/v1/studyroom/search/${studyRoomId}`,
