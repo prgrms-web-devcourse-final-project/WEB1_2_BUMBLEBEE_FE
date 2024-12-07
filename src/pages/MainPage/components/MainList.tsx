@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { GetPositionWorkPlaceData } from '@typings/types';
-import useAuthStore from '@store/authStore';
 import { useNavigate } from 'react-router-dom';
 import StudyRoomCard from './StudyRoomCard';
 
@@ -65,7 +64,7 @@ const MainList = (props: MainListProps) => {
           <button
             type='button'
             key={tab}
-            className={`h-full w-1/2 text-base ${activeTab === tab ? 'border-b-2 border-b-primary text-black' : 'text-subfont'}`}
+            className={`h-full flex-1 text-base ${activeTab === tab ? 'border-b-2 border-b-primary text-black' : 'text-subfont'}`}
             onClick={() => setActiveTab(tab)}
           >
             {tab}
