@@ -7,10 +7,12 @@ import PlaceModal from './PlaceModal';
 
 interface KakaoMapProps {
   data: GetPositionWorkPlaceData[] | undefined;
+  activeTab: string;
+  recommendData: GetPositionWorkPlaceData[];
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const { data } = props;
+  const { data, activeTab, recommendData } = props;
 
   const {
     mapPosition,
@@ -88,9 +90,27 @@ const KakaoMap = (props: KakaoMapProps) => {
           setCenterPosition({ lat: latlng.getLat(), lng: latlng.getLng() });
         }}
       >
-        {data &&
+        {activeTab === '주변 스터디룸' &&
+          data &&
           data.length > 0 &&
           data.map((item) => (
+            <MapMarker
+              onClick={() => handleMarkerClick(item)}
+              key={item.positionLat}
+              position={{ lat: item.positionLat, lng: item.positionLon }}
+              image={{
+                src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+                size: {
+                  width: 24,
+                  height: 35,
+                },
+              }}
+            />
+          ))}
+        {activeTab === '맞춤형 추천' &&
+          recommendData &&
+          recommendData.length > 0 &&
+          recommendData.map((item) => (
             <MapMarker
               onClick={() => handleMarkerClick(item)}
               key={item.positionLat}

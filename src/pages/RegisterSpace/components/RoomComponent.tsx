@@ -9,7 +9,9 @@ const RoomComponent = ({ room }: { room: WorkplaceStudyRoomData }) => {
         className='h-[94px] w-[94px] object-cover'
       />
       <div className='ml-[18px] w-[180px] text-start'>
-        <span className='text-[16px] font-normal'>{room.studyRoomName}</span>
+        <span className='line-clamp-1 text-[16px] font-normal'>
+          {room.studyRoomName}
+        </span>
         <p className='-webkit-box webkit-box-orient-vertical line-clamp-2 h-[30px] overflow-hidden text-ellipsis text-[10px]'>
           {room.description}
         </p>
