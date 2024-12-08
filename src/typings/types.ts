@@ -65,7 +65,17 @@ export interface Member {
 }
 
 // 사용자 알림
-export interface Alarm {}
+export interface Alarm {
+  memberalrimId: number;
+  content: string;
+  createdAt: string;
+  workplaceId: number;
+  notificationType: string;
+  price: number;
+  workplaceName: string;
+  studyRoomName: string;
+  imageUrl: string;
+}
 
 // 실시간 알림
 export interface SseAlarm {

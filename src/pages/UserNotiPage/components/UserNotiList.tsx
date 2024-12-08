@@ -1,77 +1,12 @@
-import { useEffect, useState } from 'react';
-import { getWithinSevenDays } from '@utils/formatTime';
 import UserNotiCard from './UserNotiCard';
-
-export interface UserNotification {
-  id: number;
-  type: string;
-  message: string;
-  reservationInfo: string;
-  price?: number;
-  createdAt: string;
-}
-
-const allNotification: UserNotification[] = [
-  {
-    id: 1,
-    type: 'upcoming',
-    message: '방문 24시간 전입니다.',
-    reservationInfo: '스터디랩 / ROOM A',
-    createdAt: '2024-11-02T00:00:00',
-  },
-  {
-    id: 2,
-    type: 'upcoming',
-    message: '방문 24시간 전입니다.',
-    reservationInfo: '스터디랩 / ROOM A',
-    createdAt: '2024-11-01T00:00:00',
-  },
-  {
-    id: 3,
-    type: 'completeReservation',
-    message: '예약이 완료되었습니다.',
-    reservationInfo: '스터디랩 / ROOM A',
-    price: 8000,
-    createdAt: '2024-10-11T14:00:00',
-  },
-  {
-    id: 4,
-    type: 'completeReservation',
-    message: '예약이 완료되었습니다.',
-    reservationInfo: '스터디랩 / ROOM A',
-    price: 8000,
-    createdAt: '2024-11-20T16:00:00',
-  },
-  {
-    id: 5,
-    type: 'completeReservation',
-    message: '예약이 완료되었습니다.',
-    reservationInfo: '스터디랩 / ROOM A',
-    price: 8000,
-    createdAt: '2024-11-10T13:00:00',
-  },
-];
+import useGetUserAlarm from '../hooks/useGetUserAlarm';
 
 const UserNotiList = () => {
-  const [isLabel, setIsLabel] = useState<string | null>(null);
-  const sortedNotification = allNotification.sort((b, a) => {
+  const { data: userAlarmList } = useGetUserAlarm();
+
+  const sortedNotification = userAlarmList?.sort((b, a) => {
     return +new Date(a.createdAt) - +new Date(b.createdAt);
   });
-
-  useEffect(() => {
-    if (sortedNotification) {
-      const reverseSortedList = [...sortedNotification].reverse();
-      const putLabel = reverseSortedList.find(
-        (item) => getWithinSevenDays(item.createdAt) === '7일 이내',
-      );
-
-      if (putLabel) {
-        setIsLabel(putLabel.createdAt);
-      } else {
-        setIsLabel(null);
-      }
-    }
-  }, [sortedNotification]);
 
   return (
     <>
@@ -80,9 +15,8 @@ const UserNotiList = () => {
           {sortedNotification.map((item) => {
             return (
               <UserNotiCard
-                key={item.id}
+                key={item.memberalrimId}
                 item={item}
-                showLabel={item.createdAt === isLabel}
               />
             );
           })}
