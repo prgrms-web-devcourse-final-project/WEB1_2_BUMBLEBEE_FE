@@ -4,7 +4,6 @@ import MainLayout from '@layouts/MainLayout';
 import { SearchStudyRoom } from '@typings/types';
 import useSearchStore from '@store/searchStore';
 import { SyncLoader } from 'react-spinners';
-import { useEffect } from 'react';
 import ResultBar from './components/ResultBar';
 import RoomCard from './components/RoomCard';
 import { useGetSearchStudyRoom } from './hooks/useGetSearchStudyRoom';
@@ -28,11 +27,6 @@ const SearchResult = () => {
   };
 
   const { data, isLoading } = useGetSearchStudyRoom(searchData);
-
-  // 스크롤 상단으로 이동
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <>

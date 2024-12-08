@@ -17,9 +17,7 @@ const PaymentLoadingPage = () => {
 
     const paymentsSuccess = async () => {
       if (requestData.orderId && requestData.amount && requestData.paymentKey) {
-        console.log(requestData);
         const response = await getPaymentsSuccess(requestData);
-        console.log(response);
         navigate('/payment-success', { state: response });
       } else {
         throw new Error('결제에 필요한 값이 누락되었습니다.');

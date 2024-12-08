@@ -10,7 +10,7 @@ const OAuth = () => {
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
-    const accessToken = query.get('accessToken');
+    const accessToken = query.get('access');
     const role = query.get('role');
     if (accessToken && role) {
       setAuthToken(accessToken);

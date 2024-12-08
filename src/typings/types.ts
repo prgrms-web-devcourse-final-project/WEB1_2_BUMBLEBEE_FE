@@ -299,7 +299,7 @@ export interface GetPositionWorkPlaceData {
   reviewCount: number;
   positionLat: number; //
   positionLon: number;
-  distance: number;
+  distance?: number;
 }
 
 // 특정 사업자의 사업장
@@ -383,7 +383,7 @@ export interface SendMessageRequest {
   sender: string;
   content: string;
   timestamp: string;
-  senderType: 'member' | 'business';
+  senderType: 'MEMBER' | 'BUSINESS';
 }
 
 // 메시지 조회 응답값
@@ -396,9 +396,21 @@ export interface ChatMessageResponse {
 }
 
 // 채팅목록 조회 응답값 (사용자)
-export interface ChatListResponse {
+export interface ChatListMember {
   roomId: number;
-  id: number;
-  name: string;
+  businessId: number;
+  workplaceName: string;
+  messageContent: string | null;
+  isRead: boolean;
+  updatedAt: string;
+}
+
+// 채팅목록 조회 응답값 (사업자)
+export interface ChatListBusiness {
+  roomId: number;
+  memberId: number;
+  memberNickname: string;
+  messageContent: string | null;
+  isRead: boolean;
   updatedAt: string;
 }

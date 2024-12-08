@@ -1,17 +1,18 @@
-import { ChatListResponse } from '@typings/types';
+import { ChatListBusiness, ChatListMember } from '@typings/types';
 import { getDateFunction } from '@utils/formatTime';
 import { GrNext } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 
 interface ChatCardProps {
-  chat: ChatListResponse;
+  chat: ChatListMember | ChatListBusiness;
 }
 const ChatCard = (props: ChatCardProps) => {
   const { chat } = props;
-
+  const userName =
+    'memberId' in chat ? chat.memberNickname : chat.workplaceName;
   const navigate = useNavigate();
   const handleClickChat = () => {
-    navigate(`/chat/${chat.roomId}`, { state: chat.name });
+    navigate(`/chat/${chat.roomId}`, { state: userName });
   };
 
   return (
@@ -26,7 +27,7 @@ const ChatCard = (props: ChatCardProps) => {
             type='button'
             className='flex items-center gap-1 text-sm font-medium'
           >
-            {chat.name} <GrNext className='text-xs' />
+            {userName} <GrNext className='text-xs' />
           </button>
           <span className='text-xs text-subfont'>
             {getDateFunction(chat.updatedAt)}
@@ -34,8 +35,7 @@ const ChatCard = (props: ChatCardProps) => {
         </div>
         <div className='flex items-center justify-between'>
           <div className='w-64 text-xs text-focusColor'>
-            안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요. 안녕하세요.
-            안녕하세요. 안녕하세요. 안녕하세요. 안.....
+            {chat.messageContent}
           </div>
           <span className='h-2 w-2 rounded-full bg-[#F83A3A]' />
         </div>

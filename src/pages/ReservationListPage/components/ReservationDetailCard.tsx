@@ -92,11 +92,15 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
     <>
       <div className='mx-auto flex w-custom flex-col gap-[18px] border-b border-solid border-b-black px-[13px] py-[24px]'>
         <div className='flex w-[auto] flex-col gap-4'>
-          <span className='flex items-center gap-1 text-[16px] font-medium'>
-            <Link to={`/detail/${workplaceId}`}>{workplaceName}</Link>
-            <MdArrowForwardIos />
+          <span className='flex items-center text-[16px] font-medium'>
+            <Link
+              to={`/detail/${workplaceId}`}
+              className='flex items-center gap-1.5'
+            >
+              {workplaceName}
+              <MdArrowForwardIos className='w-3' />
+            </Link>
           </span>
-
           <div className='flex items-center justify-between'>
             <ul className='flex w-[180px] flex-col gap-1 text-[12px]'>
               <ListStyle

@@ -144,6 +144,14 @@ export const postPositionWorkPlace = async ({
   return response.data;
 };
 
+// 하이브리드 필터링 사업장 조회
+export const getRecommendWorkPlace = async (): Promise<
+  GetPositionWorkPlaceData[]
+> => {
+  const response = await authInstance.post('/api/v1/recommend');
+  return response.data;
+};
+
 // 사업자 사업장 조회
 export const getBusinessWorkPlace =
   async (): Promise<GetBusinessWorkPlaceData> => {
@@ -166,7 +174,7 @@ export const getPossibleTime = async (
   studyRoomId: number,
   checkDate: Date,
 ): Promise<PossibleTime> => {
-  const formattedDate = checkDate.toISOString().split('T')[0];
+  const formattedDate = `${checkDate.getFullYear()}-${(checkDate.getMonth() + 1).toString().padStart(2, '0')}-${checkDate.getDate().toString().padStart(2, '0')}`;
   const response = await defaultInstance.get(
     `api/v1/studyroom/search/${studyRoomId}`,
     {

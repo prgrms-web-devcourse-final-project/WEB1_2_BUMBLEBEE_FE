@@ -1,12 +1,16 @@
-import { getChatList } from '@apis/chat';
+import { getChatListBusiness, getChatListMember } from '@apis/chat';
 import { useQuery } from '@tanstack/react-query';
-import { ChatListResponse } from '@typings/types';
+import { ChatListBusiness, ChatListMember } from '@typings/types';
+import { getRole } from '@utils/auth';
 
 const useGetChatList = () => {
-  const { data, isLoading, isError } = useQuery<ChatListResponse[]>({
-    queryKey: ['chatList'],
-    queryFn: () => getChatList(),
-  });
+  const role = getRole();
+  const queryKey = ['chatList', role];
+  const queryFn =
+    role === 'ROLE_USER' ? getChatListMember : getChatListBusiness;
+  const { data, isLoading, isError } = useQuery<
+    ChatListMember[] | ChatListBusiness[]
+  >({ queryKey, queryFn });
 
   return { data: data ?? [], isLoading, isError };
 };

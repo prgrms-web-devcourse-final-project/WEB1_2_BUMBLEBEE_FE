@@ -7,10 +7,12 @@ import PlaceModal from './PlaceModal';
 
 interface KakaoMapProps {
   data: GetPositionWorkPlaceData[] | undefined;
+  activeTab: string;
+  recommendData: GetPositionWorkPlaceData[];
 }
 
 const KakaoMap = (props: KakaoMapProps) => {
-  const { data } = props;
+  const { data, activeTab, recommendData } = props;
 
   const {
     mapPosition,
@@ -75,6 +77,9 @@ const KakaoMap = (props: KakaoMapProps) => {
     setIsModalOpen(false);
   }, []);
 
+  // 지도에 표시할 데이터
+  const markerData = activeTab === '주변 스터디룸' ? data : recommendData;
+
   return (
     <div className='relative h-[298px] w-[375px]'>
       <Map
@@ -88,9 +93,9 @@ const KakaoMap = (props: KakaoMapProps) => {
           setCenterPosition({ lat: latlng.getLat(), lng: latlng.getLng() });
         }}
       >
-        {data &&
-          data.length > 0 &&
-          data.map((item) => (
+        {markerData &&
+          markerData.length > 0 &&
+          markerData.map((item) => (
             <MapMarker
               onClick={() => handleMarkerClick(item)}
               key={item.positionLat}

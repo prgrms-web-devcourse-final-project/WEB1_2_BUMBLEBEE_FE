@@ -25,9 +25,14 @@ const ReserverCard = ({ item }: { item: ReserverInfo }) => {
       <div className='relative mx-auto flex w-custom flex-col gap-2 border-b border-solid border-b-black px-[13px] py-[26px]'>
         <div className='flex justify-between'>
           <div className='flex flex-col items-start gap-4'>
-            <div className='flex cursor-pointer items-center gap-1.5 font-medium'>
-              <Link to={`/detail/${workplaceId}`}>{workplaceName}</Link>
-              <MdArrowForwardIos className='w-3' />
+            <div className='flex cursor-pointer items-center font-medium'>
+              <Link
+                to={`/detail/${workplaceId}`}
+                className='flex items-center gap-1.5'
+              >
+                {workplaceName}
+                <MdArrowForwardIos className='w-3' />
+              </Link>
             </div>
 
             <ul className='flex flex-col gap-1 text-[12px]'>
