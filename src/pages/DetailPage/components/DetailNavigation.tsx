@@ -59,14 +59,13 @@ const DetailNavigation = ({
             </p>
           </button>
         )}
-
         <button
           type='button'
           className={`h-[48px] rounded-[8px] text-white ${isBtnDisabled ? 'bg-subfont' : 'bg-primary'} ${isUser ? 'w-[222px]' : 'pointer-events-none w-custom bg-subfont'}`}
           disabled={isBtnDisabled}
           onClick={handleSelectRoom}
         >
-          룸 선택하기
+          {isUser ? '룸 선택하기' : '사업자는 룸을 선택할 수 없습니다.'}
         </button>
       </div>
     </div>

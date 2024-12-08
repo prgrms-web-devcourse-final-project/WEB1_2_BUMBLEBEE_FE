@@ -17,7 +17,12 @@ const ReceiveMessage = (props: ReceiveMessageProps) => {
         <div className='max-w-60 rounded-t-xl rounded-br-xl bg-[#EEEEEE] px-3 py-2 text-sm'>
           {message.content}
         </div>
-        <p className='text-xs text-subfont'>{formattedTime}</p>
+        <div>
+          {!message.isRead && (
+            <p className='text-start text-xs text-primary'>1</p>
+          )}
+          <p className='text-xs text-subfont'>{formattedTime}</p>
+        </div>
       </div>
     </div>
   );
