@@ -45,7 +45,7 @@ authInstance.interceptors.response.use(
       try {
         const response = await authInstance.post('/reissue');
 
-        if (response.status === 202) {
+        if (response.status === 200) {
           const token = response.headers.authorization;
           setAuthToken(token);
 
