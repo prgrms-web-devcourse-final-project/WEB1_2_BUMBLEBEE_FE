@@ -24,7 +24,7 @@ const RoomSelect = ({
 
   return (
     <div className='w-custom'>
-      {data ? (
+      {data && data.length > 0 ? (
         data.map((item) => (
           <button
             key={item.studyRoomId}
