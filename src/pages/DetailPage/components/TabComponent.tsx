@@ -61,7 +61,7 @@ const TabComponent = ({
         )}
         {activeTab === 2 &&
           (workplaceDetailData.reviewCount === 0 ? (
-            <div className='text-[16px] font-normal text-subfont'>
+            <div className='flex h-[150px] w-full items-center justify-center font-normal text-subfont'>
               등록된 리뷰가 없습니다.
             </div>
           ) : (
