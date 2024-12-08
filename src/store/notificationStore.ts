@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { getAuthToken, getRole } from '@utils/auth';
 import { BASE_URL } from '@constants/constants';
-import { SseAlarm } from '@typings/types';
+import { BusinessReservationNoti, BusinessReviewNoti } from '@typings/types';
 
 interface NotificationState {
   message: string | null;
@@ -40,7 +40,8 @@ const useNotificationStore = create<NotificationState>((set) => ({
     };
 
     eventSource.onmessage = (event) => {
-      const newMessage: SseAlarm = JSON.parse(event.data);
+      const newMessage: BusinessReservationNoti | BusinessReviewNoti =
+        JSON.parse(event.data);
       console.log(newMessage);
 
       if (

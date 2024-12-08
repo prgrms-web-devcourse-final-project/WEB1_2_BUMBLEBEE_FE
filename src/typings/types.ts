@@ -51,8 +51,28 @@ export interface Business {
   createdAt?: string;
 }
 
-// 사업자 알림
-export interface BusinessAlarm {}
+// 사업자 리뷰 알림
+export interface BusinessReviewNoti {
+  alrimId: number;
+  content: string;
+  createAt: string;
+  workplaceId: number;
+  notificationType: string;
+}
+
+// 사업자 예약 알림
+export interface BusinessReservationNoti {
+  alrimId: number;
+  content: string;
+  createAt: string;
+  workplaceId: number;
+  notificationType: string;
+  studyroomName: string;
+  workplaceName: string;
+  reservationName: string;
+  price: number;
+  url: string;
+}
 
 // 사용자
 export interface Member {
@@ -66,14 +86,6 @@ export interface Member {
 
 // 사용자 알림
 export interface Alarm {}
-
-// 실시간 알림
-export interface SseAlarm {
-  content: string;
-  createAt: string;
-  workplaceId: number;
-  notificationType: string;
-}
 
 // 예약 등록
 export interface PostReservationData {
