@@ -39,15 +39,15 @@ const MainPage = () => {
     }
   }, [isLogin]);
 
+  // 선택한 탭
+  const [activeTab, setActiveTab] = useState('주변 스터디룸');
+
   // 사업장 추천 데이터
   const {
     data: recommendData,
     isLoading: isRecommendLoading,
     isError: isRecommendError,
-  } = useGetRecommendData(isLogin, isUser);
-
-  // 선택한 탭
-  const [activeTab, setActiveTab] = useState('주변 스터디룸');
+  } = useGetRecommendData(isLogin, isUser, activeTab);
 
   return (
     <>

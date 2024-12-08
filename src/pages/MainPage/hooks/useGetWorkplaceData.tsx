@@ -23,11 +23,15 @@ export const useGetWorkplaceData = (
   return { data, isLoading, isError, refetch };
 };
 
-export const useGetRecommendData = (isLogin: boolean, isUser: boolean) => {
+export const useGetRecommendData = (
+  isLogin: boolean,
+  isUser: boolean,
+  activeTab: string,
+) => {
   const { data, isLoading, isError } = useQuery<GetPositionWorkPlaceData[]>({
     queryKey: ['recommendWorkPlace', isLogin, isUser],
     queryFn: () => getRecommendWorkPlace(),
-    enabled: isLogin && isUser,
+    enabled: isLogin && isUser && activeTab !== '주변 스터디룸',
   });
 
   return {
