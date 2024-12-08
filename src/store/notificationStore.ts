@@ -51,7 +51,10 @@ const useNotificationStore = create<NotificationState>((set) => ({
         return;
       }
 
-      if (newMessage.content !== 'connected!' && newMessage.notificationType) {
+      if (
+        newMessage.content !== 'connected!' &&
+        newMessage.notificationType !== 'MEMBER_RESERVATION_CONFIRMED'
+      ) {
         const newText =
           newMessage.notificationType === 'REVIEW_CREATED'
             ? '새 리뷰가 등록되었습니다.'
