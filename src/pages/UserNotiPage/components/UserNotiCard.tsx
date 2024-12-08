@@ -1,5 +1,6 @@
 import { getDateFunction } from '@utils/formatTime';
 import { Alarm } from '@typings/types';
+import { Link } from 'react-router-dom';
 
 interface UserNotiProps {
   item: Alarm;
@@ -14,10 +15,11 @@ const UserNotiCard = ({ item }: UserNotiProps) => {
     imageUrl,
     workplaceName,
     studyRoomName,
+    workplaceId,
   } = item;
 
   return (
-    <>
+    <Link to={`/detail/${workplaceId}`}>
       <div className='mx-auto flex w-[100%] flex-col gap-3 text-sm active:bg-[#e9e9e9]'>
         <div className='mx-auto w-custom px-1.5 py-[13px]'>
           {notificationType === 'upcoming' ? (
@@ -52,7 +54,7 @@ const UserNotiCard = ({ item }: UserNotiProps) => {
           </div>
         </div>
       </div>
-    </>
+    </Link>
   );
 };
 
