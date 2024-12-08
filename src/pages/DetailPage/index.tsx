@@ -40,6 +40,7 @@ const DetailPage = () => {
       )}
       <DetailNavigation
         workplaceId={data?.workplaceId || 0}
+        workplaceName={data?.workplaceName || '스터디룸'}
         isBtnDisabled={isBtnDisabled}
         selectedRoomId={selectedRoomId}
       />
