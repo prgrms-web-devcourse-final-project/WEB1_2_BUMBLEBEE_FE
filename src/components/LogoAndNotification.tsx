@@ -1,13 +1,14 @@
 import Logo from '@assets/images/roomit_logo.png';
-import useAuthStore from '@store/authStore';
-import { getRole } from '@utils/auth';
-
 import { RiNotification3Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
+import { getRole } from '@utils/auth';
 
-const LogoAndNotification = () => {
+interface HeaderProps {
+  isLogin: boolean;
+}
+
+const LogoAndNotification = ({ isLogin }: HeaderProps) => {
   const navigate = useNavigate();
-  const { isLogin } = useAuthStore();
   const role = getRole();
 
   const handleMoveToNotiPageClick = () => {
@@ -19,7 +20,7 @@ const LogoAndNotification = () => {
   };
 
   return (
-    <>
+    <div className='flex w-custom items-center justify-between'>
       <Link to='/'>
         <img
           className='h-[15px] w-[50px]'
@@ -33,7 +34,7 @@ const LogoAndNotification = () => {
           onClick={handleMoveToNotiPageClick}
         />
       )}
-    </>
+    </div>
   );
 };
 

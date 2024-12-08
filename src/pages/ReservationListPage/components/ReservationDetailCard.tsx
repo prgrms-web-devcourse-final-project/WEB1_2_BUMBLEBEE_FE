@@ -102,7 +102,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
             </Link>
           </span>
           <div className='flex items-center justify-between'>
-            <ul className='flex flex-col gap-1 text-[12px]'>
+            <ul className='flex w-[180px] flex-col gap-1 text-[12px]'>
               <ListStyle
                 name='예약일'
                 value={getDateFunction(startTime)}
