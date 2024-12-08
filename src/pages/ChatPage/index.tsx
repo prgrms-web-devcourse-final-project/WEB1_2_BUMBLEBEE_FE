@@ -1,15 +1,9 @@
 import HeaderOnlyTitle from '@layouts/HeaderOnlyTitle';
 import MainLayout from '@layouts/MainLayout';
 import { useEffect, useState } from 'react';
-import { Client, IMessage } from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
 import { useLocation, useParams } from 'react-router-dom';
-import {
-  Business,
-  ChatMessageResponse,
-  Member,
-  SendMessageRequest,
-} from '@typings/types';
-import { getMessage } from '@apis/chat';
+import { Business, Member, SendMessageRequest } from '@typings/types';
 import SockJS from 'sockjs-client';
 import { WS_URL } from '@constants/constants';
 import { getRole } from '@utils/auth';
@@ -18,12 +12,12 @@ import { getBusinessData } from '@apis/business';
 import { getDatetoLocalDate } from '@utils/formatTime';
 import MessageInput from './components/MessageInput';
 import MessageContainer from './components/MessageContainer';
+import useGetMessageData from './hooks/useGetMessageData';
 
 const ChatPage = () => {
   const location = useLocation();
   const chatTitle = location.state;
   const { roomId } = useParams();
-  const [messages, setMessages] = useState<ChatMessageResponse[]>([]); // 메시지 리스트
   const [stompClient, setStompClient] = useState<Client | null>(null); // STOMP 클라이언트
 
   const role = getRole();
@@ -40,11 +34,7 @@ const ChatPage = () => {
     }
   };
 
-  // 채팅 내용 불러오기
-  const loadMessage = async () => {
-    const messageList = await getMessage(Number(roomId));
-    setMessages(messageList);
-  };
+  const { data, refetch } = useGetMessageData(Number(roomId));
 
   // 소켓 연결
   const connect = () => {
@@ -52,7 +42,6 @@ const ChatPage = () => {
       const client = new Client({
         brokerURL: WS_URL,
         webSocketFactory: () => new SockJS(WS_URL),
-        debug: (str) => console.log(str),
         reconnectDelay: 5000, // 자동 재연결
       });
 
@@ -60,11 +49,9 @@ const ChatPage = () => {
       client.onConnect = () => {
         console.log('Connected');
 
-        client.subscribe(`/sub/chat/${roomId}`, (message: IMessage) => {
+        client.subscribe(`/sub/chat/${roomId}`, () => {
           try {
-            const newMessage = JSON.parse(message.body);
-            setMessages((prevMessages) => [...prevMessages, newMessage]);
-            console.log('완료');
+            refetch();
           } catch (error) {
             console.error('오류가 발생했습니다:', error);
           }
@@ -79,7 +66,6 @@ const ChatPage = () => {
   };
 
   const disConnect = () => {
-    console.log('연결끊기');
     // 연결 끊기
     if (stompClient === null) {
       return;
@@ -101,14 +87,12 @@ const ChatPage = () => {
         destination: '/pub/sendMessage',
         body: JSON.stringify(chatMessage),
       });
-      console.log(chatMessage);
-      console.log(messages);
+      refetch();
     }
   };
 
   useEffect(() => {
     getUserNickName();
-    loadMessage();
     connect();
     return () => disConnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -121,7 +105,7 @@ const ChatPage = () => {
         <div className='fixed left-1/2 top-[93px] flex h-[calc(100vh-93px-94px)] w-custom -translate-x-1/2 overflow-hidden'>
           <div className='overflow-y-auto'>
             <MessageContainer
-              messages={messages}
+              messages={data}
               user={user}
             />
           </div>
