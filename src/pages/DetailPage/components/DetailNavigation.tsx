@@ -41,12 +41,9 @@ const DetailNavigation = ({
         </button>
         <button
           type='button'
-          className='ml-[8px] w-[222px] rounded-[8px] text-white'
+          className={`ml-[8px] w-[222px] rounded-[8px] text-white ${isBtnDisabled ? 'bg-subfont' : 'bg-primary'}`}
           disabled={isBtnDisabled}
           onClick={handleSelectRoom}
-          style={{
-            backgroundColor: isBtnDisabled === false ? '#50BEAD' : '#c3c3c3',
-          }}
         >
           룸 선택하기
         </button>
