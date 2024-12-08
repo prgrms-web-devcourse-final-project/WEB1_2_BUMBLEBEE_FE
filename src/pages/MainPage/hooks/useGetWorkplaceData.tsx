@@ -1,6 +1,7 @@
 import { getRecommendWorkPlace, postPositionWorkPlace } from '@apis/workplace';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import {
+  CenterPosition,
   GetPositionWorkPlaceData,
   MapPosition,
   NowPosition,
@@ -9,15 +10,17 @@ import {
 export const useGetWorkplaceData = (
   nowPosition: NowPosition,
   mapPosition: MapPosition,
+  centerPosition: CenterPosition,
 ) => {
   const isMapEnabled =
     mapPosition.topRight.lat !== 0 || mapPosition.bottomLeft.lat !== 0;
   const { data, isLoading, isError, refetch } = useQuery<
     GetPositionWorkPlaceData[]
   >({
-    queryKey: ['nearWorkplace', nowPosition, mapPosition],
+    queryKey: ['nearWorkplace', nowPosition, mapPosition, centerPosition],
     queryFn: () => postPositionWorkPlace({ nowPosition, mapPosition }),
     enabled: isMapEnabled,
+    placeholderData: keepPreviousData,
   });
 
   return { data, isLoading, isError, refetch };

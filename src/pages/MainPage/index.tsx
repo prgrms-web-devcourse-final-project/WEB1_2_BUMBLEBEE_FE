@@ -13,7 +13,7 @@ import {
 } from './hooks/useGetWorkplaceData';
 
 const MainPage = () => {
-  const { mapPosition, nowPosition } = usePositionStore();
+  const { mapPosition, nowPosition, centerPosition } = usePositionStore();
 
   const position = {
     latitude: nowPosition.center.lat,
@@ -24,6 +24,7 @@ const MainPage = () => {
   const { data, isLoading, isError } = useGetWorkplaceData(
     position,
     mapPosition,
+    centerPosition
   );
 
   // 비로그인 / 사업자 / 사용자 확인
