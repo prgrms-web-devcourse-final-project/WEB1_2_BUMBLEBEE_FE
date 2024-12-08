@@ -14,7 +14,7 @@ const ChatCard = (props: ChatCardProps) => {
   const handleClickChat = () => {
     navigate(`/chat/${chat.roomId}`, { state: userName });
   };
-
+  console.log(chat);
   return (
     <button
       type='button'
@@ -34,10 +34,12 @@ const ChatCard = (props: ChatCardProps) => {
           </span>
         </div>
         <div className='flex items-center justify-between'>
-          <div className='w-64 text-xs text-focusColor'>
+          <div className='w-64 truncate text-start text-xs text-focusColor'>
             {chat.messageContent}
           </div>
-          <span className='h-2 w-2 rounded-full bg-[#F83A3A]' />
+          {!chat.isRead && (
+            <span className='h-2 w-2 rounded-full bg-[#F83A3A]' />
+          )}
         </div>
       </div>
     </button>

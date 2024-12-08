@@ -6,11 +6,11 @@ interface SendMessageProps {
 
 const SendMessage = (props: SendMessageProps) => {
   const { message } = props;
-  const formattedTime = message.timestamp;
-  // .split('T')[1]
-  // .split(':')
-  // .slice(0, 2)
-  // .join(':');
+  const formattedTime = message.timestamp
+    .split('T')[1]
+    .split(':')
+    .slice(0, 2)
+    .join(':');
   return (
     <div className='flex w-custom justify-end'>
       <div className='flex items-end gap-2'>
