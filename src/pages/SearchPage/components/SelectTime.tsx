@@ -17,6 +17,7 @@ const SelectTime = () => {
   const [possibleTimeList, setPossibleTimeList] = useState<string[]>(timeList);
 
   useEffect(() => {
+    setPossibleTimeList(timeList);
     const todayDate = new Date();
     const todayDateOnly = todayDate.toLocaleDateString('ko-KR', {
       year: 'numeric',
