@@ -5,6 +5,8 @@ import useSearchStore from '@store/searchStore';
 import { toast } from 'react-toastify';
 import { ERROR_MESSAGE } from '@constants/constants';
 import useAuthStore from '@store/authStore';
+import { useEffect, useState } from 'react';
+import { getRole } from '@utils/auth';
 import ReservationBar from './components/ReservationBar';
 import ImageCarousel from './components/ImageCarousel';
 import RoomDetail from './components/RoomDetail';
@@ -35,7 +37,18 @@ const ReservationPage = () => {
     navigate('/payment', { state: studyRoomInfo });
   };
 
+  // 사용자 / 사업자인지 확인
   const { isLogin } = useAuthStore();
+  const [isUser, setIsUser] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isLogin) {
+      const role = getRole();
+      if (role === 'ROLE_USER') {
+        setIsUser(true);
+      }
+    }
+  }, [isLogin]);
 
   return (
     <MainLayout>
@@ -43,14 +56,16 @@ const ReservationPage = () => {
       <ReservationBar studyroomId={Number(studyroomId)} />
       <ImageCarousel data={data} />
       <RoomDetail data={data} />
-      <div className='fixed bottom-0 z-10 flex h-[94px] w-[375px] items-center justify-between border-t-[1px] border-t-subfont bg-white px-[30px] pb-[30px] pt-[18px]'>
-        <button
-          type='button'
-          className={`btn-primary ${isLogin ? '' : 'pointer-events-none bg-subfont font-normal'}`}
-          onClick={handleClickReservation}
-        >
-          예약하기
-        </button>
+      <div className='fixed bottom-0 z-10 flex h-[94px] w-[375px] items-center justify-center border-t-[1px] border-t-subfont bg-white pb-[16px]'>
+        <div className='flex items-center gap-2'>
+          <button
+            type='button'
+            className={`btn-primary w-custom px-1 ${isLogin ? '' : 'pointer-events-none bg-subfont'} ${isUser ? '' : 'pointer-events-none w-custom bg-subfont font-normal'}`}
+            onClick={handleClickReservation}
+          >
+            {isUser ? '룸 선택하기' : '사업자는 예약할 수 없습니다.'}
+          </button>
+        </div>
       </div>
     </MainLayout>
   );
