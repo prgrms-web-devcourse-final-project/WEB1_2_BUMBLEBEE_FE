@@ -8,5 +8,4 @@ const NotiContainer = ({ message }: { message: string }) => {
     </div>
   );
 };
-
 export default NotiContainer;
