@@ -52,7 +52,7 @@ const UserLoginForm = () => {
   };
 
   return (
-    <div className='flex justify-center pt-[40px]'>
+    <div className='flex justify-center pt-[30px]'>
       <form
         className='w-custom'
         onSubmit={handleSubmit}
