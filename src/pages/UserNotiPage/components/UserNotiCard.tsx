@@ -1,20 +1,26 @@
 import { getDateFunction } from '@utils/formatTime';
-import ShowWithinSevenDays from '@components/ShowWithinSevenDays';
-import type { UserNotification } from './UserNotiList';
+import { Alarm } from '@typings/types';
 
 interface UserNotiProps {
-  item: UserNotification;
-  showLabel: boolean;
+  item: Alarm;
 }
 
-const UserNotiCard = ({ item, showLabel }: UserNotiProps) => {
-  const { type, message, reservationInfo, createdAt, price } = item;
+const UserNotiCard = ({ item }: UserNotiProps) => {
+  const {
+    notificationType,
+    content,
+    createdAt,
+    price,
+    imageUrl,
+    workplaceName,
+    studyRoomName,
+  } = item;
 
   return (
     <>
       <div className='mx-auto flex w-[100%] flex-col gap-3 text-sm active:bg-[#e9e9e9]'>
         <div className='mx-auto w-custom px-1.5 py-[13px]'>
-          {type === 'upcoming' ? (
+          {notificationType === 'upcoming' ? (
             <p className='font-medium'>다가오는 일정</p>
           ) : (
             <p className='font-medium'>예약 완료</p>
@@ -25,12 +31,12 @@ const UserNotiCard = ({ item, showLabel }: UserNotiProps) => {
             <div className='flex justify-between'>
               {!price ? (
                 <div className='flex w-[260px] flex-col'>
-                  <p className='w-[100%]'>{message}</p>
-                  <p className='w-[100%]'>{reservationInfo}</p>
+                  <p className='w-[100%]'>{content}</p>
+                  <p className='w-[100%]'>{studyRoomName}</p>
                 </div>
               ) : (
                 <div className='flex w-[260px] flex-col'>
-                  <p className='w-[100%]'>{`${reservationInfo} ${message}`}</p>
+                  <p className='w-[100%]'>{`${workplaceName} / ${studyRoomName} ${content}`}</p>
                   <p className='w-[100%]'>
                     {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
                   </p>
@@ -38,7 +44,7 @@ const UserNotiCard = ({ item, showLabel }: UserNotiProps) => {
               )}
 
               <img
-                src='https://modo-phinf.pstatic.net/20180304_61/1520159998510ED9Yt_JPEG/mosaSDaCsR.jpeg'
+                src={imageUrl}
                 alt='스터디룸 사진'
                 className='h-10 w-10 object-cover'
               />
@@ -46,7 +52,6 @@ const UserNotiCard = ({ item, showLabel }: UserNotiProps) => {
           </div>
         </div>
       </div>
-      {showLabel ? <ShowWithinSevenDays label='7일 이내' /> : null}
     </>
   );
 };
