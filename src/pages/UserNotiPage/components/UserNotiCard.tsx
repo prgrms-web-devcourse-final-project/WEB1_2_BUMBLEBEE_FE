@@ -1,5 +1,6 @@
 import { getDateFunction } from '@utils/formatTime';
 import { Alarm } from '@typings/types';
+import { Link } from 'react-router-dom';
 
 interface UserNotiProps {
   item: Alarm;
@@ -14,10 +15,11 @@ const UserNotiCard = ({ item }: UserNotiProps) => {
     imageUrl,
     workplaceName,
     studyRoomName,
+    workplaceId,
   } = item;
 
   return (
-    <>
+    <Link to={`/detail/${workplaceId}`}>
       <div className='mx-auto flex w-[100%] flex-col gap-3 text-sm active:bg-[#e9e9e9]'>
         <div className='mx-auto w-custom px-1.5 py-[13px]'>
           {notificationType === 'upcoming' ? (
@@ -26,7 +28,7 @@ const UserNotiCard = ({ item }: UserNotiProps) => {
             <p className='font-medium'>예약 완료</p>
           )}
 
-          <div className='flex flex-col gap-1'>
+          <div className='mt-2 flex flex-col gap-1'>
             <p className='text-xs text-subfont'>{getDateFunction(createdAt)}</p>
             <div className='flex justify-between'>
               {!price ? (
@@ -37,7 +39,7 @@ const UserNotiCard = ({ item }: UserNotiProps) => {
               ) : (
                 <div className='flex w-[260px] flex-col'>
                   <p className='w-[100%]'>{`${workplaceName} / ${studyRoomName} ${content}`}</p>
-                  <p className='w-[100%]'>
+                  <p className='mt-2 w-[100%]'>
                     {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원
                   </p>
                 </div>
@@ -52,7 +54,7 @@ const UserNotiCard = ({ item }: UserNotiProps) => {
           </div>
         </div>
       </div>
-    </>
+    </Link>
   );
 };
 

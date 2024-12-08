@@ -26,7 +26,7 @@ const LatestReservation = ({ data }: { data: Reservation }) => {
             />
 
             <div className='flex w-[170px] flex-col gap-[7px]'>
-              <span className='break-word text-[16px] font-medium'>
+              <span className='overflow-hidden text-ellipsis whitespace-nowrap text-[16px] font-medium'>
                 {workplaceName}
               </span>
               <ul className='flex flex-col gap-1 text-[12px]'>

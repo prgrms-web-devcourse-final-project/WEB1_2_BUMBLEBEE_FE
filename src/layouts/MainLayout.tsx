@@ -10,7 +10,7 @@ const MainLayout = ({ children, headerType = 'default' }: MainLayoutProps) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const paddingTop = headerType === 'both' ? 'pt-[132px]' : 'pt-[93px]';
+  const paddingTop = headerType === 'both' ? 'pt-[106px]' : 'pt-[70px]';
 
   return (
     <div className='mx-auto my-0 h-[812px] w-[375px] max-w-[100%] bg-white'>

@@ -21,7 +21,7 @@ const DetailPage = () => {
           <SyncLoader color='#50BEAD' />
         </div>
       ) : (
-        <div className='pt-[10px]'>
+        <>
           <img
             src={data?.imageUrl}
             alt='사업장 사진'
@@ -36,7 +36,7 @@ const DetailPage = () => {
               setSelectedRoomId={setSelectedRoomId}
             />
           )}
-        </div>
+        </>
       )}
       <DetailNavigation
         workplaceId={data?.workplaceId || 0}

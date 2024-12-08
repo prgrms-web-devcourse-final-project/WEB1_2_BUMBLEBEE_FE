@@ -14,6 +14,7 @@ const HostReservationNotiCard = ({ item }: HostNotiProps) => {
     url,
     reservationName,
     studyRoomName,
+    price,
   } = item;
 
   return (
@@ -23,15 +24,18 @@ const HostReservationNotiCard = ({ item }: HostNotiProps) => {
           <div className='mx-auto w-custom px-1.5 py-[13px]'>
             <p className='font-medium'>새로운 예약</p>
 
-            <div className='flex flex-col gap-1'>
+            <div className='mt-2 flex flex-col gap-1'>
               <p className='text-xs text-subfont'>
                 {getDateFunction(createdAt)}
               </p>
               <div className='flex justify-between gap-3'>
                 <div className='flex w-[260px] flex-col'>
                   <p className='w-[100%]'>{`${reservationName}${content}`}</p>
-                  <p className='w-[100%] overflow-hidden text-ellipsis whitespace-nowrap text-[#666666]'>
+                  <p className='w-[100%] overflow-hidden text-ellipsis whitespace-nowrap'>
                     {`${workplaceName} / ${studyRoomName}`}
+                  </p>
+                  <p className='mt-2 w-[100%]'>
+                    {price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
                   </p>
                 </div>
 

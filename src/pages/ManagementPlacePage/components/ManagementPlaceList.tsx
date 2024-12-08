@@ -1,11 +1,11 @@
 import { IoAdd } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import ManagementPlaceCard from './ManagementPlaceCard';
-import { useGetWorkplacesList } from '../hooks/useGetBusinessWorkplaces';
+import useGetBusinessWorkplaces from '../hooks/useGetBusinessWorkplaces';
 
 const ManagementPlaceList = () => {
   const navigate = useNavigate();
-  const workplaces = useGetWorkplacesList();
+  const { workplaces } = useGetBusinessWorkplaces();
 
   const sortedWorkPlaceList = [...workplaces].sort((b, a) => {
     return +new Date(a.createdAt) - +new Date(b.createdAt);

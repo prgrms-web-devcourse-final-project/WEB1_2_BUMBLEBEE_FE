@@ -1,5 +1,5 @@
 import {
-  GetBusinessWorkPlaceData,
+  BusinessWorkplacesData,
   GetPositionWorkPlaceData,
   GetWorkPlaceData,
   MapPosition,
@@ -154,7 +154,7 @@ export const getRecommendWorkPlace = async (): Promise<
 
 // 사업자 사업장 조회
 export const getBusinessWorkPlace =
-  async (): Promise<GetBusinessWorkPlaceData> => {
+  async (): Promise<BusinessWorkplacesData> => {
     const response = await authInstance.get('/api/v1/workplace/business');
     return response.data;
   };
