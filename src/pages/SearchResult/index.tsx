@@ -49,7 +49,7 @@ const SearchResult = () => {
             data.map((item) => (
               <RoomCard
                 item={item}
-                key={item.studyRoomName}
+                key={item.studyroomId}
               />
             ))}
         </div>
