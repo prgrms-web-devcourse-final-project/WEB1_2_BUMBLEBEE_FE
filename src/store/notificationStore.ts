@@ -17,7 +17,6 @@ const ssePath =
   role === 'ROLE_USER'
     ? `${BASE_URL}/api/subscribe/user`
     : `${BASE_URL}/api/subscribe`;
-
 const useNotificationStore = create<NotificationState>((set) => ({
   message: null,
   state: true,
@@ -40,6 +39,7 @@ const useNotificationStore = create<NotificationState>((set) => ({
 
     eventSource.onmessage = (event) => {
       const newMessage: BusinessNotification = JSON.parse(event.data);
+      console.log(newMessage);
 
       if (
         newMessage.content === 'connected!' ||
@@ -48,10 +48,13 @@ const useNotificationStore = create<NotificationState>((set) => ({
         return;
       }
 
-      if (
-        newMessage.content !== 'connected!' &&
-        newMessage.notificationType !== 'MEMBER_RESERVATION_CONFIRMED'
-      ) {
+      // 사용자 역할에 따른 알림 처리
+      const isUserNotification =
+        role === 'ROLE_USER' && newMessage.notificationType;
+      const isBusinessNotification =
+        role === 'ROLE_BUSINESS' && newMessage.notificationType;
+
+      if (isUserNotification || isBusinessNotification) {
         const newText =
           newMessage.notificationType === 'REVIEW_CREATED'
             ? '새 리뷰가 등록되었습니다.'
