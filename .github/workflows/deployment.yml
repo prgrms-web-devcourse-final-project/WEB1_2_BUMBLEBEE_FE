@@ -29,7 +29,7 @@ jobs:
         run: |
           touch .env
           echo VITE_KAKAOMAP_APP_KEY=${{ secrets.VITE_KAKAOMAP_APP_KEY }} >> .env
-          echo VITE_APP_SERVER_URL=${{ secrets.VITE_APP_SERVER_URL }} >> .env
+          echo VITE_APP_SERVER_URL=https://recode.bumblebeestudy.shop >> .env
           echo VITE_APP_TOSS_CLIENT_KEY=${{ secrets.VITE_APP_TOSS_CLIENT_KEY }} >> .env
           cat .env
 
