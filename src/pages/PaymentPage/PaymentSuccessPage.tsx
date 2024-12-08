@@ -8,8 +8,6 @@ const PaymentSuccessPage = () => {
 
   const { orderName, totalAmount } = responseData;
 
-  console.log('Response Data:', responseData);
-
   const formattedAmount = `${totalAmount.toLocaleString('ko-KR')}원`;
 
   return (
