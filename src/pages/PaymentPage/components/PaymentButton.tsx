@@ -103,7 +103,7 @@ const PaymentButton = (props: PaymentButtonProps) => {
           useCardPoint: false,
         },
       })
-      .catch(async (error) => {
+      .catch((error) => {
         if (error.code === 'USER_CANCEL') {
           toast.error('유저가 결제를 취소했습니다');
           navigate(
