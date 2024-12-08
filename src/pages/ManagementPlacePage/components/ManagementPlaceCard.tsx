@@ -2,15 +2,14 @@ import { MdArrowForwardIos } from 'react-icons/md';
 import { getDateFunction } from '@utils/formatTime';
 import ButtonInCard from '@components/ButtonInCard';
 import ListStyle from '@components/ListStyle';
-import { GetWorkPlaceData } from '@typings/types';
+import { ManagementWorkplace } from '@typings/types';
 import { useState } from 'react';
 import Modal from '@components/Modal';
 import { Link, useNavigate } from 'react-router-dom';
 import useDeleteBusinessPlace from '../hooks/useDeleteBusinessPlace';
-import { useGetNumberOfRooms } from '../hooks/useGetBusinessWorkplaces';
 
 interface ManagementPlaceCardProps {
-  item: GetWorkPlaceData;
+  item: ManagementWorkplace;
 }
 
 const ManagementPlaceCard = ({ item }: ManagementPlaceCardProps) => {
@@ -21,12 +20,12 @@ const ManagementPlaceCard = ({ item }: ManagementPlaceCardProps) => {
     workplacePhoneNumber,
     createdAt,
     imageUrl,
+    studyRoomCount,
   } = item;
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
-  const numberOfRooms = useGetNumberOfRooms(workplaceId);
   const { mutate: deleteMutation } = useDeleteBusinessPlace();
 
   // 사업장 삭제
@@ -66,7 +65,7 @@ const ManagementPlaceCard = ({ item }: ManagementPlaceCardProps) => {
               />
               <ListStyle
                 name='룸 수'
-                value={numberOfRooms}
+                value={studyRoomCount}
               />
               <ListStyle
                 name='등록일'

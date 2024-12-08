@@ -269,7 +269,6 @@ export interface GetWorkPlaceData extends WorkPlaceData {
   longitude: string;
   latitude: string;
   imageUrl: string;
-  studyRoomCount?: number;
   studyRoomList: {
     studyRoomName: string;
     description: string;
@@ -316,11 +315,22 @@ export interface GetPositionWorkPlaceData {
   distance?: number;
 }
 
-// 특정 사업자의 사업장
-export interface GetBusinessWorkPlaceData {
+// 특정 사업자의 사업장 조회
+export interface BusinessWorkplacesData {
   businessId: number;
   businessName: string;
-  workplaces: GetWorkPlaceData[];
+  workplaces: ManagementWorkplace[];
+}
+
+// 특정 사업자의 사업장 상세정보
+export interface ManagementWorkplace {
+  workplaceId: number;
+  workplaceName: string;
+  workplacePhoneNumber: string;
+  workplaceAddress: string;
+  imageUrl: string;
+  studyRoomCount: number;
+  createdAt: string;
 }
 
 // 결제 검증 시 요청값
