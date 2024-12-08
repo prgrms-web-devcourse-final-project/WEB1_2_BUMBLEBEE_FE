@@ -269,6 +269,7 @@ export interface GetWorkPlaceData extends WorkPlaceData {
   longitude: string;
   latitude: string;
   imageUrl: string;
+  studyRoomCount?: number;
   studyRoomList: {
     studyRoomName: string;
     description: string;
