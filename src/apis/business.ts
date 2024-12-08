@@ -7,9 +7,15 @@ export const getBusinessData = async (): Promise<Business> => {
   return response.data;
 };
 
-// 사업자 알림
-export const getBusinessAlarm = async (): Promise<BusinessAlarm> => {
-  const response = await authInstance.get('/api/v1/notification/business');
+// 사업자 예약 알림 조회
+export const getBusinessReservationAlarm = async (): Promise<BusinessAlarm> => {
+  const response = await authInstance.get('/api/v1/subReservation/list');
+  return response.data;
+};
+
+// 사업자 리뷰 알림 조회
+export const getBusinessReviewAlarm = async (): Promise<BusinessAlarm> => {
+  const response = await authInstance.get('/api/v1/sub/list');
   return response.data;
 };
 
