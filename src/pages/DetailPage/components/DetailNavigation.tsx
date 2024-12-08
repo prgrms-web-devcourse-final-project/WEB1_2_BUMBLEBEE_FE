@@ -7,19 +7,21 @@ import { useNavigate } from 'react-router-dom';
 
 interface DetailNavigationProps {
   workplaceId: number;
+  workplaceName: string;
   isBtnDisabled: boolean;
   selectedRoomId: number;
 }
 
 const DetailNavigation = ({
   workplaceId,
+  workplaceName,
   isBtnDisabled,
   selectedRoomId,
 }: DetailNavigationProps) => {
   const navigate = useNavigate();
   const handleClickChat = async () => {
     const roomId = await postCreateChatRoom(workplaceId);
-    navigate(`/chat/${roomId}`);
+    navigate(`/chat/${roomId}`, { state: workplaceName });
   };
 
   const handleSelectRoom = async () => {

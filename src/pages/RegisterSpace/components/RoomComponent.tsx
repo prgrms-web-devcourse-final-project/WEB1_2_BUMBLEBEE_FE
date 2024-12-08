@@ -22,8 +22,10 @@ const RoomComponent = ({ room }: { room: WorkplaceStudyRoomData }) => {
           </span>
         </p>
         <p className='text-[12px]'>
-          <span className='text-[12px] font-normal'>{room.price}원</span> /
-          1시간
+          <span className='text-[12px] font-normal'>
+            {room.price.toLocaleString('ko-KR')}원
+          </span>
+          <span> / 1시간</span>
         </p>
       </div>
     </div>
