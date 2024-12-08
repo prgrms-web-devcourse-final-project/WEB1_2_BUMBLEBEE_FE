@@ -77,6 +77,9 @@ const KakaoMap = (props: KakaoMapProps) => {
     setIsModalOpen(false);
   }, []);
 
+  // 지도에 표시할 데이터
+  const markerData = activeTab === '주변 스터디룸' ? data : recommendData;
+
   return (
     <div className='relative h-[298px] w-[375px]'>
       <Map
@@ -90,27 +93,9 @@ const KakaoMap = (props: KakaoMapProps) => {
           setCenterPosition({ lat: latlng.getLat(), lng: latlng.getLng() });
         }}
       >
-        {activeTab === '주변 스터디룸' &&
-          data &&
-          data.length > 0 &&
-          data.map((item) => (
-            <MapMarker
-              onClick={() => handleMarkerClick(item)}
-              key={item.positionLat}
-              position={{ lat: item.positionLat, lng: item.positionLon }}
-              image={{
-                src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-                size: {
-                  width: 24,
-                  height: 35,
-                },
-              }}
-            />
-          ))}
-        {activeTab === '맞춤형 추천' &&
-          recommendData &&
-          recommendData.length > 0 &&
-          recommendData.map((item) => (
+        {markerData &&
+          markerData.length > 0 &&
+          markerData.map((item) => (
             <MapMarker
               onClick={() => handleMarkerClick(item)}
               key={item.positionLat}

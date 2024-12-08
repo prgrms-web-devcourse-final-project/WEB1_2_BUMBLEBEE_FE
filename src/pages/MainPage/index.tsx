@@ -24,7 +24,7 @@ const MainPage = () => {
   const { data, isLoading, isError } = useGetWorkplaceData(
     position,
     mapPosition,
-    centerPosition
+    centerPosition,
   );
 
   // 비로그인 / 사업자 / 사용자 확인
