@@ -1,5 +1,5 @@
 import ListStyle from '@components/ListStyle';
-import { WriteReviewProps } from '..';
+import type { WriteReviewProps } from '..';
 
 const ReservationInfo = ({ item }: { item: WriteReviewProps }) => {
   const {

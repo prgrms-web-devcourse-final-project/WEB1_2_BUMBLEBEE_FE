@@ -29,9 +29,14 @@ const MyReviewCard = ({ item }: { item: Review }) => {
   return (
     <div className='mx-auto flex w-custom flex-col gap-[13px] border-b border-solid border-b-black px-[13px] py-[26px]'>
       <div className='flex items-start justify-between'>
-        <div className='flex cursor-pointer items-center gap-1.5 font-medium'>
-          <Link to={`/detail/${workplaceId}`}>{workplaceName}</Link>
-          <MdArrowForwardIos className='w-3' />
+        <div className='flex cursor-pointer items-center font-medium'>
+          <Link
+            to={`/detail/${workplaceId}`}
+            className='flex items-center gap-1.5'
+          >
+            {workplaceName}
+            <MdArrowForwardIos className='w-3' />
+          </Link>
         </div>
         <img
           src={workplaceImageURL}

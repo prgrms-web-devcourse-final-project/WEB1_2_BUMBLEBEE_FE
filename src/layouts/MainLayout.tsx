@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -6,6 +6,10 @@ interface MainLayoutProps {
 }
 
 const MainLayout = ({ children, headerType = 'default' }: MainLayoutProps) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const paddingTop = headerType === 'both' ? 'pt-[132px]' : 'pt-[93px]';
 
   return (

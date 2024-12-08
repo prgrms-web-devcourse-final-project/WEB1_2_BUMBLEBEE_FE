@@ -24,7 +24,7 @@ const RoomSelect = ({
 
   return (
     <div className='w-custom'>
-      {data ? (
+      {data && data.length > 0 ? (
         data.map((item) => (
           <button
             key={item.studyRoomId}
@@ -42,7 +42,9 @@ const RoomSelect = ({
           </button>
         ))
       ) : (
-        <p>조회된 룸이 없습니다.</p>
+        <div className='flex h-[150px] w-full items-center justify-center font-normal text-subfont'>
+          조회된 룸이 없습니다.
+        </div>
       )}
     </div>
   );

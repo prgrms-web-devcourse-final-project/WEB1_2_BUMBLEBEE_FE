@@ -8,8 +8,6 @@ const PaymentSuccessPage = () => {
 
   const { orderName, totalAmount } = responseData;
 
-  console.log('Response Data:', responseData);
-
   const formattedAmount = `${totalAmount.toLocaleString('ko-KR')}원`;
 
   return (
@@ -18,10 +16,10 @@ const PaymentSuccessPage = () => {
         <div className='flex w-custom flex-col items-center justify-center gap-3'>
           <div className='text-xl font-medium'>결제 완료</div>
           <div>결제가 정상적으로 처리되었습니다.</div>
-          <div className='mt-3 flex w-[220px] flex-col gap-1 text-sm'>
+          <div className='mt-3 flex w-[250px] flex-col gap-1 text-sm'>
             <div className='flex justify-between'>
               <p className='font-medium'>주문 상품</p>
-              <p className='w-[150px] text-end'>{orderName}</p>
+              <p className='w-[180px] text-end'>{orderName}</p>
             </div>
             <div className='flex justify-between'>
               <p className='font-medium'>결제 금액</p>

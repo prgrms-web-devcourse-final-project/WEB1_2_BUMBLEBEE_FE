@@ -13,7 +13,7 @@ import {
 } from './hooks/useGetWorkplaceData';
 
 const MainPage = () => {
-  const { mapPosition, nowPosition } = usePositionStore();
+  const { mapPosition, nowPosition, centerPosition } = usePositionStore();
 
   const position = {
     latitude: nowPosition.center.lat,
@@ -24,6 +24,7 @@ const MainPage = () => {
   const { data, isLoading, isError } = useGetWorkplaceData(
     position,
     mapPosition,
+    centerPosition,
   );
 
   // 비로그인 / 사업자 / 사용자 확인
@@ -39,15 +40,15 @@ const MainPage = () => {
     }
   }, [isLogin]);
 
+  // 선택한 탭
+  const [activeTab, setActiveTab] = useState('주변 스터디룸');
+
   // 사업장 추천 데이터
   const {
     data: recommendData,
     isLoading: isRecommendLoading,
     isError: isRecommendError,
-  } = useGetRecommendData(isLogin, isUser);
-
-  // 선택한 탭
-  const [activeTab, setActiveTab] = useState('주변 스터디룸');
+  } = useGetRecommendData(isLogin, isUser, activeTab);
 
   return (
     <>

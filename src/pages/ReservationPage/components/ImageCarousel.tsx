@@ -32,7 +32,7 @@ const ImageCarousel = (props: ImageCarouselProps) => {
 
   return (
     <>
-      <div className='relative mx-auto mt-8 w-custom'>
+      <div className='relative mt-8 w-[375px]'>
         {roomImageList && roomImageList.length > 0 && (
           <>
             <img
@@ -40,7 +40,7 @@ const ImageCarousel = (props: ImageCarouselProps) => {
               alt='룸 사진'
               className='pointer-events-none h-[240px] w-full select-none object-cover'
             />
-            <div className='absolute top-[100px] flex w-custom items-center justify-between text-4xl text-white opacity-70'>
+            <div className='absolute top-[100px] flex w-[375px] cursor-pointer items-center justify-between text-4xl text-white opacity-70'>
               <GrPrevious onClick={handleSlidePrev} />
               <GrNext onClick={handleSlideNext} />
             </div>

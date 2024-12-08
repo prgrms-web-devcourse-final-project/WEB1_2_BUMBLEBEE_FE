@@ -60,7 +60,7 @@ const ChatPage = () => {
       client.onConnect = () => {
         console.log('Connected');
 
-        client.subscribe(`/sub/chat`, (message: IMessage) => {
+        client.subscribe(`/sub/chat/${roomId}`, (message: IMessage) => {
           try {
             const newMessage = JSON.parse(message.body);
             setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -94,7 +94,7 @@ const ChatPage = () => {
         content: inputValue,
         roomId: parseInt(roomId || '', 10),
         timestamp: getDatetoLocalDate(new Date()),
-        senderType: role === 'ROLE_USER' ? 'member' : 'business',
+        senderType: role === 'ROLE_USER' ? 'MEMBER' : 'BUSINESS',
       };
 
       stompClient.publish({
