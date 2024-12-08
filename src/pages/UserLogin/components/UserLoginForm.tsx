@@ -2,6 +2,8 @@ import { ERROR_MESSAGE, PLACEHOLDER, BASE_URL } from '@constants/constants';
 import { isValidEmail, isValidPassword } from '@utils/validationCheckRegex';
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NaverLogo from '@assets/icons/NaverLogo.svg';
+import KakaoLogo from '@assets/icons/KakaoLogo.svg';
 import useUserLogIn from '../hooks/useUserLogIn';
 
 const UserLoginForm = () => {
@@ -109,13 +111,13 @@ const UserLoginForm = () => {
             className='mr-[12px]'
           >
             <img
-              src='/src/assets/icons/KakaoLogo.svg'
+              src={KakaoLogo}
               alt='카카오 로고'
             />
           </a>
           <a href={`${BASE_URL}/oauth2/authorization/naver`}>
             <img
-              src='/src/assets/icons/NaverLogo.svg'
+              src={NaverLogo}
               alt='네이버 로고'
             />
           </a>

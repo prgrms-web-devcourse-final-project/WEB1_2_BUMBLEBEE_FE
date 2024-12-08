@@ -9,6 +9,7 @@ import { postPaymentsToss, postReservation } from '@apis/reservation';
 import useSearchStore from '@store/searchStore';
 import { PostPaymentsData } from '@typings/types';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import type {
   ReservationFormData,
   ErrorMessageType,
@@ -75,6 +76,8 @@ const PaymentButton = (props: PaymentButtonProps) => {
   const customerKey = uuidv4();
   const orderId = uuidv4();
 
+  const navigate = useNavigate();
+
   const handlePayment = async (response: PostPaymentsData): Promise<void> => {
     const tossPayments = await loadTossPayments(clientKey);
     const payment = tossPayments.payment({ customerKey });
@@ -103,6 +106,9 @@ const PaymentButton = (props: PaymentButtonProps) => {
       .catch((error) => {
         if (error.code === 'USER_CANCEL') {
           toast.error('유저가 결제를 취소했습니다');
+          navigate(
+            `/payment-fail?orderId=${response.orderId}&message=${error.message}&code=${error.code}`,
+          );
         } else {
           toast.error(error.message);
         }
