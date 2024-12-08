@@ -51,27 +51,18 @@ export interface Business {
   createdAt?: string;
 }
 
-// 사업자 리뷰 알림
-export interface BusinessReviewNoti {
+// 사업자 알림
+export interface BusinessNotification {
   alrimId: number;
   content: string;
-  createAt: string;
+  createdAt: string;
   workplaceId: number;
   notificationType: string;
-}
-
-// 사업자 예약 알림
-export interface BusinessReservationNoti {
-  alrimId: number;
-  content: string;
-  createAt: string;
-  workplaceId: number;
-  notificationType: string;
-  studyroomName: string;
-  workplaceName: string;
-  reservationName: string;
-  price: number;
-  url: string;
+  studyroomName?: string;
+  workplaceName?: string;
+  reservationName?: string;
+  price?: number;
+  url?: string;
 }
 
 // 사용자

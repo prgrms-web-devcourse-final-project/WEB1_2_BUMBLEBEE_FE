@@ -1,8 +1,4 @@
-import {
-  Business,
-  BusinessReservationNoti,
-  BusinessReviewNoti,
-} from '@typings/types';
+import { Business, BusinessNotification } from '@typings/types';
 import { authInstance } from '.';
 
 // 사업자 정보 조회
@@ -12,14 +8,17 @@ export const getBusinessData = async (): Promise<Business> => {
 };
 
 // 사업자 예약 알림 조회
-export const getBusinessReservationAlarm =
-  async (): Promise<BusinessReservationNoti> => {
-    const response = await authInstance.get('/api/v1/subReservation/list');
-    return response.data;
-  };
+export const getBusinessReservationAlarm = async (): Promise<
+  BusinessNotification[]
+> => {
+  const response = await authInstance.get('/api/v1/subReservation/list');
+  return response.data;
+};
 
 // 사업자 리뷰 알림 조회
-export const getBusinessReviewAlarm = async (): Promise<BusinessReviewNoti> => {
+export const getBusinessReviewAlarm = async (): Promise<
+  BusinessNotification[]
+> => {
   const response = await authInstance.get('/api/v1/sub/list');
   return response.data;
 };
