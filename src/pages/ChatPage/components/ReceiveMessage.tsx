@@ -18,6 +18,9 @@ const ReceiveMessage = (props: ReceiveMessageProps) => {
           {message.content}
         </div>
         <p className='text-xs text-subfont'>{formattedTime}</p>
+        {!message.isRead && (
+          <p className='text-start text-xs text-primary'>1</p>
+        )}
       </div>
     </div>
   );

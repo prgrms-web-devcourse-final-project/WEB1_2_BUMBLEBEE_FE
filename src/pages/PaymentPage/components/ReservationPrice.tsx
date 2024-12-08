@@ -1,5 +1,6 @@
 import DetailTitle from '@components/DetailTitle';
 import useSearchStore from '@store/searchStore';
+import { useEffect } from 'react';
 import type { StudyRoomInfo } from '..';
 
 interface ReservationPriceProps {
@@ -15,7 +16,10 @@ const ReservationPrice = (props: ReservationPriceProps) => {
 
   const reservationPrice = studyRoomPrice * searchPeople;
   const reservationTime = searchTime.length;
-  onSetTotalAmount(reservationPrice * reservationTime);
+  useEffect(() => {
+    onSetTotalAmount(reservationPrice * reservationTime);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reservationPrice, reservationTime]);
 
   return (
     <div className='mx-auto mt-8 flex w-custom flex-col gap-4'>
