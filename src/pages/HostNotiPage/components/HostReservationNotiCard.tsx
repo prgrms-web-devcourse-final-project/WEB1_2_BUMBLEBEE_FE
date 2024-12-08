@@ -9,17 +9,16 @@ interface HostNotiProps {
 const HostReservationNotiCard = ({ item }: HostNotiProps) => {
   const {
     content,
-    workplaceId,
     createdAt,
     workplaceName,
     url,
     reservationName,
-    studyroomName,
+    studyRoomName,
   } = item;
 
   return (
     <>
-      <Link to={`/detail/${workplaceId}`}>
+      <Link to='/management-reserver-list'>
         <div className='mx-auto flex w-[100%] flex-col gap-3 text-sm active:bg-[#e9e9e9]'>
           <div className='mx-auto w-custom px-1.5 py-[13px]'>
             <p className='font-medium'>새로운 예약</p>
@@ -32,7 +31,7 @@ const HostReservationNotiCard = ({ item }: HostNotiProps) => {
                 <div className='flex w-[260px] flex-col'>
                   <p className='w-[100%]'>{`${reservationName}${content}`}</p>
                   <p className='w-[100%] overflow-hidden text-ellipsis whitespace-nowrap text-[#666666]'>
-                    {`${workplaceName} / ${studyroomName}`}
+                    {`${workplaceName} / ${studyRoomName}`}
                   </p>
                 </div>
 

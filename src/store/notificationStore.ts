@@ -35,13 +35,11 @@ const useNotificationStore = create<NotificationState>((set) => ({
     });
 
     eventSource.onopen = () => {
-      console.log('연결됨');
       set(() => ({ state: true }));
     };
 
     eventSource.onmessage = (event) => {
       const newMessage: BusinessNotification = JSON.parse(event.data);
-      console.log(newMessage);
 
       if (
         newMessage.content === 'connected!' ||
@@ -73,8 +71,7 @@ const useNotificationStore = create<NotificationState>((set) => ({
     };
 
     // sse 에러 발생하면 연결 종료
-    eventSource.onerror = (error) => {
-      console.error('SSE Error:', error);
+    eventSource.onerror = () => {
       eventSource.close();
       set(() => ({ message: null }));
       set(() => ({ state: false }));
@@ -82,7 +79,6 @@ const useNotificationStore = create<NotificationState>((set) => ({
 
     set(() => ({
       disconnect: () => {
-        console.log('연결 해제');
         eventSource.close();
       },
     }));

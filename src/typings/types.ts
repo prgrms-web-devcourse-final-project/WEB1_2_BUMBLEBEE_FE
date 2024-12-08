@@ -58,7 +58,7 @@ export interface BusinessNotification {
   createdAt: string;
   workplaceId: number;
   notificationType: string;
-  studyroomName?: string;
+  studyRoomName?: string;
   workplaceName?: string;
   reservationName?: string;
   price?: number;

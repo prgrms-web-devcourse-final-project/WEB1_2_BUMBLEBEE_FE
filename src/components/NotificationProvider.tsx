@@ -14,11 +14,10 @@ const NotificationProvider = () => {
   }, [connect]);
 
   useEffect(() => {
-    console.log(state);
-    if (!state) {
+    if (isLogin && role) {
       connectSSE();
     }
-    if (isLogin || role) {
+    if (!state) {
       connectSSE();
     }
   }, [isLogin, connectSSE, state, role]);
