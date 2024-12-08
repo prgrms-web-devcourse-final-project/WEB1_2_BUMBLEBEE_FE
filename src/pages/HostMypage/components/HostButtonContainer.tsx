@@ -19,7 +19,7 @@ const HostButtonContainer = () => {
   };
 
   return (
-    <div className='absolute top-[290px] flex w-[330px] flex-col gap-[18px]'>
+    <div className='absolute top-[260px] flex w-[330px] flex-col gap-[18px]'>
       <HostCategoryButton
         category='예약자 확인'
         onClickFunction={handleMoveReserverList}

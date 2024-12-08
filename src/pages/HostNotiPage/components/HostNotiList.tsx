@@ -12,7 +12,7 @@ const HostNotiList = () => {
   return (
     <>
       {sortedNotification && sortedNotification.length > 0 ? (
-        <div className='mt-4 flex w-[375px] flex-col justify-center gap-[13px]'>
+        <div className='mt-4 flex w-[375px] flex-col justify-center gap-[13px] pb-24'>
           {sortedNotification.map((item) => {
             if (item.notificationType === 'REVIEW_CREATED') {
               return (

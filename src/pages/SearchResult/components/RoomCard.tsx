@@ -13,45 +13,47 @@ const RoomCard = (props: RoomCardProps) => {
     <button
       type='button'
       onClick={() => navigate(`/reservation/${item.studyroomId}`)}
-      className='flex cursor-pointer items-center justify-between border-b border-b-black px-[13px] py-[26px] last:border-none'
+      className='flex w-[330px] cursor-pointer justify-between border-b border-b-black px-[13px] py-[26px] last:border-none'
     >
-      <img
-        src={item.imageUrl}
-        alt='스터디룸 사진'
-        className='h-[110px] w-[110px] object-cover'
-      />
-      <div className='flex w-[210px] flex-col gap-[10px]'>
-        <div className='flex flex-col gap-1'>
-          <div className='flex items-start justify-between'>
-            <p className='text-xs font-normal text-subfont'>
-              {item.workplaceName}
-            </p>
-            <div className='flex items-center gap-[3px] text-xs'>
-              <FaStar className='text-primary' />
-              <span>
-                {item.reviewScore > 0 ? item.reviewScore.toFixed(1) : 0}
-              </span>
-              <span>({item.reviewCount})</span>
+      <div className='flex gap-4'>
+        <img
+          src={item.imageUrl}
+          alt='스터디룸 사진'
+          className='h-[110px] w-[110px] object-cover'
+        />
+        <div className='flex w-[210px] flex-col gap-[10px]'>
+          <div className='flex flex-col gap-1'>
+            <div className='flex items-start gap-2'>
+              <p className='w-[128px] overflow-hidden text-ellipsis whitespace-nowrap text-start text-xs font-normal text-subfont'>
+                {item.workplaceName}
+              </p>
+              <div className='flex items-center gap-[3px] text-xs'>
+                <FaStar className='text-primary' />
+                <span>
+                  {item.reviewScore > 0 ? item.reviewScore.toFixed(1) : 0}
+                </span>
+                <span>({item.reviewCount})</span>
+              </div>
             </div>
+            <p className='text-start font-medium'>{item.studyRoomName}</p>
           </div>
-          <p className='text-start font-medium'>{item.studyRoomName}</p>
-        </div>
-        <div className='flex flex-col gap-[6px]'>
-          <div className='flex gap-[10px] text-xs'>
-            <span className='font-normal'>{item.distance.toFixed(1)}km</span>
-            <span className='text-start'>
-              {item.workplaceAddress.split(' ').slice(0, 3).join(' ')}
-            </span>
-          </div>
-          <div className='flex gap-[6px] text-xs'>
-            <span>수용 가능 인원</span>
-            <span className='font-normal'>{item.studyRoomCapacity}명</span>
-          </div>
-          <div className='flex gap-1 text-xs'>
-            <span className='font-normal'>
-              {item.studyRoomPrice.toLocaleString('ko-KR')}원
-            </span>
-            <span> / 1시간</span>
+          <div className='flex flex-col gap-[6px]'>
+            <div className='flex gap-[10px] text-xs'>
+              <span className='font-normal'>{item.distance.toFixed(1)}km</span>
+              <span className='text-start'>
+                {item.workplaceAddress.split(' ').slice(0, 3).join(' ')}
+              </span>
+            </div>
+            <div className='flex gap-[6px] text-xs'>
+              <span>수용 가능 인원</span>
+              <span className='font-normal'>{item.studyRoomCapacity}명</span>
+            </div>
+            <div className='flex gap-1 text-xs'>
+              <span className='font-normal'>
+                {item.studyRoomPrice.toLocaleString('ko-KR')}원
+              </span>
+              <span> / 1시간</span>
+            </div>
           </div>
         </div>
       </div>

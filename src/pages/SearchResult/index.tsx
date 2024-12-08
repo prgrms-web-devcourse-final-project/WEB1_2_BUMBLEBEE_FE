@@ -33,7 +33,7 @@ const SearchResult = () => {
       <MainLayout headerType='both'>
         <HeaderWithTitle title='검색 결과' />
         <ResultBar />
-        <div className='mt-4 flex h-auto flex-col pb-[94px]'>
+        <div className='mt-4 flex h-auto flex-col items-center pb-[94px]'>
           {isLoading && (
             <div className='flex h-[300px] w-full items-center justify-center'>
               <SyncLoader color='#50BEAD' />
