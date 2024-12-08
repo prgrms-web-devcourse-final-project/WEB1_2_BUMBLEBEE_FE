@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { getAuthToken, getRole } from '@utils/auth';
 import { BASE_URL } from '@constants/constants';
-import { SseAlarm } from '@typings/types';
+import { BusinessNotification } from '@typings/types';
 
 interface NotificationState {
   message: string | null;
@@ -17,7 +17,6 @@ const ssePath =
   role === 'ROLE_USER'
     ? `${BASE_URL}/api/subscribe/user`
     : `${BASE_URL}/api/subscribe`;
-
 const useNotificationStore = create<NotificationState>((set) => ({
   message: null,
   state: true,
@@ -35,12 +34,11 @@ const useNotificationStore = create<NotificationState>((set) => ({
     });
 
     eventSource.onopen = () => {
-      console.log('연결됨');
       set(() => ({ state: true }));
     };
 
     eventSource.onmessage = (event) => {
-      const newMessage: SseAlarm = JSON.parse(event.data);
+      const newMessage: BusinessNotification = JSON.parse(event.data);
       console.log(newMessage);
 
       if (
@@ -50,7 +48,13 @@ const useNotificationStore = create<NotificationState>((set) => ({
         return;
       }
 
-      if (newMessage.content !== 'connected!' && newMessage.notificationType) {
+      // 사용자 역할에 따른 알림 처리
+      const isUserNotification =
+        role === 'ROLE_USER' && newMessage.notificationType;
+      const isBusinessNotification =
+        role === 'ROLE_BUSINESS' && newMessage.notificationType;
+
+      if (isUserNotification || isBusinessNotification) {
         const newText =
           newMessage.notificationType === 'REVIEW_CREATED'
             ? '새 리뷰가 등록되었습니다.'
@@ -70,8 +74,7 @@ const useNotificationStore = create<NotificationState>((set) => ({
     };
 
     // sse 에러 발생하면 연결 종료
-    eventSource.onerror = (error) => {
-      console.error('SSE Error:', error);
+    eventSource.onerror = () => {
       eventSource.close();
       set(() => ({ message: null }));
       set(() => ({ state: false }));
@@ -79,7 +82,6 @@ const useNotificationStore = create<NotificationState>((set) => ({
 
     set(() => ({
       disconnect: () => {
-        console.log('연결 해제');
         eventSource.close();
       },
     }));
