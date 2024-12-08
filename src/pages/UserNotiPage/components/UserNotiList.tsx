@@ -11,7 +11,7 @@ const UserNotiList = () => {
   return (
     <>
       {sortedNotification && sortedNotification.length > 0 ? (
-        <div className='mt-4 flex w-[375px] flex-col justify-center gap-[13px]'>
+        <div className='mt-4 flex w-[375px] flex-col justify-center gap-[13px] pb-24'>
           {sortedNotification.map((item) => {
             return (
               <UserNotiCard

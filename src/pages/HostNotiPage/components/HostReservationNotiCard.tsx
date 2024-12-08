@@ -34,7 +34,7 @@ const HostReservationNotiCard = ({ item }: HostNotiProps) => {
                   <p className='w-[100%] overflow-hidden text-ellipsis whitespace-nowrap'>
                     {`${workplaceName} / ${studyRoomName}`}
                   </p>
-                  <p className='mt-2'>
+                  <p className='mt-2 w-[100%]'>
                     {price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
                   </p>
                 </div>
