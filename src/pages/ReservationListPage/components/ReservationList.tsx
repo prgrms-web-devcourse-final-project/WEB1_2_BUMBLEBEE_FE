@@ -48,20 +48,26 @@ const ReservationList = () => {
           </div>
           {!activeSortButton
             ? sortedWithPayment.map((item) => {
-                return (
-                  <ReservationDetailCard
-                    key={item.reservationId}
-                    item={item}
-                  />
-                );
+                if (item.state !== 'ON_HOLD') {
+                  return (
+                    <ReservationDetailCard
+                      key={item.reservationId}
+                      item={item}
+                    />
+                  );
+                }
+                return null;
               })
             : sortedWithDate.map((item) => {
-                return (
-                  <ReservationDetailCard
-                    key={item.reservationId}
-                    item={item}
-                  />
-                );
+                if (item.state !== 'ON_HOLD') {
+                  return (
+                    <ReservationDetailCard
+                      key={item.reservationId}
+                      item={item}
+                    />
+                  );
+                }
+                return null;
               })}
         </div>
       ) : (

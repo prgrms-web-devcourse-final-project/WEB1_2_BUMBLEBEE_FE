@@ -72,7 +72,7 @@ const RegisterSpace = () => {
       ) : (
         <HeaderOnlyTitle title='공간 등록' />
       )}
-      <hr className='fixed top-[93px] mx-[22.5px] h-0.5 w-custom border-0 bg-black' />
+      <hr className='fixed top-[70px] mx-[22.5px] h-0.5 w-custom border-0 bg-black' />
       {selectedRoomId ? (
         <RoomForm
           room={spaceFormData.rooms.find(({ id }) => id === selectedRoomId)!}

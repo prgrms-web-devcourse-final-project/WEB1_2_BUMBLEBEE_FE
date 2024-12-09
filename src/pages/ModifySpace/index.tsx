@@ -121,7 +121,7 @@ const ModifySpace = () => {
       ) : (
         <HeaderOnlyTitle title='공간 등록 수정' />
       )}
-      <hr className='fixed top-[93px] mx-[22.5px] h-0.5 w-custom border-0 bg-black' />
+      <hr className='fixed top-[70px] mx-[22.5px] h-0.5 w-custom border-0 bg-black' />
       {selectedRoomId ? (
         <RoomModify
           room={spaceFormData.rooms.find(({ id }) => id === selectedRoomId)!}
