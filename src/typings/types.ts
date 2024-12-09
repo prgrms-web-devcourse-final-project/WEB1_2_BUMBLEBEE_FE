@@ -53,7 +53,8 @@ export interface Business {
 
 // 사업자 알림
 export interface BusinessNotification {
-  alrimId: number;
+  reviewId?: number;
+  reservationId?: number;
   content: string;
   createdAt: string;
   workplaceId: number;
