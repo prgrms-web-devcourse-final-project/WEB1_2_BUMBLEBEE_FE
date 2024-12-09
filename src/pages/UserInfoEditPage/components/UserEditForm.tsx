@@ -21,6 +21,7 @@ const UserEditForm = ({ user }: { user: Member }) => {
   const [newInformation, setNewInformation] = useState({
     nickName: user.nickName,
     birthDay: user.birthDay,
+    email: user.email,
     sex: user.sex,
     phoneNumber: user.phoneNumber,
   });
