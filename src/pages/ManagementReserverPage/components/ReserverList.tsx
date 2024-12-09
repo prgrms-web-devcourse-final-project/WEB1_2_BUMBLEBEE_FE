@@ -10,8 +10,6 @@ const ReserverList = () => {
     );
   });
 
-  console.log(reserverList);
-
   return (
     <>
       {reserverList.length > 0 ? (

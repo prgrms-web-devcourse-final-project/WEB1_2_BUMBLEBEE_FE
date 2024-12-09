@@ -19,6 +19,11 @@ const ChatListPage = () => {
                 chat={chat}
               />
             ))}
+          {data && data.length === 0 && (
+            <div className='flex h-[calc(100vh-112px-94px)] w-full items-center justify-center text-[14px] font-normal text-subfont'>
+              채팅 목록이 비어있습니다.
+            </div>
+          )}
         </div>
         <BottomNavigation />
       </MainLayout>
