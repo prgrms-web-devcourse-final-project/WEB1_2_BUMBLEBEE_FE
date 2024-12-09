@@ -16,6 +16,7 @@ import { getRole } from '@utils/auth';
 import { getUserData } from '@apis/member';
 import { getBusinessData } from '@apis/business';
 import { getDatetoLocalDate } from '@utils/formatTime';
+import { toast } from 'react-toastify';
 import MessageInput from './components/MessageInput';
 import MessageContainer from './components/MessageContainer';
 
@@ -52,21 +53,17 @@ const ChatPage = () => {
       const client = new Client({
         brokerURL: WS_URL,
         webSocketFactory: () => new SockJS(WS_URL),
-        debug: (str) => console.log(str),
         reconnectDelay: 5000, // 자동 재연결
       });
 
       // 구독
       client.onConnect = () => {
-        console.log('Connected');
-
         client.subscribe(`/sub/chat/${roomId}`, (message: IMessage) => {
           try {
             const newMessage = JSON.parse(message.body);
             setMessages((prevMessages) => [...prevMessages, newMessage]);
-            console.log('완료');
           } catch (error) {
-            console.error('오류가 발생했습니다:', error);
+            toast.error('오류가 발생했습니다.');
           }
         });
       };
@@ -74,12 +71,11 @@ const ChatPage = () => {
       client.activate();
       setStompClient(client);
     } catch (err) {
-      console.error(err);
+      toast.error('오류가 발생했습니다.');
     }
   };
 
   const disConnect = () => {
-    console.log('연결끊기');
     // 연결 끊기
     if (stompClient === null) {
       return;
@@ -101,8 +97,6 @@ const ChatPage = () => {
         destination: '/pub/sendMessage',
         body: JSON.stringify(chatMessage),
       });
-      console.log(chatMessage);
-      console.log(messages);
     }
   };
 

@@ -6,7 +6,6 @@ import useGetChatList from './hooks/useGetChatList';
 
 const ChatListPage = () => {
   const { data } = useGetChatList();
-
   return (
     <>
       <MainLayout headerType='both'>

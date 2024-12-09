@@ -18,7 +18,8 @@ const ResultBar = () => {
     return newTimeArray;
   };
 
-  const formattedTime = setTimeArray(searchTime).join(' ~ ');
+  const formattedTime =
+    searchTime.length > 0 ? setTimeArray(searchTime).join(' ~ ') : '시간 선택';
 
   return (
     <div className='mx-auto mt-4 flex w-custom justify-center gap-1 rounded-full py-[18px] text-sm shadow-custom'>
@@ -27,7 +28,7 @@ const ResultBar = () => {
         className='w-16 overflow-hidden text-ellipsis whitespace-nowrap border-r-2 border-subfont pr-1 text-center'
         onClick={() => navigate('/search', { state: true })}
       >
-        {searchPlace}
+        {searchPlace.length > 0 ? searchPlace : '장소 선택'}
       </button>
       <button
         type='button'
