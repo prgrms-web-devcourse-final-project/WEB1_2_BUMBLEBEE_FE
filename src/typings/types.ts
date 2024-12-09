@@ -64,6 +64,7 @@ export interface BusinessNotification {
   reservationName?: string;
   price?: number;
   url?: string;
+  imageURL?: string;
 }
 
 // 사용자

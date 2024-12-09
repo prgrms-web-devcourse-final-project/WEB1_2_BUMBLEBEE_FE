@@ -7,7 +7,7 @@ interface HostNotiProps {
 }
 
 const HostReviewNotiCard = ({ item }: HostNotiProps) => {
-  const { content, workplaceId, createdAt, workplaceName, url } = item;
+  const { content, workplaceId, createdAt, workplaceName, imageURL } = item;
 
   return (
     <>
@@ -31,7 +31,7 @@ const HostReviewNotiCard = ({ item }: HostNotiProps) => {
                 </div>
 
                 <img
-                  src={url}
+                  src={imageURL}
                   alt='스터디룸 사진'
                   className='h-10 w-10 object-cover'
                 />
