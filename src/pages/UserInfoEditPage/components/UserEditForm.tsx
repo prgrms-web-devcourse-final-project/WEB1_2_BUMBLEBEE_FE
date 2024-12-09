@@ -4,7 +4,6 @@ import { Member } from '@typings/types';
 import { insertBirthHyphen, insertPhoneNumberHyphen } from '@utils/autoHyphen';
 import {
   isValidBirth,
-  isValidEmail,
   isValidNickname,
   isValidUserPhoneNumber,
 } from '@utils/validationCheckRegex';
@@ -13,16 +12,14 @@ import usePutEditUserData from '../hooks/usePutEditUserData';
 
 interface EditErrorMessage {
   nicknameError?: string;
-  emailError?: string;
   birthError?: string;
   phoneNumberError?: string;
   sexError?: string;
 }
 
 const UserEditForm = ({ user }: { user: Member }) => {
-  const [newInformation, setNewInformation] = useState<Member>({
+  const [newInformation, setNewInformation] = useState({
     nickName: user.nickName,
-    email: user.email,
     birthDay: user.birthDay,
     sex: user.sex,
     phoneNumber: user.phoneNumber,
@@ -51,7 +48,6 @@ const UserEditForm = ({ user }: { user: Member }) => {
   const isValid = () => {
     const errors: EditErrorMessage = {
       nicknameError: '',
-      emailError: '',
       birthError: '',
       phoneNumberError: '',
       sexError: '',
@@ -62,9 +58,6 @@ const UserEditForm = ({ user }: { user: Member }) => {
     }
     if (!isValidNickname(newInformation.nickName)) {
       errors.nicknameError = ERROR_MESSAGE.nickname;
-    }
-    if (!isValidEmail(newInformation.email)) {
-      errors.emailError = ERROR_MESSAGE.email;
     }
     if (!isValidBirth(newInformation.birthDay)) {
       errors.birthError = ERROR_MESSAGE.birth;
@@ -83,7 +76,7 @@ const UserEditForm = ({ user }: { user: Member }) => {
     const errors = isValid();
     const newData = {
       nickName: newInformation.nickName,
-      email: newInformation.email,
+      email: user.email,
       birthDay: newInformation.birthDay,
       sex: newInformation.sex,
       phoneNumber: newInformation.phoneNumber,
@@ -91,7 +84,6 @@ const UserEditForm = ({ user }: { user: Member }) => {
 
     if (
       newInformation.sex !== '' &&
-      isValidEmail(newInformation.email) &&
       isValidNickname(newInformation.nickName) &&
       isValidBirth(newInformation.birthDay) &&
       isValidUserPhoneNumber(newInformation.phoneNumber)
@@ -162,20 +154,6 @@ const UserEditForm = ({ user }: { user: Member }) => {
           {errorMessage.nicknameError && (
             <p className='text-[12px] font-medium text-[#F83A3A]'>
               {errorMessage.nicknameError}
-            </p>
-          )}
-        </div>
-        <div className='flex flex-col gap-1'>
-          <CommonInput
-            label='이메일'
-            name='email'
-            placeholder={PLACEHOLDER.email}
-            value={newInformation.email}
-            onChangeFunction={handleGetNewValue}
-          />
-          {errorMessage.emailError && (
-            <p className='text-[12px] font-medium text-[#F83A3A]'>
-              {errorMessage.emailError}
             </p>
           )}
         </div>

@@ -11,7 +11,7 @@ const usePutEditUserData = () => {
     mutationFn: (user: Member) => putEditMemberInformation(user),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['member'] });
-      navigate('/user-info');
+      navigate('/user-page');
     },
   });
 

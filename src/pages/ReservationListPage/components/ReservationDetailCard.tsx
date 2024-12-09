@@ -154,7 +154,7 @@ const ReservationDetailCard = ({ item }: { item: Reservation }) => {
                     결제 취소된 예약입니다.
                   </span>
                 ))}
-              {buttonText === 'review' && state !== 'CANCELLED' && (
+              {buttonText === 'review' && (
                 <ButtonInCard
                   name='리뷰 작성'
                   onClickFunction={handleReviewButton}
