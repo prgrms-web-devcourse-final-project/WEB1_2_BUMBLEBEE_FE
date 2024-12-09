@@ -36,10 +36,16 @@ module.exports = {
         namedComponents: 'arrow-function',
       },
     ], // 화살표 함수 이용
-
+    'react/require-default-props': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
-
+    'jsx-a11y/label-has-associated-control': [
+      2,
+      {
+        some: ['nesting', 'id'],
+      },
+    ],
+    'no-param-reassign': 'off',
     '@typescript-eslint/naming-convention': [
       'error',
       // 인터페이스 이름은 PascalCase를 사용하되, 'I'로 시작하지 않아야 함
