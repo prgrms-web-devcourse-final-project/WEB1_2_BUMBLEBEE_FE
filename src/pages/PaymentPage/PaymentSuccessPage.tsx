@@ -9,7 +9,6 @@ const PaymentSuccessPage = () => {
   const { orderName, totalAmount } = responseData;
 
   const formattedAmount = `${totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`;
-
   return (
     <MainLayout>
       <div className='mx-auto -mt-[93px] flex h-[100vh] flex-col items-center justify-center gap-6'>
@@ -19,7 +18,11 @@ const PaymentSuccessPage = () => {
           <div className='mt-3 flex w-[250px] flex-col gap-1 text-sm'>
             <div className='flex justify-between'>
               <p className='font-medium'>주문 상품</p>
-              <p className='w-[180px] text-end'>{orderName}</p>
+              <div className='w-40'>
+                <p className='whitespace-normal break-words text-end'>
+                  {orderName}
+                </p>
+              </div>
             </div>
             <div className='flex justify-between'>
               <p className='font-medium'>결제 금액</p>
