@@ -19,7 +19,6 @@ const WriteReviewPage = () => {
   const location = useLocation();
   const reservationInfo: WriteReviewProps = { ...location.state };
   const { reservationId, workPlaceName } = reservationInfo;
-  console.log(reservationId);
 
   return (
     <MainLayout>
