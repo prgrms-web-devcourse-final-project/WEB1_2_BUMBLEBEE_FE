@@ -8,7 +8,7 @@ const PaymentSuccessPage = () => {
 
   const { orderName, totalAmount } = responseData;
 
-  const formattedAmount = `${totalAmount.toLocaleString('ko-KR')}원`;
+  const formattedAmount = `${totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`;
 
   return (
     <MainLayout>

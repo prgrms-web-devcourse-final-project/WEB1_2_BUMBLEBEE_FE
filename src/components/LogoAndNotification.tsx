@@ -2,6 +2,7 @@ import Logo from '@assets/images/roomit_logo.png';
 import { RiNotification3Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
 import { getRole } from '@utils/auth';
+// import useNotificationStore from '@store/notificationStore';
 
 interface HeaderProps {
   isLogin: boolean;
@@ -10,6 +11,7 @@ interface HeaderProps {
 const LogoAndNotification = ({ isLogin }: HeaderProps) => {
   const navigate = useNavigate();
   const role = getRole();
+  // const { activeNoti } = useNotificationStore();
 
   const handleMoveToNotiPageClick = () => {
     if (role === 'ROLE_USER') {

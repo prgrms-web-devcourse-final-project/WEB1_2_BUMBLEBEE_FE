@@ -36,7 +36,7 @@ export const getLatestReservation = async (): Promise<Reservation> => {
 };
 
 // 사업자의 예약자 조회
-export const getAllReserver = async (): Promise<ReserverInfo> => {
+export const getAllReserver = async (): Promise<ReserverInfo[]> => {
   const response = await authInstance.get('/api/v1/reservations/all/workplace');
   return response.data;
 };

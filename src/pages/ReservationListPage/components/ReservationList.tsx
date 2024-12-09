@@ -25,6 +25,8 @@ const ReservationList = () => {
 
   const sortedWithDate = sortedReservationWithDate();
 
+  console.log(reservationList);
+
   return (
     <>
       {reservationList && reservationList.length > 0 ? (
@@ -48,26 +50,20 @@ const ReservationList = () => {
           </div>
           {!activeSortButton
             ? sortedWithPayment.map((item) => {
-                if (item.state !== 'ON_HOLD') {
-                  return (
-                    <ReservationDetailCard
-                      key={item.reservationId}
-                      item={item}
-                    />
-                  );
-                }
-                return null;
+                return (
+                  <ReservationDetailCard
+                    key={item.reservationId}
+                    item={item}
+                  />
+                );
               })
             : sortedWithDate.map((item) => {
-                if (item.state !== 'ON_HOLD') {
-                  return (
-                    <ReservationDetailCard
-                      key={item.reservationId}
-                      item={item}
-                    />
-                  );
-                }
-                return null;
+                return (
+                  <ReservationDetailCard
+                    key={item.reservationId}
+                    item={item}
+                  />
+                );
               })}
         </div>
       ) : (
