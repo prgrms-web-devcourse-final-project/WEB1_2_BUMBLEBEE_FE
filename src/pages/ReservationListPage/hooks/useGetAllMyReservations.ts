@@ -11,6 +11,8 @@ const useGetAllMyReservations = () => {
         (item) => item.state !== 'ON_HOLD' && item.state !== 'PAYMENT_FAIL',
       );
 
+      console.log(reservationList);
+
       return filteredReservation;
     },
   });

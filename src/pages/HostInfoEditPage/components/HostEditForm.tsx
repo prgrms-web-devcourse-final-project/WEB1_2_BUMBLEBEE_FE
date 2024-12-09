@@ -4,7 +4,6 @@ import { Business } from '@typings/types';
 import { insertBusinessNumberHyphen } from '@utils/autoHyphen';
 import {
   isValidBusinessNumber,
-  isValidEmail,
   isValidNickname,
 } from '@utils/validationCheckRegex';
 import { ChangeEvent, FormEvent, useState } from 'react';
@@ -12,7 +11,6 @@ import usePutEditBusinessData from '../hooks/usePutEditBusinessData';
 
 interface EditErrorMessage {
   nicknameError?: string;
-  emailError?: string;
   businessNumberError?: string;
 }
 
@@ -43,15 +41,11 @@ const HostEditForm = ({ business }: { business: Business }) => {
   const isValid = () => {
     const errors: EditErrorMessage = {
       nicknameError: '',
-      emailError: '',
       businessNumberError: '',
     };
 
     if (!isValidNickname(newInformation.businessName)) {
       errors.nicknameError = ERROR_MESSAGE.nickname;
-    }
-    if (!isValidEmail(newInformation.businessEmail)) {
-      errors.emailError = ERROR_MESSAGE.email;
     }
     if (!isValidBusinessNumber(newInformation.businessNum)) {
       errors.businessNumberError = ERROR_MESSAGE.businessNumber;
@@ -67,12 +61,11 @@ const HostEditForm = ({ business }: { business: Business }) => {
     const errors = isValid();
     const newData = {
       businessName: newInformation.businessName,
-      businessEmail: newInformation.businessEmail,
+      businessEmail: business.businessEmail,
       businessNum: newInformation.businessNum,
     };
 
     if (
-      isValidEmail(newInformation.businessEmail) &&
       isValidNickname(newInformation.businessName) &&
       isValidBusinessNumber(newInformation.businessNum)
     ) {
@@ -100,20 +93,6 @@ const HostEditForm = ({ business }: { business: Business }) => {
           {errorMessage.nicknameError && (
             <p className='text-[12px] font-medium text-[#F83A3A]'>
               {errorMessage.nicknameError}
-            </p>
-          )}
-        </div>
-        <div className='flex flex-col gap-1'>
-          <CommonInput
-            label='이메일'
-            name='businessEmail'
-            placeholder={PLACEHOLDER.email}
-            value={newInformation.businessEmail}
-            onChangeFunction={handleGetNewValue}
-          />
-          {errorMessage.emailError && (
-            <p className='text-[12px] font-medium text-[#F83A3A]'>
-              {errorMessage.emailError}
             </p>
           )}
         </div>
