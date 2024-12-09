@@ -13,11 +13,16 @@ const HostNotiList = () => {
     <>
       {sortedNotification && sortedNotification.length > 0 ? (
         <div className='mt-4 flex w-[375px] flex-col justify-center gap-[13px] pb-24'>
-          {sortedNotification.map((item) => {
+          {sortedNotification.map((item, index) => {
+            const uniqueKey =
+              item.notificationType === 'REVIEW_CREATED'
+                ? `review-${item.reviewId || index}`
+                : `reservation-${item.reservationId || index}`;
+
             if (item.notificationType === 'REVIEW_CREATED') {
               return (
                 <HostReviewNotiCard
-                  key={item.alrimId}
+                  key={uniqueKey}
                   item={item}
                 />
               );
@@ -25,7 +30,7 @@ const HostNotiList = () => {
 
             return (
               <HostReservationNotiCard
-                key={item.alrimId}
+                key={uniqueKey}
                 item={item}
               />
             );

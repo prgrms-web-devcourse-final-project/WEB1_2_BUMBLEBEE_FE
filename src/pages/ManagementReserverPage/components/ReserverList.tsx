@@ -10,20 +10,19 @@ const ReserverList = () => {
     );
   });
 
+  console.log(reserverList);
+
   return (
     <>
       {reserverList.length > 0 ? (
         <div className='mt-[6px] flex w-[375px] flex-col justify-center pb-24'>
           {sortedReserverList.map((item) => {
-            if (item.reservationState !== 'ON_HOLD') {
-              return (
-                <ReserverCard
-                  key={item.reservationId}
-                  item={item}
-                />
-              );
-            }
-            return null;
+            return (
+              <ReserverCard
+                key={item.reservationId}
+                item={item}
+              />
+            );
           })}
         </div>
       ) : (

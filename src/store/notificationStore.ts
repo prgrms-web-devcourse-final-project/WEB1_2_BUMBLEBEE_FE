@@ -9,6 +9,7 @@ interface NotificationState {
   connect: () => void;
   disconnect: () => void;
   state: boolean;
+  activeNoti: boolean;
 }
 
 const EventSource = EventSourcePolyfill || NativeEventSource;
@@ -21,6 +22,7 @@ const useNotificationStore = create<NotificationState>((set) => ({
   message: null,
   state: true,
   link: '/',
+  activeNoti: false,
 
   connect: () => {
     const token = getAuthToken() || '';
@@ -39,7 +41,6 @@ const useNotificationStore = create<NotificationState>((set) => ({
 
     eventSource.onmessage = (event) => {
       const newMessage: BusinessNotification = JSON.parse(event.data);
-      console.log(newMessage);
 
       if (
         newMessage.content === 'connected!' ||
@@ -59,6 +60,8 @@ const useNotificationStore = create<NotificationState>((set) => ({
           newMessage.notificationType === 'REVIEW_CREATED'
             ? '새 리뷰가 등록되었습니다.'
             : '새로운 예약이 등록되었습니다.';
+
+        set(() => ({ activeNoti: true }));
 
         set((state) => {
           if (state.message === newText) {
