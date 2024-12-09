@@ -23,12 +23,9 @@ const ChatCard = (props: ChatCardProps) => {
     >
       <div className='flex w-full flex-col gap-[10px]'>
         <div className='flex items-center justify-between'>
-          <button
-            type='button'
-            className='flex items-center gap-1 text-sm font-medium'
-          >
+          <div className='flex items-center gap-1 text-sm font-medium'>
             {userName} <GrNext className='text-xs' />
-          </button>
+          </div>
           <span className='text-xs text-subfont'>
             {getDateFunction(chat.updatedAt)}
           </span>

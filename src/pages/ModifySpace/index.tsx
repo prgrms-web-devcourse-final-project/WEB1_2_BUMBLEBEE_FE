@@ -13,8 +13,6 @@ const ModifySpace = () => {
   const { workplaceId } = useParams() as { workplaceId: string };
   const { data: info } = useGetWorkPlaceInfo(Number(workplaceId));
   const { data: roomInfo } = useGetRoomListInfo(Number(workplaceId));
-  console.log(info);
-  console.log(roomInfo);
 
   // 공간 등록 + 룸 폼 상태관리
   const [spaceFormData, setSpaceFormData] = useState<Space>({
@@ -30,8 +28,6 @@ const ModifySpace = () => {
     spaceImage: { file: null, url: '' },
     rooms: [],
   });
-
-  console.log(spaceFormData);
 
   useEffect(() => {
     if (info && roomInfo) {

@@ -10,7 +10,7 @@ const useGetChatList = () => {
     role === 'ROLE_USER' ? getChatListMember : getChatListBusiness;
   const { data, isLoading, isError } = useQuery<
     ChatListMember[] | ChatListBusiness[]
-  >({ queryKey, queryFn });
+  >({ queryKey, queryFn, refetchOnWindowFocus: true });
 
   return { data: data ?? [], isLoading, isError };
 };

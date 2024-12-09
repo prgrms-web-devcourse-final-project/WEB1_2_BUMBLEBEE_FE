@@ -102,7 +102,6 @@ const RoomModify = ({ room, updateRoomData, completeAdd }: RoomFormProps) => {
             ).then((roomImageS3URL) => uploadImageToS3(roomImageS3URL, file!)),
           ),
         );
-        console.log(room.roomName);
       } else {
         // 룸 수정
         await putRoom({
