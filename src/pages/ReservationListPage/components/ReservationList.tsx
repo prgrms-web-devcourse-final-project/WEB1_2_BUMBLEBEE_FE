@@ -25,8 +25,6 @@ const ReservationList = () => {
 
   const sortedWithDate = sortedReservationWithDate();
 
-  console.log(reservationList);
-
   return (
     <>
       {reservationList && reservationList.length > 0 ? (
