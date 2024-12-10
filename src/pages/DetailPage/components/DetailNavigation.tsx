@@ -44,7 +44,9 @@ const DetailNavigation = ({
   return (
     <div className='fixed bottom-0 z-10 flex h-[94px] w-[375px] items-center justify-center border-t border-subfont bg-white pb-[16px]'>
       <div className='flex items-center gap-2'>
-        {isUser && (
+        {isLogin && !isUser ? (
+          <div />
+        ) : (
           <button
             type='button'
             className='flex h-[48px] w-[100px] items-center justify-center rounded-[8px] border border-primary'
@@ -61,11 +63,13 @@ const DetailNavigation = ({
         )}
         <button
           type='button'
-          className={`h-[48px] rounded-[8px] text-white ${isBtnDisabled ? 'bg-subfont' : 'bg-primary'} ${isUser ? 'w-[222px]' : 'pointer-events-none w-custom bg-subfont'}`}
+          className={`h-[48px] rounded-[8px] text-white ${isBtnDisabled ? 'bg-subfont' : 'bg-primary'} ${isLogin && !isUser ? 'pointer-events-none w-custom bg-subfont' : 'w-[222px]'}`}
           disabled={isBtnDisabled}
           onClick={handleSelectRoom}
         >
-          {isUser ? '룸 선택하기' : '사업자는 룸을 선택할 수 없습니다.'}
+          {isLogin && !isUser
+            ? '사업자는 룸을 선택할 수 없습니다.'
+            : '룸 선택하기'}
         </button>
       </div>
     </div>
