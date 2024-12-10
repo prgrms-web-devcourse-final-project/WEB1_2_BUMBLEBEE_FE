@@ -60,10 +60,12 @@ const ReservationPage = () => {
         <div className='flex items-center gap-2'>
           <button
             type='button'
-            className={`btn-primary w-custom px-1 ${isLogin ? '' : 'pointer-events-none bg-subfont'} ${isUser ? '' : 'pointer-events-none w-custom bg-subfont font-normal'}`}
+            className={`btn-primary w-custom px-1 ${isLogin && !isUser ? 'pointer-events-none w-custom bg-subfont font-normal' : ''}`}
             onClick={handleClickReservation}
           >
-            {isUser ? '룸 선택하기' : '사업자는 예약할 수 없습니다.'}
+            {isLogin && !isUser
+              ? '사업자는 예약할 수 없습니다.'
+              : '룸 선택하기'}
           </button>
         </div>
       </div>
