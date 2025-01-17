@@ -41,6 +41,8 @@ const ChatPage = () => {
     }
   };
 
+  console.log(stompClientRef);
+
   // 채팅 내용 불러오기
   const loadMessage = async (cursor?: string) => {
     try {
