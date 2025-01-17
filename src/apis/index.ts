@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 // Default Instance
 const defaultInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 2000,
+  timeout: 5000,
   headers: {
     accept: 'application/json',
     'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const defaultInstance: AxiosInstance = axios.create({
 // Auth Instance
 const authInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
-  timeout: 2000,
+  timeout: 5000,
   headers: {
     accept: 'application/json',
     'Content-Type': 'application/json',

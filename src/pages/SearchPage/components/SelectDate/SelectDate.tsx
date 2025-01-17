@@ -10,7 +10,7 @@ type DatePiece = Date | null;
 type SelectedDate = DatePiece | [DatePiece, DatePiece];
 
 const SelectDate = () => {
-  const { searchDate, setDate } = useSearchStore();
+  const { searchDate, setDate, setTime, setFormattedTime } = useSearchStore();
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + 3);
 
@@ -27,6 +27,8 @@ const SelectDate = () => {
   const handleChangeDate = (newDate: SelectedDate) => {
     if (newDate instanceof Date) {
       setDate(new Date(newDate));
+      setTime([]);
+      setFormattedTime([]);
     }
   };
   return (
