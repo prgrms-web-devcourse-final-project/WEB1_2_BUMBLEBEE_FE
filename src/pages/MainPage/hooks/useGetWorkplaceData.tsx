@@ -6,6 +6,7 @@ import {
   MapPosition,
   NowPosition,
 } from '@typings/types';
+import { AxiosError } from 'axios';
 
 export const useGetWorkplaceData = (
   nowPosition: NowPosition,
@@ -31,10 +32,20 @@ export const useGetRecommendData = (
   isUser: boolean,
   activeTab: string,
 ) => {
-  const { data, isLoading, isError } = useQuery<GetPositionWorkPlaceData[]>({
+  const { data, isLoading, isError } = useQuery<
+    GetPositionWorkPlaceData[],
+    AxiosError
+  >({
     queryKey: ['recommendWorkPlace', isLogin, isUser],
     queryFn: () => getRecommendWorkPlace(),
     enabled: isLogin && isUser && activeTab !== '주변 스터디룸',
+    retry: (failureCount, error: AxiosError) => {
+      // 503 에러 발생 시 재요청 금지
+      if (error.response?.status === 503) {
+        return false;
+      }
+      return failureCount < 3;
+    },
   });
 
   return {
